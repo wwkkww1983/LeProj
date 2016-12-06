@@ -1,25 +1,5 @@
 ﻿#准备工作
 ***
-###设置设备IP与静态网关
-1. 备份并打开文件/etc/network/interfaces
-2. 添加以下几行  
->iface eth0 inet static  
-\#your static IP  
-address 192.168.1.123    
-\#your gateway IP  
-gateway 192.168.1.1  
-netmask 255.255.255.0  
-\#your network address "family"  
-network 192.168.1.0
-3. 改为无线方式  
-建议先使用有线方式连接树莓测试通过后再改，避免网络不稳定。  
->iface eth0 inet dhcp  
-auto wlan0  
-allow-hotplug wlan0  
-iface wlan0 inet dhcp  
-wpa-ssid “你的wifi名称”  
-wpa-psk “你的wifi密码”  
-
 
 ###MJPG-Steamer安装
 用于视频流的显示
@@ -40,7 +20,7 @@ wpa-psk “你的wifi密码”
     git pull origin（更新非必需）
     ./build
 
-### 编译服务器C程序
+### 编译服务器C程序（仅用于TCP程序）
 gcc car_server.c –o car_server  -lwiringPi -lwiringPiDev
 
 ###Flask安装
