@@ -10,7 +10,14 @@ address 192.168.1.123
 gateway 192.168.1.1  
 netmask 255.255.255.0  
 \#your network address "family"  
-network 192.168.1.0  
+network 192.168.1.0
+3. 先使用有线连接树莓测试通过后，再改为无线方式
+>>iface eth0 inet dhcp
+auto wlan0
+allow-hotplug wlan0
+iface wlan0 inet dhcp
+wpa-ssid “你的wifi名称”
+wpa-psk “你的wifi密码”
 
 ###Flask安装
 需要设备可以联网，使用Flask框架，默认端口为 9001，启动程序需要先安装框架。
