@@ -13,7 +13,7 @@ netmask 255.255.255.0
 network 192.168.1.0
 3. 改为无线方式  
 建议先使用有线方式连接树莓测试通过后再改，避免网络不稳定。  
->>iface eth0 inet dhcp  
+>iface eth0 inet dhcp  
 auto wlan0  
 allow-hotplug wlan0  
 iface wlan0 inet dhcp  
