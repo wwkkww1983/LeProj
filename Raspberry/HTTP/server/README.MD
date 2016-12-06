@@ -26,6 +26,22 @@ wpa-psk “你的wifi密码”
 
     wget https://github.com/jacksonliam/mjpg-streamer
     或者直接到网站下载zip安装包mjpg-streamer-master.zip，使用unzip mjpg-streamer-master.zip
+    sudo apt-get install cmake  
+    sudo  apt-get  install  libjpeg8-dev 
+    cd /mjpg-streamer-master/mjpg-streamer-experimental
+    make clean all
+
+### GPIO 库安装
+
+    sudo apt-get install git-core
+    sudo apt-get update
+    git clone git://git.drogon.net/wiringPi
+    cd wiringPi
+    git pull origin（更新非必需）
+    ./build
+
+### 编译服务器C程序
+gcc car_server.c –o car_server  -lwiringPi -lwiringPiDev
 
 ###Flask安装
 需要设备可以联网，使用Flask框架，默认端口为 9001，启动程序需要先安装框架。
