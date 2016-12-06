@@ -1,0 +1,39 @@
+/*=============================================================================
+#     FileName: style.css
+#         Desc:  
+#       Author: wangheng
+#        Email: wujiwh@gmail.com
+#     HomePage: http://wangheng.org
+#      Version: 0.0.1
+#   LastChange: 2015-01-14 20:40:04
+#      History:
+=============================================================================*/
+body            { font-family: sans-serif; background: #eee; }
+a, h1, h2       { color: #377ba8; }
+h1, h2          { font-family: 'Georgia', serif; margin: 0; }
+h1              { border-bottom: 2px solid #eee; }
+h2              { font-size: 1.2em; }
+
+.page           { margin: 0em auto; width: 60em; border:10px solid #ccc;
+padding: 1.8em; background: white; }
+
+
+.error          { background: #f0d6d6; padding: 0.5em; }
+
+.button_ctl {
+	font: 12px Tahoma, Verdana;
+	padding: 0 5px;
+	color: #D3E0E7;
+	cursor:pointer;
+	background-repeat: no-repeat;
+	background-position: 0 50%;
+	outline: 0px solid #D3E0E7;
+	border: 5px solid #FFF !important;
+	line-height: 17px;
+}
+th {
+	font-weight: bold;
+	height: 95px;
+	width: 95px;
+}
+
