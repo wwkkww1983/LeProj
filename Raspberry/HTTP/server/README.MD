@@ -20,6 +20,13 @@ iface wlan0 inet dhcp
 wpa-ssid “你的wifi名称”  
 wpa-psk “你的wifi密码”  
 
+
+###MJPG-Steamer安装
+用于视频流的显示
+
+    wget https://github.com/jacksonliam/mjpg-streamer
+    或者直接到网站下载zip安装包mjpg-streamer-master.zip，使用unzip mjpg-streamer-master.zip
+
 ###Flask安装
 需要设备可以联网，使用Flask框架，默认端口为 9001，启动程序需要先安装框架。
 
