@@ -2,7 +2,7 @@
 ***
 ###设置设备IP与静态网关
 1. 备份并打开文件/etc/network/interfaces
-2. 添加以下几行
+2. 添加以下几行  
 >iface eth0 inet static  
 \#your static IP  
 address 192.168.1.123    
@@ -11,9 +11,9 @@ gateway 192.168.1.1
 netmask 255.255.255.0  
 \#your network address "family"  
 network 192.168.1.0
-3. 改为无线方式
-建议先使用有线方式连接树莓测试通过后再改，避免网络不稳定。
->>iface eth0 inet dhcp  
+3. 改为无线方式  
+建议先使用有线方式连接树莓测试通过后再改，避免网络不稳定。  
+>iface eth0 inet dhcp  
 auto wlan0  
 allow-hotplug wlan0  
 iface wlan0 inet dhcp  
