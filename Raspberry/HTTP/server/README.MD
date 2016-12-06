@@ -49,6 +49,13 @@ gcc car_server.c –o car_server  -lwiringPi -lwiringPiDev
     sudo apt-get install python-pip
     sudo pip install flask
 
+### 设置程序开机启动
+可以不设置，如果不自动启动则每次通电后需要连上树莓，然后手动启动这两个程序（视频流和服务端程序）
+    
+    sudo vi /etc/rc.local
+    在exit前加入下面两个程序的调用命令
+    home/pi/mjpg-streamer/mjpg-streamer-experimental/mjpg-streamer -i "input_raspicam.so" -o "output_http.so -w ./www"
+    python home/pi/server/server.py
 
 #视频流模块
 ***
@@ -60,16 +67,17 @@ gcc car_server.c –o car_server  -lwiringPi -lwiringPiDev
 ###服务器程序启动
 不启动的话，网页端不显示视频
 
-    mjpg-streamer/mjpg-streamer-experimental
+    cd mjpg-streamer/mjpg-streamer-experimental
     sudo ./mjpg-streamer -i "input_raspicam.so" -o "output_http.so -w ./www"（单引号双引号都可以）
 
 #控制模块
 ***
 ###启动程序
 
+    cd server
     sudo python server.py
 
-###客户端访问
+###客户端访问控制
 在浏览器输入下面内容
 
     设备IP:9001

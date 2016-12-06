@@ -23,9 +23,6 @@ atexit.register(GPIO.cleanup)
 def show_index():
 	return render_template('home.html')
 
-@app.route("/favicon.ico", methods=["GET"])                                   
-def show_logo():
-	raise web.seeother("/static/img/favicon.ico")
 
 IN1 = 18
 IN2 = 23
@@ -89,24 +86,4 @@ def t_right():
 	GPIO.output(IN2, False)
 	GPIO.output(IN3, False)
 	GPIO.output(IN4, True)
-def t_servod():
-	GPIO.setup(38,GPIO.OUT)
-	p=GPIO.PWM(38,50)
-	p.start(0)
-	for i in range(0,181,10):
-		p.ChangeDutyCycle(2.5 + 10 * i / 180) 
-		time.sleep(0.02)                      
-		p.ChangeDutyCycle(0)               
-		time.sleep(0.2)
-	for i in range(181,0,-10):
-		p.ChangeDutyCycle(2.5 + 10 * i / 180)
-		time.sleep(0.02)
-		p.ChangeDutyCycle(0)
-		time.sleep(0.2)
-	#	p.ChangeDutyCycle(7.5)
-	#	time.sleep(1)
-	#	p.ChangeDutyCycle(7.5)
-	#	time.sleep(1)	
-	#	p.ChangeDutyCycle(2.5)
-	#	time.sleep(1)	
 
