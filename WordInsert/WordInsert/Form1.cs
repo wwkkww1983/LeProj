@@ -54,13 +54,13 @@ namespace WordInsert
         private void btnExe_Click(object sender, EventArgs e)
         {
             string pathSource = tbSource.Text.Trim(), pathTarget = tbTarget.Text.Trim();
-            if (pathTarget.Equals(string.Empty) || pathSource.Equals(string.Empty) || pathTarget.Equals(pathSource))
-            {
-                MessageBox.Show("请重新选择文件夹");
-                return;
-            }
-            //pathSource = "C:\\Users\\Administrator\\Desktop\\原来的";
-            //pathTarget = "C:\\Users\\Administrator\\Desktop\\改过的";
+            //if (pathTarget.Equals(string.Empty) || pathSource.Equals(string.Empty) || pathTarget.Equals(pathSource))
+            //{
+            //    MessageBox.Show("请重新选择文件夹");
+            //    return;
+            //}
+            pathSource = "C:\\Users\\Administrator\\Desktop\\原来的";
+            pathTarget = "C:\\Users\\Administrator\\Desktop\\改过的";
             ComponentUseable(false);
             TransformDocs(pathSource, pathTarget);
             ComponentUseable(true);
@@ -107,7 +107,7 @@ namespace WordInsert
                 try
                 {
                     total++;
-                    lbResult.Text = total.ToString() ;
+                    lbResult.Text = "第 " +  total.ToString() + " 篇";
                     worddoc = wordApp.Documents.Open(docItem.FullName, true);
                     //核心工作：修改文档
                     ChangeContents(worddoc);
@@ -135,7 +135,7 @@ namespace WordInsert
         /// <param name="doc">文档内容</param>
         private void ChangeContents(MSWord.Document doc)
         {
-            int senTotal = 0, idx = 0;
+            int senTotal = 0, idx = 0, idxTmp=0;
             MSWord.Range objRange = null;
             string strTmp = string.Empty;
             MSWord.Sentences content = null;
@@ -143,19 +143,41 @@ namespace WordInsert
             //doc.SetCompatibilityMode((int)MSWord.WdCompatibilityMode.wdWord2010);
             content = doc.Sentences;
             senTotal = content.Count;
+            pbInsert.Maximum = senTotal;
             for (int i = 1; i <= senTotal; i++)
             {
+                pbInsert.Value = i;
                 objRange = content[i].Words.First;
+                Console.WriteLine(i.ToString() + " == " + content[i].Words.Count.ToString ());
                 idx = 1;
                 if (objRange.Text == "\r" || objRange.Next().Text == "\r" || objRange.Next().Next().Text == "\r")
                     continue;//词语不足两个字则忽略
                 while (objRange.Text.IndexOf("\r") < 0)
                 {//插入字符
-                    objRange.InsertAfter(GetRandomChar());
-                    content[i].Words[++idx].Font.TextColor.ObjectThemeColor = MSWord.WdThemeColorIndex.wdThemeColorBackground1;
+                    Console.Write(idx);
+                    if (objRange.Text.IndexOf("。") >= 0 || objRange.Text.IndexOf("、") >= 0)
+                    {//黑名单
+                        if (content[i].Words.Count <= idx) break;
+                        objRange = content[i].Words[++idx]; continue;
+                    } 
+                    Console.Write("CK");
+                    idxTmp = content[i].Words.Count;
+                    objRange.InsertAfter("1");
+                    idx += (content[i].Words.Count - idxTmp);
+                    Console.Write("MV");
+                    //content[i].Words[++idx].Font.TextColor.ObjectThemeColor = MSWord.WdThemeColorIndex.wdThemeColorBackground1;
                     content[i].Words[idx].Font.Fill.Transparency = 1F;
+                    Console.Write("Trans");
                     content[i].Words[idx].Font.Spacing = -30;
-                    objRange = content[i].Words[++idx];
+                    Console.WriteLine("Space");
+                    try
+                    {
+                        objRange = content[i].Words[++idx];
+                    }
+                    catch (Exception ee)
+                    {
+                        Console.WriteLine(ee.Message);
+                    }
                 }
             }
 
@@ -172,5 +194,10 @@ namespace WordInsert
             int idx = random.Next(1, STRING_INSERT.Length);
             return STRING_INSERT[idx].ToString();
         }
+
+        //private void updateComponent()
+        //{
+
+        //}
     }
 }

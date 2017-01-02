@@ -14,3 +14,4 @@ D:\Project\LeProj\WordInsert\WordInsert\bin\Release\System.dll
 D:\Project\LeProj\WordInsert\WordInsert\bin\Release\System.Drawing.dll
 D:\Project\LeProj\WordInsert\WordInsert\bin\Release\System.Windows.Forms.dll
 D:\Project\LeProj\WordInsert\WordInsert\obj\Release\WordInsert.csproj.ResolveComReference.cache
+D:\Project\LeProj\WordInsert\WordInsert\obj\Release\WordInsert.csprojResolveAssemblyReference.cache
