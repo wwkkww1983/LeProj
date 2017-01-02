@@ -1,0 +1,13 @@
+﻿Sub AutoOpen()
+'
+' AutoDocx 宏
+' save as docx
+'
+       ActiveDocument.SaveAs2 FileName:="C:\Users\Administrator\Desktop\改过的\" + Left(ActiveDocument.Name, InStr(ActiveDocument.Name, ".doc") - 1) + ".docx", FileFormat:= _
+        wdFormatXMLDocument, LockComments:=False, Password:="", AddToRecentFiles _
+        :=True, WritePassword:="", ReadOnlyRecommended:=False, EmbedTrueTypeFonts _
+        :=False, SaveNativePictureFormat:=False, SaveFormsData:=False, _
+        SaveAsAOCELetter:=False, CompatibilityMode:=14
+
+
+End Sub

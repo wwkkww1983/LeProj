@@ -108,10 +108,19 @@ namespace WordInsert
                 {
                     total++;
                     lbResult.Text = "第 " +  total.ToString() + " 篇";
-                    worddoc = wordApp.Documents.Open(docItem.FullName, true);
+                    worddoc = wordApp.Documents.Open(docItem.FullName);
+                    fileTarget = pathTarget + "\\" + docItem.Name;
+
+                    //if (docItem.Extension == ".doc")
+                    //{//word转换
+                    //    fileTarget = pathTarget + "\\" + docItem.Name.Substring(0,docItem.Name.Length-4) + ".docx";
+                    //    worddoc.SaveAs2(fileTarget);
+                    //    wordApp.ActiveDocument.Close(false);
+                    //    worddoc = wordApp.Documents.Open(fileTarget);
+                    //}
+
                     //核心工作：修改文档
                     ChangeContents(worddoc);
-                    fileTarget = pathTarget + "\\" + docItem.Name;
                     worddoc.SaveAs2(fileTarget);
                 }
                 catch (Exception ex)
@@ -148,36 +157,23 @@ namespace WordInsert
             {
                 pbInsert.Value = i;
                 objRange = content[i].Words.First;
-                Console.WriteLine(i.ToString() + " == " + content[i].Words.Count.ToString ());
                 idx = 1;
                 if (objRange.Text == "\r" || objRange.Next().Text == "\r" || objRange.Next().Next().Text == "\r")
                     continue;//词语不足两个字则忽略
                 while (objRange.Text.IndexOf("\r") < 0)
                 {//插入字符
-                    Console.Write(idx);
                     if (objRange.Text.IndexOf("。") >= 0 || objRange.Text.IndexOf("、") >= 0)
                     {//黑名单
                         if (content[i].Words.Count <= idx) break;
                         objRange = content[i].Words[++idx]; continue;
                     } 
-                    Console.Write("CK");
                     idxTmp = content[i].Words.Count;
-                    objRange.InsertAfter("1");
+                    objRange.InsertAfter(GetRandomChar());
                     idx += (content[i].Words.Count - idxTmp);
-                    Console.Write("MV");
                     //content[i].Words[++idx].Font.TextColor.ObjectThemeColor = MSWord.WdThemeColorIndex.wdThemeColorBackground1;
                     content[i].Words[idx].Font.Fill.Transparency = 1F;
-                    Console.Write("Trans");
                     content[i].Words[idx].Font.Spacing = -30;
-                    Console.WriteLine("Space");
-                    try
-                    {
-                        objRange = content[i].Words[++idx];
-                    }
-                    catch (Exception ee)
-                    {
-                        Console.WriteLine(ee.Message);
-                    }
+                    objRange = content[i].Words[++idx];
                 }
             }
 
@@ -194,10 +190,5 @@ namespace WordInsert
             int idx = random.Next(1, STRING_INSERT.Length);
             return STRING_INSERT[idx].ToString();
         }
-
-        //private void updateComponent()
-        //{
-
-        //}
     }
 }
