@@ -37,6 +37,7 @@
             this.lbResult = new System.Windows.Forms.Label();
             this.btnExe = new System.Windows.Forms.Button();
             this.pbInsert = new System.Windows.Forms.ProgressBar();
+            this.lbCount = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnSource
@@ -75,9 +76,9 @@
             // 
             // rtbResult
             // 
-            this.rtbResult.Location = new System.Drawing.Point(24, 146);
+            this.rtbResult.Location = new System.Drawing.Point(24, 142);
             this.rtbResult.Name = "rtbResult";
-            this.rtbResult.Size = new System.Drawing.Size(828, 449);
+            this.rtbResult.Size = new System.Drawing.Size(828, 453);
             this.rtbResult.TabIndex = 2;
             this.rtbResult.Text = "";
             // 
@@ -92,9 +93,9 @@
             // 
             // btnExe
             // 
-            this.btnExe.Location = new System.Drawing.Point(152, 104);
+            this.btnExe.Location = new System.Drawing.Point(24, 108);
             this.btnExe.Name = "btnExe";
-            this.btnExe.Size = new System.Drawing.Size(75, 36);
+            this.btnExe.Size = new System.Drawing.Size(111, 28);
             this.btnExe.TabIndex = 4;
             this.btnExe.Text = "生成";
             this.btnExe.UseVisualStyleBackColor = true;
@@ -102,16 +103,26 @@
             // 
             // pbInsert
             // 
-            this.pbInsert.Location = new System.Drawing.Point(292, 113);
+            this.pbInsert.Location = new System.Drawing.Point(393, 113);
             this.pbInsert.Name = "pbInsert";
-            this.pbInsert.Size = new System.Drawing.Size(428, 23);
+            this.pbInsert.Size = new System.Drawing.Size(376, 23);
             this.pbInsert.TabIndex = 5;
+            // 
+            // lbCount
+            // 
+            this.lbCount.AutoSize = true;
+            this.lbCount.Location = new System.Drawing.Point(164, 117);
+            this.lbCount.Name = "lbCount";
+            this.lbCount.Size = new System.Drawing.Size(37, 15);
+            this.lbCount.TabIndex = 6;
+            this.lbCount.Text = "统计";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(864, 607);
+            this.Controls.Add(this.lbCount);
             this.Controls.Add(this.pbInsert);
             this.Controls.Add(this.btnExe);
             this.Controls.Add(this.lbResult);
@@ -141,6 +152,7 @@
         private System.Windows.Forms.Label lbResult;
         private System.Windows.Forms.Button btnExe;
         private System.Windows.Forms.ProgressBar pbInsert;
+        private System.Windows.Forms.Label lbCount;
     }
 }
 

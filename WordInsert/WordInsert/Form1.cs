@@ -54,13 +54,13 @@ namespace WordInsert
         private void btnExe_Click(object sender, EventArgs e)
         {
             string pathSource = tbSource.Text.Trim(), pathTarget = tbTarget.Text.Trim();
-            //if (pathTarget.Equals(string.Empty) || pathSource.Equals(string.Empty) || pathTarget.Equals(pathSource))
-            //{
-            //    MessageBox.Show("请重新选择文件夹");
-            //    return;
-            //}
-            pathSource = "C:\\Users\\Administrator\\Desktop\\原来的";
-            pathTarget = "C:\\Users\\Administrator\\Desktop\\改过的";
+            if (pathTarget.Equals(string.Empty) || pathSource.Equals(string.Empty) || pathTarget.Equals(pathSource))
+            {
+                MessageBox.Show("请重新选择文件夹");
+                return;
+            }
+            //pathSource = "C:\\Users\\Administrator\\Desktop\\原来的";
+            //pathTarget = "C:\\Users\\Administrator\\Desktop\\改过的";
             ComponentUseable(false);
             TransformDocs(pathSource, pathTarget);
             ComponentUseable(true);
@@ -107,10 +107,9 @@ namespace WordInsert
                 try
                 {
                     total++;
-                    lbResult.Text = "第 " +  total.ToString() + " 篇";
+                    lbResult.Text = "第 " + total.ToString() + " 篇";
+                    rtbResult.Text = docItem.Name + "\r\n" + rtbResult.Text;
                     worddoc = wordApp.Documents.Open(docItem.FullName);
-                    fileTarget = pathTarget + "\\" + docItem.Name;
-
                     //if (docItem.Extension == ".doc")
                     //{//word转换
                     //    fileTarget = pathTarget + "\\" + docItem.Name.Substring(0,docItem.Name.Length-4) + ".docx";
@@ -120,21 +119,25 @@ namespace WordInsert
                     //}
 
                     //核心工作：修改文档
+
                     ChangeContents(worddoc);
+                    //fileTarget = pathTarget + "\\" + docItem.Name;
+                    fileTarget = pathTarget + "\\" + docItem.Name.Substring(0, docItem.Name.Length - 4) + ".docx";
                     worddoc.SaveAs2(fileTarget);
                 }
                 catch (Exception ex)
                 {
                     fail++;
-                    rtbResult.Text = docItem.Name + "\t" + ex.Message + ex.StackTrace +  "\r\n" + rtbResult.Text;
+                    rtbResult.Text = docItem.Name + "\t" + ex.Message + ex.StackTrace + "\r\n" + rtbResult.Text;
                 }
                 finally
                 {
                     wordApp.ActiveDocument.Close(false);
+                    lbCount.Text = "完成：\t成功：" + (total - fail).ToString() + " 篇；失败：" + fail.ToString() + " 篇";
                     worddoc = null;
                 }
             }
-            rtbResult.Text = "完成：\t成功：" + (total-fail).ToString () + "个；失败：" + fail.ToString () + "个；\r\n" + rtbResult.Text;
+
             wordApp.Quit();
         }
 
@@ -144,7 +147,7 @@ namespace WordInsert
         /// <param name="doc">文档内容</param>
         private void ChangeContents(MSWord.Document doc)
         {
-            int senTotal = 0, idx = 0, idxTmp=0;
+            int senTotal = 0, idx = 0, idxTmp = 0;
             MSWord.Range objRange = null;
             string strTmp = string.Empty;
             MSWord.Sentences content = null;
@@ -158,22 +161,22 @@ namespace WordInsert
                 pbInsert.Value = i;
                 objRange = content[i].Words.First;
                 idx = 1;
-                if (objRange.Text == "\r" || objRange.Next().Text == "\r" || objRange.Next().Next().Text == "\r")
-                    continue;//词语不足两个字则忽略
-                while (objRange.Text.IndexOf("\r") < 0)
+                while (content[i].Words.Count > idx)
                 {//插入字符
+                    if (objRange.Text.IndexOf("\r") >= 0) break;
                     if (objRange.Text.IndexOf("。") >= 0 || objRange.Text.IndexOf("、") >= 0)
                     {//黑名单
-                        if (content[i].Words.Count <= idx) break;
                         objRange = content[i].Words[++idx]; continue;
-                    } 
+                    }
                     idxTmp = content[i].Words.Count;
                     objRange.InsertAfter(GetRandomChar());
                     idx += (content[i].Words.Count - idxTmp);
                     //content[i].Words[++idx].Font.TextColor.ObjectThemeColor = MSWord.WdThemeColorIndex.wdThemeColorBackground1;
                     content[i].Words[idx].Font.Fill.Transparency = 1F;
                     content[i].Words[idx].Font.Spacing = -30;
-                    objRange = content[i].Words[++idx];
+
+                    if (idx + 3 < content[i].Words.Count) idx++; else break;
+                    objRange = content[i].Words[idx];
                 }
             }
 
