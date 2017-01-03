@@ -128,7 +128,7 @@ namespace WordInsert
                 catch (Exception ex)
                 {
                     fail++;
-                    rtbResult.Text = docItem.Name + "\t" + ex.Message + ex.StackTrace + "\r\n" + rtbResult.Text;
+                    rtbResult.Text = "失败\t" + ex.Message + ex.StackTrace + "\r\n" + rtbResult.Text;
                 }
                 finally
                 {
@@ -158,6 +158,7 @@ namespace WordInsert
             pbInsert.Maximum = senTotal;
             for (int i = 1; i <= senTotal; i++)
             {
+                Console.WriteLine(i);
                 pbInsert.Value = i;
                 objRange = content[i].Words.First;
                 idx = 1;
@@ -170,12 +171,16 @@ namespace WordInsert
                     }
                     idxTmp = content[i].Words.Count;
                     objRange.InsertAfter(GetRandomChar());
-                    idx += (content[i].Words.Count - idxTmp);
-                    //content[i].Words[++idx].Font.TextColor.ObjectThemeColor = MSWord.WdThemeColorIndex.wdThemeColorBackground1;
-                    content[i].Words[idx].Font.Fill.Transparency = 1F;
-                    content[i].Words[idx].Font.Spacing = -30;
+                    if (content[i].Words.Count > idxTmp)
+                    {
+                        idx++;
+                        //content[i].Words[idx].Font.TextColor.ObjectThemeColor = MSWord.WdThemeColorIndex.wdThemeColorBackground1;
+                        content[i].Words[idx].Font.Fill.Transparency = 1F;
+                        content[i].Words[idx].Font.Spacing = -30;
+                    }
 
-                    if (idx + 3 < content[i].Words.Count) idx++; else break;
+                    if (idx + 3 < content[i].Words.Count) idx++;
+                    else break;
                     objRange = content[i].Words[idx];
                 }
             }
