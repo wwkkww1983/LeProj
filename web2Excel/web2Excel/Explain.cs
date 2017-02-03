@@ -171,7 +171,7 @@ namespace web2Excel
             if (floorList == null)
                 floorList = new Dictionary<string, string>();
 
-            string strPattern = @"<td>\d+栋</td>[\s\S]*?进入>></a>[\s\S]*?进入>></a>";
+            string strPattern = @"<tr align=""center""[\s\S]*?进入>></a>[\s\S]*?进入>></a>";
             Regex regex = new Regex(strPattern);
             if (!regex.IsMatch(strHtml)) return;
 
@@ -179,12 +179,12 @@ namespace web2Excel
             MatchCollection matchList = regex.Matches(strHtml);
             foreach (Match item in matchList)
             {
-                start1Idx = item.Value.IndexOf('>');
-                end1Idx = item.Value.IndexOf('栋');
+                start1Idx = item.Value.IndexOf("<td>");
+                end1Idx = item.Value.IndexOf("</td>");
                 start2Idx = item.Value.LastIndexOf("href=");
                 end2Idx = item.Value.LastIndexOf("target=");
                 
-                floorList.Add(item.Value.Substring(start1Idx + 1, end1Idx - start1Idx), item.Value.Substring(start2Idx + 6, end2Idx - start2Idx - 6 - 2));
+                floorList.Add(item.Value.Substring(start1Idx + 4, end1Idx - start1Idx - 4), item.Value.Substring(start2Idx + 6, end2Idx - start2Idx - 6 - 2));
             }
         }
 

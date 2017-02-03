@@ -109,15 +109,26 @@ namespace web2Excel
             app = new Excel.Application();
             workBook = app.Workbooks.Open(fileName);
             Excel.Worksheet worksheet = (Excel.Worksheet)workBook.Sheets[2];
+            GetExcelData(worksheet, out dataList);           
+        }
+
+        /// <summary>
+        /// 解析Excel表格数据
+        /// </summary>
+        /// <param name="worksheet"></param>
+        /// <param name="dataList"></param>
+        private static void GetExcelData(Excel.Worksheet worksheet, out string[,] dataList)
+        {
             int row = worksheet.UsedRange.Rows.Count;
             int column = worksheet.UsedRange.Columns.Count;
-            dataList = new string[row-1, column];
-            for(int i=2;i<=row ;i++){
+            dataList = new string[row - 1, column];
+            for (int i = 2; i <= row; i++)
+            {
                 for (int j = 1; j <= column; j++)
                 {
-                    dataList[i-2,j-1] =(worksheet.Cells[i,j] as Excel.Range).Text.ToString();
+                    dataList[i - 2, j - 1] = (worksheet.Cells[i, j] as Excel.Range).Text.ToString();
                 }
-            }            
+            }
         }
 
 
@@ -165,16 +176,20 @@ namespace web2Excel
             string strHouseStatus = string.Empty;
             updateItemCount(todayRow);
 
-            for (int i = 2; i <= todayRow; i++)
+            string[,] todayExcelData,yestdayExcelData;
+            GetExcelData(todaySheet, out todayExcelData);
+            GetExcelData(yestdaySheet, out yestdayExcelData);
+
+            for (int i = 1; i < todayRow; i++)
             {
                 UpdateProgess(false, i);
-                strHouseStatus = (todaySheet.Cells[i, 12] as Excel.Range).Text.ToString();
+                strHouseStatus = todayExcelData[i, 11] ;
                 if (strHouseStatus != "签订中" && strHouseStatus != "已备案" && strHouseStatus != "已预告")
                     continue;//还是可售或不可售（状态没变）
                 bool findFlag = false;//0:未找到，1：已找到，2已找过
                 for (int j = Math.Max(2, i - 20); j <= yestdayRow; j++)
                 {
-                    if ((yestdaySheet.Cells[j, 1] as Excel.Range).Text.ToString() != (todaySheet.Cells[i, 1] as Excel.Range).Text.ToString())
+                    if (yestdayExcelData[j, 0] != todayExcelData[i, 0])
                     {
                         if (findFlag) { findFlag = false; break; }//数据已经遍历完
                         else continue;//还没找到数据
@@ -184,16 +199,16 @@ namespace web2Excel
                         findFlag = true;
                     }
 
-                    if ((yestdaySheet.Cells[j, 1] as Excel.Range).Text.ToString() == (todaySheet.Cells[i, 1] as Excel.Range).Text.ToString()
-                        && (yestdaySheet.Cells[j, 2] as Excel.Range).Text.ToString() == (todaySheet.Cells[i, 2] as Excel.Range).Text.ToString()
-                        && (yestdaySheet.Cells[j, 3] as Excel.Range).Text.ToString() == (todaySheet.Cells[i, 3] as Excel.Range).Text.ToString()
-                        && (yestdaySheet.Cells[j, 5] as Excel.Range).Text.ToString() == (todaySheet.Cells[i, 5] as Excel.Range).Text.ToString()
-                        && (yestdaySheet.Cells[j, 6] as Excel.Range).Text.ToString() == (todaySheet.Cells[i, 6] as Excel.Range).Text.ToString())
+                    if (yestdayExcelData[j, 0] == todayExcelData[i, 0]
+                        && yestdayExcelData[j, 1] == todayExcelData[i, 1] 
+                        && yestdayExcelData[j, 2] == todayExcelData[i, 2] 
+                        && yestdayExcelData[j, 4] == todayExcelData[i, 4]
+                        && yestdayExcelData[j, 5]  == todayExcelData[i, 5] )
                     {
-                        if ((yestdaySheet.Cells[j, 12] as Excel.Range).Text.ToString() != (todaySheet.Cells[i, 12] as Excel.Range).Text.ToString())
+                        if (yestdayExcelData[j, 11] != todayExcelData[i, 11])
                         {
-                            if (!projComparedList.Contains((todaySheet.Cells[i, 1] as Excel.Range).Text.ToString()))
-                                projComparedList.Add((todaySheet.Cells[i, 1] as Excel.Range).Text.ToString());
+                            if (!projComparedList.Contains(todayExcelData[i, 0]))
+                                projComparedList.Add(todayExcelData[i, 0]);
                             int k = 1;
                             for (; k <= 13; k++)
                             {
