@@ -19,6 +19,8 @@ namespace web2Excel
 
     public delegate void UpdateProjCount(int value);
 
+    public delegate void UpdateProgressInfo(string strPro);
+
     public partial class Form1 : Form
     {
         private string strTodayFileName = DateTime.Now.ToString("yyyyMMdd") + ".xlsx";
@@ -147,6 +149,15 @@ namespace web2Excel
         }
 
         /// <summary>
+        /// 更新当前执行任务名称
+        /// </summary>
+        /// <param name="strProgress"></param>
+        private void UpdateProgressInfo(string strProgress)
+        {
+            this.Text = strProgress;
+        }
+
+        /// <summary>
         /// 修改控件可用性
         /// </summary>
         /// <param name="status"></param>
@@ -189,14 +200,14 @@ namespace web2Excel
         {
             try
             {
-                EnableSetting(false);
-                this.Text = "数据对比中。。。";
+                EnableSetting(false);                
                 string strResult = "对比完成";
 
                 List<string> projComparedList = new List<string>();
 
                 ExcelInfo.updateItemCount = new UpdateProjCount(this.UpdateProgressMax);
                 ExcelInfo.UpdateProgess = new UpdateBoardValue(this.UpdateProjProgress);
+                ExcelInfo.updateProgressInfo = new UpdateProgressInfo(this.UpdateProgressInfo);
                 switch (ExcelInfo.CompareData(tbToday.Text,tbYesterday.Text, dtpDeal.Text, projComparedList))
                 {
                     case ErrorInfo.YesterFileNoExists:
@@ -210,6 +221,7 @@ namespace web2Excel
                 if (rbCompare.Checked)
                 {
                     this.Text = "查看户型中。。。";
+                    this.pgbProj.Value = 0;
                     Controller ctl = new Controller(houseType, start, end);
                     ctl.updateItemCount = new UpdateProjCount(this.UpdateProgressMax);
                     ctl.UpdateProgess = new UpdateBoardValue(this.UpdateProjProgress);

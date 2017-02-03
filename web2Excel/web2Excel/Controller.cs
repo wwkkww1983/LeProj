@@ -184,7 +184,7 @@ namespace web2Excel
 
             for (int i = 0; i < row; i++)
             {
-                this.UpdateProgess(false, i);
+                this.UpdateProgess(false, i+1);
                 string strType = this.GetRoomTypeInfo(data[i, 0], data[i, 2], data[i, 4], data[i, 5]);
                 typeListByItemIdx.Add(i + 1 + 1, strType);
             }

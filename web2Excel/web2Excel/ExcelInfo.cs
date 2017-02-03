@@ -10,9 +10,10 @@ namespace web2Excel
     class ExcelInfo
     {
         private static Excel.Application app;
-        private static Excel.Workbook workBook; 
+        private static Excel.Workbook workBook;
         public static UpdateBoardValue UpdateProgess;
         public static UpdateProjCount updateItemCount;
+        public static UpdateProgressInfo updateProgressInfo;
 
         /// <summary>
         /// 在制定的文件夹创建Excel文件
@@ -25,14 +26,14 @@ namespace web2Excel
             app = new Excel.Application();
             app.Visible = false;
             workBook = app.Workbooks.Add(Nothing);
-            
+
             Excel.Worksheet worksheet = (Excel.Worksheet)workBook.Sheets[1];
             worksheet.Name = "原始数据";
-            AddExcelHead(worksheet,false);
+            AddExcelHead(worksheet, false);
 
             worksheet = (Excel.Worksheet)workBook.Sheets[2];
             worksheet.Name = "成交数据表";
-            AddExcelHead(worksheet,true);
+            AddExcelHead(worksheet, true);
 
             worksheet.SaveAs(fileName, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Excel.XlSaveAsAccessMode.xlNoChange, Type.Missing, Type.Missing, Type.Missing);
         }
@@ -42,7 +43,7 @@ namespace web2Excel
         /// </summary>
         /// <param name="worksheet">Excel表</param>
         /// <param name="hasDeal">是否显示成交日期</param>
-        private static void AddExcelHead(Excel.Worksheet worksheet,bool hasDeal)
+        private static void AddExcelHead(Excel.Worksheet worksheet, bool hasDeal)
         {
             string[] headItems = { "项目名称", "地址", "撞号（楼号）", "层高", "所在层", "房间号", "户型", "用途", "建筑面积", "套内面积", "分摊面积", "房屋状态", "预售/现售", "成交日期" };
             int idx = 1;
@@ -90,7 +91,7 @@ namespace web2Excel
         /// </summary>
         /// <param name="excelIdx">表单序号</param>
         /// <param name="houseType">数据内容</param>
-        public static void updateTypeInfo(int excelIdx, IDictionary<int,string> houseType)
+        public static void updateTypeInfo(int excelIdx, IDictionary<int, string> houseType)
         {
             Excel.Worksheet worksheet = (Excel.Worksheet)workBook.Sheets[excelIdx];
             foreach (KeyValuePair<int, string> item in houseType)
@@ -109,21 +110,23 @@ namespace web2Excel
             app = new Excel.Application();
             workBook = app.Workbooks.Open(fileName);
             Excel.Worksheet worksheet = (Excel.Worksheet)workBook.Sheets[2];
-            GetExcelData(worksheet, out dataList);           
+            GetExcelData(false, worksheet, out dataList);
         }
 
         /// <summary>
         /// 解析Excel表格数据
         /// </summary>
+        /// <param name="upFlag"></param>
         /// <param name="worksheet"></param>
         /// <param name="dataList"></param>
-        private static void GetExcelData(Excel.Worksheet worksheet, out string[,] dataList)
+        private static void GetExcelData(bool upFlag, Excel.Worksheet worksheet, out string[,] dataList)
         {
             int row = worksheet.UsedRange.Rows.Count;
             int column = worksheet.UsedRange.Columns.Count;
             dataList = new string[row - 1, column];
             for (int i = 2; i <= row; i++)
             {
+                if (upFlag) UpdateProgess(false, i);
                 for (int j = 1; j <= column; j++)
                 {
                     dataList[i - 2, j - 1] = (worksheet.Cells[i, j] as Excel.Range).Text.ToString();
@@ -160,7 +163,7 @@ namespace web2Excel
         {
             int changedIdx = 2;
 
-            if(!File.Exists(todayFileName) ) return ErrorInfo.TodayFileNoExists;
+            if (!File.Exists(todayFileName)) return ErrorInfo.TodayFileNoExists;
             if (!File.Exists(yestdayFileName)) return ErrorInfo.YesterFileNoExists;
 
             Excel.Application appExcel = new Excel.Application();
@@ -171,39 +174,48 @@ namespace web2Excel
             Excel.Worksheet yestdaySheet = yestdayExcel.Sheets[1] as Excel.Worksheet;
             Excel.Worksheet todaySheedChanged = todayExcel.Sheets[2] as Excel.Worksheet;
 
+
             int todayRow = todaySheet.UsedRange.Rows.Count;
             int yestdayRow = yestdaySheet.UsedRange.Rows.Count;
             string strHouseStatus = string.Empty;
+
+            string[,] todayExcelData, yestdayExcelData;
+            updateProgressInfo("读取今天数据。。。");
             updateItemCount(todayRow);
+            UpdateProgess(false, 0);
+            GetExcelData(true, todaySheet, out todayExcelData);
+            updateProgressInfo("读昨天记录。。。");
+            updateItemCount(yestdayRow);
+            UpdateProgess(false, 0);
+            GetExcelData(true, yestdaySheet, out yestdayExcelData);
 
-            string[,] todayExcelData,yestdayExcelData;
-            GetExcelData(todaySheet, out todayExcelData);
-            GetExcelData(yestdaySheet, out yestdayExcelData);
-
-            for (int i = 1; i < todayRow; i++)
+            updateProgressInfo("数据对比中。。。");
+            updateItemCount(todayRow);
+            for (int i = 0; i < todayRow - 1; i++)//减去第一行标题
             {
-                UpdateProgess(false, i);
-                strHouseStatus = todayExcelData[i, 11] ;
+                UpdateProgess(false, i+1);
+                strHouseStatus = todayExcelData[i, 11];
                 if (strHouseStatus != "签订中" && strHouseStatus != "已备案" && strHouseStatus != "已预告")
                     continue;//还是可售或不可售（状态没变）
-                bool findFlag = false;//0:未找到，1：已找到，2已找过
-                for (int j = Math.Max(2, i - 20); j <= yestdayRow; j++)
-                {
+                int findFlag = 0;//0:未找到，1：已找到，2已找过
+                //for (int j = Math.Max(2, i - 20); j <= yestdayRow; j++)
+                for (int j = i; j > 0 && j < yestdayRow; j--)
+                {//先往前找
                     if (yestdayExcelData[j, 0] != todayExcelData[i, 0])
                     {
-                        if (findFlag) { findFlag = false; break; }//数据已经遍历完
+                        if (findFlag >= 1) { findFlag++; break; }//数据已经遍历完
                         else continue;//还没找到数据
                     }
                     else
                     {
-                        findFlag = true;
+                        findFlag = 1;
                     }
 
                     if (yestdayExcelData[j, 0] == todayExcelData[i, 0]
-                        && yestdayExcelData[j, 1] == todayExcelData[i, 1] 
-                        && yestdayExcelData[j, 2] == todayExcelData[i, 2] 
+                        && yestdayExcelData[j, 1] == todayExcelData[i, 1]
+                        && yestdayExcelData[j, 2] == todayExcelData[i, 2]
                         && yestdayExcelData[j, 4] == todayExcelData[i, 4]
-                        && yestdayExcelData[j, 5]  == todayExcelData[i, 5] )
+                        && yestdayExcelData[j, 5] == todayExcelData[i, 5])
                     {
                         if (yestdayExcelData[j, 11] != todayExcelData[i, 11])
                         {
@@ -218,9 +230,45 @@ namespace web2Excel
                             changedIdx++;
                             todayExcel.Save();
                         }
-                        break;                    
+                        break;
                     }
-                      
+                }
+
+                if (findFlag >= 1) continue;//找到过，则不再向后找
+
+                for (int j = i + 1; j < yestdayRow - 1; j++)
+                {//再往后找
+                    if (yestdayExcelData[j, 0] != todayExcelData[i, 0])
+                    {
+                        if (findFlag >= 1) { findFlag++; break; }//数据已经遍历完
+                        else continue;//还没找到数据
+                    }
+                    else
+                    {
+                        findFlag = 1;
+                    }
+
+                    if (yestdayExcelData[j, 0] == todayExcelData[i, 0]
+                        && yestdayExcelData[j, 1] == todayExcelData[i, 1]
+                        && yestdayExcelData[j, 2] == todayExcelData[i, 2]
+                        && yestdayExcelData[j, 4] == todayExcelData[i, 4]
+                        && yestdayExcelData[j, 5] == todayExcelData[i, 5])
+                    {
+                        if (yestdayExcelData[j, 11] != todayExcelData[i, 11])
+                        {
+                            if (!projComparedList.Contains(todayExcelData[i, 0]))
+                                projComparedList.Add(todayExcelData[i, 0]);
+                            int k = 1;
+                            for (; k <= 13; k++)
+                            {
+                                todaySheedChanged.Cells[changedIdx, k] = todaySheet.Cells[i, k];
+                            }
+                            todaySheedChanged.Cells[changedIdx, k] = dealDate;
+                            changedIdx++;
+                            todayExcel.Save();
+                        }
+                        break;
+                    }
                 }
             }
             todayExcel.Save();
