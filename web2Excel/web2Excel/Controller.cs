@@ -65,6 +65,9 @@ namespace web2Excel
                     }
                 }
                 if (pageIdx >= pageCount || pageIdx >= pageEnd) break;
+                //每栋楼抓完后保存数据
+                if( pageIdx % 30 ==0 )//每30页保存一次
+                    ExcelInfo.SaveInfo();
 
                 //开始下一轮循环
                 Dictionary<string,string> nextKey = new Dictionary<string,string> ();
@@ -116,8 +119,8 @@ namespace web2Excel
             {
                 itemInfo.BlockNumber = buildingItem.Key;
                 this.ExplainThirdDetail(System.Web.HttpUtility.HtmlDecode(buildingItem.Value), itemInfo);
-                //每栋楼抓完后保存数据
-                ExcelInfo.SaveInfo();
+                ////每栋楼抓完后保存数据
+                //ExcelInfo.SaveInfo();
             }
         }
 

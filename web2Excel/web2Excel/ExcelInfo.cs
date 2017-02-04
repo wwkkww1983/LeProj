@@ -148,6 +148,7 @@ namespace web2Excel
         /// </summary>
         public static void FinishExcel()
         {
+            SaveInfo();
             workBook.Close(true);
             app.Quit();
         }
