@@ -228,7 +228,7 @@ namespace web2Excel
                                 int k = 1;
                                 for (; k <= 13; k++)
                                 {
-                                    todaySheedChanged.Cells[changedIdx, k] = todaySheet.Cells[i, k];
+                                    todaySheedChanged.Cells[changedIdx, k] = todayExcelData[i, k - 1];
                                 }
                                 todaySheedChanged.Cells[changedIdx, k] = dealDate;
                                 changedIdx++;

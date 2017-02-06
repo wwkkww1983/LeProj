@@ -199,7 +199,7 @@ namespace web2Excel
             if (infoList == null)
                 infoList = new List<Content>();
 
-            string strPattern = @"<td>\S*?房</td>[\s\S]*?</tr>";
+            string strPattern = @"<tr class=""ListRow2""[\s\S]*?</tr>";
             Regex regex = new Regex(strPattern);
             if (!regex.IsMatch(strHtml)) return;
 
