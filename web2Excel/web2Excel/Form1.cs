@@ -208,7 +208,8 @@ namespace web2Excel
                 ExcelInfo.updateItemCount = new UpdateProjCount(this.UpdateProgressMax);
                 ExcelInfo.UpdateProgess = new UpdateBoardValue(this.UpdateProjProgress);
                 ExcelInfo.updateProgressInfo = new UpdateProgressInfo(this.UpdateProgressInfo);
-                switch (ExcelInfo.CompareData(tbToday.Text,tbYesterday.Text, dtpDeal.Text, projComparedList))
+                string strTime = dtpDeal.Value.ToString("yyyy年MM月dd日");
+                switch (ExcelInfo.CompareData(tbToday.Text, tbYesterday.Text, strTime, projComparedList))
                 {
                     case ErrorInfo.YesterFileNoExists:
                         strResult = "昨天的文件不存在";

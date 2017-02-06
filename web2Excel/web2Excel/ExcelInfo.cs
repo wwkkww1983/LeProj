@@ -194,82 +194,91 @@ namespace web2Excel
             updateItemCount(todayRow);
             for (int i = 0; i < todayRow - 1; i++)//减去第一行标题
             {
-                UpdateProgess(false, i+1);
-                strHouseStatus = todayExcelData[i, 11];
-                if (strHouseStatus != "签订中" && strHouseStatus != "已备案" && strHouseStatus != "已预告")
-                    continue;//还是可售或不可售（状态没变）
-                int findFlag = 0;//0:未找到，1：已找到，2已找过
-                //for (int j = Math.Max(2, i - 20); j <= yestdayRow; j++)
-                for (int j = i; j > 0 && j < yestdayRow; j--)
-                {//先往前找
-                    if (yestdayExcelData[j, 0] != todayExcelData[i, 0])
-                    {
-                        if (findFlag >= 1) { findFlag++; break; }//数据已经遍历完
-                        else continue;//还没找到数据
-                    }
-                    else
-                    {
-                        findFlag = 1;
-                    }
-
-                    if (yestdayExcelData[j, 0] == todayExcelData[i, 0]
-                        && yestdayExcelData[j, 1] == todayExcelData[i, 1]
-                        && yestdayExcelData[j, 2] == todayExcelData[i, 2]
-                        && yestdayExcelData[j, 4] == todayExcelData[i, 4]
-                        && yestdayExcelData[j, 5] == todayExcelData[i, 5])
-                    {
-                        if (yestdayExcelData[j, 11] != todayExcelData[i, 11])
+                int j = 0, jFlag = 0; ;
+                try
+                {
+                    UpdateProgess(false, i + 1);
+                    strHouseStatus = todayExcelData[i, 11];
+                    if (strHouseStatus != "签订中" && strHouseStatus != "已备案" && strHouseStatus != "已预告")
+                        continue;//还是可售或不可售（状态没变）
+                    int findFlag = 0;//0:未找到，1：已找到，2已找过
+                    //for (int j = Math.Max(2, i - 20); j <= yestdayRow; j++)
+                    for (j = Math.Min(i, yestdayRow - 2); j > 0; j--)
+                    {//先往前找
+                        if (yestdayExcelData[j, 0] != todayExcelData[i, 0])
                         {
-                            if (!projComparedList.Contains(todayExcelData[i, 0]))
-                                projComparedList.Add(todayExcelData[i, 0]);
-                            int k = 1;
-                            for (; k <= 13; k++)
-                            {
-                                todaySheedChanged.Cells[changedIdx, k] = todaySheet.Cells[i, k];
-                            }
-                            todaySheedChanged.Cells[changedIdx, k] = dealDate;
-                            changedIdx++;
-                            todayExcel.Save();
+                            if (findFlag >= 1) { findFlag++; break; }//数据已经遍历完
+                            else continue;//还没找到数据
                         }
-                        break;
+                        else
+                        {
+                            findFlag = 1;
+                        }
+
+                        if (yestdayExcelData[j, 0] == todayExcelData[i, 0]
+                            && yestdayExcelData[j, 1] == todayExcelData[i, 1]
+                            && yestdayExcelData[j, 2] == todayExcelData[i, 2]
+                            && yestdayExcelData[j, 4] == todayExcelData[i, 4]
+                            && yestdayExcelData[j, 5] == todayExcelData[i, 5])
+                        {
+                            if (yestdayExcelData[j, 11] != todayExcelData[i, 11])
+                            {
+                                if (!projComparedList.Contains(todayExcelData[i, 0]))
+                                    projComparedList.Add(todayExcelData[i, 0]);
+                                int k = 1;
+                                for (; k <= 13; k++)
+                                {
+                                    todaySheedChanged.Cells[changedIdx, k] = todaySheet.Cells[i, k];
+                                }
+                                todaySheedChanged.Cells[changedIdx, k] = dealDate;
+                                changedIdx++;
+                                todayExcel.Save();
+                            }
+                            break;
+                        }
                     }
+                    jFlag = 1;
+                    if (findFlag >= 1) continue;//找到过，则不再向后找
+                    jFlag = 2;
+                    for (j = Math.Min(i + 1, yestdayRow - 2); j < yestdayRow - 1; j++)
+                    {//再往后找
+                        if (yestdayExcelData[j, 0] != todayExcelData[i, 0])
+                        {
+                            if (findFlag >= 1) { findFlag++; break; }//数据已经遍历完
+                            else continue;//还没找到数据
+                        }
+                        else
+                        {
+                            findFlag = 1;
+                        }
+
+                        if (yestdayExcelData[j, 0] == todayExcelData[i, 0]
+                            && yestdayExcelData[j, 1] == todayExcelData[i, 1]
+                            && yestdayExcelData[j, 2] == todayExcelData[i, 2]
+                            && yestdayExcelData[j, 4] == todayExcelData[i, 4]
+                            && yestdayExcelData[j, 5] == todayExcelData[i, 5])
+                        {
+                            if (yestdayExcelData[j, 11] != todayExcelData[i, 11])
+                            {
+                                if (!projComparedList.Contains(todayExcelData[i, 0]))
+                                    projComparedList.Add(todayExcelData[i, 0]);
+                                int k = 1;
+                                for (; k <= 13; k++)
+                                {
+                                    todaySheedChanged.Cells[changedIdx, k] = todayExcelData[i, k-1];
+                                }
+                                todaySheedChanged.Cells[changedIdx, k] = dealDate;
+                                changedIdx++;
+                                todayExcel.Save();
+                            }
+                            break;
+                        }
+                    }
+                    jFlag = 3;
                 }
-
-                if (findFlag >= 1) continue;//找到过，则不再向后找
-
-                for (int j = i + 1; j < yestdayRow - 1; j++)
-                {//再往后找
-                    if (yestdayExcelData[j, 0] != todayExcelData[i, 0])
-                    {
-                        if (findFlag >= 1) { findFlag++; break; }//数据已经遍历完
-                        else continue;//还没找到数据
-                    }
-                    else
-                    {
-                        findFlag = 1;
-                    }
-
-                    if (yestdayExcelData[j, 0] == todayExcelData[i, 0]
-                        && yestdayExcelData[j, 1] == todayExcelData[i, 1]
-                        && yestdayExcelData[j, 2] == todayExcelData[i, 2]
-                        && yestdayExcelData[j, 4] == todayExcelData[i, 4]
-                        && yestdayExcelData[j, 5] == todayExcelData[i, 5])
-                    {
-                        if (yestdayExcelData[j, 11] != todayExcelData[i, 11])
-                        {
-                            if (!projComparedList.Contains(todayExcelData[i, 0]))
-                                projComparedList.Add(todayExcelData[i, 0]);
-                            int k = 1;
-                            for (; k <= 13; k++)
-                            {
-                                todaySheedChanged.Cells[changedIdx, k] = todaySheet.Cells[i, k];
-                            }
-                            todaySheedChanged.Cells[changedIdx, k] = dealDate;
-                            changedIdx++;
-                            todayExcel.Save();
-                        }
-                        break;
-                    }
+                catch (Exception ex)
+                {
+                    throw new Exception(string.Format("i={0},j={1},jFlag={2},cIdx={3},tr={4},yr={5},error={6},code={7}", i, j, jFlag, changedIdx, todayRow, yestdayRow, ex.Message, ex.Source));
                 }
             }
             todayExcel.Save();
