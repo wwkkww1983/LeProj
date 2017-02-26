@@ -6,7 +6,7 @@ using System.IO;
 using System.Collections;
 using System.Data.SQLite;
 
-namespace SimuProteus
+namespace CamInter
 {
     /// <summary>
     /// SQLiteHelper is a utility class similar to "SQLHelper" in MS

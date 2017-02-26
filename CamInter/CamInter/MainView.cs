@@ -25,19 +25,19 @@ namespace CamInter
 
         private void FocusToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MidRing viewShow = new MidRing(EnumType.Focus);
+            MidRing viewShow = new MidRing(enumProductType.Focus);
             viewShow.ShowDialog();
         }
 
         private void AdapterToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MidRing viewShow = new MidRing(EnumType.Adapter);
+            MidRing viewShow = new MidRing(enumProductType.Adapter);
             viewShow.ShowDialog();
         }
 
         private void ExtendToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MidRing viewShow = new MidRing(EnumType.Extend);
+            MidRing viewShow = new MidRing(enumProductType.Extend);
             viewShow.ShowDialog();
         }
     }

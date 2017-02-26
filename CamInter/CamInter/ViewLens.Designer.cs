@@ -35,7 +35,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.tbFocusAft = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.tbInter = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.tbWeight = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -46,6 +45,9 @@
             this.tbDistort = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.cbInter = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -104,13 +106,6 @@
             this.label4.Size = new System.Drawing.Size(37, 15);
             this.label4.TabIndex = 0;
             this.label4.Text = "接口";
-            // 
-            // tbInter
-            // 
-            this.tbInter.Location = new System.Drawing.Point(66, 96);
-            this.tbInter.Name = "tbInter";
-            this.tbInter.Size = new System.Drawing.Size(100, 25);
-            this.tbInter.TabIndex = 3;
             // 
             // label5
             // 
@@ -178,7 +173,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(116, 178);
+            this.btnSave.Location = new System.Drawing.Point(116, 207);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 9;
@@ -188,7 +183,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(244, 178);
+            this.btnCancel.Location = new System.Drawing.Point(244, 207);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 10;
@@ -196,11 +191,36 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(8, 160);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(52, 15);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "序列号";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(66, 157);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(318, 25);
+            this.textBox1.TabIndex = 4;
+            // 
+            // cbInter
+            // 
+            this.cbInter.FormattingEnabled = true;
+            this.cbInter.Location = new System.Drawing.Point(66, 96);
+            this.cbInter.Name = "cbInter";
+            this.cbInter.Size = new System.Drawing.Size(100, 23);
+            this.cbInter.TabIndex = 11;
+            // 
             // ViewLens
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(419, 223);
+            this.ClientSize = new System.Drawing.Size(404, 255);
+            this.Controls.Add(this.cbInter);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.tbDistort);
@@ -209,9 +229,10 @@
             this.Controls.Add(this.label7);
             this.Controls.Add(this.tbFreq);
             this.Controls.Add(this.label6);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.label9);
             this.Controls.Add(this.tbWeight);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.tbInter);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.tbFocusAft);
             this.Controls.Add(this.label3);
@@ -235,7 +256,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbFocusAft;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox tbInter;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox tbWeight;
         private System.Windows.Forms.Label label6;
@@ -246,5 +266,8 @@
         private System.Windows.Forms.TextBox tbDistort;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ComboBox cbInter;
     }
 }

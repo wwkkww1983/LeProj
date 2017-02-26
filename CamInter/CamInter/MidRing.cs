@@ -12,8 +12,8 @@ namespace CamInter
 {
     public partial class MidRing : Form
     {
-        private EnumType typeName;
-        public MidRing(EnumType type)
+        private enumProductType typeName;
+        public MidRing(enumProductType type)
         {
             this.typeName = type;
             InitializeComponent();
@@ -24,12 +24,17 @@ namespace CamInter
             string strTypeName = string.Empty;
             switch (this.typeName)
             {
-                case EnumType.Focus: strTypeName = Constants.FOCUS; break;
-                case EnumType.Adapter: strTypeName = Constants.ADAPTER; break;
-                case EnumType.Extend: strTypeName = Constants.EXTEND; break;
+                case enumProductType.Focus: strTypeName = Constants.FOCUS; break;
+                case enumProductType.Adapter: strTypeName = Constants.ADAPTER; break;
+                case enumProductType.Extend: strTypeName = Constants.EXTEND; break;
                 default: MessageBox.Show("参数异常"); return;
             }
             this.Text = strTypeName;
+
+            if (this.typeName == enumProductType.Extend)
+            {
+                this.tbInterB.Enabled = false;
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

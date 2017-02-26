@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace CamInter
 {
     /// <summary>
-    /// 中间环类型
+    /// 产品类型
     /// </summary>
-    public enum EnumType
+    public enum enumProductType
     {
         /// <summary>
         /// 镜头
