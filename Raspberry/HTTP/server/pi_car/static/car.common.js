@@ -1,13 +1,13 @@
-var WH;
-if (!!WH && (typeof WH != 'object' || WH.name)) throw new Error("namespace already exists!");
-WH = {};
+var Suoxd;
+if (!!Suoxd && (typeof Suoxd != 'object' || Suoxd.name)) throw new Error("namespace already exists!");
+Suoxd = {};
 
-WH.name = 'wangheng\'s car control project!';
-WH.author="wangheng";
-WH.version="0.1";
+Suoxd.name = 'Suo Xudong\'s car control project!';
+Suoxd.author = "Suo Xudong";
+Suoxd.version = "0.0.1";
 (function($) {
 
-	WH.Common = {
+    Suoxd.Common = {
 		ajaxRequest : _ajaxRequest
 	};
 

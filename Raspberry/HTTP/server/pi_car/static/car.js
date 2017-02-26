@@ -1,4 +1,4 @@
-WH.Init=function(){
+Suoxd.Init = function () {
 	$(".button_ctl").each(function(){
 		$(this).click(function(){
 			data={
@@ -6,7 +6,7 @@ WH.Init=function(){
 			};
 			console.log(data);
 
-			WH.Common.ajaxRequest("/cmd",data,function(){
+			Suoxd.Common.ajaxRequest("/cmd", data, function () {
 				console.log("success");
 			});
 		});
