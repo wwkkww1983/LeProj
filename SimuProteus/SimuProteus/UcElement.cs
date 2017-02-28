@@ -130,6 +130,17 @@ namespace SimuProteus
         {
             this.RemoveElement(this.ViewInfo.ID);
         }
+
+        private void UcElement_DoubleClick(object sender, EventArgs e)
+        {
+            FormFootParam formFoot = new FormFootParam(this.ViewInfo);
+            formFoot.ShowDialog();
+        }
+
+        private void picbElement_DoubleClick(object sender, EventArgs e)
+        {
+            this.UcElement_DoubleClick(sender, e);
+        }
         
     }
 }

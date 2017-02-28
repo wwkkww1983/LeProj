@@ -58,6 +58,7 @@ namespace SimuProteus
             LineFoot info = new LineFoot();
 
             info.Idx = Convert.ToInt32(dr["lineIdx"]);
+            info.PinsType = (enumPinsType)Enum.Parse(typeof(enumPinsType), dr["pinsType"].ToString());
             info.Name = dr["name"].ToString();
             info.LocX = Convert.ToInt32(dr["locX"]);
             info.LocY = Convert.ToInt32(dr["locY"]);

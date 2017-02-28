@@ -119,6 +119,7 @@ namespace SimuProteus
     public struct LineFoot
     {
         public int Idx;
+        public enumPinsType PinsType;
         public int LocX;
         public int LocY;
         public Color Color;

@@ -43,6 +43,7 @@
             this.picbElement.Size = new System.Drawing.Size(100, 50);
             this.picbElement.TabIndex = 0;
             this.picbElement.TabStop = false;
+            this.picbElement.DoubleClick += new System.EventHandler(this.picbElement_DoubleClick);
             this.picbElement.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picbElement_MouseDown);
             this.picbElement.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picbElement_MouseMove);
             this.picbElement.MouseUp += new System.Windows.Forms.MouseEventHandler(this.picbElement_MouseUp);
@@ -57,7 +58,7 @@
             // delToolStripMenuItem
             // 
             this.delToolStripMenuItem.Name = "delToolStripMenuItem";
-            this.delToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.delToolStripMenuItem.Size = new System.Drawing.Size(108, 24);
             this.delToolStripMenuItem.Text = "删除";
             this.delToolStripMenuItem.Click += new System.EventHandler(this.delToolStripMenuItem_Click);
             // 
@@ -68,6 +69,7 @@
             this.ContextMenuStrip = this.contextMenuStrip1;
             this.Controls.Add(this.picbElement);
             this.Name = "UcElement";
+            this.DoubleClick += new System.EventHandler(this.UcElement_DoubleClick);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.UcElement_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UcElement_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.UcElement_MouseUp);

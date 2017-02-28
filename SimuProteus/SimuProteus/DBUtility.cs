@@ -74,6 +74,7 @@ namespace SimuProteus
             tableList.Add(@"create table lineFoot (
                                lineIdx INTEGER PRIMARY KEY AUTOINCREMENT,
                                footType int,
+                               pinsType int,
                                component int,
                                name nvarchar(20),
                                locX int,
@@ -306,8 +307,8 @@ namespace SimuProteus
             string strSql = string.Empty;
             foreach (LineFoot item in footList)
             {
-                strSql += string.Format("insert into lineFoot (component,footType,name,locX,locY,color) values ({0},{1},'{2}',{3},{4},{5});",
-                    compIdx, (int)compType, item.Name == null ? string.Empty : item.Name, item.LocX, item.LocY, item.Color == null ? 0 : item.Color.ToArgb());
+                strSql += string.Format("insert into lineFoot (component,footType,pinsType,name,locX,locY,color) values ({0},{1},{2},'{3}',{4},{5},{6});",
+                    compIdx, (int)compType,(int)item.PinsType, item.Name == null ? string.Empty : item.Name, item.LocX, item.LocY, item.Color == null ? 0 : item.Color.ToArgb());
             }
             return footList.Count == SQLiteHelper.ExecuteNonQuery(STR_CONNECTION, strSql);
         }

@@ -45,9 +45,6 @@ namespace SimuProteus
 
     }
 
-    /// <summary>
-    /// 组件类型
-    /// </summary>
     public enum enumComponent
     {
         /// <summary>
@@ -71,6 +68,9 @@ namespace SimuProteus
         Land
     }
 
+    /// <summary>
+    /// 组件类型
+    /// </summary>
     public enum enumComponentType
     {
         /// <summary>
@@ -81,5 +81,17 @@ namespace SimuProteus
         /// 一般元器件
         /// </summary>
         NormalComponent
+    }
+
+    /// <summary>
+    /// 引脚类型
+    /// </summary>
+    public enum enumPinsType
+    {
+        Input,
+        Output,
+        Power,
+        OD,
+        OC
     }
 }
