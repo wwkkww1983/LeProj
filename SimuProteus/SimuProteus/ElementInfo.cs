@@ -41,6 +41,15 @@ namespace SimuProteus
         }
 
         /// <summary>
+        /// 组件编号
+        /// </summary>
+        public int Component
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// 索引序号
         /// </summary>
         public int ID
@@ -153,5 +162,18 @@ namespace SimuProteus
         public ProjectInfo Project;
         public List<ElementLine> linesList;
         public List<ElementInfo> elementList;
+    }
+
+    /// <summary>
+    /// 串口信息
+    /// </summary>
+    public struct SerialInfo
+    {
+        public string PortName;
+        public int BaudRate;
+        public int Parity;
+        public int DataBits;
+        public int StopBits;
+        public int TimeOut;
     }
 }

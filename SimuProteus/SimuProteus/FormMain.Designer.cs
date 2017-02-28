@@ -41,6 +41,7 @@
             this.readToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.writeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ProjToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.serialStatusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnBoard.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -96,7 +97,7 @@
             // hC244ToolStripMenuItem
             // 
             this.hC244ToolStripMenuItem.Name = "hC244ToolStripMenuItem";
-            this.hC244ToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.hC244ToolStripMenuItem.Size = new System.Drawing.Size(145, 24);
             this.hC244ToolStripMenuItem.Tag = "1";
             this.hC244ToolStripMenuItem.Text = "74HC244";
             this.hC244ToolStripMenuItem.Click += new System.EventHandler(this.hC244ToolStripMenuItem_Click);
@@ -104,7 +105,7 @@
             // lS221ToolStripMenuItem
             // 
             this.lS221ToolStripMenuItem.Name = "lS221ToolStripMenuItem";
-            this.lS221ToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.lS221ToolStripMenuItem.Size = new System.Drawing.Size(145, 24);
             this.lS221ToolStripMenuItem.Tag = "2";
             this.lS221ToolStripMenuItem.Text = "74LS221";
             this.lS221ToolStripMenuItem.Click += new System.EventHandler(this.lS221ToolStripMenuItem_Click);
@@ -119,6 +120,7 @@
             // SerialToolStripMenuItem
             // 
             this.SerialToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.serialStatusToolStripMenuItem,
             this.readToolStripMenuItem,
             this.writeToolStripMenuItem});
             this.SerialToolStripMenuItem.Name = "SerialToolStripMenuItem";
@@ -128,14 +130,14 @@
             // readToolStripMenuItem
             // 
             this.readToolStripMenuItem.Name = "readToolStripMenuItem";
-            this.readToolStripMenuItem.Size = new System.Drawing.Size(108, 24);
+            this.readToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.readToolStripMenuItem.Text = "读取";
             this.readToolStripMenuItem.Click += new System.EventHandler(this.readToolStripMenuItem_Click);
             // 
             // writeToolStripMenuItem
             // 
             this.writeToolStripMenuItem.Name = "writeToolStripMenuItem";
-            this.writeToolStripMenuItem.Size = new System.Drawing.Size(108, 24);
+            this.writeToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.writeToolStripMenuItem.Text = "写入";
             this.writeToolStripMenuItem.Click += new System.EventHandler(this.writeToolStripMenuItem_Click);
             // 
@@ -144,6 +146,13 @@
             this.ProjToolStripMenuItem.Name = "ProjToolStripMenuItem";
             this.ProjToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
             this.ProjToolStripMenuItem.Text = "历史项目";
+            // 
+            // serialStatusToolStripMenuItem
+            // 
+            this.serialStatusToolStripMenuItem.Name = "serialStatusToolStripMenuItem";
+            this.serialStatusToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.serialStatusToolStripMenuItem.Text = "串口设置";
+            this.serialStatusToolStripMenuItem.Click += new System.EventHandler(this.serialStatusToolStripMenuItem_Click);
             // 
             // FormMain
             // 
@@ -180,6 +189,7 @@
         private System.Windows.Forms.ToolStripMenuItem writeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ProjToolStripMenuItem;
         private System.Windows.Forms.Label lbProjName;
+        private System.Windows.Forms.ToolStripMenuItem serialStatusToolStripMenuItem;
     }
 }
 

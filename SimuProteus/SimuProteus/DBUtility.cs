@@ -32,6 +32,14 @@ namespace SimuProteus
         private List<string> CreateTableStruct()
         {
             List<string> tableList = new List<string>();
+            //串口信息
+            tableList.Add(@"create table serialInfo(
+                               portName varchar(10),
+                               baudRate int,
+                               parity int,
+                               databits int,
+                               stopbits int,
+                               timeOut int);");
             //组件的基础信息，新拖动到面板时展示的样式
             tableList.Add(@"create table components (
                                itemId INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -39,8 +47,7 @@ namespace SimuProteus
                                width int,
                                height int,
                                backColor int,
-                               backImage varchar(100)
-                               );");
+                               backImage varchar(100));");
             //新建的项目
             tableList.Add(@"create table projects(
                                id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -90,6 +97,15 @@ namespace SimuProteus
 
         private void CreateModelData()
         {
+            this.InsertSerialInfo(new SerialInfo()
+            {
+                PortName = "COM1",
+                BaudRate = 9600,
+                DataBits = 1,
+                Parity = 1,
+                StopBits = 1,
+                TimeOut = 200
+            });
             ElementInfo info = new ElementInfo();
             //箭头
             info.Name = enumComponent.NONE.ToString ();
@@ -174,6 +190,31 @@ namespace SimuProteus
             });
         }
 
+        public void InsertSerialInfo(SerialInfo info)
+        {
+            string strSql = string.Format("insert into serialInfo (portName,baudRate,parity,databits,stopbits,timeOut) values ('{0}',{1},{2},{3},{4},{5})",
+                info.PortName, info.BaudRate, info.Parity, info.DataBits, info.StopBits, info.TimeOut);
+            SQLiteHelper.ExecuteNonQuery(STR_CONNECTION, strSql);
+        }
+
+        /// <summary>
+        /// 获取串口信息
+        /// </summary>
+        /// <returns></returns>
+        public SerialInfo GetSerialInfo()
+        {
+            string strSql = "select * from serialInfo";
+            DataSet dsInfo = SQLiteHelper.ExecuteDataSet(STR_CONNECTION, strSql, null);
+            return code.DecodeSerialInfo(dsInfo);
+        }
+
+        public bool UpdateSerialInfo(SerialInfo info)
+        {
+            string strSql = string.Format("update serialInfo set portName='{0}',baudRate={1},parity={2},databits={3},stopbits={4},timeOut={5}",
+                info.PortName, info.BaudRate, info.Parity, info.DataBits, info.StopBits, info.TimeOut);
+            return SQLiteHelper.ExecuteNonQuery(STR_CONNECTION, strSql) > 0;
+        }
+
         /// <summary>
         /// 获取当前所有元器件
         /// </summary>
@@ -195,12 +236,42 @@ namespace SimuProteus
             return code.DecodeProjectsByDb(ds);
         }
 
+        public ProjectDetails getProjectDetail(int projIdx)
+        {
+            ProjectDetails project = new ProjectDetails();
+
+            string strSql = string.Format( "select * from projects where id={0}",projIdx);
+            DataSet ds = SQLiteHelper.ExecuteDataSet(STR_CONNECTION, strSql,null);
+            project.Project = code.DecodeOneProjectByDb(ds.Tables[0].Rows[0]);
+
+            strSql = string.Format("select * from componentView where projIdx={0}", projIdx);
+            DataSet dscomps = SQLiteHelper.ExecuteDataSet(STR_CONNECTION, strSql, null);
+            strSql = string.Format("select * from lineFoot where footType={0}", (int)enumComponentType.NormalComponent);
+            DataSet dsFoots = SQLiteHelper.ExecuteDataSet(STR_CONNECTION, strSql,null);
+            project.elementList = code.DecodeElementsByDb(dscomps,dsFoots,false);
+
+            strSql = string.Format("select * from lineLink where project={0}", projIdx);
+            DataSet dsLines = SQLiteHelper.ExecuteDataSet(STR_CONNECTION, strSql, null);
+            project.linesList = code.DecodeElementLineByDb(dsLines);
+
+            return project;
+            
+        }
+
         public List<LineFoot> GetChipFoots(int chipIdx)
         {
             string strSql = string.Format("select * from lineFoot where footType={0} and component={1}", (int)enumComponentType.Chips, chipIdx);
             DataSet dsFoots = SQLiteHelper.ExecuteDataSet(STR_CONNECTION, strSql, null);
 
             return code.DecodeCompFootsByDb(dsFoots.Tables[0], chipIdx);
+        }
+
+        public bool RemoveOneProject(int projIdx)
+        {
+            string strSql = string.Format(@"delete from projects where id={0};
+                               delete from componentView where projIdx={0};
+                               delete from lineLink where project={0};",projIdx);
+            return SQLiteHelper.ExecuteNonQuery(STR_CONNECTION, strSql) > 0;
         }
 
         public bool CheckProjectNameExists(string projName)
@@ -285,7 +356,7 @@ namespace SimuProteus
             {
                 strSql += string.Format( @"insert into componentView (projIdx,component,name,locX,locY,width,height,backColor,backImage) 
                                         values ({0},{1},'{2}',{3},{4},{5},{6},{7},'{8}');",
-                             projIdx, item.ID, item.Name, item.Location.X, item.Location.Y, item.Size.Width, item.Size.Height, item.BackColor.ToArgb(), item.BackImage );
+                             projIdx, item.Component, item.Name, item.Location.X, item.Location.Y, item.Size.Width, item.Size.Height, item.BackColor.ToArgb(), item.BackImage );
             } 
             objIdx = SQLiteHelper.ExecuteNonQuery(STR_CONNECTION, strSql);
             if(Convert.ToInt32(objIdx) != project.elementList.Count) 

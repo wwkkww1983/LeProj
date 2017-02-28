@@ -95,6 +95,10 @@ namespace web2Excel
             {
                 Shutdown.ShutDown();
             }
+            else
+            {
+                MessageBox.Show("信息获取完毕");
+            }
         }
 
         /// <summary>

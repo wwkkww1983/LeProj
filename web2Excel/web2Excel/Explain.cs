@@ -179,12 +179,12 @@ namespace web2Excel
             MatchCollection matchList = regex.Matches(strHtml);
             foreach (Match item in matchList)
             {
-                start1Idx = item.Value.IndexOf("<td>");
-                end1Idx = item.Value.IndexOf("</td>");
+                start1Idx = item.Value.IndexOf("<span>");
+                end1Idx = item.Value.IndexOf("</span>");
                 start2Idx = item.Value.LastIndexOf("href=");
                 end2Idx = item.Value.LastIndexOf("target=");
                 
-                floorList.Add(item.Value.Substring(start1Idx + 4, end1Idx - start1Idx - 4), item.Value.Substring(start2Idx + 6, end2Idx - start2Idx - 6 - 2));
+                floorList.Add(item.Value.Substring(start1Idx + 6, end1Idx - start1Idx - 6), item.Value.Substring(start2Idx + 6, end2Idx - start2Idx - 6 - 2));
             }
         }
 

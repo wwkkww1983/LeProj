@@ -15,20 +15,21 @@ namespace SimuProteus
         #region 初始化
         private int elementIdx = 0;
         private enumComponent currentSelectedComponent = enumComponent.NONE;
-        private int currentChips = -1;
         private Point clickPositionForLine ;
+        private SerialCom serial = new SerialCom();
+        DBUtility dbHandler = new DBUtility();
         List<ElementInfo> elementList = null;
         List<ElementLine> createLinePoint = new List<ElementLine>(2);
         ProjectDetails currentBoardInfo = new ProjectDetails() { 
             Project=new ProjectInfo (), 
             elementList = new List<ElementInfo> (), 
-            linesList = new List<ElementLine> () };
+            linesList = new List<ElementLine> () 
+        };
 
         public FormMain()
         {
             InitializeComponent();
 
-            DBUtility dbHandler = new DBUtility();
             //dbHandler.InitialTable();
             this.elementList = dbHandler.GetBaseComponents();
             int idx = 0;
@@ -105,38 +106,12 @@ namespace SimuProteus
             };
             eleOne.otherFoot = footIdx;
             eleOther.otherFoot = eleOne.oneFoot;
-            if (eleOne.LocX == locX || eleOne.LocY == locY)
-            {//在同一个水平/竖直方向上
-                eleOne.LocOtherX = locX;
-                eleOne.LocOtherY = locY;
-            }
-            else
-            {//统一参考坐标系
-                int xLeft, yLeft, xRight, yRihgt;
-                if (eleOne.LocY < locY)
-                {//下面点为参考点
-                    xLeft = eleOne.LocX; yLeft = eleOne.LocY;
-                    xRight = locX; yRihgt = locY;
-                }
-                else
-                {
-                    xLeft = locX; yLeft = locY;
-                    xRight = eleOne.LocX; yRihgt = eleOne.LocY;
-                }
-                if (((xRight-xLeft) * (clickPositionForLine.Y - yLeft) - (yRihgt - yLeft) * (clickPositionForLine.X - xLeft)) > 0)
-                {//左边
-                    eleOne.LocOtherX = Math.Min(eleOne.LocX, locX);
-                    //绘图坐标系跟直角坐标是沿X轴对称的，所以斜率是反的但左右不变
-                    eleOne.LocOtherY = (eleOne.LocY * 0.1 - locY * 0.1) / (eleOne.LocX * 0.1 - locX * 0.1) > 0 ? Math.Max(eleOne.LocY, locY) : Math.Min(eleOne.LocY, locY);
-                }
-                else
-                {
-                    eleOne.LocOtherX = Math.Max(eleOne.LocX, locX);
-                    eleOne.LocOtherY = (eleOne.LocY * 0.1 - locY * 0.1) / (eleOne.LocX * 0.1 - locX * 0.1) < 0 ? Math.Max(eleOne.LocY, locY) : Math.Min(eleOne.LocY, locY);
-                }
-            }
-            eleOther.LocOtherX = eleOne.LocOtherX;
-            eleOther.LocOtherY = eleOne.LocOtherY;
+            int midX,midY;
+            this.CalcTurnLocation(eleOne.LocX, eleOne.LocY, locX, locY, out midX, out midY);
+            eleOne.LocOtherX = midX;
+            eleOne.LocOtherY = midY;
+            eleOther.LocOtherX = midX;
+            eleOther.LocOtherY = midY;
             createLinePoint.Clear();
             this.currentBoardInfo.linesList.Add(eleOne);
             this.currentBoardInfo.linesList.Add(eleOther);
@@ -149,6 +124,40 @@ namespace SimuProteus
             this.pnBoard.Controls.Add(lineOther);
             lineOther.BringToFront();
             this.Cursor = Cursors.Arrow;
+        }
+
+        private void CalcTurnLocation(int locX, int locY, int locOtherX, int locOtherY, out int midX, out int midY)
+        {
+            if (locX == locOtherX || locY == locOtherY)
+            {//在同一个水平/竖直方向上
+                midX = locOtherX;
+                midY = locOtherY;
+            }
+            else
+            {//统一参考坐标系
+                int xLeft, yLeft, xRight, yRihgt;
+                if (locY < locOtherY)
+                {//下面点为参考点
+                    xLeft = locX; yLeft = locY;
+                    xRight = locOtherX; yRihgt = locOtherY;
+                }
+                else
+                {
+                    xLeft = locOtherX; yLeft = locOtherY;
+                    xRight = locX; yRihgt = locY;
+                }
+                if (((xRight - xLeft) * (clickPositionForLine.Y - yLeft) - (yRihgt - yLeft) * (clickPositionForLine.X - xLeft)) > 0)
+                {//左边
+                    midX = Math.Min(locX, locOtherX);
+                    //绘图坐标系跟直角坐标是沿X轴对称的，所以斜率是反的但左右不变
+                    midY = (locY * 0.1 - locOtherY * 0.1) / (locX * 0.1 - locOtherX * 0.1) > 0 ? Math.Max(locY, locOtherY) : Math.Min(locY, locOtherY);
+                }
+                else
+                {
+                    midX = Math.Max(locX, locOtherX);
+                    midY = (locY * 0.1 - locOtherY * 0.1) / (locX * 0.1 - locOtherX * 0.1) < 0 ? Math.Max(locY, locOtherY) : Math.Min(locY, locOtherY);
+                }
+            }
         }
 
         private void DeleteLineLink(int idx, int otherIdx)
@@ -178,6 +187,8 @@ namespace SimuProteus
             }
         }
 
+
+
         private void DeleteElement(int idx)
         {
             for (int i = 0; i < this.currentBoardInfo.elementList.Count;i++ )
@@ -200,7 +211,6 @@ namespace SimuProteus
                 }
             }
         }
-
         #endregion
 
         #region 面板事件
@@ -231,6 +241,8 @@ namespace SimuProteus
             }
             return null;
         }
+
+
         #endregion 
 
         #region 菜单事件
@@ -238,9 +250,9 @@ namespace SimuProteus
         {
             if (CheckLoadChip())
             {
-                this.currentChips = Convert.ToInt32((sender as ToolStripMenuItem).Tag);
+                int currentChips = Convert.ToInt32((sender as ToolStripMenuItem).Tag);
                 this.pnBoard.Controls.Add(this.InitialChipOnBoard(currentChips));
-                currentBoardInfo.Project.Chips = this.currentChips;
+                currentBoardInfo.Project.Chips = currentChips;
             }
         }
 
@@ -248,9 +260,9 @@ namespace SimuProteus
         {
             if (CheckLoadChip())
             {
-                this.currentChips = Convert.ToInt32((sender as ToolStripMenuItem).Tag);
+                int currentChips = Convert.ToInt32((sender as ToolStripMenuItem).Tag);
                 this.pnBoard.Controls.Add(this.InitialChipOnBoard(currentChips));
-                currentBoardInfo.Project.Chips = this.currentChips;
+                currentBoardInfo.Project.Chips = currentChips;
             }
         }
 
@@ -309,22 +321,95 @@ namespace SimuProteus
             saveWindow.ShowDialog();
         }
 
+        private bool CheckSerialStatus()
+        {
+            if (!serial.IsOpen)
+            {
+                MessageBox.Show("串口未打开");
+                return false;
+            }
+            return true;
+        }
+
+
         private void readToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("待做");
+            if (!this.CheckSerialStatus()) return;
 
+
+            MessageBox.Show("==待做");
         }
 
         private void writeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("待做");
+            if (!this.CheckSerialStatus()) return;
 
+            MessageBox.Show("==待做");
+        }
+
+        private void serialStatusToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormSetSerial formSerial = new FormSetSerial(serial);
+            formSerial.ShowDialog();
         }
 
         private void projectNameToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (!CheckLoadChip()) return;
             ToolStripItem projItem = sender as ToolStripItem;
-            MessageBox.Show(projItem.Text + "==待做");
+
+            ProjectDetails projInfo = dbHandler.getProjectDetail(Convert.ToInt32(projItem.Tag));
+            this.LoadElementByHistoryItem(projInfo);
+            this.currentBoardInfo = projInfo;
+        }
+
+        private void LoadElementByHistoryItem(ProjectDetails projInfo)
+        {
+            this.lbProjName.Text = projInfo.Project.Name;
+            this.lbProjName.Tag = projInfo.Project.Idx;
+            this.pnBoard.Controls.Add(this.InitialChipOnBoard(projInfo.Project.Chips));
+            foreach (ElementInfo info in projInfo.elementList)
+            {
+                UcElement ucTmp = new UcElement(info, CreateLineForElement, DeleteElement);
+                this.pnBoard.Controls.Add(ucTmp);
+                ucTmp.BringToFront();
+            }
+            foreach (ElementLine line in projInfo.linesList)
+            {
+                int midX, midY;
+                this.CalcTurnLocation(line.LocX, line.LocY, line.LocOtherX, line.LocOtherY, out midX, out midY);
+                ElementLine eleOne = new ElementLine()
+                {
+                    Color = line.Color,
+                    LocX = line.LocX,
+                    LocY = line.LocY,
+                    LocOtherX = midX,
+                    LocOtherY = midY,
+                    Idx = line.Idx,
+                    oneFoot = line.oneFoot,
+                    otherFoot = line.otherFoot,
+                    Name = line.Name
+                };
+                ElementLine eleOther = new ElementLine()
+                {
+                    Color = line.Color,
+                    LocX = line.LocOtherX,
+                    LocY = line.LocOtherY,
+                    LocOtherX = midX,
+                    LocOtherY = midY,
+                    Idx = line.Idx,
+                    oneFoot = line.otherFoot,
+                    otherFoot = line.oneFoot,
+                    Name = line.Name
+                };
+                UcLine lineOne = new UcLine(eleOne, DeleteLineLink);
+                UcLine lineOther = new UcLine(eleOther, DeleteLineLink);
+                lineOne.OtherLine = lineOther;
+                lineOther.OtherLine = lineOne;
+                this.pnBoard.Controls.Add(lineOne);
+                lineOne.BringToFront();
+                lineOther.BringToFront();
+            }
         }
         #endregion 
 

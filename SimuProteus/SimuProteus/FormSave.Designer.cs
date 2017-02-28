@@ -106,6 +106,7 @@
             this.MinimumSize = new System.Drawing.Size(433, 329);
             this.Name = "FormSave";
             this.Text = "保存当前项目";
+            this.Load += new System.EventHandler(this.FormSave_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

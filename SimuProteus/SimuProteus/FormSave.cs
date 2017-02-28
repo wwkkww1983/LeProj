@@ -42,21 +42,32 @@ namespace SimuProteus
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (this.tbName.Text.Trim().Equals(string.Empty))
-            {
-                MessageBox.Show("请输入项目名称");
-                return;
-            }
-            this.Project.Project.Name = this.tbName.Text.Trim();
-            this.Project.Project.Description = this.tbDesc.Text.Trim();
-            this.Project.Project.CreateTime = DateTime.Now;
-            this.Project.Project.UpdateTime = DateTime.Now;
-
             DBUtility dbhandler = new DBUtility();
-            if (dbhandler.CheckProjectNameExists(this.Project.Project.Name))
+            if (NewFlag)
             {
-                MessageBox.Show("名称已存在，请换个名称");
-                return;
+                if (!dbhandler.RemoveOneProject(Project.Project.Idx))
+                {
+                    MessageBox.Show("更新失败");
+                    return;
+                }
+            }
+            else
+            {
+                if (this.tbName.Text.Trim().Equals(string.Empty))
+                {
+                    MessageBox.Show("请输入项目名称");
+                    return;
+                }
+                this.Project.Project.Name = this.tbName.Text.Trim();
+                this.Project.Project.Description = this.tbDesc.Text.Trim();
+                this.Project.Project.CreateTime = DateTime.Now;
+                this.Project.Project.UpdateTime = DateTime.Now;
+
+                if (dbhandler.CheckProjectNameExists(this.Project.Project.Name))
+                {
+                    MessageBox.Show("名称已存在，请换个名称");
+                    return;
+                }
             }
             int result = dbhandler.InsertNewProject(this.Project);
             if (result <= 0)
@@ -75,6 +86,15 @@ namespace SimuProteus
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void FormSave_Load(object sender, EventArgs e)
+        {
+            if (NewFlag)
+            {
+                this.tbName.Text = this.Project.Project.Name;
+                this.tbDesc.Text = this.Project.Project.Description;
+            }
         }
     }
 }

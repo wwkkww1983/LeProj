@@ -22,6 +22,7 @@ namespace SimuProteus
             ElementInfo info = new ElementInfo();
 
             info.ID = Convert.ToInt32(dr["itemId"]);
+            info.Component = info.ID;
             info.Name = dr["name"].ToString();
             info.FootType = enumComponentType.NormalComponent;
             info.Size = new Size(Convert.ToInt32(dr["width"]), Convert.ToInt32(dr["height"]));
@@ -41,7 +42,8 @@ namespace SimuProteus
             ElementInfo info = new ElementInfo();
 
             info.Name = dr["name"].ToString();
-            info.ID = Convert.ToInt32(dr["itemId"]);
+            info.ID = Convert.ToInt32(dr["id"]);
+            info.Component = Convert.ToInt32(dr["component"]);
             info.FootType = enumComponentType.NormalComponent;
             info.Location = new Point(Convert.ToInt32(dr["locX"]), Convert.ToInt32(dr["locY"]));
             info.Size = new Size(Convert.ToInt32(dr["width"]), Convert.ToInt32(dr["height"]));
@@ -104,7 +106,7 @@ namespace SimuProteus
             {
                 info = DecodeElementByDb(drComp);
             }
-            info.LineFoots = DecodeCompFootsByDb(dtFoot, info.ID);
+            info.LineFoots = DecodeCompFootsByDb(dtFoot, info.Component);
 
             return info;
         }
@@ -129,23 +131,68 @@ namespace SimuProteus
             return infoList;
         }
 
+        public SerialInfo DecodeSerialInfo(DataSet ds)
+        {
+            DataRow dr = ds.Tables[0].Rows[0];
+            SerialInfo info = new SerialInfo() {
+                 PortName = dr["portName"].ToString(),
+                 BaudRate = Convert.ToInt32(dr["baudRate"]),
+                 DataBits = Convert.ToInt32(dr["databits"]),
+                 Parity = Convert.ToInt32(dr["parity"]),
+                 StopBits = Convert.ToInt32(dr["stopbits"]),
+                 TimeOut = Convert.ToInt32(dr["timeOut"])
+            };
+
+            return info;
+        }
+
+        public ProjectInfo DecodeOneProjectByDb(DataRow dr)
+        {
+            return new ProjectInfo()
+            {
+                Idx = Convert.ToInt32(dr["id"]),
+                Name = dr["name"].ToString(),
+                CreateTime = Convert.ToDateTime(dr["createtime"]),
+                UpdateTime = Convert.ToDateTime(dr["updatetime"]),
+                Chips = Convert.ToInt32(dr["chips"]),
+                Description = dr["desc"].ToString()
+            };
+        }
+
         public List<ProjectInfo> DecodeProjectsByDb(DataSet ds)
         {
             List<ProjectInfo> infoList = new List<ProjectInfo>();
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
-                infoList.Add(new ProjectInfo()
-                {
-                    Idx = Convert.ToInt32(dr["id"]),
-                    Name = dr["name"].ToString(),
-                    CreateTime = Convert.ToDateTime(dr["createtime"]),
-                    UpdateTime = Convert.ToDateTime(dr["updatetime"]),
-                    Chips = Convert.ToInt32(dr["chips"]),
-                    Description = dr["desc"].ToString()
-                });
+                infoList.Add(DecodeOneProjectByDb(dr));
 
             }
             return infoList;
         }
+
+        public List<ElementLine> DecodeElementLineByDb(DataSet ds)
+        {
+            List<ElementLine> infoList = new List<ElementLine>();
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                infoList.Add(new ElementLine()
+                {
+                    Idx = Convert.ToInt32(dr["lineIdx"]),
+                    Name = dr["name"].ToString(),
+                    oneFoot = Convert.ToInt32(dr["oneFoot"]),
+                    otherFoot = Convert.ToInt32(dr["otherFoot"]),
+                    LocX = Convert.ToInt32(dr["locX"]),
+                    LocY = Convert.ToInt32(dr["locY"]),
+                    LocOtherX = Convert.ToInt32(dr["locOtherX"]),
+                    LocOtherY = Convert.ToInt32(dr["locOtherY"]),
+                    Color = Color.FromArgb( Convert.ToInt32(dr["color"]))
+                });
+
+            }
+                               
+            return infoList;
+        }
+
+        
     }
 }
