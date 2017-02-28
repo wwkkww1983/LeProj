@@ -43,6 +43,10 @@ namespace SimuProteus
         private void btnSave_Click(object sender, EventArgs e)
         {
             DBUtility dbhandler = new DBUtility();
+
+            this.Project.Project.Name = this.tbName.Text.Trim();
+            this.Project.Project.Description = this.tbDesc.Text.Trim();
+            this.Project.Project.UpdateTime = DateTime.Now;
             if (NewFlag)
             {
                 if (!dbhandler.RemoveOneProject(Project.Project.Idx))
@@ -66,10 +70,6 @@ namespace SimuProteus
                     return;
                 }
             }
-
-            this.Project.Project.Name = this.tbName.Text.Trim();
-            this.Project.Project.Description = this.tbDesc.Text.Trim();
-            this.Project.Project.UpdateTime = DateTime.Now;
             int result = dbhandler.InsertNewProject(this.Project);
             if (result <= 0)
             {

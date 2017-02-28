@@ -32,6 +32,7 @@ namespace SimuProteus
             this.Height = Constants.FOOT_SIZE_PIXEL;
             int hsize = Constants.FOOT_SIZE_PIXEL / 2;
             this.Location = new Point(this.locX + hsize, this.locY + hsize);
+            this.BackColor = Color.FromName(Ini.GetItemValue("colorInfo", "colorFoot"));
         }
 
         private void UcFoot_Click(object sender, EventArgs e)

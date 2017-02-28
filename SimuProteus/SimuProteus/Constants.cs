@@ -9,6 +9,9 @@ namespace SimuProteus
     public struct Constants
     {
         static string m_directory = System.Environment.CurrentDirectory;
+        static int m_footSize = int.Parse(Ini.GetItemValue("sizeInfo", "pixelFootSize"));
+        static int m_lineWidth = int.Parse(Ini.GetItemValue("sizeInfo", "pixelLineWidth"));
+
         /// <summary>
         /// 当前程序目录
         /// </summary>
@@ -22,11 +25,24 @@ namespace SimuProteus
         /// <summary>
         /// 引脚尺寸
         /// </summary>
-        public const int FOOT_SIZE_PIXEL = 6;
+        public static int FOOT_SIZE_PIXEL
+        {
+            get
+            {
+                return m_footSize;
+            }
+        }
         /// <summary>
         /// 线宽
         /// </summary>
-        public const int LINE_LINK_WIDTH = 5;
+        public static int LINE_LINK_WIDTH
+        {
+            get
+            {
+                return m_lineWidth;
+            }
+        }
+
     }
 
     /// <summary>

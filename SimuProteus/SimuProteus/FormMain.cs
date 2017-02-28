@@ -110,7 +110,8 @@ namespace SimuProteus
                     Idx = elementIdx++,
                     oneFoot = footIdx,
                     LocX = locX,
-                    LocY = locY
+                    LocY = locY,
+                    Color = Color.FromName(Ini.GetItemValue("colorInfo", "colorLine"))
                 });
                 clickPositionForLine.X = 0;
                 clickPositionForLine.Y = 0;
@@ -124,7 +125,8 @@ namespace SimuProteus
                 Idx = elementIdx++,
                 oneFoot = footIdx,
                 LocX = locX,
-                LocY = locY
+                LocY = locY,
+                Color = Color.FromName(Ini.GetItemValue("colorInfo", "colorLine"))
             };
             eleOne.otherFoot = footIdx;
             eleOther.otherFoot = eleOne.oneFoot;
@@ -137,8 +139,8 @@ namespace SimuProteus
             createLinePoint.Clear();
             this.currentBoardInfo.linesList.Add(eleOne);
             this.currentBoardInfo.linesList.Add(eleOther);
-            UcLine lineOne = new UcLine(eleOne, DeleteLineLink);
-            UcLine lineOther = new UcLine(eleOther, DeleteLineLink);
+            UcLine lineOne = new UcLine(eleOne, DeleteLineLink, ChangeLineColor);
+            UcLine lineOther = new UcLine(eleOther, DeleteLineLink, ChangeLineColor);
             lineOne.OtherLine = lineOther;
             lineOther.OtherLine = lineOne;
             this.pnBoard.Controls.Add(lineOne);
@@ -244,6 +246,21 @@ namespace SimuProteus
                 }
             }
         }
+
+        private void ChangeLineColor(int idx, int color)
+        {
+            for (int i = 0; i < this.currentBoardInfo.linesList.Count; i++)
+            {
+                ElementLine tmpInfo = this.currentBoardInfo.linesList[i];
+                if (tmpInfo.Idx == idx)
+                {
+                    this.currentBoardInfo.linesList.RemoveAt(i);
+                    tmpInfo.Color = Color.FromArgb(color);
+                    this.currentBoardInfo.linesList.Add(tmpInfo);
+                    break;
+                }
+            }
+        }
         #endregion
 
         #region 面板事件
@@ -336,6 +353,11 @@ namespace SimuProteus
                 if (dResult == DialogResult.OK)
                 {
                     this.pnBoard.Controls.Clear();
+                    this.lbProjName.Tag = null;
+                    this.lbProjName.Text = "未命名";
+                    this.pnBoard.Controls.Add(this.lbProjName);
+                    currentBoardInfo.linesList.Clear();
+                    currentBoardInfo.elementList.Clear();
                 }
                 else
                 {//不清空
@@ -400,7 +422,6 @@ namespace SimuProteus
         {
             this.lbProjName.Text = projInfo.Project.Name;
             this.lbProjName.Tag = projInfo.Project.Idx;
-            this.pnBoard.Controls.Add(this.lbProjName);
             if (projInfo.Project.Chips > 0)
             {
                 this.pnBoard.Controls.Add(this.InitialChipOnBoard(projInfo.Project.Chips));
@@ -411,39 +432,46 @@ namespace SimuProteus
                 this.pnBoard.Controls.Add(ucTmp);
                 ucTmp.BringToFront();
             }
+            List<int> addedLine = new List<int>();
             foreach (ElementLine line in projInfo.linesList)
             {
-                int midX, midY;
-                this.CalcTurnLocation(line.LocX, line.LocY, line.LocOtherX, line.LocOtherY, out midX, out midY);
+                if (addedLine.Contains(line.Idx)) continue;
                 ElementLine eleOne = new ElementLine()
-                {
+                {   
                     Color = line.Color,
                     LocX = line.LocX,
                     LocY = line.LocY,
-                    LocOtherX = midX,
-                    LocOtherY = midY,
+                    LocOtherX = line.LocOtherX,
+                    LocOtherY = line.LocOtherY,
                     Idx = line.Idx,
                     oneFoot = line.oneFoot,
                     otherFoot = line.otherFoot,
                     Name = line.Name
                 };
-                ElementLine eleOther = new ElementLine()
+                addedLine.Add(line.Idx);
+                ElementLine eleOther = new ElementLine();
+                foreach (ElementLine lineChild in projInfo.linesList)
                 {
-                    Color = line.Color,
-                    LocX = line.LocOtherX,
-                    LocY = line.LocOtherY,
-                    LocOtherX = midX,
-                    LocOtherY = midY,
-                    Idx = line.Idx,
-                    oneFoot = line.otherFoot,
-                    otherFoot = line.oneFoot,
-                    Name = line.Name
-                };
-                UcLine lineOne = new UcLine(eleOne, DeleteLineLink);
-                UcLine lineOther = new UcLine(eleOther, DeleteLineLink);
+                    if (addedLine.Contains(lineChild.Idx)) continue;
+                    if (lineChild.LocOtherX == line.LocOtherX && lineChild.LocOtherY == line.LocOtherY)
+                    {
+                        eleOther.Color = lineChild.Color;
+                        eleOther.LocX = lineChild.LocX;
+                        eleOther.LocY = lineChild.LocY;
+                        eleOther.LocOtherX = lineChild.LocOtherX;
+                        eleOther.LocOtherY = lineChild.LocOtherY;
+                        eleOther.Idx = lineChild.Idx;
+                        eleOther.oneFoot = lineChild.oneFoot;
+                        eleOther.otherFoot = lineChild.otherFoot;
+                        eleOther.Name = lineChild.Name;
+                    }
+                }
+                UcLine lineOne = new UcLine(eleOne, DeleteLineLink, ChangeLineColor);
+                UcLine lineOther = new UcLine(eleOther, DeleteLineLink, ChangeLineColor);
                 lineOne.OtherLine = lineOther;
                 lineOther.OtherLine = lineOne;
                 this.pnBoard.Controls.Add(lineOne);
+                this.pnBoard.Controls.Add(lineOther);
                 lineOne.BringToFront();
                 lineOther.BringToFront();
             }

@@ -199,7 +199,7 @@ namespace web2Excel
                 {
                     UpdateProgess(false, i + 1);
                     strHouseStatus = todayExcelData[i, 11];
-                    if (strHouseStatus != "签订中" && strHouseStatus != "已备案" && strHouseStatus != "已预告")
+                    if (strHouseStatus != "签订中" && strHouseStatus != "已备案" && strHouseStatus != "已预告" || yestdayExcelData[i, 11] != "可售")
                         continue;//还是可售或不可售（状态没变）
                     int findFlag = 0;//0:未找到，1：已找到，2已找过
                     //for (int j = Math.Max(2, i - 20); j <= yestdayRow; j++)
