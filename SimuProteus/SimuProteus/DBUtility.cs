@@ -101,7 +101,7 @@ namespace SimuProteus
             {
                 PortName = "COM1",
                 BaudRate = 9600,
-                DataBits = 1,
+                DataBits = 8,
                 Parity = 1,
                 StopBits = 1,
                 TimeOut = 200

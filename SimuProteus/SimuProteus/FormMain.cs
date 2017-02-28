@@ -41,11 +41,16 @@ namespace SimuProteus
             List<ProjectInfo> projectList = dbHandler.GetAllProjects();
             foreach (ProjectInfo item in projectList)
             {
-                ToolStripItem projItem = new ToolStripMenuItem(item.Name);
-                projItem.Tag = item.Idx;
-                projItem.Click += projectNameToolStripMenuItem_Click;
-                this.ProjToolStripMenuItem.DropDownItems.Add(projItem);
+                this.AddProjectHistory(item.Name, item.Idx);
             }
+        }
+
+        private void AddProjectHistory(string name, int idx)
+        {
+            ToolStripItem projItem = new ToolStripMenuItem(name);
+            projItem.Tag = idx;
+            projItem.Click += projectNameToolStripMenuItem_Click;
+            this.ProjToolStripMenuItem.DropDownItems.Insert(0,projItem);
         }
         #endregion
 
@@ -67,13 +72,30 @@ namespace SimuProteus
             this.currentSelectedComponent = clickedCompo;
         }
 
-        private void SaveProjectName(int projIdx, string projName)
+        private void SaveProjectName(bool newFlag,int projIdx, string projName)
         {
             if (this.InvokeRequired)
             {
-                Action<int, string> delegateSaveProjectName = new Action<int, string>(SaveProjectName);
+                Action<bool, int, string> delegateSaveProjectName = new Action<bool, int, string>(SaveProjectName);
                 this.Invoke(delegateSaveProjectName, new object[] { projIdx });
                 return;
+            }
+
+            if (!newFlag)
+            {
+                this.AddProjectHistory(projName, projIdx);
+            }
+            else
+            {
+                foreach (ToolStripItem item in this.ProjToolStripMenuItem.DropDownItems)
+                {
+                    if (Convert.ToInt32(item.Tag) == Convert.ToInt32(this.lbProjName.Tag))
+                    {
+                        item.Tag = projIdx;
+                        item.Text = projName;
+                        break;
+                    }
+                }
             }
             this.lbProjName.Tag = projIdx;
             this.lbProjName.Text = projName;
@@ -187,8 +209,6 @@ namespace SimuProteus
             }
         }
 
-
-
         private void DeleteElement(int idx)
         {
             for (int i = 0; i < this.currentBoardInfo.elementList.Count;i++ )
@@ -211,6 +231,19 @@ namespace SimuProteus
                 }
             }
         }
+
+        private void MoveElement(int idx, int locX,int locY)
+        {
+            for (int i = 0; i < this.currentBoardInfo.elementList.Count; i++)
+            {
+                ElementInfo tmpInfo = this.currentBoardInfo.elementList[i];
+                if (tmpInfo.ID == idx)
+                {
+                    tmpInfo.Location = new Point(locX, locY);
+                    break;
+                }
+            }
+        }
         #endregion
 
         #region 面板事件
@@ -228,7 +261,7 @@ namespace SimuProteus
                 return;
             }
             info.ID = elementIdx++;
-            this.pnBoard.Controls.Add(new UcElement(info, CreateLineForElement, DeleteElement));
+            this.pnBoard.Controls.Add(new UcElement(info, CreateLineForElement, DeleteElement, MoveElement));
             this.currentBoardInfo.elementList.Add(info);
         }
 
@@ -290,7 +323,7 @@ namespace SimuProteus
                 LineFoots = new DBUtility().GetChipFoots(chipIdx)
             };
 
-            return new UcElement(info, CreateLineForElement, DeleteElement);
+            return new UcElement(info, CreateLineForElement, DeleteElement, MoveElement);
         }
 
 
@@ -367,10 +400,14 @@ namespace SimuProteus
         {
             this.lbProjName.Text = projInfo.Project.Name;
             this.lbProjName.Tag = projInfo.Project.Idx;
-            this.pnBoard.Controls.Add(this.InitialChipOnBoard(projInfo.Project.Chips));
+            this.pnBoard.Controls.Add(this.lbProjName);
+            if (projInfo.Project.Chips > 0)
+            {
+                this.pnBoard.Controls.Add(this.InitialChipOnBoard(projInfo.Project.Chips));
+            }
             foreach (ElementInfo info in projInfo.elementList)
             {
-                UcElement ucTmp = new UcElement(info, CreateLineForElement, DeleteElement);
+                UcElement ucTmp = new UcElement(info, CreateLineForElement, DeleteElement, MoveElement);
                 this.pnBoard.Controls.Add(ucTmp);
                 ucTmp.BringToFront();
             }

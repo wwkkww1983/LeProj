@@ -12,7 +12,7 @@ namespace SimuProteus
 {
     public partial class FormSave : Form
     {
-        public Action<int, string> HandlerAfterSave
+        public Action<bool,int, string> HandlerAfterSave
         {
             get;
             set;
@@ -58,10 +58,7 @@ namespace SimuProteus
                     MessageBox.Show("请输入项目名称");
                     return;
                 }
-                this.Project.Project.Name = this.tbName.Text.Trim();
-                this.Project.Project.Description = this.tbDesc.Text.Trim();
                 this.Project.Project.CreateTime = DateTime.Now;
-                this.Project.Project.UpdateTime = DateTime.Now;
 
                 if (dbhandler.CheckProjectNameExists(this.Project.Project.Name))
                 {
@@ -69,6 +66,10 @@ namespace SimuProteus
                     return;
                 }
             }
+
+            this.Project.Project.Name = this.tbName.Text.Trim();
+            this.Project.Project.Description = this.tbDesc.Text.Trim();
+            this.Project.Project.UpdateTime = DateTime.Now;
             int result = dbhandler.InsertNewProject(this.Project);
             if (result <= 0)
             {
@@ -76,7 +77,7 @@ namespace SimuProteus
             }
             else
             {
-                HandlerAfterSave(result, this.Project.Project.Name);
+                HandlerAfterSave(NewFlag,result, this.Project.Project.Name);
                 MessageBox.Show("保存成功");
                 this.Close();
             }

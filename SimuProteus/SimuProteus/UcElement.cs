@@ -15,7 +15,7 @@ namespace SimuProteus
         private bool mouseDownFlag = false;
         private int currentX = 0, currentY = 0;
         private DBUtility dbHandler = new DBUtility();
-        private Action<int, int, int> ClickFoot = null;
+        private Action<int, int, int> ClickFoot = null, dragElement=null;
         private Action<int>  RemoveElement = null;
 
         /// <summary>
@@ -32,11 +32,12 @@ namespace SimuProteus
             InitializeComponent();
         }
 
-        public UcElement(ElementInfo viewInfo, Action<int, int, int> linkLine, Action<int> removeSelf)
+        public UcElement(ElementInfo viewInfo, Action<int, int, int> linkLine, Action<int> removeSelf,Action<int,int,int> moveElement)
         {
             this.ViewInfo = viewInfo;
             this.ClickFoot = linkLine;
             this.RemoveElement = removeSelf;
+            this.dragElement = moveElement;
 
             InitializeComponent();
 
@@ -95,6 +96,7 @@ namespace SimuProteus
         private void UcElement_MouseUp(object sender, MouseEventArgs e)
         {
             mouseDownFlag = false;
+            this.dragElement(this.ViewInfo.ID, this.Location.X, this.Location.Y);
         }
 
         private void UcElement_MouseMove(object sender, MouseEventArgs e)
