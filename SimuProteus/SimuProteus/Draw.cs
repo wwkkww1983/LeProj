@@ -48,5 +48,24 @@ namespace SimuProteus
                 g.DrawLine(pen, new Point(x, oy), new Point(ox, oy));
             }
         }
+
+        /// <summary>
+        /// 画实心圆
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="color"></param>
+        /// <param name="center"></param>
+        /// <param name="radius"></param>
+        public static void DrawSolidCircle(Control board, int color, Point center, int radius)
+        {
+            Color colorItem = Color.FromArgb(color);
+            Rectangle rect = new Rectangle(center.X - radius, center.Y - radius, radius * 2 , radius * 2);
+            
+            Graphics g = board.CreateGraphics();
+            Pen pen = new Pen(colorItem);
+            g.DrawEllipse(pen, rect);
+            Brush brush = new SolidBrush(colorItem);
+            g.FillEllipse(brush, rect);
+        }
     }
 }

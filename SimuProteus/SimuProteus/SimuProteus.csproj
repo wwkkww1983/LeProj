@@ -126,6 +126,12 @@
     <Compile Include="UcLine.Designer.cs">
       <DependentUpon>UcLine.cs</DependentUpon>
     </Compile>
+    <Compile Include="UcPoint.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UcPoint.Designer.cs">
+      <DependentUpon>UcPoint.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="FormFootParam.resx">
       <DependentUpon>FormFootParam.cs</DependentUpon>
     </EmbeddedResource>
@@ -164,6 +170,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UcLine.resx">
       <DependentUpon>UcLine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UcPoint.resx">
+      <DependentUpon>UcPoint.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

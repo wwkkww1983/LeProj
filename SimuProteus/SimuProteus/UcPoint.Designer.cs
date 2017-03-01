@@ -28,8 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // UcPoint
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Name = "UcPoint";
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.UcPoint_Paint);
+            this.ResumeLayout(false);
+
         }
 
         #endregion

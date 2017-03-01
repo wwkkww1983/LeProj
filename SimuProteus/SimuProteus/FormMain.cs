@@ -32,7 +32,7 @@ namespace SimuProteus
         {
             InitializeComponent();
 
-            dbHandler.InitialTable();
+            //dbHandler.InitialTable();
             this.elementList = dbHandler.GetBaseComponents();
             int idx = 0;
             foreach (ElementInfo item in elementList)
@@ -40,6 +40,7 @@ namespace SimuProteus
                 UcComponent compo = new UcComponent(++idx, item, ChangeCursor);
                 this.gbComponent.Controls.Add(compo);  
             }
+            this.InitialNetPoint();
             List<ProjectInfo> projectList = dbHandler.GetAllProjects();
             foreach (ProjectInfo item in projectList)
             {
@@ -55,9 +56,32 @@ namespace SimuProteus
             this.ProjToolStripMenuItem.DropDownItems.Insert(0,projItem);
         }
 
+        
         private void InitialNetPoint()
         {
-
+            int boardMargin = int.Parse(Ini.GetItemValue("sizeInfo", "pixelBoardMargin"));
+            int countWidth = int.Parse(Ini.GetItemValue("sizeInfo", "netWidth"));
+            int countHeight = int.Parse(Ini.GetItemValue("sizeInfo", "netHeight"));
+            int sizePoint = int.Parse(Ini.GetItemValue("sizeInfo", "pixelNetPoint"));
+            int width = this.pnBoard.Width - boardMargin * 2;
+            int height = this.pnBoard.Height - boardMargin * 2;
+            int interWidth = (width - countWidth * sizePoint) / (countWidth - 1);
+            int interHeight = (height - countHeight * sizePoint) / (countHeight - 1);
+            int x = boardMargin, y = boardMargin;
+            for (int i = 0; i < countWidth; i++)
+            {
+                y = boardMargin;
+                for (int j = 0; j < countHeight; j++)
+                {
+                    UcPoint point = new UcPoint();
+                    point.Location = new Point(x, y);
+                    y += sizePoint;
+                    y += interHeight;
+                    this.pnBoard.Controls.Add(point);
+                }
+                x += sizePoint;
+                x += interWidth;
+            }
         }
         #endregion
 
@@ -66,7 +90,7 @@ namespace SimuProteus
         /// 改变光标
         /// </summary>
         /// <param name="newCursor"></param>
-        private void ChangeCursor(Cursor newCursor,enumComponent clickedCompo)
+        private void ChangeCursor(Cursor newCursor, enumComponent clickedCompo)
         {
             if (this.InvokeRequired)
             {
@@ -509,25 +533,29 @@ namespace SimuProteus
         {
             if (!this.CheckSerialStatus()) return;
 
-            MessageBox.Show("==待做");
-        }
-
-        private void freeSerialToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (serial.IsOpen)
-            {
-                serial.Close();
-            }
-            else
-            {
-                MessageBox.Show("串口未开启");
-            }
+            MessageBox.Show("接口完成，无数据");
         }
 
         private void serialStatusToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormSetSerial formSerial = new FormSetSerial(serial);
             formSerial.ShowDialog();
+        }
+
+
+        private void freeSerialToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!this.CheckSerialStatus()) return;
+
+            this.serial.Close();
+            if (serial.IsOpen)
+            {
+                MessageBox.Show("串口操作失败");
+            }
+            else
+            {
+                MessageBox.Show("串口释放成功");
+            }
         }
 
         private void projectNameToolStripMenuItem_Click(object sender, EventArgs e)
@@ -645,5 +673,6 @@ namespace SimuProteus
             serial.Write(strSend);
         }
         #endregion
+
     }
 }

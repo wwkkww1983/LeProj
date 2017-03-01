@@ -30,16 +30,18 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSetSize));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.tbWidth = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.tbLength = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.tbWidth = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.tbFootSize = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.tbLineWidth = new System.Windows.Forms.TextBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tbNetPoint = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,21 +58,12 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "网格节点数";
             // 
-            // label1
+            // tbLength
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(43, 49);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(22, 15);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "宽";
-            // 
-            // tbWidth
-            // 
-            this.tbWidth.Location = new System.Drawing.Point(71, 46);
-            this.tbWidth.Name = "tbWidth";
-            this.tbWidth.Size = new System.Drawing.Size(100, 25);
-            this.tbWidth.TabIndex = 1;
+            this.tbLength.Location = new System.Drawing.Point(270, 46);
+            this.tbLength.Name = "tbLength";
+            this.tbLength.Size = new System.Drawing.Size(100, 25);
+            this.tbLength.TabIndex = 1;
             // 
             // label2
             // 
@@ -81,17 +74,26 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "长";
             // 
-            // tbLength
+            // tbWidth
             // 
-            this.tbLength.Location = new System.Drawing.Point(270, 46);
-            this.tbLength.Name = "tbLength";
-            this.tbLength.Size = new System.Drawing.Size(100, 25);
-            this.tbLength.TabIndex = 1;
+            this.tbWidth.Location = new System.Drawing.Point(71, 46);
+            this.tbWidth.Name = "tbWidth";
+            this.tbWidth.Size = new System.Drawing.Size(100, 25);
+            this.tbWidth.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(43, 49);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(22, 15);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "宽";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(55, 158);
+            this.label3.Location = new System.Drawing.Point(25, 160);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(172, 15);
             this.label3.TabIndex = 0;
@@ -107,7 +109,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(55, 218);
+            this.label4.Location = new System.Drawing.Point(55, 191);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(142, 15);
             this.label4.TabIndex = 0;
@@ -115,7 +117,7 @@
             // 
             // tbLineWidth
             // 
-            this.tbLineWidth.Location = new System.Drawing.Point(233, 208);
+            this.tbLineWidth.Location = new System.Drawing.Point(233, 186);
             this.tbLineWidth.Name = "tbLineWidth";
             this.tbLineWidth.Size = new System.Drawing.Size(100, 25);
             this.tbLineWidth.TabIndex = 1;
@@ -142,6 +144,22 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(70, 222);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(127, 15);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "网络节点（像素）";
+            // 
+            // tbNetPoint
+            // 
+            this.tbNetPoint.Location = new System.Drawing.Point(233, 217);
+            this.tbNetPoint.Name = "tbNetPoint";
+            this.tbNetPoint.Size = new System.Drawing.Size(100, 25);
+            this.tbNetPoint.TabIndex = 1;
+            // 
             // FormSetSize
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -150,6 +168,8 @@
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.tbNetPoint);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.tbLineWidth);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.tbFootSize);
@@ -177,5 +197,7 @@
         private System.Windows.Forms.TextBox tbLineWidth;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox tbNetPoint;
     }
 }
