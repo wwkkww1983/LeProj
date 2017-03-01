@@ -77,11 +77,23 @@
     <Compile Include="FormSave.Designer.cs">
       <DependentUpon>FormSave.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormSetColor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSetColor.Designer.cs">
+      <DependentUpon>FormSetColor.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSetSerial.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormSetSerial.Designer.cs">
       <DependentUpon>FormSetSerial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSetSize.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSetSize.Designer.cs">
+      <DependentUpon>FormSetSize.cs</DependentUpon>
     </Compile>
     <Compile Include="ini.cs" />
     <Compile Include="Program.cs" />
@@ -123,8 +135,14 @@
     <EmbeddedResource Include="FormSave.resx">
       <DependentUpon>FormSave.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormSetColor.resx">
+      <DependentUpon>FormSetColor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormSetSerial.resx">
       <DependentUpon>FormSetSerial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSetSize.resx">
+      <DependentUpon>FormSetSize.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

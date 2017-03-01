@@ -9,7 +9,7 @@ namespace SimuProteus
 {
     class DBUtility
     {
-        private const string STR_CONNECTION = "Data Source=prot.sqlite;Version=3;";
+        private const string STR_CONNECTION = "Data Source=prot.s;Version=3;";
         private Coder code = new Coder();
 
         /// <summary>
@@ -62,6 +62,7 @@ namespace SimuProteus
                                id INTEGER PRIMARY KEY AUTOINCREMENT,
                                projIdx int,
                                component int,
+                               innerIdx int,
                                name nvarchar(20),
                                locX int,
                                locY int,
@@ -81,11 +82,23 @@ namespace SimuProteus
                                locY int,
                                color int);");
 
+            //当前面板上引脚属性
+            tableList.Add(@"create table lineFootView (
+                               id INTEGER PRIMARY KEY AUTOINCREMENT,
+                               projIdx int,
+                               component int,
+                               innerIdx int,
+                               footIdx int,
+                               name nvarchar(20),
+                               pinsType int);");
+
             //元器件之间的连线
             tableList.Add(@"create table lineLink (
                                lineIdx INTEGER PRIMARY KEY AUTOINCREMENT,
                                project int,
                                name nvarchar(20),
+                               oneElement int,
+                               otherElement int,
                                oneFoot int,
                                otherFoot int,
                                locX int,
@@ -255,6 +268,8 @@ namespace SimuProteus
             DataSet dsLines = SQLiteHelper.ExecuteDataSet(STR_CONNECTION, strSql, null);
             project.linesList = code.DecodeElementLineByDb(dsLines);
 
+            project.footsList = this.GetPinsInfo(projIdx, -1);
+
             return project;
             
         }
@@ -271,7 +286,8 @@ namespace SimuProteus
         {
             string strSql = string.Format(@"delete from projects where id={0};
                                delete from componentView where projIdx={0};
-                               delete from lineLink where project={0};",projIdx);
+                               delete from lineLink where project={0};
+                               delete from lineFootView where projIdx={0};", projIdx);
             return SQLiteHelper.ExecuteNonQuery(STR_CONNECTION, strSql) > 0;
         }
 
@@ -280,6 +296,23 @@ namespace SimuProteus
             string strSql = string.Format("select id from projects where name='{0}'", projName) ;
             object objId = SQLiteHelper.ExecuteScalar(STR_CONNECTION, strSql);
             return Convert.ToInt32(objId) > 0;
+        }
+
+        public List<LineFootView> GetPinsInfo(int projIdx, int elementIdx)
+        {
+            string strSql = string.Format("select * from lineFootView where projIdx={0}",projIdx);
+            if (elementIdx > 0)
+            {
+                strSql = string.Format("{0} and innerIdx={1}", strSql, elementIdx);
+            }
+            DataSet ds = SQLiteHelper.ExecuteDataSet(STR_CONNECTION, strSql, null);
+            return code.DecodeElementLineFootsByDb(ds);
+        }
+
+        public bool UpdateElementName(int projIdx, int elementIdx, string name)
+        {
+            string strSql = string.Format("update componentView set name='{0}' where projIdx={1} and innerIdx={2}",name,projIdx,elementIdx);
+            return SQLiteHelper.ExecuteNonQuery(STR_CONNECTION, strSql) == 1;
         }
 
         /// <summary>
@@ -355,9 +388,9 @@ namespace SimuProteus
             if (project.elementList.Count == 0) return projIdx;
             foreach (ElementInfo item in project.elementList)
             {
-                strSql += string.Format( @"insert into componentView (projIdx,component,name,locX,locY,width,height,backColor,backImage) 
-                                        values ({0},{1},'{2}',{3},{4},{5},{6},{7},'{8}');",
-                             projIdx, item.Component, item.Name, item.Location.X, item.Location.Y, item.Size.Width, item.Size.Height, item.BackColor.ToArgb(), item.BackImage );
+                strSql += string.Format(@"insert into componentView (projIdx,component,name,locX,locY,width,height,backColor,backImage,innerIdx) 
+                                        values ({0},{1},'{2}',{3},{4},{5},{6},{7},'{8}',{9});",
+                             projIdx, item.Component, item.Name, item.Location.X, item.Location.Y, item.Size.Width, item.Size.Height, item.BackColor.ToArgb(), item.BackImage,item.InnerIdx);
             } 
             objIdx = SQLiteHelper.ExecuteNonQuery(STR_CONNECTION, strSql);
             if(Convert.ToInt32(objIdx) != project.elementList.Count) 
@@ -367,12 +400,23 @@ namespace SimuProteus
             if (project.linesList.Count == 0) return projIdx;
             foreach (ElementLine item in project.linesList)
             {
-                strSql += string.Format(@"insert into lineLink (project,name,oneFoot,otherFoot,locX,locY,locOtherX,locOtherY,color) 
-                                        values ({0},'{1}',{2},{3},{4},{5},{6},{7},'{8}');",
-                             projIdx, item.Name, item.oneFoot, item.otherFoot, item.LocX, item.LocY, item.LocOtherX, item.LocOtherY, item.Color.ToArgb ());
+                strSql += string.Format(@"insert into lineLink (project,name,oneFoot,otherFoot,locX,locY,locOtherX,locOtherY,color,oneElement,otherElement) 
+                                        values ({0},'{1}',{2},{3},{4},{5},{6},{7},'{8}',{9},{10});",
+                             projIdx, item.Name, item.oneFoot, item.otherFoot, item.LocX, item.LocY, item.LocOtherX, item.LocOtherY, item.Color.ToArgb (),item.oneElement,item.otherElement);
             }
             objIdx = SQLiteHelper.ExecuteNonQuery(STR_CONNECTION, strSql);
             if (Convert.ToInt32(objIdx) != project.linesList.Count)
+                return -1;
+
+            strSql = string.Empty;
+            if (project.footsList.Count == 0) return projIdx;
+            foreach (LineFootView lineItem in project.footsList)
+            {
+                strSql += string.Format("insert into lineFootView (projIdx,component,innerIdx,name,pinsType,footIdx) values ({0},{1},{2},'{3}',{4},{5});",
+                    projIdx, lineItem.Component, lineItem.Element, lineItem.PinsName, (int)lineItem.PinsType,lineItem.Foot);
+            }
+            objIdx = SQLiteHelper.ExecuteNonQuery(STR_CONNECTION, strSql);
+            if (Convert.ToInt32(objIdx) != project.footsList.Count)
                 return -1;
 
             return projIdx;

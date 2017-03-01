@@ -44,6 +44,7 @@ namespace SimuProteus
             info.Name = dr["name"].ToString();
             info.ID = Convert.ToInt32(dr["id"]);
             info.Component = Convert.ToInt32(dr["component"]);
+            info.InnerIdx = Convert.ToInt32(dr["innerIdx"]);
             info.FootType = enumComponentType.NormalComponent;
             info.Location = new Point(Convert.ToInt32(dr["locX"]), Convert.ToInt32(dr["locY"]));
             info.Size = new Size(Convert.ToInt32(dr["width"]), Convert.ToInt32(dr["height"]));
@@ -119,8 +120,6 @@ namespace SimuProteus
         /// <returns></returns>
         public List<ElementInfo> DecodeElementsByDb(DataSet dsComps, DataSet dsFoots,bool isComponent)
         {
-            if (dsComps.Tables.Count < 1 || dsComps.Tables[0].Rows.Count < 1) return null;
-
             List<ElementInfo> infoList = new List<ElementInfo>();
             DataTable dtComps = dsComps.Tables[0];
             DataTable dtFoots = dsFoots.Tables[0];
@@ -180,6 +179,8 @@ namespace SimuProteus
                 {
                     Idx = Convert.ToInt32(dr["lineIdx"]),
                     Name = dr["name"].ToString(),
+                    oneElement = Convert.ToInt32(dr["oneElement"]),
+                    otherElement = Convert.ToInt32(dr["otherElement"]),
                     oneFoot = Convert.ToInt32(dr["oneFoot"]),
                     otherFoot = Convert.ToInt32(dr["otherFoot"]),
                     LocX = Convert.ToInt32(dr["locX"]),
@@ -194,6 +195,25 @@ namespace SimuProteus
             return infoList;
         }
 
-        
+
+        public List<LineFootView> DecodeElementLineFootsByDb(DataSet ds)
+        {
+            List<LineFootView> infoList = new List<LineFootView>();
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                infoList.Add(new LineFootView()
+                {
+                    Idx = Convert.ToInt32(dr["id"]),
+                    Component = Convert.ToInt32(dr["component"]),
+                    Element = Convert.ToInt32(dr["innerIdx"]),
+                    Foot = Convert.ToInt32(dr["footIdx"]),
+                    PinsType = (enumPinsType)Enum.Parse(typeof(enumPinsType), dr["pinsType"].ToString()),
+                    PinsName = dr["name"].ToString()
+                });
+
+            }
+
+            return infoList;
+        }        
     }
 }

@@ -5,7 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace SimuProteus
@@ -13,7 +13,8 @@ namespace SimuProteus
     public partial class FormMain : Form
     {
         #region 初始化
-        private int elementIdx = 0;
+        private bool serialReadFlag = false;
+        private int elementIdx = 1;
         private enumComponent currentSelectedComponent = enumComponent.NONE;
         private Point clickPositionForLine ;
         private SerialCom serial = new SerialCom();
@@ -23,14 +24,15 @@ namespace SimuProteus
         ProjectDetails currentBoardInfo = new ProjectDetails() { 
             Project=new ProjectInfo (), 
             elementList = new List<ElementInfo> (), 
-            linesList = new List<ElementLine> () 
+            linesList = new List<ElementLine> () ,
+            footsList = new List<LineFootView> ()
         };
 
         public FormMain()
         {
             InitializeComponent();
 
-            //dbHandler.InitialTable();
+            dbHandler.InitialTable();
             this.elementList = dbHandler.GetBaseComponents();
             int idx = 0;
             foreach (ElementInfo item in elementList)
@@ -51,6 +53,11 @@ namespace SimuProteus
             projItem.Tag = idx;
             projItem.Click += projectNameToolStripMenuItem_Click;
             this.ProjToolStripMenuItem.DropDownItems.Insert(0,projItem);
+        }
+
+        private void InitialNetPoint()
+        {
+
         }
         #endregion
 
@@ -101,7 +108,7 @@ namespace SimuProteus
             this.lbProjName.Text = projName;
         }
 
-        private void CreateLineForElement(int footIdx, int locX, int locY)
+        private void CreateLineForElement(int idx,int footIdx, int locX, int locY)
         {
             if (createLinePoint.Count == 0)
             {
@@ -109,9 +116,10 @@ namespace SimuProteus
                 {
                     Idx = elementIdx++,
                     oneFoot = footIdx,
+                    oneElement = idx,
                     LocX = locX,
                     LocY = locY,
-                    Color = Color.FromName(Ini.GetItemValue("colorInfo", "colorLine"))
+                    Color = Color.FromArgb(int.Parse(Ini.GetItemValue("colorInfo", "colorLine")))
                 });
                 clickPositionForLine.X = 0;
                 clickPositionForLine.Y = 0;
@@ -120,13 +128,16 @@ namespace SimuProteus
             }
             if (locX == createLinePoint[0].LocX && locY == createLinePoint[0].LocY) return;
             ElementLine eleOne = createLinePoint[0];
+            eleOne.otherElement = idx;
             ElementLine eleOther = new ElementLine()
             {
                 Idx = elementIdx++,
                 oneFoot = footIdx,
+                oneElement = idx,
+                otherElement = eleOne.oneElement,
                 LocX = locX,
                 LocY = locY,
-                Color = Color.FromName(Ini.GetItemValue("colorInfo", "colorLine"))
+                Color = Color.FromArgb(int.Parse(Ini.GetItemValue("colorInfo", "colorLine")))
             };
             eleOne.otherFoot = footIdx;
             eleOther.otherFoot = eleOne.oneFoot;
@@ -216,7 +227,7 @@ namespace SimuProteus
             for (int i = 0; i < this.currentBoardInfo.elementList.Count;i++ )
             {
                 ElementInfo tmpInfo = this.currentBoardInfo.elementList[i];
-                if (tmpInfo.ID == idx)
+                if (tmpInfo.InnerIdx == idx)
                 {
                     this.currentBoardInfo.elementList.RemoveAt(i);
                     break;
@@ -226,7 +237,7 @@ namespace SimuProteus
             for (int i = 0; i < this.pnBoard.Controls.Count; i++)
             {
                 Control item = this.pnBoard.Controls[i];
-                if (item.GetType() == typeof(UcElement) && (item as UcElement).ViewInfo.ID == idx)
+                if (item.GetType() == typeof(UcElement) && (item as UcElement).ViewInfo.InnerIdx == idx)
                 {
                     this.pnBoard.Controls.RemoveAt(i);
                     break;
@@ -239,10 +250,29 @@ namespace SimuProteus
             for (int i = 0; i < this.currentBoardInfo.elementList.Count; i++)
             {
                 ElementInfo tmpInfo = this.currentBoardInfo.elementList[i];
-                if (tmpInfo.ID == idx)
+                if (tmpInfo.InnerIdx == idx)
                 {
                     tmpInfo.Location = new Point(locX, locY);
                     break;
+                }
+            }
+
+            for (int i = 0; i < this.currentBoardInfo.linesList.Count; i++)
+            {
+                ElementLine tmpInfo = this.currentBoardInfo.linesList[i];
+                if (tmpInfo.oneElement == idx || tmpInfo.otherElement == idx)
+                {
+                    this.currentBoardInfo.linesList.Remove(tmpInfo);
+                    i--;
+                }
+            }
+            for (int i = 0; i < this.pnBoard.Controls.Count; i++)
+            {
+                Control item = this.pnBoard.Controls[i];
+                if (item.GetType() == typeof(UcLine) && ((item as UcLine).LineInfo.oneElement == idx || (item as UcLine).LineInfo.otherElement == idx))
+                {
+                    this.pnBoard.Controls.Remove(item);
+                    i--; 
                 }
             }
         }
@@ -261,25 +291,92 @@ namespace SimuProteus
                 }
             }
         }
+
+        private void UpdateElementName(int idx, string name)
+        {
+            for (int i = 0; i < this.currentBoardInfo.elementList.Count; i++)
+            {
+                ElementInfo tmpInfo = this.currentBoardInfo.elementList[i];
+                if (tmpInfo.InnerIdx == idx)
+                {
+                    tmpInfo.Name = name;
+                    break;
+                }
+            }
+        }
+
+        private void updateElementFoots(LineFootView foot)
+        {
+            bool foundFlag = false;
+            for (int i = 0; i < this.currentBoardInfo.footsList.Count; i++)
+            {
+                LineFootView item = this.currentBoardInfo.footsList[i];
+                if (item.Element == foot.Element && item.Foot == foot.Foot)
+                {
+                    this.currentBoardInfo.footsList.RemoveAt(i);
+                    this.currentBoardInfo.footsList.Add(foot);
+                    foundFlag = true;
+                    break;
+                }
+            }
+
+            if (!foundFlag)
+            {
+                for (int i = 0; i < this.currentBoardInfo.elementList.Count; i++)
+                {
+                    ElementInfo elementTmp = this.currentBoardInfo.elementList[i];
+                    if (elementTmp.InnerIdx != foot.Element)
+                        continue;
+
+                    foreach (LineFoot footItem in elementTmp.LineFoots)
+                    {
+                        this.currentBoardInfo.footsList.Add(new LineFootView()
+                        {
+                            Component = elementTmp.ID,
+                            Element = elementTmp.InnerIdx,
+                            Foot = footItem.Idx,
+                            PinsName = footItem.Idx == foot.Foot ? foot.PinsName : footItem.Name,
+                            PinsType = footItem.Idx == foot.Foot ? foot.PinsType : footItem.PinsType
+                        });
+                    }
+                    break;
+                }
+            }
+        }
         #endregion
 
         #region 面板事件
 
+        private ElementInfo GetElementInfoOnBoardByName(string component, Point location)
+        {
+            ElementInfo infoTmp = GetElementByName(component);
+            ElementInfo info = (ElementInfo)infoTmp.Clone();
+            info.Location = location;
+
+            return info;
+        }
+
         private void pnBoard_Click(object sender, EventArgs e)
         {
             MouseEventArgs clickArgs = (MouseEventArgs)e;
-            ElementInfo infoTmp = GetElementByName(this.currentSelectedComponent.ToString());
-            ElementInfo info =(ElementInfo) infoTmp.Clone();
-            info.Location = new Point(clickArgs.X, clickArgs.Y);
+            ElementInfo info = GetElementInfoOnBoardByName(this.currentSelectedComponent.ToString(),new Point(clickArgs.X, clickArgs.Y));
             if (info.Name == enumComponent.NONE.ToString())
             {
                 if (this.createLinePoint.Count == 1)
                     this.clickPositionForLine = info.Location;
                 return;
             }
-            info.ID = elementIdx++;
-            this.pnBoard.Controls.Add(new UcElement(info, CreateLineForElement, DeleteElement, MoveElement));
-            this.currentBoardInfo.elementList.Add(info);
+            if (clickArgs.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                this.Cursor = Cursors.Arrow;
+                this.currentSelectedComponent = enumComponent.NONE;
+            }
+            else
+            {
+                info.InnerIdx = elementIdx++;
+                this.pnBoard.Controls.Add(this.getElementView(info));
+                this.currentBoardInfo.elementList.Add(info);
+            }
         }
 
         private ElementInfo GetElementByName(string name)
@@ -340,9 +437,14 @@ namespace SimuProteus
                 LineFoots = new DBUtility().GetChipFoots(chipIdx)
             };
 
-            return new UcElement(info, CreateLineForElement, DeleteElement, MoveElement);
+            return this.getElementView(info);
         }
 
+
+        private UcElement getElementView(ElementInfo info)
+        {
+            return new UcElement(info, CreateLineForElement, DeleteElement, MoveElement, UpdateElementName, updateElementFoots,this.currentBoardInfo.footsList);
+        }
 
         private bool CheckLoadChip()
         {
@@ -391,8 +493,16 @@ namespace SimuProteus
         {
             if (!this.CheckSerialStatus()) return;
 
+            if (serialReadFlag)
+            {
+                MessageBox.Show("已经在监听串口数据");
+                return;
+            }
 
-            MessageBox.Show("==待做");
+            Thread threadSerial = new Thread(ListenSerialPort);
+            threadSerial.Start();
+            
+            serialReadFlag = true;
         }
 
         private void writeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -400,6 +510,18 @@ namespace SimuProteus
             if (!this.CheckSerialStatus()) return;
 
             MessageBox.Show("==待做");
+        }
+
+        private void freeSerialToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (serial.IsOpen)
+            {
+                serial.Close();
+            }
+            else
+            {
+                MessageBox.Show("串口未开启");
+            }
         }
 
         private void serialStatusToolStripMenuItem_Click(object sender, EventArgs e)
@@ -414,8 +536,8 @@ namespace SimuProteus
             ToolStripItem projItem = sender as ToolStripItem;
 
             ProjectDetails projInfo = dbHandler.getProjectDetail(Convert.ToInt32(projItem.Tag));
-            this.LoadElementByHistoryItem(projInfo);
             this.currentBoardInfo = projInfo;
+            this.LoadElementByHistoryItem(projInfo);
         }
 
         private void LoadElementByHistoryItem(ProjectDetails projInfo)
@@ -428,7 +550,7 @@ namespace SimuProteus
             }
             foreach (ElementInfo info in projInfo.elementList)
             {
-                UcElement ucTmp = new UcElement(info, CreateLineForElement, DeleteElement, MoveElement);
+                UcElement ucTmp =this.getElementView(info);
                 this.pnBoard.Controls.Add(ucTmp);
                 ucTmp.BringToFront();
             }
@@ -476,7 +598,52 @@ namespace SimuProteus
                 lineOther.BringToFront();
             }
         }
+
+        private void colorSetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormSetColor formColor = new FormSetColor();
+            formColor.ShowDialog();
+        }
+
+        private void sizeSetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormSetSize formSize = new FormSetSize();
+            formSize.ShowDialog();
+        }
+
         #endregion 
 
+        #region 串口事件
+        private void ListenSerialPort()
+        {
+            byte[] byteRecvive = new byte[1024];
+            while(true)
+            {
+                string strMsg = string.Empty;
+
+                serial.DiscardInBuffer();
+                serial.DiscardOutBuffer();
+                if (!serial.ReadBuffer(byteRecvive, 5))
+                {
+                    Console.WriteLine("数据标志位失败");
+                }
+                handlerSerialData(byteRecvive);
+            }
+        }
+
+        private void handlerSerialData(byte[] buff)
+        {
+            //GetElementInfoOnBoardByName:根据名称获取显示信息
+            //getElementView:根据显示显示创建显示对象
+        }
+
+        private void WriteSerialPort(string strSend)
+        {
+            serial.DiscardInBuffer();
+            serial.DiscardOutBuffer();
+
+            serial.Write(strSend);
+        }
+        #endregion
     }
 }

@@ -15,8 +15,12 @@ namespace SimuProteus
         private bool mouseDownFlag = false;
         private int currentX = 0, currentY = 0;
         private DBUtility dbHandler = new DBUtility();
-        private Action<int, int, int> ClickFoot = null, dragElement=null;
+        private List<LineFootView> pinsList = null;
+        private Action<int, int, int,int> ClickFoot = null;
+        private Action<int, int, int> dragElement=null;
+        private Action<int, string> updateElementName = null;
         private Action<int>  RemoveElement = null;
+        private Action<LineFootView> updateElementFoots = null;
 
         /// <summary>
         /// 元器件显示信息
@@ -32,12 +36,15 @@ namespace SimuProteus
             InitializeComponent();
         }
 
-        public UcElement(ElementInfo viewInfo, Action<int, int, int> linkLine, Action<int> removeSelf,Action<int,int,int> moveElement)
+        public UcElement(ElementInfo viewInfo, Action<int, int, int, int> linkLine, Action<int> removeSelf, Action<int, int, int> moveElement, Action<int, string> updateElementName, Action<LineFootView> updateElementFoots, List<LineFootView> pinsList)
         {
             this.ViewInfo = viewInfo;
             this.ClickFoot = linkLine;
             this.RemoveElement = removeSelf;
             this.dragElement = moveElement;
+            this.updateElementName = updateElementName;
+            this.updateElementFoots = updateElementFoots;
+            this.pinsList = pinsList;
 
             InitializeComponent();
 
@@ -72,7 +79,7 @@ namespace SimuProteus
 
         private void ExchangeCoordinate(int footIdx,int locX, int locY)
         {
-            this.ClickFoot(footIdx, locX + this.Location.X + Constants.FOOT_SIZE_PIXEL / 2, locY + this.Location.Y + Constants.FOOT_SIZE_PIXEL / 2);
+            this.ClickFoot(this.ViewInfo.InnerIdx,footIdx, locX + this.Location.X + Constants.FOOT_SIZE_PIXEL / 2, locY + this.Location.Y + Constants.FOOT_SIZE_PIXEL / 2);
         }
 
 
@@ -96,7 +103,7 @@ namespace SimuProteus
         private void UcElement_MouseUp(object sender, MouseEventArgs e)
         {
             mouseDownFlag = false;
-            this.dragElement(this.ViewInfo.ID, this.Location.X, this.Location.Y);
+            this.dragElement(this.ViewInfo.InnerIdx, this.Location.X, this.Location.Y);
         }
 
         private void UcElement_MouseMove(object sender, MouseEventArgs e)
@@ -128,12 +135,12 @@ namespace SimuProteus
 
         private void delToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.RemoveElement(this.ViewInfo.ID);
+            this.RemoveElement(this.ViewInfo.InnerIdx);
         }
 
         private void UcElement_DoubleClick(object sender, EventArgs e)
         {
-            FormFootParam formFoot = new FormFootParam(this.ViewInfo);
+            FormFootParam formFoot = new FormFootParam(this.ViewInfo, this.updateElementName, this.updateElementFoots, this.pinsList);
             formFoot.ShowDialog();
         }
 

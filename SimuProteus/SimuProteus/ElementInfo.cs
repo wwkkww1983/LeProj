@@ -50,6 +50,15 @@ namespace SimuProteus
         }
 
         /// <summary>
+        /// 项目内索引序号
+        /// </summary>
+        public int InnerIdx
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// 索引序号
         /// </summary>
         public int ID
@@ -127,11 +136,26 @@ namespace SimuProteus
     }
 
     /// <summary>
+    /// 管脚属性
+    /// </summary>
+    public struct LineFootView
+    {
+        public int Idx;
+        public int Component;
+        public int Element;
+        public int Foot;
+        public enumPinsType PinsType;
+        public string PinsName;
+    }
+
+    /// <summary>
     /// 元器件之间的连线
     /// </summary>
     public struct ElementLine
     {
         public int Idx;
+        public int oneElement;
+        public int otherElement;
         public int oneFoot;
         public int otherFoot;
         public int LocX;
@@ -163,6 +187,7 @@ namespace SimuProteus
         public ProjectInfo Project;
         public List<ElementLine> linesList;
         public List<ElementInfo> elementList;
+        public List<LineFootView> footsList;
     }
 
     /// <summary>

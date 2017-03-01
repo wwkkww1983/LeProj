@@ -31,11 +31,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormFootParam));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.label1 = new System.Windows.Forms.Label();
             this.tbName = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dgvFoots = new System.Windows.Forms.DataGridView();
             this.footName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idx = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.footType = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -65,6 +66,23 @@
             this.tabPage1.Text = "元器件";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // tbName
+            // 
+            this.tbName.Location = new System.Drawing.Point(58, 47);
+            this.tbName.Name = "tbName";
+            this.tbName.Size = new System.Drawing.Size(174, 25);
+            this.tbName.TabIndex = 1;
+            this.tbName.TextChanged += new System.EventHandler(this.tbName_TextChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(15, 50);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(37, 15);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "名称";
+            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.dgvFoots);
@@ -76,22 +94,6 @@
             this.tabPage2.Text = "管脚";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 50);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(37, 15);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "名称";
-            // 
-            // tbName
-            // 
-            this.tbName.Location = new System.Drawing.Point(58, 47);
-            this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(174, 25);
-            this.tbName.TabIndex = 1;
-            // 
             // dgvFoots
             // 
             this.dgvFoots.AllowUserToAddRows = false;
@@ -99,18 +101,27 @@
             this.dgvFoots.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvFoots.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.footName,
+            this.idx,
             this.footType});
             this.dgvFoots.Location = new System.Drawing.Point(3, 6);
             this.dgvFoots.Name = "dgvFoots";
             this.dgvFoots.RowTemplate.Height = 27;
             this.dgvFoots.Size = new System.Drawing.Size(244, 413);
             this.dgvFoots.TabIndex = 0;
+            this.dgvFoots.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFoots_CellEndEdit);
             // 
             // footName
             // 
             this.footName.DataPropertyName = "footName";
             this.footName.HeaderText = "名称";
             this.footName.Name = "footName";
+            // 
+            // idx
+            // 
+            this.idx.DataPropertyName = "idx";
+            this.idx.HeaderText = "idx";
+            this.idx.Name = "idx";
+            this.idx.Visible = false;
             // 
             // footType
             // 
@@ -153,6 +164,7 @@
         private System.Windows.Forms.TextBox tbName;
         private System.Windows.Forms.DataGridView dgvFoots;
         private System.Windows.Forms.DataGridViewTextBoxColumn footName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idx;
         private System.Windows.Forms.DataGridViewComboBoxColumn footType;
     }
 }
