@@ -10,7 +10,7 @@ namespace SimuProteus
     /// <summary>
     /// 显示信息的编码解码
     /// </summary>
-    class Coder
+    public class Coder
     {
         /// <summary>
         /// 解析单个元器件数据库信息为可用结构

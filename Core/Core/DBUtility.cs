@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace SimuProteus
 {
-    class DBUtility
+    public class DBUtility
     {
         private const string STR_CONNECTION = "Data Source=prot.s;Version=3;";
         private Coder code = new Coder();
