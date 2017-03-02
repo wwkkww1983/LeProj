@@ -9,8 +9,6 @@ namespace SimuProteus
     public struct Constants
     {
         static string m_directory = System.Environment.CurrentDirectory;
-        static int m_footSize = int.Parse(Ini.GetItemValue("sizeInfo", "pixelFootSize"));
-        static int m_lineWidth = int.Parse(Ini.GetItemValue("sizeInfo", "pixelLineWidth"));
 
         /// <summary>
         /// 当前程序目录
@@ -29,7 +27,7 @@ namespace SimuProteus
         {
             get
             {
-                return m_footSize;
+                return int.Parse(Ini.GetItemValue("sizeInfo", "pixelFootSize"));
             }
         }
         /// <summary>
@@ -39,7 +37,7 @@ namespace SimuProteus
         {
             get
             {
-                return m_lineWidth;
+                return int.Parse(Ini.GetItemValue("sizeInfo", "pixelLineWidth"));
             }
         }
 
@@ -88,10 +86,20 @@ namespace SimuProteus
     /// </summary>
     public enum enumPinsType
     {
-        Input,
+        Input = 0x00,
         Output,
         Power,
         OD,
         OC
+    }
+
+    /// <summary>
+    /// 节点类型
+    /// </summary>
+    public enum enumNetPointType
+    {
+        VCC = 0x01,
+        GND,
+        NONE
     }
 }

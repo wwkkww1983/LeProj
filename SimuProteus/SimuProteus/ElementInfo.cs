@@ -173,6 +173,8 @@ namespace SimuProteus
     {
         public int Idx;
         public string Name;
+        public int Length;
+        public int Width;
         public DateTime CreateTime;
         public DateTime UpdateTime;
         public int Chips;
@@ -188,6 +190,7 @@ namespace SimuProteus
         public List<ElementLine> linesList;
         public List<ElementInfo> elementList;
         public List<LineFootView> footsList;
+        public List<NetPoint> pointsList;
     }
 
     /// <summary>
@@ -201,5 +204,16 @@ namespace SimuProteus
         public int DataBits;
         public int StopBits;
         public int TimeOut;
+    }
+
+    /// <summary>
+    /// 网络节点信息
+    /// </summary>
+    public struct NetPoint
+    {
+        public int Idx;
+        public int X;
+        public int Y;
+        public enumNetPointType Type;
     }
 }

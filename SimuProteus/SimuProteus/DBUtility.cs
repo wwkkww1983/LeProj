@@ -52,10 +52,20 @@ namespace SimuProteus
             tableList.Add(@"create table projects(
                                id INTEGER PRIMARY KEY AUTOINCREMENT,
                                name nvarchar(20),
+                               height int,
+                               width int,
                                createtime datetime,
                                updatetime datetime,
                                chips nvarchar(100),
                                desc nvarchar(100));");
+
+            //网格节点
+            tableList.Add(@"create table netPoints(
+                               id INTEGER PRIMARY KEY AUTOINCREMENT,
+                               projIdx int,
+                               x int,
+                               y int,
+                               status int);");
 
             //当前面板上面的所有元器件
             tableList.Add(@"create table componentView (
@@ -268,6 +278,10 @@ namespace SimuProteus
             DataSet dsLines = SQLiteHelper.ExecuteDataSet(STR_CONNECTION, strSql, null);
             project.linesList = code.DecodeElementLineByDb(dsLines);
 
+            strSql = string.Format("select * from netPoints where projIdx={0}", projIdx);
+            DataSet dsPoints = SQLiteHelper.ExecuteDataSet(STR_CONNECTION, strSql, null);
+            project.pointsList = code.DecodeNetPointsByDb(dsPoints);
+
             project.footsList = this.GetPinsInfo(projIdx, -1);
 
             return project;
@@ -287,7 +301,8 @@ namespace SimuProteus
             string strSql = string.Format(@"delete from projects where id={0};
                                delete from componentView where projIdx={0};
                                delete from lineLink where project={0};
-                               delete from lineFootView where projIdx={0};", projIdx);
+                               delete from lineFootView where projIdx={0};
+                               delete from netPoints where projIdx={0};", projIdx);
             return SQLiteHelper.ExecuteNonQuery(STR_CONNECTION, strSql) > 0;
         }
 
@@ -377,9 +392,9 @@ namespace SimuProteus
         public int InsertNewProject(ProjectDetails project)
         {
             ProjectInfo baseInfo = project.Project;
-            string strSql = string.Format(@"insert into projects (name,createtime,updatetime,chips,desc) 
-                                                values ('{0}','{1}','{2}','{3}','{4}');select last_insert_rowid();",
-                                baseInfo.Name, baseInfo.CreateTime.ToString("yyyy-MM-dd HH:mm:ss"), baseInfo.UpdateTime.ToString("yyyy-MM-dd HH:mm:ss"), baseInfo.Chips, baseInfo.Description);
+            string strSql = string.Format(@"insert into projects (name,createtime,updatetime,chips,desc,height,width) 
+                                                values ('{0}','{1}','{2}','{3}','{4}',{5},{6});select last_insert_rowid();",
+                                baseInfo.Name, baseInfo.CreateTime.ToString("yyyy-MM-dd HH:mm:ss"), baseInfo.UpdateTime.ToString("yyyy-MM-dd HH:mm:ss"), baseInfo.Chips, baseInfo.Description,baseInfo.Length,baseInfo.Width);
             object objIdx = SQLiteHelper.ExecuteScalar(STR_CONNECTION, strSql);
             int projIdx = Convert.ToInt32(objIdx);
             if (projIdx <= 0) return projIdx;
@@ -413,10 +428,21 @@ namespace SimuProteus
             foreach (LineFootView lineItem in project.footsList)
             {
                 strSql += string.Format("insert into lineFootView (projIdx,component,innerIdx,name,pinsType,footIdx) values ({0},{1},{2},'{3}',{4},{5});",
-                    projIdx, lineItem.Component, lineItem.Element, lineItem.PinsName, (int)lineItem.PinsType,lineItem.Foot);
+                    projIdx, lineItem.Component, lineItem.Element, lineItem.PinsName, (int)lineItem.PinsType, lineItem.Foot);
             }
             objIdx = SQLiteHelper.ExecuteNonQuery(STR_CONNECTION, strSql);
             if (Convert.ToInt32(objIdx) != project.footsList.Count)
+                return -1;
+
+            strSql = string.Empty;
+            if (project.pointsList.Count == 0) return projIdx;
+            foreach (NetPoint pointItem in project.pointsList)
+            {
+                strSql += string.Format("insert into netPoints (projIdx,x,y,status) values ({0},{1},{2},{3});",
+                    projIdx, pointItem.X, pointItem.Y, (int)pointItem.Type);
+            }
+            objIdx = SQLiteHelper.ExecuteNonQuery(STR_CONNECTION, strSql);
+            if (Convert.ToInt32(objIdx) != project.pointsList.Count)
                 return -1;
 
             return projIdx;

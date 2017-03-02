@@ -15,6 +15,8 @@ namespace SimuProteus
         #region 初始化
         private bool serialReadFlag = false;
         private int elementIdx = 1;
+        private int countWidth = int.Parse(Ini.GetItemValue("sizeInfo", "netWidth"));
+        private int countHeight = int.Parse(Ini.GetItemValue("sizeInfo", "netHeight"));
         private enumComponent currentSelectedComponent = enumComponent.NONE;
         private Point clickPositionForLine ;
         private SerialCom serial = new SerialCom();
@@ -25,7 +27,8 @@ namespace SimuProteus
             Project=new ProjectInfo (), 
             elementList = new List<ElementInfo> (), 
             linesList = new List<ElementLine> () ,
-            footsList = new List<LineFootView> ()
+            footsList = new List<LineFootView> (),
+            pointsList = new  List<NetPoint>()
         };
 
         public FormMain()
@@ -40,7 +43,9 @@ namespace SimuProteus
                 UcComponent compo = new UcComponent(++idx, item, ChangeCursor);
                 this.gbComponent.Controls.Add(compo);  
             }
-            this.InitialNetPoint();
+            currentBoardInfo.Project.Length = countHeight;
+            currentBoardInfo.Project.Width = countWidth;
+            this.InitialNetPoint(countWidth,countHeight);
             List<ProjectInfo> projectList = dbHandler.GetAllProjects();
             foreach (ProjectInfo item in projectList)
             {
@@ -56,12 +61,10 @@ namespace SimuProteus
             this.ProjToolStripMenuItem.DropDownItems.Insert(0,projItem);
         }
 
-        
-        private void InitialNetPoint()
+
+        private void InitialNetPoint(int countWidth, int countHeight)
         {
             int boardMargin = int.Parse(Ini.GetItemValue("sizeInfo", "pixelBoardMargin"));
-            int countWidth = int.Parse(Ini.GetItemValue("sizeInfo", "netWidth"));
-            int countHeight = int.Parse(Ini.GetItemValue("sizeInfo", "netHeight"));
             int sizePoint = int.Parse(Ini.GetItemValue("sizeInfo", "pixelNetPoint"));
             int width = this.pnBoard.Width - boardMargin * 2;
             int height = this.pnBoard.Height - boardMargin * 2;
@@ -73,7 +76,7 @@ namespace SimuProteus
                 y = boardMargin;
                 for (int j = 0; j < countHeight; j++)
                 {
-                    UcPoint point = new UcPoint();
+                    UcPoint point = new UcPoint(i, j, ChangeNetPoint);
                     point.Location = new Point(x, y);
                     y += sizePoint;
                     y += interHeight;
@@ -367,6 +370,68 @@ namespace SimuProteus
                 }
             }
         }
+
+        private void ChangeNetPoint(UcPoint ucItem, enumNetPointType pointType)
+        {
+            bool foundFlag = false;
+            for(int i=0;i< this.currentBoardInfo.pointsList.Count;i++)
+            {
+                NetPoint point = this.currentBoardInfo.pointsList[i];
+                if (point.X == ucItem.X && point.Y == ucItem.Y)
+                {
+                    point.Type = pointType;
+                    this.currentBoardInfo.pointsList.RemoveAt(i);
+                    if (pointType != enumNetPointType.NONE)
+                    {
+                        this.currentBoardInfo.pointsList.Add(point);
+                    }
+                    foundFlag = true;
+                    break;
+                }
+            }
+            if (!foundFlag)
+            {
+                this.currentBoardInfo.pointsList.Add(new NetPoint()
+                {
+                    X = ucItem.X,
+                    Y = ucItem.Y,
+                    Type = pointType
+                });
+            }
+            
+            this.UpdatePointName(ucItem, pointType);
+        }
+
+        private void UpdatePointName(UcPoint ucItem, enumNetPointType status)
+        {
+            bool foundFlag = false;
+            string labelTag = string.Format("{0}*{1}",ucItem.X,ucItem.Y);
+            for (int i = 0; i < this.pnBoard.Controls.Count;i++ )
+            {
+                Control item = this.pnBoard.Controls[i];
+                if (item.GetType() == typeof(Label) && (Convert.ToString((item as Label).Tag) == labelTag))
+                {
+                    if (status == enumNetPointType.NONE)
+                    {
+                        this.pnBoard.Controls.RemoveAt(i);
+                    }
+                    else
+                    {
+                        (item as Label).Text = status.ToString();
+                    }
+                    foundFlag = true;
+                    break;
+                }
+            }
+            if (!foundFlag && status != enumNetPointType.NONE)
+            {
+                Label lbTmp = new Label();
+                lbTmp.Tag = labelTag;
+                lbTmp.Text = status.ToString();
+                lbTmp.Location = new Point(ucItem.Location.X - 12, ucItem.Location.Y + 8);
+                this.pnBoard.Controls.Add(lbTmp);
+            }
+        }
         #endregion
 
         #region 面板事件
@@ -398,7 +463,9 @@ namespace SimuProteus
             else
             {
                 info.InnerIdx = elementIdx++;
-                this.pnBoard.Controls.Add(this.getElementView(info));
+                UcElement elementItem = this.getElementView(info);
+                this.pnBoard.Controls.Add(elementItem);
+                elementItem.BringToFront();
                 this.currentBoardInfo.elementList.Add(info);
             }
         }
@@ -421,8 +488,11 @@ namespace SimuProteus
         {
             if (CheckLoadChip())
             {
+                this.InitialNetPoint(countWidth, countHeight);
                 int currentChips = Convert.ToInt32((sender as ToolStripMenuItem).Tag);
-                this.pnBoard.Controls.Add(this.InitialChipOnBoard(currentChips));
+                UcElement chipElement = this.InitialChipOnBoard(currentChips);
+                this.pnBoard.Controls.Add(chipElement);
+                chipElement.BringToFront();
                 currentBoardInfo.Project.Chips = currentChips;
             }
         }
@@ -431,8 +501,11 @@ namespace SimuProteus
         {
             if (CheckLoadChip())
             {
+                this.InitialNetPoint(countWidth, countHeight);
                 int currentChips = Convert.ToInt32((sender as ToolStripMenuItem).Tag);
-                this.pnBoard.Controls.Add(this.InitialChipOnBoard(currentChips));
+                UcElement chipElement = this.InitialChipOnBoard(currentChips);
+                this.pnBoard.Controls.Add(chipElement);
+                chipElement.BringToFront();
                 currentBoardInfo.Project.Chips = currentChips;
             }
         }
@@ -484,6 +557,8 @@ namespace SimuProteus
                     this.pnBoard.Controls.Add(this.lbProjName);
                     currentBoardInfo.linesList.Clear();
                     currentBoardInfo.elementList.Clear();
+                    currentBoardInfo.footsList.Clear();
+                    currentBoardInfo.pointsList.Clear();
                 }
                 else
                 {//不清空
@@ -565,6 +640,7 @@ namespace SimuProteus
 
             ProjectDetails projInfo = dbHandler.getProjectDetail(Convert.ToInt32(projItem.Tag));
             this.currentBoardInfo = projInfo;
+            this.InitialNetPoint(projInfo.Project.Width, projInfo.Project.Length);
             this.LoadElementByHistoryItem(projInfo);
         }
 
@@ -572,9 +648,13 @@ namespace SimuProteus
         {
             this.lbProjName.Text = projInfo.Project.Name;
             this.lbProjName.Tag = projInfo.Project.Idx;
+            this.InitialNetPoint(projInfo.Project.Width,projInfo.Project.Length);
+
             if (projInfo.Project.Chips > 0)
             {
-                this.pnBoard.Controls.Add(this.InitialChipOnBoard(projInfo.Project.Chips));
+                UcElement chipElement = this.InitialChipOnBoard(projInfo.Project.Chips);
+                this.pnBoard.Controls.Add(chipElement);
+                chipElement.BringToFront();
             }
             foreach (ElementInfo info in projInfo.elementList)
             {
@@ -624,6 +704,20 @@ namespace SimuProteus
                 this.pnBoard.Controls.Add(lineOther);
                 lineOne.BringToFront();
                 lineOther.BringToFront();
+            }
+            foreach (NetPoint point in projInfo.pointsList)
+            {
+                if (point.Type == enumNetPointType.NONE) continue;
+                for (int i = 0; i < this.pnBoard.Controls.Count; i++)
+                {
+                    Control item = this.pnBoard.Controls[i];
+                    if (item.GetType() == typeof(UcPoint) && (item as UcPoint).X == point.X && (item as UcPoint).Y == point.Y)
+                    {
+                        UcPoint itemPoint = (item as UcPoint);
+                        itemPoint.UpdateStatusOnInitialLoad(point.Type);
+                        UpdatePointName(itemPoint, point.Type);
+                    }
+                }
             }
         }
 

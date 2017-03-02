@@ -67,5 +67,21 @@ namespace SimuProteus
             Brush brush = new SolidBrush(colorItem);
             g.FillEllipse(brush, rect);
         }
+
+        /// <summary>
+        /// 写字
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="color"></param>
+        /// <param name="location"></param>
+        /// <param name="words"></param>
+        public static void DrawWords(Control board, Color color,PointF location, string words)
+        {
+            Graphics g = board.CreateGraphics();
+            Brush brush = new SolidBrush(color);
+            Font font = new Font(SystemFonts.DefaultFont, FontStyle.Bold);
+
+            g.DrawString(words, font, brush, location);
+        }
     }
 }

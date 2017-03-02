@@ -152,6 +152,8 @@ namespace SimuProteus
             {
                 Idx = Convert.ToInt32(dr["id"]),
                 Name = dr["name"].ToString(),
+                Length = Convert.ToInt32(dr["height"]),
+                Width = Convert.ToInt32(dr["width"]),
                 CreateTime = Convert.ToDateTime(dr["createtime"]),
                 UpdateTime = Convert.ToDateTime(dr["updatetime"]),
                 Chips = Convert.ToInt32(dr["chips"]),
@@ -187,11 +189,29 @@ namespace SimuProteus
                     LocY = Convert.ToInt32(dr["locY"]),
                     LocOtherX = Convert.ToInt32(dr["locOtherX"]),
                     LocOtherY = Convert.ToInt32(dr["locOtherY"]),
-                    Color = Color.FromArgb( Convert.ToInt32(dr["color"]))
+                    Color = Color.FromArgb(Convert.ToInt32(dr["color"]))
                 });
 
             }
-                               
+
+            return infoList;
+        }
+
+        public List<NetPoint> DecodeNetPointsByDb(DataSet ds)
+        {
+            List<NetPoint> infoList = new List<NetPoint>();
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                infoList.Add(new NetPoint()
+                {
+                    Idx = Convert.ToInt32(dr["id"]),
+                    X = Convert.ToInt32(dr["x"]),
+                    Y = Convert.ToInt32(dr["y"]),
+                    Type = (enumNetPointType)Convert.ToInt32(dr["status"])
+                });
+
+            }
+
             return infoList;
         }
 
