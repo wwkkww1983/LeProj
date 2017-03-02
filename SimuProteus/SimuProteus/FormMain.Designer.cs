@@ -103,7 +103,7 @@
             // hC244ToolStripMenuItem
             // 
             this.hC244ToolStripMenuItem.Name = "hC244ToolStripMenuItem";
-            this.hC244ToolStripMenuItem.Size = new System.Drawing.Size(145, 24);
+            this.hC244ToolStripMenuItem.Size = new System.Drawing.Size(156, 24);
             this.hC244ToolStripMenuItem.Tag = "1";
             this.hC244ToolStripMenuItem.Text = "74HC244";
             this.hC244ToolStripMenuItem.Click += new System.EventHandler(this.hC244ToolStripMenuItem_Click);
@@ -111,9 +111,9 @@
             // lS221ToolStripMenuItem
             // 
             this.lS221ToolStripMenuItem.Name = "lS221ToolStripMenuItem";
-            this.lS221ToolStripMenuItem.Size = new System.Drawing.Size(145, 24);
+            this.lS221ToolStripMenuItem.Size = new System.Drawing.Size(156, 24);
             this.lS221ToolStripMenuItem.Tag = "2";
-            this.lS221ToolStripMenuItem.Text = "74LS221";
+            this.lS221ToolStripMenuItem.Text = "74系列芯片";
             this.lS221ToolStripMenuItem.Click += new System.EventHandler(this.lS221ToolStripMenuItem_Click);
             // 
             // setToolStripMenuItem

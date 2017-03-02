@@ -63,7 +63,22 @@ namespace SimuProteus
         /// <summary>
         /// 接地
         /// </summary>
-        Land
+        Land,
+
+        /// <summary>
+        /// 二极管
+        /// </summary>
+        Diode,
+
+        /// <summary>
+        /// 三极管
+        /// </summary>
+        Triode,
+
+        /// <summary>
+        /// 运算放大器
+        /// </summary>
+        Amplifier
     }
 
     /// <summary>

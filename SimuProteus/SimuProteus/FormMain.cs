@@ -35,7 +35,7 @@ namespace SimuProteus
         {
             InitializeComponent();
 
-            dbHandler.InitialTable();
+            //dbHandler.InitialTable();
             this.elementList = dbHandler.GetBaseComponents();
             int idx = 0;
             foreach (ElementInfo item in elementList)
@@ -516,7 +516,7 @@ namespace SimuProteus
             switch (chipIdx)
             {
                 case 1: chipName = "\\img\\74HC244.jpg"; break;
-                case 2: chipName = "\\img\\HD74LS221P.jpg"; break;
+                case 2: chipName = "\\img\\74Serial.png"; break;
                 default: break;
             }
             Image imgChip = Image.FromFile(Constants.CurrentDirectory + chipName);
