@@ -25,6 +25,7 @@ namespace SimuProteus
                 strSql += strItem;
             }
 
+            SQLiteHelper.CreateDatabase("prot.s", "vejoe2017");
             SQLiteHelper.ExecuteNonQuery(STR_CONNECTION, strSql, null);
             this.CreateModelData();
         }
