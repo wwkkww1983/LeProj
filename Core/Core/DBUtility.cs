@@ -12,6 +12,16 @@ namespace SimuProteus
         private const string STR_CONNECTION = "Data Source=prot.s;Version=3;";
         private Coder code = new Coder();
 
+        public DBUtility()
+        {
+        }
+
+        public DBUtility(bool dbEncrypt)
+        {
+            SQLiteHelper.SetPassWordFlag = dbEncrypt;
+            SQLiteHelper.SetSignature = Ini.GetItemValue("sizeInfo", "appSignature");
+        }
+
         /// <summary>
         /// 新建表结构
         /// </summary>
@@ -25,7 +35,7 @@ namespace SimuProteus
                 strSql += strItem;
             }
 
-            SQLiteHelper.CreateDatabase("prot.s", "vejoe2017");
+            SQLiteHelper.CreateDatabase("prot.s");
             SQLiteHelper.ExecuteNonQuery(STR_CONNECTION, strSql, null);
             this.CreateModelData();
         }

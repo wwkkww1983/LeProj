@@ -44,6 +44,8 @@
             this.tbNetPoint = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.tbMargin = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.tbDragDistance = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,7 +67,7 @@
             this.tbLength.Location = new System.Drawing.Point(270, 46);
             this.tbLength.Name = "tbLength";
             this.tbLength.Size = new System.Drawing.Size(100, 25);
-            this.tbLength.TabIndex = 1;
+            this.tbLength.TabIndex = 2;
             // 
             // label2
             // 
@@ -106,7 +108,7 @@
             this.tbFootSize.Location = new System.Drawing.Point(211, 155);
             this.tbFootSize.Name = "tbFootSize";
             this.tbFootSize.Size = new System.Drawing.Size(100, 25);
-            this.tbFootSize.TabIndex = 1;
+            this.tbFootSize.TabIndex = 3;
             // 
             // label4
             // 
@@ -122,11 +124,11 @@
             this.tbLineWidth.Location = new System.Drawing.Point(211, 186);
             this.tbLineWidth.Name = "tbLineWidth";
             this.tbLineWidth.Size = new System.Drawing.Size(100, 25);
-            this.tbLineWidth.TabIndex = 1;
+            this.tbLineWidth.TabIndex = 4;
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(216, 293);
+            this.btnCancel.Location = new System.Drawing.Point(216, 322);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 2;
@@ -136,7 +138,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(123, 293);
+            this.btnSave.Location = new System.Drawing.Point(123, 322);
             this.btnSave.MaximumSize = new System.Drawing.Size(75, 23);
             this.btnSave.MinimumSize = new System.Drawing.Size(75, 23);
             this.btnSave.Name = "btnSave";
@@ -160,7 +162,7 @@
             this.tbNetPoint.Location = new System.Drawing.Point(211, 217);
             this.tbNetPoint.Name = "tbNetPoint";
             this.tbNetPoint.Size = new System.Drawing.Size(100, 25);
-            this.tbNetPoint.TabIndex = 1;
+            this.tbNetPoint.TabIndex = 5;
             // 
             // label6
             // 
@@ -176,16 +178,34 @@
             this.tbMargin.Location = new System.Drawing.Point(211, 248);
             this.tbMargin.Name = "tbMargin";
             this.tbMargin.Size = new System.Drawing.Size(100, 25);
-            this.tbMargin.TabIndex = 1;
+            this.tbMargin.TabIndex = 6;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(78, 284);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(127, 15);
+            this.label7.TabIndex = 0;
+            this.label7.Text = "防抖距离（像素）";
+            // 
+            // tbDragDistance
+            // 
+            this.tbDragDistance.Location = new System.Drawing.Point(211, 279);
+            this.tbDragDistance.Name = "tbDragDistance";
+            this.tbDragDistance.Size = new System.Drawing.Size(100, 25);
+            this.tbDragDistance.TabIndex = 7;
             // 
             // FormSetSize
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(421, 341);
+            this.ClientSize = new System.Drawing.Size(421, 358);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.tbDragDistance);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.tbMargin);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.tbNetPoint);
@@ -221,5 +241,7 @@
         private System.Windows.Forms.TextBox tbNetPoint;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox tbMargin;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox tbDragDistance;
     }
 }

@@ -6,14 +6,36 @@ using System.IO;
 using System.Collections;
 using System.Data.SQLite;
 
-namespace CamInter
+namespace SimuProteus
 {
     /// <summary>
     /// SQLiteHelper is a utility class similar to "SQLHelper" in MS
     /// Data Access Application Block and follows similar pattern.
     /// </summary>
-    class SQLiteHelper
+    class CamInter
     {
+        private static bool HasPwdFlag = false;
+        private static string Password = "vejoe2017";
+
+        public static bool SetPassWordFlag
+        {
+            set
+            {
+                HasPwdFlag = value;
+            }
+        }
+
+        public static void CreateDatabase(string strDb)
+        {
+            SQLiteConnection.CreateFile(strDb);
+            SQLiteConnection conn = new SQLiteConnection(string.Format("Data Source={0};Version=3;",strDb));
+            conn.Open();
+            if (HasPwdFlag)
+            {
+                conn.ChangePassword(Password);
+            }
+        }
+
         /// <summary>
         /// Creates a new <see cref="SQLiteHelper"/> instance. The ctor is marked private since all members are static.
         /// </summary>
@@ -134,7 +156,10 @@ namespace CamInter
             }
             DataSet ds = new DataSet();
             if (cn.State == ConnectionState.Closed)
+            {
+                if (HasPwdFlag) cn.SetPassword(Password);
                 cn.Open();
+            }
             SQLiteDataAdapter da = new SQLiteDataAdapter(cmd);
             da.Fill(ds);
             da.Dispose();
@@ -162,7 +187,10 @@ namespace CamInter
             }
             DataSet ds = new DataSet();
             if (cn.State == ConnectionState.Closed)
+            {
+                if (HasPwdFlag) cn.SetPassword(Password);
                 cn.Open();
+            }
             SQLiteDataAdapter da = new SQLiteDataAdapter(cmd);
             da.Fill(ds);
             da.Dispose();
@@ -178,7 +206,10 @@ namespace CamInter
         public static DataSet ExecuteDataSet(SQLiteCommand cmd)
         {
             if (cmd.Connection.State == ConnectionState.Closed)
+            {
+                if (HasPwdFlag) cmd.Connection.SetPassword(Password);
                 cmd.Connection.Open();
+            }
             DataSet ds = new DataSet();
             SQLiteDataAdapter da = new SQLiteDataAdapter(cmd);
             da.Fill(ds);
@@ -208,7 +239,10 @@ namespace CamInter
                 cmd.Parameters.Add(parm);
             }
             if (transaction.Connection.State == ConnectionState.Closed)
+            {
+                if (HasPwdFlag) transaction.Connection.SetPassword(Password);
                 transaction.Connection.Open();
+            }
             DataSet ds = ExecuteDataSet((SQLiteCommand)cmd);
             return ds;
         }
@@ -230,7 +264,10 @@ namespace CamInter
             cmd.CommandText = commandText;
             AttachParameters((SQLiteCommand)cmd, cmd.CommandText, commandParameters);
             if (transaction.Connection.State == ConnectionState.Closed)
+            {
+                if (HasPwdFlag) transaction.Connection.SetPassword(Password);
                 transaction.Connection.Open();
+            }
 
             DataSet ds = ExecuteDataSet((SQLiteCommand)cmd);
             return ds;
@@ -273,7 +310,10 @@ namespace CamInter
             cmd.CommandText = commandText;
             AttachParameters(cmd, commandText, paramList);
             if (cmd.Connection.State == ConnectionState.Closed)
+            {
+                if (HasPwdFlag) cmd.Connection.SetPassword(Password);
                 cmd.Connection.Open();
+            }
             IDataReader rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
             return rdr;
         }
@@ -295,7 +335,10 @@ namespace CamInter
             cmd.CommandText = commandText;
             AttachParameters(cmd, commandText, paramList);
             if (cn.State == ConnectionState.Closed)
+            {
+                if (HasPwdFlag) cn.SetPassword(Password);
                 cn.Open();
+            }
             int result = cmd.ExecuteNonQuery();
             cmd.Dispose();
             cn.Close();
@@ -312,7 +355,10 @@ namespace CamInter
             cmd.CommandText = commandText;
             AttachParameters(cmd, commandText, paramList);
             if (cn.State == ConnectionState.Closed)
+            {
+                if (HasPwdFlag) cn.SetPassword(Password);
                 cn.Open();
+            }
             int result = cmd.ExecuteNonQuery();
             cmd.Dispose();
             cn.Close();
@@ -336,7 +382,10 @@ namespace CamInter
             cmd.CommandText = commandText;
             AttachParameters((SQLiteCommand)cmd, cmd.CommandText, paramList);
             if (transaction.Connection.State == ConnectionState.Closed)
+            {
+                if (HasPwdFlag) transaction.Connection.SetPassword(Password);
                 transaction.Connection.Open();
+            }
             int result = cmd.ExecuteNonQuery();
             cmd.Dispose();
             return result;
@@ -352,6 +401,7 @@ namespace CamInter
         {
             if (cmd.Connection.State == ConnectionState.Closed)
                 cmd.Connection.Open();
+
             int result = cmd.ExecuteNonQuery();
             cmd.Connection.Close();
             cmd.Dispose();
@@ -373,7 +423,10 @@ namespace CamInter
             cmd.CommandText = commandText;
             AttachParameters(cmd, commandText, paramList);
             if (cn.State == ConnectionState.Closed)
+            {
+                if (HasPwdFlag) cn.SetPassword(Password);
                 cn.Open();
+            }
             object result = cmd.ExecuteScalar();
             cmd.Dispose();
             cn.Close();

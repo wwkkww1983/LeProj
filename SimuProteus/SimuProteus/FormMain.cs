@@ -17,10 +17,11 @@ namespace SimuProteus
         private int elementIdx = 1;
         private int countWidth = int.Parse(Ini.GetItemValue("sizeInfo", "netWidth"));
         private int countHeight = int.Parse(Ini.GetItemValue("sizeInfo", "netHeight"));
+        private int DragDistance = int.Parse(Ini.GetItemValue("sizeInfo", "pixelDragDistance"));
         private enumComponent currentSelectedComponent = enumComponent.NONE;
         private Point clickPositionForLine ;
         private SerialCom serial = new SerialCom();
-        DBUtility dbHandler = new DBUtility();
+        DBUtility dbHandler = new DBUtility(true);
         List<ElementInfo> elementList = null;
         List<ElementLine> createLinePoint = new List<ElementLine>(2);
         ProjectDetails currentBoardInfo = new ProjectDetails() { 
@@ -274,16 +275,21 @@ namespace SimuProteus
 
         private void MoveElement(int idx, int locX,int locY)
         {
+            bool moveFlag = false;
             for (int i = 0; i < this.currentBoardInfo.elementList.Count; i++)
             {
                 ElementInfo tmpInfo = this.currentBoardInfo.elementList[i];
                 if (tmpInfo.InnerIdx == idx)
                 {
                     tmpInfo.Location = new Point(locX, locY);
+                    if (Math.Sqrt((tmpInfo.Location.X - locX) * (tmpInfo.Location.X - locX) + (tmpInfo.Location.Y - locY) * (tmpInfo.Location.Y - locY)) > DragDistance)
+                    {
+                        moveFlag = true;
+                    }
                     break;
                 }
             }
-
+            if (!moveFlag) return;
             for (int i = 0; i < this.currentBoardInfo.linesList.Count; i++)
             {
                 ElementLine tmpInfo = this.currentBoardInfo.linesList[i];
@@ -428,7 +434,7 @@ namespace SimuProteus
                 Label lbTmp = new Label();
                 lbTmp.Tag = labelTag;
                 lbTmp.Text = status.ToString();
-                lbTmp.Location = new Point(ucItem.Location.X - 12, ucItem.Location.Y + 8);
+                lbTmp.Location = new Point(ucItem.Location.X - 10, ucItem.Location.Y + 8);
                 this.pnBoard.Controls.Add(lbTmp);
             }
         }
@@ -531,7 +537,7 @@ namespace SimuProteus
                 BackColor = Color.Gray,
                 BackImage = chipName,
                 FootType = enumComponentType.Chips,
-                LineFoots = new DBUtility().GetChipFoots(chipIdx)
+                LineFoots = dbHandler.GetChipFoots(chipIdx)
             };
 
             return this.getElementView(info);
@@ -546,7 +552,7 @@ namespace SimuProteus
         private bool CheckLoadChip()
         {
             bool result = true;
-            if (this.pnBoard.Controls.Count > 1)
+            if (this.pnBoard.Controls.Count > 1 + countWidth * countHeight)
             {
                 DialogResult dResult = MessageBox.Show("画板上有内容，确定清空？", "清空当前画布", MessageBoxButtons.OKCancel);
                 if (dResult == DialogResult.OK)

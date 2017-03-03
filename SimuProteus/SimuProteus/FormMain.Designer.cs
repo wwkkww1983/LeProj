@@ -74,7 +74,6 @@
             this.lbProjName.Name = "lbProjName";
             this.lbProjName.Size = new System.Drawing.Size(52, 15);
             this.lbProjName.TabIndex = 0;
-            this.lbProjName.Tag = "";
             this.lbProjName.Text = "未命名";
             // 
             // menuStrip1

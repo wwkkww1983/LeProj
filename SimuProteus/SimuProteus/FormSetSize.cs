@@ -22,13 +22,16 @@ namespace SimuProteus
             this.tbLineWidth.Text = Ini.GetItemValue("sizeInfo", "pixelLineWidth");
             this.tbNetPoint.Text = Ini.GetItemValue("sizeInfo", "pixelNetPoint");
             this.tbMargin.Text = Ini.GetItemValue("sizeInfo", "pixelBoardMargin");
+            this.tbDragDistance.Text = Ini.GetItemValue("sizeInfo", "pixelDragDistance");
+            
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (!(int.Parse(this.tbWidth.Text) > 0 && int.Parse(this.tbLength.Text) > 0 &&
                 int.Parse(this.tbFootSize.Text) > 0 && int.Parse(this.tbLineWidth.Text) > 0 &&
-                int.Parse(this.tbNetPoint.Text) > 0 && int.Parse(this.tbMargin.Text) > 0))
+                int.Parse(this.tbNetPoint.Text) > 0 && int.Parse(this.tbMargin.Text) > 0 && 
+                int.Parse(this.tbDragDistance.Text) > 0))
             {
                 MessageBox.Show("仅可输入正整数");
                 return;
@@ -39,6 +42,7 @@ namespace SimuProteus
             Ini.SetItemValue("sizeInfo", "pixelLineWidth", this.tbLineWidth.Text);
             Ini.SetItemValue("sizeInfo", "pixelNetPoint", this.tbNetPoint.Text);
             Ini.SetItemValue("sizeInfo", "pixelBoardMargin", this.tbMargin.Text);
+            Ini.SetItemValue("sizeInfo", "pixelDragDistance", this.tbDragDistance.Text);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

@@ -11,6 +11,11 @@ namespace CamInter
         private const string STR_CONNECTION = "Data Source=cam.sqlite;Version=3;";
         private Coder code = new Coder();
 
+        public DBUtility(bool dbEncrypt)
+        {
+            SQLiteHelper.SetPassWordFlag = dbEncrypt;
+        }
+
         /// <summary>
         /// 新建表结构
         /// </summary>
