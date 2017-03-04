@@ -201,7 +201,8 @@ namespace web2Excel
                     strHouseStatus = todayExcelData[i, 11];
                     if (strHouseStatus != "签订中" && strHouseStatus != "已备案" && strHouseStatus != "已预告" || yestdayExcelData[i, 11] != "可售")
                         continue;//还是可售或不可售（状态没变）
-                    int findFlag = 0;//0:未找到，1：已找到，2已找过
+                    bool itemFindFlag = false;
+                    int findFlag = 0;//0:未找到项目，1：已找到项目，2已找过项目
                     //for (int j = Math.Max(2, i - 20); j <= yestdayRow; j++)
                     for (j = Math.Min(i, yestdayRow - 2); j > 0; j--)
                     {//先往前找
@@ -233,12 +234,13 @@ namespace web2Excel
                                 todaySheedChanged.Cells[changedIdx, k] = dealDate;
                                 changedIdx++;
                                 todayExcel.Save();
+                                itemFindFlag = true;
                             }
                             break;
                         }
                     }
                     jFlag = 1;
-                    if (findFlag >= 1) continue;//找到过，则不再向后找
+                    if (itemFindFlag) continue;//找到过，则不再向后找
                     jFlag = 2;
                     for (j = Math.Min(i + 1, yestdayRow - 2); j < yestdayRow - 1; j++)
                     {//再往后找
