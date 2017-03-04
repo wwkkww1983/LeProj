@@ -200,6 +200,11 @@ namespace web2Excel
             }
         }
 
+        private void ShowDialogString(string strInfo)
+        {
+            MessageBox.Show(strInfo);
+        }
+
         private void btnCompare_Click(object sender, EventArgs e)
         {
             try
@@ -213,7 +218,7 @@ namespace web2Excel
                 ExcelInfo.UpdateProgess = new UpdateBoardValue(this.UpdateProjProgress);
                 ExcelInfo.updateProgressInfo = new UpdateProgressInfo(this.UpdateProgressInfo);
                 string strTime = dtpDeal.Value.ToString("yyyy年MM月dd日");
-                switch (ExcelInfo.CompareData(tbToday.Text, tbYesterday.Text, strTime, projComparedList))
+                switch (ExcelInfo.CompareData(tbToday.Text, tbYesterday.Text, strTime, projComparedList, ShowDialogString))
                 {
                     case ErrorInfo.YesterFileNoExists:
                         strResult = "昨天的文件不存在";

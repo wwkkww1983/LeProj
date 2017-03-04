@@ -46,8 +46,7 @@ namespace SimuProteus
             else
             {
                 this.Cursor = Cursors.Arrow;
-            }
-            
+            }            
         }
 
         private void UcComponent_Click(object sender, EventArgs e)

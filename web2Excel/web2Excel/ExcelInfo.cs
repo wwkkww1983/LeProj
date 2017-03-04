@@ -198,10 +198,6 @@ namespace web2Excel
                 try
                 {
                     UpdateProgess(false, i + 1);
-                    if (todayExcelData[i, 0] == "奥园商业广场" && todayExcelData[i, 5] == "1231")
-                    {
-                        int ddtt = 0;
-                    }
                     strHouseStatus = todayExcelData[i, 11];
                     if (strHouseStatus != "签订中" && strHouseStatus != "已备案" && strHouseStatus != "已预告" || yestdayExcelData[i, 11] != "可售")
                         continue;//还是可售或不可售（状态没变）
