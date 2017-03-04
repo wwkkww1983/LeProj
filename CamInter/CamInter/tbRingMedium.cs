@@ -1,13 +1,21 @@
 ﻿using System;
 using System.Data;
+using System.Collections.Generic;
+using System.Data.SQLite;
 
 namespace CamInter
 {
     /// <summary>
     /// 中间环属性
     /// </summary>
-    class tbRingMedium : tbGeneral
+    class tbRingMedium : itable
     {
+        private string STR_CONNECTION;
+        public tbRingMedium(string strConn)
+        {
+            this.STR_CONNECTION = strConn;
+        }
+
         public ValueType DecodeOneItemByDb(DataRow dr)
         {
             RingMedium info = new RingMedium();
@@ -35,6 +43,19 @@ namespace CamInter
                         weight int,
                         lengthMin int,
                         lengthMax int);";
+        }
+
+        public bool InsertOneItem(ValueType item)
+        {
+            RingMedium info = (RingMedium)item;
+
+            string strSql = "insert into camLens (ringType,innerDiameter) values (@ringType,@innerDiameter)";
+            List<SQLiteParameter> paraList = new List<SQLiteParameter>();
+            paraList.Add(SQLiteHelper.CreateParameter("@ringType", DbType.Int32, (int)info.RingType));
+            paraList.Add(SQLiteHelper.CreateParameter("@innerDiameter", DbType.Int32, info.InnerDiameter));
+
+            SQLiteCommand command = SQLiteHelper.CreateCommand(this.STR_CONNECTION, strSql, paraList.ToArray());
+            return SQLiteHelper.ExecuteNonQuery(command) > 0;
         }
     }
 

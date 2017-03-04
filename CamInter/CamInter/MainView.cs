@@ -15,6 +15,10 @@ namespace CamInter
         public MainView()
         {
             InitializeComponent();
+
+            DBUtility dbHandler = new DBUtility();
+            dbHandler.InitialTable();
+            dbHandler.InsertItem(new Connectors() { Idx=1, Name="dddd" });
         }
 
         private void CamLensToolStripMenuItem_Click(object sender, EventArgs e)

@@ -6,13 +6,13 @@ using System.IO;
 using System.Collections;
 using System.Data.SQLite;
 
-namespace SimuProteus
+namespace CamInter
 {
     /// <summary>
     /// SQLiteHelper is a utility class similar to "SQLHelper" in MS
     /// Data Access Application Block and follows similar pattern.
     /// </summary>
-    class CamInter
+    class SQLiteHelper
     {
         private static bool HasPwdFlag = false;
         private static string Password = "vejoe2017";

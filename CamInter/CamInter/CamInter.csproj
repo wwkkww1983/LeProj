@@ -52,7 +52,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="tbCamLens.cs" />
     <Compile Include="tbConnector.cs" />
-    <Compile Include="tbGeneral.cs" />
+    <Compile Include="itable.cs" />
     <Compile Include="tbRingMedium.cs" />
     <Compile Include="DBUtility.cs" />
     <Compile Include="MainView.cs">

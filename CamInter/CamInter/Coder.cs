@@ -12,7 +12,7 @@ namespace CamInter
     /// </summary>
     class Coder
     {
-        public List<ValueType> DecodeListByDb(DataTable dt, tbGeneral tableClass)
+        public List<ValueType> DecodeListByDb(DataTable dt, itable tableClass)
         {
             List<ValueType> infoList = new List<ValueType>();
             foreach (DataRow dr in dt.Rows)

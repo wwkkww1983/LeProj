@@ -1,13 +1,21 @@
 ﻿using System;
 using System.Data;
+using System.Collections.Generic;
+using System.Data.SQLite;
 
 namespace CamInter
 {
     /// <summary>
     /// 接口
     /// </summary>
-    class tbConnector : tbGeneral
+    class tbConnector : itable
     {
+        private string STR_CONNECTION;
+        public tbConnector(string strConn)
+        {
+            this.STR_CONNECTION = strConn;
+        }
+
         public ValueType DecodeOneItemByDb(DataRow dr)
         {
             Connectors info = new Connectors();
@@ -25,6 +33,18 @@ namespace CamInter
                         itemId INTEGER PRIMARY KEY AUTOINCREMENT,
                         name nvarchar(20),
                         desc varchar(100));";
+        }
+
+        public bool InsertOneItem(ValueType item)
+        {
+            Connectors info = (Connectors)item;
+            string strSql = "insert into connectors (name,desc) values (@name,@desc)";
+            List<SQLiteParameter> paraList = new List<SQLiteParameter> ();
+            paraList.Add(SQLiteHelper.CreateParameter("@name", DbType.String, info.Name));
+            paraList.Add(SQLiteHelper.CreateParameter("@desc", DbType.String, info.Description));
+
+            SQLiteCommand command = SQLiteHelper.CreateCommand(this.STR_CONNECTION, strSql, paraList.ToArray());
+            return SQLiteHelper.ExecuteNonQuery(command) > 0;
         }
     }
 

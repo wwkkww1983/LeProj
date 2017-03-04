@@ -1,14 +1,22 @@
 ﻿using System;
 using System.Data;
+using System.Collections.Generic;
+using System.Data.SQLite;
 
 namespace CamInter
 {
-
+    
     /// <summary>
     /// 镜头属性
     /// </summary>
-    class tbCamLens : tbGeneral
+    class tbCamLens : itable
     {
+        private string STR_CONNECTION;
+        public tbCamLens(string strConn)
+        {
+            this.STR_CONNECTION = strConn;
+        }
+
         public ValueType DecodeOneItemByDb(DataRow dr)
         {
             CameraLens info = new CameraLens();
@@ -38,6 +46,19 @@ namespace CamInter
                         contrast int,
                         targetSurface int,
                         distort int);";
+        }
+
+        public bool InsertOneItem(ValueType item)
+        {
+            CameraLens info = (CameraLens)item;
+
+            string strSql = "insert into camLens (length,targetSurface) values (@length,@targetSurface)";
+            List<SQLiteParameter> paraList = new List<SQLiteParameter>();
+            paraList.Add(SQLiteHelper.CreateParameter("@length", DbType.Int32, info.Length));
+            paraList.Add(SQLiteHelper.CreateParameter("@targetSurface", DbType.Int16, info.TargetSurface));
+
+            SQLiteCommand command = SQLiteHelper.CreateCommand(this.STR_CONNECTION, strSql, paraList.ToArray());
+            return SQLiteHelper.ExecuteNonQuery(command) > 0;
         }
     }
 
