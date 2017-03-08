@@ -133,6 +133,8 @@ namespace SimuProteus
         public int LocY;
         public Color Color;
         public string Name;
+        public int NameLocX;
+        public int NameLocY;
     }
 
     /// <summary>
@@ -146,6 +148,8 @@ namespace SimuProteus
         public int Foot;
         public enumPinsType PinsType;
         public string PinsName;
+        public int PointX;
+        public int PointY;
     }
 
     /// <summary>
@@ -154,6 +158,8 @@ namespace SimuProteus
     public struct ElementLine
     {
         public int Idx;
+        public int InnerIdx;
+        public int LineIdx;
         public int oneElement;
         public int otherElement;
         public int oneFoot;
@@ -162,6 +168,7 @@ namespace SimuProteus
         public int LocY;
         public int LocOtherX;
         public int LocOtherY;
+        public enumNetPointType PointType;
         public Color Color;
         public string Name;
     }
@@ -173,8 +180,8 @@ namespace SimuProteus
     {
         public int Idx;
         public string Name;
-        public int Length;
-        public int Width;
+        public int OriginX;
+        public int OriginY;
         public DateTime CreateTime;
         public DateTime UpdateTime;
         public int Chips;
@@ -186,10 +193,25 @@ namespace SimuProteus
     /// </summary>
     public class ProjectDetails
     {
+        /// <summary>
+        /// 项目基本信息
+        /// </summary>
         public ProjectInfo Project;
+        /// <summary>
+        /// 连线信息
+        /// </summary>
         public List<ElementLine> linesList;
+        /// <summary>
+        /// 元器件信息
+        /// </summary>
         public List<ElementInfo> elementList;
+        /// <summary>
+        /// 引脚信息（修改后的参数）
+        /// </summary>
         public List<LineFootView> footsList;
+        /// <summary>
+        /// 节点信息（VCC/GND）
+        /// </summary>
         public List<NetPoint> pointsList;
     }
 

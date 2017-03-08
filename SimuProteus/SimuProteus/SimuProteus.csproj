@@ -35,10 +35,6 @@
     <ApplicationIcon>logo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\Core.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -120,6 +116,9 @@
     <Compile Include="UcLine.Designer.cs">
       <DependentUpon>UcLine.cs</DependentUpon>
     </Compile>
+    <Compile Include="UcPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UcPoint.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -187,6 +186,12 @@
     <Content Include="Img\land.png" />
     <Content Include="Img\resistance.png" />
     <Content Include="logo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Core\Core.csproj">
+      <Project>{9bb65674-028b-4a03-b2df-ef7127156e2a}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

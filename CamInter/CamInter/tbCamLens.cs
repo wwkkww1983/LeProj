@@ -52,10 +52,16 @@ namespace CamInter
         {
             CameraLens info = (CameraLens)item;
 
-            string strSql = "insert into camLens (length,targetSurface) values (@length,@targetSurface)";
+            string strSql = "insert into camLens (length,focusLength,focusLengthBak,connector,weight,contrast,targetSurface,distort) values (@length,@focusLength,@focusLengthBak,@connector,@weight,@contrast,@targetSurface,@distort)";
             List<SQLiteParameter> paraList = new List<SQLiteParameter>();
             paraList.Add(SQLiteHelper.CreateParameter("@length", DbType.Int32, info.Length));
-            paraList.Add(SQLiteHelper.CreateParameter("@targetSurface", DbType.Int16, info.TargetSurface));
+            paraList.Add(SQLiteHelper.CreateParameter("@focusLength", DbType.Int32, info.FocusLength));
+            paraList.Add(SQLiteHelper.CreateParameter("@focusLengthBak", DbType.Int32, info.FocusLengthBak));
+            paraList.Add(SQLiteHelper.CreateParameter("@connector", DbType.Int32, info.Connector));
+            paraList.Add(SQLiteHelper.CreateParameter("@weight", DbType.Int32, info.Weight));
+            paraList.Add(SQLiteHelper.CreateParameter("@contrast", DbType.Int32, info.Contrast));
+            paraList.Add(SQLiteHelper.CreateParameter("@targetSurface", DbType.Int32, info.TargetSurface));
+            paraList.Add(SQLiteHelper.CreateParameter("@distort", DbType.Int32, info.Distort));
 
             SQLiteCommand command = SQLiteHelper.CreateCommand(this.STR_CONNECTION, strSql, paraList.ToArray());
             return SQLiteHelper.ExecuteNonQuery(command) > 0;

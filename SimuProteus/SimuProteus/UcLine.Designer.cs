@@ -41,19 +41,19 @@
             this.delToolStripMenuItem,
             this.colorToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 74);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(109, 52);
             // 
             // delToolStripMenuItem
             // 
             this.delToolStripMenuItem.Name = "delToolStripMenuItem";
-            this.delToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.delToolStripMenuItem.Size = new System.Drawing.Size(108, 24);
             this.delToolStripMenuItem.Text = "删除";
             this.delToolStripMenuItem.Click += new System.EventHandler(this.delToolStripMenuItem_Click);
             // 
             // colorToolStripMenuItem
             // 
             this.colorToolStripMenuItem.Name = "colorToolStripMenuItem";
-            this.colorToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.colorToolStripMenuItem.Size = new System.Drawing.Size(108, 24);
             this.colorToolStripMenuItem.Text = "颜色";
             this.colorToolStripMenuItem.Click += new System.EventHandler(this.colorToolStripMenuItem_Click);
             // 
@@ -64,6 +64,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.ContextMenuStrip = this.contextMenuStrip1;
             this.Name = "UcLine";
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.UcLine_Paint);
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 

@@ -63,8 +63,8 @@ namespace SimuProteus
             tableList.Add(@"create table projects(
                                id INTEGER PRIMARY KEY AUTOINCREMENT,
                                name nvarchar(20),
-                               height int,
-                               width int,
+                               x0 int,
+                               y0 int,
                                createtime datetime,
                                updatetime datetime,
                                chips nvarchar(100),
@@ -431,9 +431,9 @@ namespace SimuProteus
         public int InsertNewProject(ProjectDetails project)
         {
             ProjectInfo baseInfo = project.Project;
-            string strSql = string.Format(@"insert into projects (name,createtime,updatetime,chips,desc,height,width) 
+            string strSql = string.Format(@"insert into projects (name,createtime,updatetime,chips,desc,x0,y0) 
                                                 values ('{0}','{1}','{2}','{3}','{4}',{5},{6});select last_insert_rowid();",
-                                baseInfo.Name, baseInfo.CreateTime.ToString("yyyy-MM-dd HH:mm:ss"), baseInfo.UpdateTime.ToString("yyyy-MM-dd HH:mm:ss"), baseInfo.Chips, baseInfo.Description,baseInfo.Length,baseInfo.Width);
+                                baseInfo.Name, baseInfo.CreateTime.ToString("yyyy-MM-dd HH:mm:ss"), baseInfo.UpdateTime.ToString("yyyy-MM-dd HH:mm:ss"), baseInfo.Chips, baseInfo.Description,baseInfo.OriginX,baseInfo.OriginY);
             object objIdx = SQLiteHelper.ExecuteScalar(STR_CONNECTION, strSql);
             int projIdx = Convert.ToInt32(objIdx);
             if (projIdx <= 0) return projIdx;

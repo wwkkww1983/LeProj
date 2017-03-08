@@ -8,8 +8,14 @@ namespace SimuProteus
 {
     public class Draw
     {
-        static Color colorFoot = Color.Black, colorLine = Color.Green;
-        static float widthFoot = 5f, widthLine = 2f;
+        private static Color colorFoot = Color.Black;
+        private static float widthFoot = 5f, widthLine = 3f;
+
+        private static int pointColorNone = int.Parse(Ini.GetItemValue("colorInfo", "colorNONE"));
+        private static int pointColorVCC = int.Parse(Ini.GetItemValue("colorInfo", "colorVCC"));
+        private static int pointColorGND = int.Parse(Ini.GetItemValue("colorInfo", "colorGND"));
+        private static int pointSize = int.Parse(Ini.GetItemValue("sizeInfo", "pixelNetPoint"));
+        private static int pointRadius = pointSize / 2;
 
         /// <summary>
         /// 绘制元器件的管脚
@@ -36,7 +42,7 @@ namespace SimuProteus
         public static void LineBetweenElement(Control board, bool isXFirst, int x, int y, int ox, int oy)
         {
             Graphics g = board.CreateGraphics();
-            Pen pen = new Pen(colorLine, widthLine);
+            Pen pen = new Pen(Color.Black, widthLine);
             if (isXFirst)
             {
                 g.DrawLine(pen, new Point(x, y), new Point(ox, y));
@@ -47,6 +53,44 @@ namespace SimuProteus
                 g.DrawLine(pen, new Point(x, y), new Point(x, oy));
                 g.DrawLine(pen, new Point(x, oy), new Point(ox, oy));
             }
+        }
+
+        public static void DrawSolidLine(Control board, Point start, Point end, bool isDemo)
+        {
+            Graphics g = board.CreateGraphics();
+            Pen pen = new Pen(Color.Blue, widthLine);            
+
+            if (isDemo)
+            {
+                pen.Color = Color.Black; 
+                pen.DashStyle = System.Drawing.Drawing2D.DashStyle.DashDot;
+            }
+
+            start.X += pointRadius;
+            start.Y += pointRadius;
+            end.X += pointRadius;
+            end.Y += pointRadius;
+
+            g.DrawLine(pen, start, end);
+        }
+
+        /// <summary>
+        /// 画实心圆
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="point"></param>
+        /// <param name="originLU"></param>
+        public static void DrawSolidCircle(Control board, enumNetPointType point, int originLUX, int originLUY)
+        {
+            int colorPoint = -1;
+            switch (point)
+            {
+                case enumNetPointType.GND: colorPoint = pointColorGND; break;
+                case enumNetPointType.VCC: colorPoint = pointColorVCC; break;
+                default: colorPoint = pointColorNone; break;
+            }
+
+            DrawSolidCircle(board, colorPoint, new Point(originLUX+pointRadius,originLUY+pointRadius), pointRadius);
         }
 
         /// <summary>

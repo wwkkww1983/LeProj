@@ -65,5 +65,10 @@ namespace SimuProteus
                 this.ChangeColor(this.OtherLine.LineInfo.Idx, lineColor.ToArgb());
             }
         }
+
+        private void UcLine_Paint(object sender, PaintEventArgs e)
+        {
+            Console.WriteLine("9999999");
+        }
     }
 }

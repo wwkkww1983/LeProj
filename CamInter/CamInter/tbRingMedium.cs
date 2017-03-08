@@ -49,10 +49,15 @@ namespace CamInter
         {
             RingMedium info = (RingMedium)item;
 
-            string strSql = "insert into camLens (ringType,innerDiameter) values (@ringType,@innerDiameter)";
+            string strSql = "insert into camLens (ringType,interUp,interDown,innerDiameter,weight,lengthMin,lengthMax) values (@ringType,@interUp,@interDown,@innerDiameter,@weight,@lengthMin,@lengthMax)";
             List<SQLiteParameter> paraList = new List<SQLiteParameter>();
             paraList.Add(SQLiteHelper.CreateParameter("@ringType", DbType.Int32, (int)info.RingType));
+            paraList.Add(SQLiteHelper.CreateParameter("@interUp", DbType.Int32, info.InterUp));
+            paraList.Add(SQLiteHelper.CreateParameter("@interDown", DbType.Int32, info.InterDown));
             paraList.Add(SQLiteHelper.CreateParameter("@innerDiameter", DbType.Int32, info.InnerDiameter));
+            paraList.Add(SQLiteHelper.CreateParameter("@weight", DbType.Int32, info.Weight));
+            paraList.Add(SQLiteHelper.CreateParameter("@lengthMin", DbType.Int32, info.LengthMin));
+            paraList.Add(SQLiteHelper.CreateParameter("@lengthMax", DbType.Int32, info.LengthMax));
 
             SQLiteCommand command = SQLiteHelper.CreateCommand(this.STR_CONNECTION, strSql, paraList.ToArray());
             return SQLiteHelper.ExecuteNonQuery(command) > 0;

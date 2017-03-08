@@ -152,8 +152,8 @@ namespace SimuProteus
             {
                 Idx = Convert.ToInt32(dr["id"]),
                 Name = dr["name"].ToString(),
-                Length = Convert.ToInt32(dr["height"]),
-                Width = Convert.ToInt32(dr["width"]),
+                OriginX = Convert.ToInt32(dr["x0"]),
+                OriginY = Convert.ToInt32(dr["y0"]),
                 CreateTime = Convert.ToDateTime(dr["createtime"]),
                 UpdateTime = Convert.ToDateTime(dr["updatetime"]),
                 Chips = Convert.ToInt32(dr["chips"]),
