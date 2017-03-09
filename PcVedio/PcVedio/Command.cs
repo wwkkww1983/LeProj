@@ -8,7 +8,7 @@ namespace PcVedio
 {
     class Command
     {
-        private const int PORT_SEARCH = 9527,PORT_VEDIO=80,BUFFER_SIZE=1024;
+        private const int PORT_SEARCH = 9527, PORT_VEDIO = 80, BUFFER_SIZE = 1024;
         private const int PORT_SELF_SEARCH = 8888, PORT_SELF_VEDIO = 8889;
         private const string ROUTE_ADDRESS = "255.255.255.255", ROUTE_ADDRESS2 = "192.168.1.255", selfAddress = "127.0.0.1";
         private string cameraIP = "192.168.1.1";
@@ -20,20 +20,23 @@ namespace PcVedio
 
         public Command()
         {
+            byte[] buff;
+            Coder.EncodeLogin2(out buff);
+
             socket.Bind(new IPEndPoint(IPAddress.Any, PORT_SELF_VEDIO));
 
             Thread threadRecev = new Thread(RespConnectWifi);
             threadRecev.Start();
 
-            Thread threadTCP = new Thread(ListenPort);
-            threadTCP.Start();
+            //Thread threadTCP = new Thread(ListenPort);
+            //threadTCP.Start();
         }
 
 
         public void ConnectWifi()
         {
-            IPEndPoint targetPoint = new IPEndPoint(IPAddress.Broadcast, PORT_SEARCH);            
-            
+            IPEndPoint targetPoint = new IPEndPoint(IPAddress.Broadcast, PORT_SEARCH);
+
             byte[] buff;
             Coder.EncodeWifiSearch(out buff);
             client.EnableBroadcast = true;
@@ -48,32 +51,47 @@ namespace PcVedio
             {
                 byte[] buff = client.Receive(ref serverPoint);
                 WifiRespInfo info = Coder.DecodeWifiSearch(buff);
-                Login1(info.IP,info.Port);
+                Login1(info.IP, info.Port);
             }
         }
 
-        public void Login1(string ip,int port)
+        public void Login1(string ip, int port)
         {
             if (NetHelper.Connect(socket, ip, port))
             {
                 byte[] buff;
                 Coder.EncodeLogin1(out buff);
                 socket.Send(buff);
+
+                byte[] buffReceive = new byte[BUFFER_SIZE];
+                int byteBuff = socket.Receive(buffReceive);
+                NormalDataStruct dataInfo = Coder.DecodeData(buffReceive);
+                Login1Struct loginInfo = Coder.DecodeLogin1(dataInfo.Content);
+
+                Coder.EncodeLogin2(out buff);
+                socket.Send(buff);
+
+                byteBuff = socket.Receive(buffReceive);
+                dataInfo = Coder.DecodeData(buffReceive);
+
+                string strMsg = ConvertHelper.BytesToString(buff, System.Text.Encoding.UTF8);
+                Console.WriteLine(strMsg);
             }
         }
 
         public void ListenPort()
         {
-            TcpListener listener = NetHelper.CreateTcpListener(NetHelper.LANIP, PORT_SELF_VEDIO);
-            listener.Start();
+            Socket server = NetHelper.CreateTcpSocket();
+            IPEndPoint ipPoint = new IPEndPoint(IPAddress.Any, PORT_SELF_VEDIO);
+            server.Bind(ipPoint);
+            server.Listen(0);
             while (true)
             {
-                TcpClient tcpConnector = listener.AcceptTcpClient();
-                NetworkStream ns = tcpConnector.GetStream();
-
+                Socket reader = server.Accept();
                 byte[] buff = new byte[BUFFER_SIZE];
-                int byteRead = ns.Read(buff, 0, BUFFER_SIZE);
 
+                int byteBuff = reader.Receive(buff);
+                
                 string strMsg = ConvertHelper.BytesToString(buff, System.Text.Encoding.UTF8);
                 Console.WriteLine(strMsg);
             }

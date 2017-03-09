@@ -109,6 +109,15 @@ namespace PcVedio
         /// 将byte[]转换成int
         /// </summary>
         /// <param name="data">需要转换成整数的byte数组</param>
+        public static int BytesToInt32(byte[] data)
+        {
+            return BytesToInt32(data, 0, true);
+        }
+
+        /// <summary>
+        /// 将byte[]转换成int
+        /// </summary>
+        /// <param name="data">需要转换成整数的byte数组</param>
         public static int BytesToInt32(byte[] data, bool lowBefore)
         {
             return BytesToInt32(data, 0, lowBefore);
@@ -140,7 +149,7 @@ namespace PcVedio
                 //将传入的字节数组的前4个字节复制到临时缓冲区
                 Buffer.BlockCopy(data, start, tempBuffer, 0, 4);
 
-                if (lowBefore)
+                if (!lowBefore)
                     Array.Reverse(tempBuffer);
 
                 //将临时缓冲区的值转换成整数，并赋给num

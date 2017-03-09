@@ -13,7 +13,7 @@ namespace PcVedio
     /// <summary>
     /// 命令
     /// </summary>
-    enum enumCommandType
+    public enum enumCommandType
     {
         LOGIN1_REQ = 502,
         LOGIN1_RESP = 510,
@@ -71,7 +71,7 @@ namespace PcVedio
     public struct WifiRespInfo
     {
         public int Magic;
-        public int Code;
+        public enumCommandType Code;
         public string ID;
         public string Version;
         public string Web;
@@ -88,5 +88,21 @@ namespace PcVedio
         public bool IsHttps;
         public string Number;
         public int Type;
+    }
+
+    public struct NormalDataStruct
+    {
+        public int MagicNumber;
+        public enumCommandType Code;
+        public int contentLen;
+        public int FillField;
+        public byte[] Content;
+    }
+
+    public struct Login1Struct
+    {
+        public int ID;
+        public string Encode;
+        public string Plain;
     }
 }

@@ -8,6 +8,9 @@ namespace PcVedio
 {
     class Coder
     {
+        public const int MAGIC_NORMAL = 0x20130809;
+        public static BlowFish fish = new BlowFish("hello kitty and kgb/cia 2011 COPYRIGHT@REECAM 5460");
+
         public static void EncodeWifiSearch(out byte[] buff)
         {
             buff = new byte[5];
@@ -25,7 +28,7 @@ namespace PcVedio
 
             int locIdx = 4;
             info.Magic = ConvertHelper.BytesToInt32(buff, 0,true);
-            info.Code = buff[locIdx++];
+            info.Code = (enumCommandType)buff[locIdx++];
             
             int wifiIDLen = buff[locIdx++];
             byte[] wifiIDByte = new byte[wifiIDLen];
@@ -80,25 +83,87 @@ namespace PcVedio
         public static void EncodeLogin1(out byte[] buff)
         {
             buff = new byte[12];
+            NormalDataStruct data = new NormalDataStruct()
+            {
+                Code = enumCommandType.LOGIN1_REQ,
+                contentLen = 0,
+                Content = null
+            };
 
-            int magic = 0x20130809;
-            byte[] magicByte = ConvertHelper.Int32ToBytes(magic, true);
+            EncodeData(data, out buff);
+        }
+
+        public static void EncodeData(NormalDataStruct data, out byte[] buff)
+        {
+            buff = new byte[data.contentLen + 12];
+
+            byte[] magicByte = ConvertHelper.Int32ToBytes(MAGIC_NORMAL, true);
             Array.Copy(magicByte, buff, 4);
 
-            int command = (int)enumCommandType.LOGIN1_REQ;
-            byte[] cmdByte = ConvertHelper.Int16ToBytes(command, true);
+            byte[] cmdByte = ConvertHelper.Int16ToBytes((Int16)data.Code, true);
             Array.Copy(cmdByte, 0, buff, 4, 2);
 
-            int contentLen = 0;
-            byte[] conLenByte = ConvertHelper.Int32ToBytes(contentLen, true);
+            byte[] conLenByte = ConvertHelper.Int32ToBytes(data.contentLen, true);
             Array.Copy(conLenByte, 0, buff, 6, 4);
 
             int randInfo = new Random().Next(0, 0xFF);
             byte[] randInfoByte = ConvertHelper.Int16ToBytes(randInfo, true);
             Array.Copy(randInfoByte, 0, buff, 10, 2);
 
-            byte[] content= new byte[0];
-            Array.Copy(content, 0, buff, 12,0);
+            if (data.Content != null)
+            {
+                Array.Copy(data.Content, 0, buff, 12, data.contentLen);
+            }
+        }
+
+        public static NormalDataStruct DecodeData(byte[] buff)
+        {
+            NormalDataStruct data = new NormalDataStruct();
+
+            int locIdx = 4;
+            data.MagicNumber = ConvertHelper.BytesToInt32(buff, 0, true);
+            data.Code = (enumCommandType)ConvertHelper.BytesToInt16(buff, locIdx, true);
+            locIdx += 2;
+
+            data.contentLen = ConvertHelper.BytesToInt32(buff, locIdx, true);
+            locIdx += 4;
+
+            data.FillField = ConvertHelper.BytesToInt16(buff, locIdx, true);
+            locIdx += 2;
+
+            data.Content = new byte[data.contentLen];
+            Array.Copy(buff, locIdx, data.Content, 0, data.contentLen);
+
+            return data;
+        }
+
+        public static Login1Struct DecodeLogin1(byte[] data)
+        {
+            Login1Struct login1 = new Login1Struct();
+            login1.ID = data[0];
+            login1.Encode = ConvertHelper.BytesToString(data, Encoding.ASCII);
+            login1.Encode = login1.Encode.Substring(1);
+            login1.Plain = fish.Decrypt_CBC(login1.Encode);
+            return login1;
+        }
+
+        public static void EncodeLogin2(out byte[] buff)
+        {
+            string name = "admin",encode=string.Empty;
+            string pwd = string.Empty;
+            byte[] content = new byte[10];
+            content[0] = (byte)(name.Length + 1);
+            content[1] = 0;
+            encode = fish.Encrypt_CBC(name);
+            byte [] byteCode = ConvertHelper.StringToBytes(encode, Encoding.ASCII);
+            Array.Copy(byteCode, 0, content, 2, byteCode.Length);
+            NormalDataStruct data = new NormalDataStruct()
+            {
+                Code = enumCommandType.LOGIN2_REQ,
+                contentLen = 0,
+                Content = content
+            };
+            EncodeData(data, out buff);
         }
     }
 }
