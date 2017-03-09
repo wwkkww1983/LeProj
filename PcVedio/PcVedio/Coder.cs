@@ -19,9 +19,62 @@ namespace PcVedio
             buff[4] = (byte)0;
         }
 
-        public static void DecodeWifiSearch(byte[] buff)
+        public static WifiRespInfo DecodeWifiSearch(byte[] buff)
         {
+            WifiRespInfo info = new WifiRespInfo();
 
+            int locIdx = 4;
+            info.Magic = ConvertHelper.BytesToInt32(buff, 0,true);
+            info.Code = buff[locIdx++];
+            
+            int wifiIDLen = buff[locIdx++];
+            byte[] wifiIDByte = new byte[wifiIDLen];
+            Array.Copy(buff, locIdx, wifiIDByte, 0, wifiIDLen);
+            locIdx += wifiIDLen;
+            info.ID = ConvertHelper.BytesToString(wifiIDByte, Encoding.ASCII);
+
+            int wifiVersionLen = buff[locIdx++];
+            byte[] wifiVersionByte = new byte[wifiVersionLen];
+            Array.Copy(buff, locIdx, wifiVersionByte, 0, wifiVersionLen);
+            locIdx += wifiVersionLen;
+            info.Version = ConvertHelper.BytesToString(wifiVersionByte, Encoding.ASCII);
+
+            int wifiWebLen = buff[locIdx++];
+            byte[] wifiWebByte = new byte[wifiWebLen];
+            Array.Copy(buff, locIdx, wifiWebByte, 0, wifiWebLen);
+            locIdx += wifiWebLen;
+            info.Web = ConvertHelper.BytesToString(wifiWebByte, Encoding.ASCII);
+
+            int wifiNameLen = buff[locIdx++];
+            byte[] wifiNameByte = new byte[wifiNameLen];
+            Array.Copy(buff, locIdx, wifiNameByte, 0, wifiNameLen);
+            locIdx += wifiNameLen;
+            info.Name = ConvertHelper.BytesToString(wifiNameByte, Encoding.ASCII);
+
+            info.IP = string.Format("{0}.{1}.{2}.{3}", buff[locIdx++], buff[locIdx++], buff[locIdx++], buff[locIdx++]);
+            info.NetMask = string.Format("{0}.{1}.{2}.{3}", buff[locIdx++], buff[locIdx++], buff[locIdx++], buff[locIdx++]);
+            info.IsDhcp = buff[locIdx++] == 1;
+            info.IPStatic = string.Format("{0}.{1}.{2}.{3}", buff[locIdx++], buff[locIdx++], buff[locIdx++], buff[locIdx++]);
+            info.NetMaskStatic = string.Format("{0}.{1}.{2}.{3}", buff[locIdx++], buff[locIdx++], buff[locIdx++], buff[locIdx++]);
+            info.NetGateStatic = string.Format("{0}.{1}.{2}.{3}", buff[locIdx++], buff[locIdx++], buff[locIdx++], buff[locIdx++]);
+            info.DNS1 = string.Format("{0}.{1}.{2}.{3}", buff[locIdx++], buff[locIdx++], buff[locIdx++], buff[locIdx++]);
+            info.DNS2 = string.Format("{0}.{1}.{2}.{3}", buff[locIdx++], buff[locIdx++], buff[locIdx++], buff[locIdx++]);
+            byte[] wifiPort = new byte[2];
+            info.Port = ConvertHelper.BytesToInt16(buff, locIdx, true);
+            locIdx += 2;
+
+            info.IsHttps = buff[locIdx++] == 1;
+
+            int wifiNOLen = buff[locIdx++];
+            byte[] wifiNOByte = new byte[wifiNameLen];
+            Array.Copy(buff, locIdx, wifiNOByte, 0, wifiNOLen);
+            Array.Reverse(wifiNOByte);
+            locIdx += wifiNOLen;
+            info.Number = ConvertHelper.BytesToString(wifiNOByte, Encoding.ASCII);
+
+            info.Type = buff[locIdx++];
+
+            return info;
         }
 
         public static void EncodeLogin1(out byte[] buff)

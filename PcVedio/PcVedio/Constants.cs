@@ -66,4 +66,27 @@ namespace PcVedio
 
         CONTINUE_RECORD_REQ = 465
     }
+
+
+    public struct WifiRespInfo
+    {
+        public int Magic;
+        public int Code;
+        public string ID;
+        public string Version;
+        public string Web;
+        public string Name;
+        public string IP;
+        public string NetMask;
+        public bool IsDhcp;
+        public string IPStatic;
+        public string NetMaskStatic;
+        public string NetGateStatic;
+        public string DNS1;
+        public string DNS2;
+        public int Port;
+        public bool IsHttps;
+        public string Number;
+        public int Type;
+    }
 }

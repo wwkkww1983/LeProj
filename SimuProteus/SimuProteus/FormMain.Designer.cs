@@ -52,9 +52,12 @@
             this.setOriginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnBoard = new System.Windows.Forms.Panel();
             this.lbProjName = new System.Windows.Forms.Label();
+            this.contextMsLine = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.colorLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.contextMsPoint.SuspendLayout();
             this.pnBoard.SuspendLayout();
+            this.contextMsLine.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbComponent
@@ -238,6 +241,20 @@
             this.lbProjName.TabIndex = 0;
             this.lbProjName.Text = "未命名";
             // 
+            // contextMsLine
+            // 
+            this.contextMsLine.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.colorLineToolStripMenuItem});
+            this.contextMsLine.Name = "contextMsLine";
+            this.contextMsLine.Size = new System.Drawing.Size(153, 50);
+            // 
+            // colorLineToolStripMenuItem
+            // 
+            this.colorLineToolStripMenuItem.Name = "colorLineToolStripMenuItem";
+            this.colorLineToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.colorLineToolStripMenuItem.Text = "颜色";
+            this.colorLineToolStripMenuItem.Click += new System.EventHandler(this.colorLineToolStripMenuItem_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -256,6 +273,7 @@
             this.contextMsPoint.ResumeLayout(false);
             this.pnBoard.ResumeLayout(false);
             this.pnBoard.PerformLayout();
+            this.contextMsLine.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -285,6 +303,8 @@
         private System.Windows.Forms.ToolStripMenuItem setOriginToolStripMenuItem;
         private System.Windows.Forms.Label lbProjName;
         private System.Windows.Forms.Panel pnBoard;
+        private System.Windows.Forms.ContextMenuStrip contextMsLine;
+        private System.Windows.Forms.ToolStripMenuItem colorLineToolStripMenuItem;
     }
 }
 

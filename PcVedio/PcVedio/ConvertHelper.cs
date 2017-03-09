@@ -109,7 +109,18 @@ namespace PcVedio
         /// 将byte[]转换成int
         /// </summary>
         /// <param name="data">需要转换成整数的byte数组</param>
-        public static int BytesToInt32(byte[] data)
+        public static int BytesToInt32(byte[] data, bool lowBefore)
+        {
+            return BytesToInt32(data, 0, lowBefore);
+        }
+
+
+        /// <summary>
+        /// 将byte[]转换成int
+        /// </summary>
+        /// <param name="data">需要转换成整数的byte数组</param>
+        /// <param name="start">起始位置</param>
+        public static int BytesToInt32(byte[] data, int start, bool lowBefore)
         {
             //如果传入的字节数组长度小于4,则返回0
             if (data.Length < 4)
@@ -127,7 +138,10 @@ namespace PcVedio
                 byte[] tempBuffer = new byte[4];
 
                 //将传入的字节数组的前4个字节复制到临时缓冲区
-                Buffer.BlockCopy(data, 0, tempBuffer, 0, 4);
+                Buffer.BlockCopy(data, start, tempBuffer, 0, 4);
+
+                if (lowBefore)
+                    Array.Reverse(tempBuffer);
 
                 //将临时缓冲区的值转换成整数，并赋给num
                 num = BitConverter.ToInt32(tempBuffer, 0);
@@ -135,6 +149,47 @@ namespace PcVedio
 
             //返回整数
             return num;
+        }
+
+
+
+        /// <summary>
+        /// 将byte[]转换成Short
+        /// </summary>
+        /// <param name="data">需要转换成整数的byte数组</param>
+        /// <param name="start">起始位置</param>
+        public static int BytesToInt16(byte[] data, int start, bool lowBefore)
+        {
+            //如果传入的字节数组长度小于4,则返回0
+            if (data.Length < 2)
+            {
+                return 0;
+            }
+
+            //定义要返回的整数
+            int num = data[start];
+
+            if (lowBefore)
+            {
+                num |= (data[start + 1] << 8);
+            }
+            else
+            {
+                num <<= 8;
+                num |= data[start + 1];
+            }
+
+            //返回整数
+            return num;
+        }
+
+        /// <summary>
+        /// 将byte[]转换成Short
+        /// </summary>
+        /// <param name="data">需要转换成整数的byte数组</param>
+        public static int BytesToInt16(byte[] data, bool lowBefore)
+        {
+            return BytesToInt16(data, 0, lowBefore);
         }
         #endregion
 

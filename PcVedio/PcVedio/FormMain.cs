@@ -25,7 +25,6 @@ namespace PcVedio
 
         private void wifiConnToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            cmd.Login1();
         }
 
         private void wifiBreakToolStripMenuItem_Click(object sender, EventArgs e)

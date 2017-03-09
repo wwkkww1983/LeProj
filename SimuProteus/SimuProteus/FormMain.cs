@@ -427,14 +427,6 @@ namespace SimuProteus
                 }
                 return;
             }
-
-            ElementInfo info = GetElementInfoOnBoardByName(this.currentSelectedComponent.ToString(), new Point(clickArgs.X, clickArgs.Y));
-            if (info.Name == enumComponent.NONE.ToString())
-            {
-                if (this.createLinePoint.Count == 1)
-                    this.clickPositionForLine = info.Location;
-                return;
-            }
             if (clickArgs.Button == MouseButtons.Right)
             {
                 this.Cursor = Cursors.Arrow;
@@ -443,6 +435,7 @@ namespace SimuProteus
             else
             {
                 //添加元器件
+                ElementInfo info = GetElementInfoOnBoardByName(this.currentSelectedComponent.ToString(), new Point(clickArgs.X, clickArgs.Y));
                 info.InnerIdx = elementIdx++;
                 UcElement elementItem = this.getElementView(info);
                 this.pnBoard.Controls.Add(elementItem);
@@ -492,7 +485,7 @@ namespace SimuProteus
 
         private void pnBoard_MouseMove(object sender, MouseEventArgs e)
         {
-            Point pointIdx = CalcLocIdxByCoordinate(e.X, e.Y);
+            Point pointIdx = this.CalcLocIdxByCoordinate(e.X, e.Y);
             if (pointIdx.X > 0 && pointIdx.Y > 0)
             {
                 this.contextMsPoint.Text = string.Format("{0}{1}{2}", pointIdx.X, COORDINATE_SEPERATOR,pointIdx.Y);
@@ -500,7 +493,16 @@ namespace SimuProteus
             }
             else
             {
-                this.ContextMenuStrip = null;
+                int lineIdx = this.CalcLineIdxByCoordinate(e.X, e.Y);
+                if (lineIdx < 0)
+                {
+                    this.ContextMenuStrip = null;
+                }
+                else
+                {
+                    this.contextMsLine.Text = lineIdx.ToString ();
+                    this.ContextMenuStrip = this.contextMsLine;
+                }
             }
 
             //实时展示预览图
@@ -539,6 +541,33 @@ namespace SimuProteus
                 X = boardMargin + (x - 1) * oneNetPointLength,
                 Y = boardMargin + (y - 1) * oneNetPointLength
             };
+        }
+
+        private int CalcLineIdxByCoordinate(int x, int y)
+        {
+            int lineIdx = -1;
+
+            foreach (ElementLine line in this.currentBoardInfo.linesList)
+            {
+                int x1, y1;
+                if (line.LocX == line.LocOtherX)
+                {//竖线
+                    x1 = line.LocOtherX + Constants.LINE_LINK_WIDTH;
+                    y1 = line.LocOtherY;
+                }
+                else
+                {
+                    x1 = line.LocOtherX;
+                    y1 = line.LocOtherY + Constants.LINE_LINK_WIDTH;
+                }
+                if ((line.LocX - x) * (x1 - x) <= 0 && (line.LocY - y) * (y1 - y) <= 0)
+                {
+                    lineIdx = line.InnerIdx;
+                    break;
+                }
+            }
+
+            return lineIdx;
         }
 
         private Point CalcNearestLocIdxByCoordinate(int x, int y)
@@ -981,6 +1010,36 @@ namespace SimuProteus
 
             return locIdx;
         }
+
+        private void colorLineToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int lineIdx = int.Parse((sender as ToolStripItem).Owner.Text);
+            Color beforeColor = defaultLineColor;
+            foreach (ElementLine line in this.currentBoardInfo.linesList)
+            {
+                if (line.InnerIdx == lineIdx)
+                {
+                    beforeColor = line.Color;
+                    break;
+                }
+            }
+            ColorDialog dialog = new ColorDialog();
+            dialog.Color = beforeColor;
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                for( int i=this.currentBoardInfo.linesList.Count - 1;i>0 ;i--)
+                {
+                    ElementLine line = this.currentBoardInfo.linesList[i];
+                    if (line.InnerIdx == lineIdx)
+                    {
+                        line.Color = dialog.Color;
+                        this.currentBoardInfo.linesList.RemoveAt(i);
+                        this.currentBoardInfo.linesList.Add(line);
+                    }
+                }
+            }
+        }
+
         #endregion
 
         #region 串口事件
@@ -1015,5 +1074,7 @@ namespace SimuProteus
             serial.Write(strSend);
         }
         #endregion
+
+
     }
 }
