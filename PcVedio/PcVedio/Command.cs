@@ -10,6 +10,7 @@ namespace PcVedio
     {
         private const int PORT = 9527;
         private const string ROUTE_ADDRESS = "255.255.255.255",selfAddress = "127.0.0.1";
+        private const string CAMERA_IP = "192.168.1.1";
         private Socket socket = NetHelper.CreateTcpSocket();
         private Socket socketWiff = NetHelper.CreateUdpSocket();
 
@@ -47,12 +48,12 @@ namespace PcVedio
             Console.WriteLine(strMsg);
         }
 
-        public void Connect()
+        public void Login1()
         {
-            if (NetHelper.Connect(socket, ROUTE_ADDRESS, PORT))
+            if (NetHelper.Connect(socket, CAMERA_IP, 80))
             {
                 byte[] buff;
-                Coder.EncodeWifiSearch(out buff);
+                Coder.EncodeLogin1(out buff);
                 socket.Send(buff);
             }
         }

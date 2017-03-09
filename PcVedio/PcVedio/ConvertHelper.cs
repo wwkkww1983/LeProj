@@ -150,12 +150,35 @@ namespace PcVedio
             byte[] buff = new byte[4];
             for (int i = 0; i < 4; i++)
             {
-                buff[i] = (byte)(data & 255);
+                buff[i] = (byte)(data & 0xFF);
                 data >>= 8;
             }
 
             if (!lowBefore)
                 Array.Reverse(buff);
+
+            return buff;
+        }
+        #endregion
+
+        #region int 转为 byte[]
+        /// <summary>
+        /// int 转为 byte[]
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="lowBefore">是否低位在前</param>
+        /// <returns></returns>
+        public static byte[] Int16ToBytes(int data, bool lowBefore)
+        {
+            byte[] buff = new byte[2];
+            int i=0, j=1;
+            if (!lowBefore)
+            {
+                i = 1;
+                j = 0;
+            }
+            buff[i] = (byte)(data & 0xFF);
+            buff[j] = (byte)((data >> 8) & 0xFF);
 
             return buff;
         }
