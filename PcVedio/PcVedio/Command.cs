@@ -20,10 +20,8 @@ namespace PcVedio
 
         public Command()
         {
-            //byte[] buff = new byte[] {
-            //0x0d,0x33,0x84 ,0xf1,0xca,0x90,0xf8,0x8a,0x9a,0x94,0x21,0xdb,0xab,0xf6,0xf0,0x73,0x29
-            //};
-            //Coder.DecodeLogin1(buff);
+            byte[] buff;
+            Coder.EncodeLogin2(out buff);
 
             socket.Bind(new IPEndPoint(IPAddress.Any, PORT_SELF_VEDIO));
 

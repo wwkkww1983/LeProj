@@ -28,9 +28,9 @@ namespace PcVedio
             WifiRespInfo info = new WifiRespInfo();
 
             int locIdx = 4;
-            info.Magic = ConvertHelper.BytesToInt32(buff, 0,true);
+            info.Magic = ConvertHelper.BytesToInt32(buff, 0, true);
             info.Code = (enumCommandType)buff[locIdx++];
-            
+
             int wifiIDLen = buff[locIdx++];
             byte[] wifiIDByte = new byte[wifiIDLen];
             Array.Copy(buff, locIdx, wifiIDByte, 0, wifiIDLen);
@@ -144,31 +144,58 @@ namespace PcVedio
             login1.Length = data[0];
             int len = (login1.Length + 7) / 8 * 8;
             byte[] codeInfo = new byte[data.Length - 1];
-            Array.Copy(data,1, codeInfo,0, codeInfo.Length);
+            Array.Copy(data, 1, codeInfo, 0, codeInfo.Length);
             Console.WriteLine(ConvertHelper.BytesToString(codeInfo, Encoding.ASCII));
             if (!fish.Decode(codeInfo, len, FISH_KEY))
                 Console.WriteLine("解码失败");
             Console.WriteLine(codeInfo);
             login1.Plain = ConvertHelper.BytesToString(codeInfo, Encoding.ASCII);
+            login1.Plain = login1.Plain.Substring(0, login1.Length - 1);
             Console.WriteLine(login1.Plain);
             return login1;
         }
 
         public static void EncodeLogin2(out byte[] buff)
         {
-            string name = "admin",encode=string.Empty;
+            string name = "admin";
             string pwd = string.Empty;
-            byte[] content = new byte[10];
-            content[0] = (byte)(name.Length + 1);
-            content[1] = 0;
 
-            byte[] byteName =ConvertHelper.StringToBytes(name,Encoding.ASCII);
-            fish.Encode(byteName, content[0], FISH_KEY);
-            Array.Copy(byteName, 0, content, 2, byteName.Length);
+            int locIdx = 0;
+            int sNameLen = 0, sPwdLen = 0;
+            int nameLen = 0, pwdLen = 0, conLen = 0;
+            sNameLen = name.Length + 1;
+            sPwdLen = pwd.Length + 1;
+            nameLen = (sNameLen + 7) / 8 * 8;
+            pwdLen = (sPwdLen + 7) / 8 * 8;
+            conLen = 1 + nameLen + 1 + pwdLen;
+
+            byte[] content = new byte[conLen];
+            content[locIdx++] = (byte)(sNameLen);
+
+            Random rand = new Random();
+            for (int i = name.Length; i < nameLen; i++)
+            {
+                name = string.Format("{0}{1}", name, (char)rand.Next(0, 0xFF));
+            }
+            for (int i = pwd.Length; i < pwdLen; i++)
+            {
+                pwd = string.Format("{0}{1}", pwd, (char)rand.Next(0, 0xFF));
+            }
+
+            byte[] byteName = ConvertHelper.StringToBytes(name, Encoding.ASCII);
+            fish.Encode(byteName, nameLen, FISH_KEY);
+            Array.Copy(byteName, 0, content, locIdx, nameLen);
+            locIdx += nameLen;
+
+            content[locIdx++] = (byte)(sPwdLen);
+            byte[] bytePwd = ConvertHelper.StringToBytes(pwd, Encoding.ASCII);
+            fish.Encode(bytePwd, pwdLen, FISH_KEY);
+            Array.Copy(bytePwd, 0, content, locIdx, pwdLen);
+
             NormalDataStruct data = new NormalDataStruct()
             {
                 Code = enumCommandType.LOGIN2_REQ,
-                contentLen = 0,
+                contentLen = conLen,
                 Content = content
             };
             EncodeData(data, out buff);
