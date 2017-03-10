@@ -17,11 +17,15 @@ namespace SimuProteus
         #region 初始化
         private bool serialReadFlag = false;
         private const char COORDINATE_SEPERATOR = '#';
-        private int elementIdx = 1;
+        private const int ORIGIN_ARROW_LEN = 10;
+        private Color ORIGIN_ARROW_COLOR = Color.Black;
+        private int elementIdx = 1, pointRadius=0;
         private int boardMargin = int.Parse(Ini.GetItemValue("sizeInfo", "pixelBoardMargin"));
         private int DragDistance = int.Parse(Ini.GetItemValue("sizeInfo", "pixelDragDistance"));
         private int netPointGap = int.Parse(Ini.GetItemValue("sizeInfo", "pixelPointGap"));
         private int netPointSize = int.Parse(Ini.GetItemValue("sizeInfo", "pixelNetPoint"));
+        private int boardWidth = int.Parse(Ini.GetItemValue("sizeInfo", "pixelBoardWidth"));
+        private int boardHeight = int.Parse(Ini.GetItemValue("sizeInfo", "pixelBoardHeight"));
         private int defaultWidth = int.Parse(Ini.GetItemValue("sizeInfo", "pixelInitialWidth"));
         private int defaultHeight = int.Parse(Ini.GetItemValue("sizeInfo", "pixelInitialHeight"));
         private Color defaultLineColor = Color.FromArgb(int.Parse(Ini.GetItemValue("colorInfo", "colorLine")));
@@ -33,24 +37,22 @@ namespace SimuProteus
         List<Point> newLinePoints = new List<Point>();
         List<ElementInfo> elementList = null;
         List<ElementLine> createLinePoint = new List<ElementLine>(2);
-        ProjectDetails currentBoardInfo = new ProjectDetails() { 
-            Project=new ProjectInfo (), 
-            elementList = new List<ElementInfo> (), 
-            linesList = new List<ElementLine> () ,
-            footsList = new List<LineFootView> (),
-            pointsList = new  List<NetPoint>()
+        ProjectDetails currentBoardInfo = new ProjectDetails()
+        {
+            Project = new ProjectInfo() { 
+             OriginX = 1, OriginY=1//默认原点为起点
+            },
+            elementList = new List<ElementInfo>(),
+            linesList = new List<ElementLine>(),
+            footsList = new List<LineFootView>(),
+            pointsList = new List<NetPoint>()
         };
 
         public FormMain()
         {
             InitializeComponent();
 
-
             this.InitialControl();
-            this.Size = new Size(defaultWidth, defaultHeight);
-            this.defaultLeftMenuHeight = this.gbComponent.Height;
-            this.defaultProjNameCoordX = this.lbProjName.Location.X;
-            this.oneNetPointLength = this.netPointGap + this.netPointSize;
             //dbHandler.InitialTable();
             this.elementList = dbHandler.GetBaseComponents();
             int idx = 0;
@@ -68,6 +70,17 @@ namespace SimuProteus
 
         private void InitialControl()
         {
+            this.Size = new Size(defaultWidth, defaultHeight);
+            this.defaultLeftMenuHeight = this.gbComponent.Height;
+            this.defaultProjNameCoordX = this.lbProjName.Location.X;
+            this.oneNetPointLength = this.netPointGap + this.netPointSize;
+            this.pointRadius = this.netPointSize / 2;
+
+            this.pnWorkPlace.Size = this.pnBoard.Size;
+            this.pnWorkPlace.Location = this.pnBoard.Location;
+            this.pnBoard.Size = new Size(boardWidth, boardHeight);
+            this.pnBoard.Location = new Point(0, 0);
+            this.pnBoard.Parent = this.pnWorkPlace;
             //this.pnLineDemo.Size = this.pnBoard.Size;
             //this.pnLineDemo.BackColor = this.pnBoard.BackColor;
             //this.pnLineDemo.Location = this.pnBoard.Location;
@@ -89,6 +102,17 @@ namespace SimuProteus
             projItem.Tag = idx;
             projItem.Click += projectNameToolStripMenuItem_Click;
             this.ProjToolStripMenuItem.DropDownItems.Insert(0,projItem);
+        }
+
+        private void DrawOrigin(int x, int y)
+        {
+            Point coor = this.CalcCoordinateByLocIdx(x, y);
+            Point origin = new Point(coor.X + this.pointRadius, coor.Y + this.pointRadius);
+            Point coorX = new Point(origin.X + ORIGIN_ARROW_LEN, origin.Y);
+            Point coorY = new Point(origin.X, origin.Y + ORIGIN_ARROW_LEN);
+
+            Draw.DrawArrawLine(this.pnBoard, origin, coorX, ORIGIN_ARROW_COLOR);
+            Draw.DrawArrawLine(this.pnBoard, origin, coorY, ORIGIN_ARROW_COLOR);
         }
         #endregion
 
@@ -434,6 +458,8 @@ namespace SimuProteus
             }
             else
             {
+                if (this.currentSelectedComponent == enumComponent.NONE)
+                    return;
                 //添加元器件
                 ElementInfo info = GetElementInfoOnBoardByName(this.currentSelectedComponent.ToString(), new Point(clickArgs.X, clickArgs.Y));
                 info.InnerIdx = elementIdx++;
@@ -456,20 +482,25 @@ namespace SimuProteus
 
         private void pnBoard_Paint(object sender, PaintEventArgs e)
         {
-            int width = 1920, height = 1200;
-
-            for (int x = boardMargin; x < width; x += oneNetPointLength)
+            for (int x = boardMargin; x < boardWidth; x += oneNetPointLength)
             {
-                for (int y = boardMargin; y < height; y += oneNetPointLength)
+                for (int y = boardMargin; y < boardHeight; y += oneNetPointLength)
                 {
                     Draw.DrawSolidCircle(this.pnBoard, enumNetPointType.NONE, x, y);
                 }
             }
-
             foreach (NetPoint point in this.currentBoardInfo.pointsList)
             {
                 Point coord = this.CalcCoordinateByLocIdx(point.X, point.Y);
                 Draw.DrawSolidCircle(this.pnBoard, point.Type, coord.X, coord.Y);
+            }
+            this.DrawOrigin(this.currentBoardInfo.Project.OriginX, this.currentBoardInfo.Project.OriginY);
+
+            foreach (ElementLine line in this.currentBoardInfo.linesList)
+            {
+                Point coordiOne = this.CalcCoordinateByLocIdx(line.LocX, line.LocY);
+                Point coordiOther = this.CalcCoordinateByLocIdx(line.LocOtherX, line.LocOtherY);
+                Draw.DrawSolidLine(this.pnBoard, coordiOne, coordiOther,line.Color);
             }
         }
 
@@ -485,24 +516,21 @@ namespace SimuProteus
 
         private void pnBoard_MouseMove(object sender, MouseEventArgs e)
         {
+            int lineIdx = this.CalcLineIdxByCoordinate(e.X, e.Y);
             Point pointIdx = this.CalcLocIdxByCoordinate(e.X, e.Y);
-            if (pointIdx.X > 0 && pointIdx.Y > 0)
+            if (lineIdx >= 0)
             {
-                this.contextMsPoint.Text = string.Format("{0}{1}{2}", pointIdx.X, COORDINATE_SEPERATOR,pointIdx.Y);
+                this.contextMsLine.Text = lineIdx.ToString();
+                this.ContextMenuStrip = this.contextMsLine;
+            }
+            else if (pointIdx.X > 0 && pointIdx.Y > 0)
+            {
+                this.contextMsPoint.Text = string.Format("{0}{1}{2}", pointIdx.X, COORDINATE_SEPERATOR, pointIdx.Y);
                 this.ContextMenuStrip = this.contextMsPoint;
             }
             else
             {
-                int lineIdx = this.CalcLineIdxByCoordinate(e.X, e.Y);
-                if (lineIdx < 0)
-                {
-                    this.ContextMenuStrip = null;
-                }
-                else
-                {
-                    this.contextMsLine.Text = lineIdx.ToString ();
-                    this.ContextMenuStrip = this.contextMsLine;
-                }
+                this.ContextMenuStrip = null;
             }
 
             //实时展示预览图
@@ -549,18 +577,20 @@ namespace SimuProteus
 
             foreach (ElementLine line in this.currentBoardInfo.linesList)
             {
+                Point coorOne = this.CalcCoordinateByLocIdx(line.LocX, line.LocY),
+                    coorOther = this.CalcCoordinateByLocIdx(line.LocOtherX, line.LocOtherY);
                 int x1, y1;
                 if (line.LocX == line.LocOtherX)
                 {//竖线
-                    x1 = line.LocOtherX + Constants.LINE_LINK_WIDTH;
-                    y1 = line.LocOtherY;
+                    x1 = coorOther.X + Constants.LINE_LINK_WIDTH;
+                    y1 = coorOther.Y;
                 }
                 else
                 {
-                    x1 = line.LocOtherX;
-                    y1 = line.LocOtherY + Constants.LINE_LINK_WIDTH;
+                    x1 = coorOther.X;
+                    y1 = coorOther.Y + Constants.LINE_LINK_WIDTH;
                 }
-                if ((line.LocX - x) * (x1 - x) <= 0 && (line.LocY - y) * (y1 - y) <= 0)
+                if ((coorOne.X - x) * (x1 - x) <= 0 && (coorOne.Y - y) * (y1 - y) <= 0)
                 {
                     lineIdx = line.InnerIdx;
                     break;
@@ -688,7 +718,7 @@ namespace SimuProteus
                 Point otherPoint = this.newLinePoints[i];
                 this.currentBoardInfo.linesList.Add(new ElementLine()
                 {
-                    InnerIdx = elementIdx++,
+                    InnerIdx = elementIdx,
                     LocX = onePoint.X,
                     LocY = onePoint.Y,
                     LocOtherX = otherPoint.X,
@@ -696,7 +726,9 @@ namespace SimuProteus
                     LineIdx = lineIdx++,
                     Color = this.defaultLineColor
                 });
+                onePoint = otherPoint;
             }
+            elementIdx++;
         }
 
         private void DrawLinesByLastPoints()
@@ -999,6 +1031,8 @@ namespace SimuProteus
 
             this.currentBoardInfo.Project.OriginX = locIdx.X;
             this.currentBoardInfo.Project.OriginY = locIdx.Y;
+
+            this.Refresh();
         }
 
         private Point DecodeIndexByStr(string strXY)
@@ -1027,7 +1061,7 @@ namespace SimuProteus
             dialog.Color = beforeColor;
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                for( int i=this.currentBoardInfo.linesList.Count - 1;i>0 ;i--)
+                for( int i=this.currentBoardInfo.linesList.Count - 1;i>=0 ;i--)
                 {
                     ElementLine line = this.currentBoardInfo.linesList[i];
                     if (line.InnerIdx == lineIdx)
@@ -1035,6 +1069,11 @@ namespace SimuProteus
                         line.Color = dialog.Color;
                         this.currentBoardInfo.linesList.RemoveAt(i);
                         this.currentBoardInfo.linesList.Add(line);
+
+                        Point coorOne = this.CalcCoordinateByLocIdx(line.LocX,line.LocY),
+                            coorOther = this.CalcCoordinateByLocIdx(line.LocOtherX,line.LocOtherY);
+
+                        Draw.DrawSolidLine(this.pnBoard, coorOne, coorOther, line.Color);
                     }
                 }
             }
@@ -1074,7 +1113,5 @@ namespace SimuProteus
             serial.Write(strSend);
         }
         #endregion
-
-
     }
 }

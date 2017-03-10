@@ -16,8 +16,10 @@ namespace SimuProteus
         {
             InitializeComponent();
 
-            this.tbWidth.Text = Ini.GetItemValue("sizeInfo", "netWidth");
-            this.tbLength.Text = Ini.GetItemValue("sizeInfo", "netHeight");
+            this.tbWidthBoard.Text = Ini.GetItemValue("sizeInfo", "pixelBoardWidth");
+            this.tbHeightBoard.Text = Ini.GetItemValue("sizeInfo", "pixelBoardHeight");
+            this.tbWidthWindow.Text = Ini.GetItemValue("sizeInfo", "pixelInitialWidth");
+            this.tbHeightWindow.Text = Ini.GetItemValue("sizeInfo", "pixelInitialHeight");
             this.tbFootSize.Text = Ini.GetItemValue("sizeInfo", "pixelFootSize");
             this.tbLineWidth.Text = Ini.GetItemValue("sizeInfo", "pixelLineWidth");
             this.tbNetPoint.Text = Ini.GetItemValue("sizeInfo", "pixelNetPoint");
@@ -28,7 +30,8 @@ namespace SimuProteus
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (!(int.Parse(this.tbWidth.Text) > 0 && int.Parse(this.tbLength.Text) > 0 &&
+            if (!(int.Parse(this.tbWidthBoard.Text) > 0 && int.Parse(this.tbHeightBoard.Text) > 0 &&
+                int.Parse(this.tbWidthWindow.Text) > 0 && int.Parse(this.tbHeightWindow.Text) > 0 &&
                 int.Parse(this.tbFootSize.Text) > 0 && int.Parse(this.tbLineWidth.Text) > 0 &&
                 int.Parse(this.tbNetPoint.Text) > 0 && int.Parse(this.tbMargin.Text) > 0 && 
                 int.Parse(this.tbDragDistance.Text) > 0))
@@ -36,8 +39,10 @@ namespace SimuProteus
                 MessageBox.Show("仅可输入正整数");
                 return;
             }
-            Ini.SetItemValue("sizeInfo", "netWidth", this.tbWidth.Text);
-            Ini.SetItemValue("sizeInfo", "netHeight", this.tbLength.Text);
+            Ini.SetItemValue("sizeInfo", "pixelBoardWidth", this.tbWidthBoard.Text);
+            Ini.SetItemValue("sizeInfo", "pixelBoardHeight", this.tbHeightBoard.Text);
+            Ini.SetItemValue("sizeInfo", "pixelInitialWidth", this.tbWidthWindow.Text);
+            Ini.SetItemValue("sizeInfo", "pixelInitialHeight", this.tbHeightWindow.Text);
             Ini.SetItemValue("sizeInfo", "pixelFootSize", this.tbFootSize.Text);
             Ini.SetItemValue("sizeInfo", "pixelLineWidth", this.tbLineWidth.Text);
             Ini.SetItemValue("sizeInfo", "pixelNetPoint", this.tbNetPoint.Text);

@@ -55,16 +55,39 @@ namespace SimuProteus
             }
         }
 
+        public static void DrawArrawLine(Control board, Point start, Point end,Color color)
+        {
+            Graphics g = board.CreateGraphics();
+
+            Pen pen = new Pen(color, 1);
+            pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Solid;//恢复实线  
+            pen.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;//定义线尾的样式为箭头  
+            g.DrawLine(pen,start,end);  
+        }
+
         public static void DrawSolidLine(Control board, Point start, Point end, bool isDemo)
         {
             Graphics g = board.CreateGraphics();
-            Pen pen = new Pen(Color.Blue, widthLine);            
+            Pen pen = new Pen(Color.Blue, widthLine);
 
             if (isDemo)
             {
-                pen.Color = Color.Black; 
+                pen.Color = Color.Black;
                 pen.DashStyle = System.Drawing.Drawing2D.DashStyle.DashDot;
             }
+
+            start.X += pointRadius;
+            start.Y += pointRadius;
+            end.X += pointRadius;
+            end.Y += pointRadius;
+
+            g.DrawLine(pen, start, end);
+        }
+
+        public static void DrawSolidLine(Control board, Point start, Point end, Color color)
+        {
+            Graphics g = board.CreateGraphics();
+            Pen pen = new Pen(color, widthLine);
 
             start.X += pointRadius;
             start.Y += pointRadius;

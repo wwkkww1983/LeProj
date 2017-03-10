@@ -54,6 +54,7 @@
             this.lbProjName = new System.Windows.Forms.Label();
             this.contextMsLine = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.colorLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pnWorkPlace = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.contextMsPoint.SuspendLayout();
             this.pnBoard.SuspendLayout();
@@ -246,20 +247,29 @@
             this.contextMsLine.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.colorLineToolStripMenuItem});
             this.contextMsLine.Name = "contextMsLine";
-            this.contextMsLine.Size = new System.Drawing.Size(153, 50);
+            this.contextMsLine.Size = new System.Drawing.Size(109, 28);
             // 
             // colorLineToolStripMenuItem
             // 
             this.colorLineToolStripMenuItem.Name = "colorLineToolStripMenuItem";
-            this.colorLineToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.colorLineToolStripMenuItem.Size = new System.Drawing.Size(108, 24);
             this.colorLineToolStripMenuItem.Text = "颜色";
             this.colorLineToolStripMenuItem.Click += new System.EventHandler(this.colorLineToolStripMenuItem_Click);
+            // 
+            // pnWorkPlace
+            // 
+            this.pnWorkPlace.AutoScroll = true;
+            this.pnWorkPlace.Location = new System.Drawing.Point(78, 35);
+            this.pnWorkPlace.Name = "pnWorkPlace";
+            this.pnWorkPlace.Size = new System.Drawing.Size(200, 100);
+            this.pnWorkPlace.TabIndex = 3;
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(880, 700);
+            this.Controls.Add(this.pnWorkPlace);
             this.Controls.Add(this.pnBoard);
             this.Controls.Add(this.gbComponent);
             this.Controls.Add(this.menuStrip1);
@@ -305,6 +315,7 @@
         private System.Windows.Forms.Panel pnBoard;
         private System.Windows.Forms.ContextMenuStrip contextMsLine;
         private System.Windows.Forms.ToolStripMenuItem colorLineToolStripMenuItem;
+        private System.Windows.Forms.Panel pnWorkPlace;
     }
 }
 
