@@ -101,8 +101,9 @@ namespace PcVedio
 
     public struct Login1Struct
     {
-        public int ID;
-        public string Encode;
+        public int Length;
+        public byte[] Encode;
+        public byte[] Decode;
         public string Plain;
     }
 }

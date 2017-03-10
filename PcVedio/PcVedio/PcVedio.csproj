@@ -44,11 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Blowfish.cs" />
     <Compile Include="Coder.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ConvertHelper.cs" />
+    <Compile Include="Blowfish.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>

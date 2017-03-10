@@ -9,7 +9,8 @@ namespace PcVedio
     class Coder
     {
         public const int MAGIC_NORMAL = 0x20130809;
-        public static BlowFish fish = new BlowFish("hello kitty and kgb/cia 2011 COPYRIGHT@REECAM 5460");
+        public const string FISH_KEY = "hello kitty and kgb/cia 2011 COPYRIGHT@REECAM 5460";
+        public static Blowfish fish = new Blowfish();
 
         public static void EncodeWifiSearch(out byte[] buff)
         {
@@ -140,10 +141,16 @@ namespace PcVedio
         public static Login1Struct DecodeLogin1(byte[] data)
         {
             Login1Struct login1 = new Login1Struct();
-            login1.ID = data[0];
-            login1.Encode = ConvertHelper.BytesToString(data, Encoding.ASCII);
-            login1.Encode = login1.Encode.Substring(1);
-            login1.Plain = fish.Decrypt_CBC(login1.Encode);
+            login1.Length = data[0];
+            int len = (login1.Length + 7) / 8 * 8;
+            byte[] codeInfo = new byte[data.Length - 1];
+            Array.Copy(data,1, codeInfo,0, codeInfo.Length);
+            Console.WriteLine(ConvertHelper.BytesToString(codeInfo, Encoding.ASCII));
+            if (!fish.Decode(codeInfo, len, FISH_KEY))
+                Console.WriteLine("解码失败");
+            Console.WriteLine(codeInfo);
+            login1.Plain = ConvertHelper.BytesToString(codeInfo, Encoding.ASCII);
+            Console.WriteLine(login1.Plain);
             return login1;
         }
 
@@ -154,15 +161,28 @@ namespace PcVedio
             byte[] content = new byte[10];
             content[0] = (byte)(name.Length + 1);
             content[1] = 0;
-            encode = fish.Encrypt_CBC(name);
-            byte [] byteCode = ConvertHelper.StringToBytes(encode, Encoding.ASCII);
-            Array.Copy(byteCode, 0, content, 2, byteCode.Length);
+
+            byte[] byteName =ConvertHelper.StringToBytes(name,Encoding.ASCII);
+            fish.Encode(byteName, content[0], FISH_KEY);
+            Array.Copy(byteName, 0, content, 2, byteName.Length);
             NormalDataStruct data = new NormalDataStruct()
             {
                 Code = enumCommandType.LOGIN2_REQ,
                 contentLen = 0,
                 Content = content
             };
+            EncodeData(data, out buff);
+        }
+
+        public static void EncodePlayVedio(out byte[] buff)
+        {
+            NormalDataStruct data = new NormalDataStruct()
+            {
+                Code = enumCommandType.PLAY_VIDEO_REQ,
+                Content = null,
+                contentLen = 0
+            };
+
             EncodeData(data, out buff);
         }
     }
