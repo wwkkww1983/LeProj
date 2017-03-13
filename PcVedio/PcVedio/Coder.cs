@@ -145,13 +145,13 @@ namespace PcVedio
             int len = (login1.Length + 7) / 8 * 8;
             byte[] codeInfo = new byte[data.Length - 1];
             Array.Copy(data, 1, codeInfo, 0, codeInfo.Length);
-            Console.WriteLine(ConvertHelper.BytesToString(codeInfo, Encoding.ASCII));
+            //Console.WriteLine(ConvertHelper.BytesToString(codeInfo, Encoding.ASCII));
             if (!fish.Decode(codeInfo, len, FISH_KEY))
                 Console.WriteLine("解码失败");
-            Console.WriteLine(codeInfo);
+            //Console.WriteLine(codeInfo);
             login1.Plain = ConvertHelper.BytesToString(codeInfo, Encoding.ASCII);
             login1.Plain = login1.Plain.Substring(0, login1.Length - 1);
-            Console.WriteLine(login1.Plain);
+            //Console.WriteLine(login1.Plain);
             return login1;
         }
 
@@ -169,26 +169,35 @@ namespace PcVedio
             pwdLen = (sPwdLen + 7) / 8 * 8;
             conLen = 1 + nameLen + 1 + pwdLen;
 
+            byte[] byteName = new byte[nameLen];
+            for (int i = 0; i < name.Length; i++)
+            {
+                byteName[i] = (byte)name[i];
+            }
+            byteName[name.Length] = (byte)0;
+            byte[] bytePwd = new byte[pwdLen];
+            for (int i = 0; i < pwd.Length; i++)
+            {
+                bytePwd[i] = (byte)pwd[i];
+            }
+            bytePwd[pwd.Length] = (byte)0;
+            ConvertHelper.StringToBytes(pwd, Encoding.ASCII);
+            Random rand = new Random();
+            for (int i = sNameLen; i < nameLen; i++)
+            {
+                byteName[i] = (byte)rand.Next(48, 125);
+            }
+            for (int i = sPwdLen; i < pwdLen; i++)
+            {
+                bytePwd[i] = (byte)rand.Next(48, 125);
+            }
+
             byte[] content = new byte[conLen];
             content[locIdx++] = (byte)(sNameLen);
-
-            Random rand = new Random();
-            for (int i = name.Length; i < nameLen; i++)
-            {
-                name = string.Format("{0}{1}", name, (char)rand.Next(0, 0xFF));
-            }
-            for (int i = pwd.Length; i < pwdLen; i++)
-            {
-                pwd = string.Format("{0}{1}", pwd, (char)rand.Next(0, 0xFF));
-            }
-
-            byte[] byteName = ConvertHelper.StringToBytes(name, Encoding.ASCII);
             fish.Encode(byteName, nameLen, FISH_KEY);
             Array.Copy(byteName, 0, content, locIdx, nameLen);
             locIdx += nameLen;
-
-            content[locIdx++] = (byte)(sPwdLen);
-            byte[] bytePwd = ConvertHelper.StringToBytes(pwd, Encoding.ASCII);
+            content[locIdx++] = (byte)(sPwdLen);            
             fish.Encode(bytePwd, pwdLen, FISH_KEY);
             Array.Copy(bytePwd, 0, content, locIdx, pwdLen);
 
@@ -199,6 +208,13 @@ namespace PcVedio
                 Content = content
             };
             EncodeData(data, out buff);
+
+            //byte[] bf1 = new byte[] { 0xd0, 0xab, 0x22, 0x8a, 0x50, 0x35, 0x33, 0x11 };
+            //byte[] bf2 = new byte[] { 0x92, 0x5c, 0x81, 0xf6, 0x8d, 0xdf, 0xfb, 0x60 };
+            //byte[] bf3 = new byte[] { 0xed, 0xdf, 0xd8, 0x9e, 0x11, 0xce, 0x7b, 0xd5 };
+            //fish.Decode(bf1, nameLen, FISH_KEY);
+            //fish.Decode(bf2, nameLen, FISH_KEY);
+            //fish.Decode(bf3, nameLen, FISH_KEY);
         }
 
         public static void EncodePlayVedio(out byte[] buff)
@@ -206,8 +222,78 @@ namespace PcVedio
             NormalDataStruct data = new NormalDataStruct()
             {
                 Code = enumCommandType.PLAY_VIDEO_REQ,
-                Content = null,
-                contentLen = 0
+                Content = new byte[4],
+                contentLen = 4
+            };
+
+            EncodeData(data, out buff);
+        }
+
+        public static enumRespResult DecodeResult(byte[] data)
+        {
+            enumRespResult result = (enumRespResult)data[0];
+
+            return result;
+        }
+
+        public static VideoData DecodeVideo(int len, byte[] data,byte[] before)
+        {
+            VideoData video = new VideoData();
+            int tmpMagic = ConvertHelper.BytesToInt32(data, 0, true);
+            video.NewFlag = (tmpMagic == MAGIC_NORMAL);
+            int locIdx = 12;
+            if (video.NewFlag)
+            {
+                video.Type = (enumVideoZipType)data[locIdx++];
+                video.Resolution = (enumVideoResolution)data[locIdx++];
+                video.Video = data[locIdx++];
+                video.NeedPhoto = data[locIdx++];
+                video.IsKeyImg = data[locIdx++];
+
+                video.Time = ConvertHelper.BytesToInt32(data, locIdx, true);
+                locIdx += 4;
+                video.TakeTime = ConvertHelper.BytesToInt32(data, locIdx, true);
+                locIdx += 4;
+                video.Length = ConvertHelper.BytesToInt32(data, locIdx, true);
+                locIdx += 4;
+
+                if (len >= locIdx)
+                {
+                    video.Data = new byte[len - locIdx];
+                    Array.Copy(data, locIdx, video.Data, 0, len - locIdx);
+                }
+            }
+            else
+            {
+                locIdx = 0;
+                video.Data = new byte[len - locIdx + before.Length];
+                Array.Copy(before, video.Data, before.Length);
+                Array.Copy(data, locIdx, video.Data, before.Length, len - locIdx);
+            }
+            //Console.WriteLine("{0}={1}", len, video.NewFlag);
+
+            //try
+            //{
+            //    System.IO.MemoryStream ms2 = new System.IO.MemoryStream(video.Data);
+            //    System.Drawing.Image img2 = System.Drawing.Image.FromStream(ms2);
+            //    img2.Save("bbb.jpg");
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e.Message);
+            //}
+
+            return video;
+        }
+
+        public static void EncodeKeepAlive(out byte[] buff)
+        {
+            buff = new byte[12];
+            NormalDataStruct data = new NormalDataStruct()
+            {
+                Code = enumCommandType.KEEP_ALIVE,
+                contentLen = 0,
+                Content = null
             };
 
             EncodeData(data, out buff);

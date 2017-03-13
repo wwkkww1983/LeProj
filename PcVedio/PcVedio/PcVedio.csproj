@@ -55,11 +55,21 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormPath.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPath.Designer.cs">
+      <DependentUpon>FormPath.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ini.cs" />
     <Compile Include="NetHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPath.resx">
+      <DependentUpon>FormPath.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

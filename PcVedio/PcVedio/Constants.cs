@@ -67,6 +67,94 @@ namespace PcVedio
         CONTINUE_RECORD_REQ = 465
     }
 
+    /// <summary>
+    /// 返回结果
+    /// </summary>
+    public enum enumRespResult
+    {
+        /// <summary>
+        /// 成功
+        /// </summary>
+        Success = 0x00,
+        /// <summary>
+        /// 用户权限不足
+        /// </summary>
+        NoRight,
+        /// <summary>
+        /// 当前音视频会话数目过多，拒绝
+        /// </summary>
+        TooMuch,
+        /// <summary>
+        /// 设备内部错误
+        /// </summary>
+        DeviceError,
+        /// <summary>
+        /// 参数错误
+        /// </summary>
+        ErrorParam,
+        /// <summary>
+        /// 当前禁止音视频访问
+        /// </summary>
+        Prohiden,
+        /// <summary>
+        /// 视频操作失败
+        /// </summary>
+        HandlerError,
+        /// <summary>
+        /// 当前连接正在播放视频
+        /// </summary>
+        IsWorking
+    }
+
+    /// <summary>
+    /// 视频数据压缩格式
+    /// </summary>
+    public enum enumVideoZipType
+    {
+        MJPEG = 0x00,
+        MPEG4,
+        H264
+    }
+
+    /// <summary>
+    /// 视频数据图像分辨率
+    /// </summary>
+    public enum enumVideoResolution
+    {
+        _128_96 = 0x00,
+        _160_112,
+        _160_120,
+        _176_144,
+        _320_240,
+        _352_288,
+        _640_480,
+        _704_576,
+        _720_576,
+        _800_600,
+        _1024_768,
+        _1280_720,
+        _256_144,
+        _384_216,
+        _512_288,
+        _640_360,
+        _768_432,
+        _896_504,
+        _1024_576
+    }
+
+    public struct VideoData
+    {
+        public enumVideoZipType Type;
+        public enumVideoResolution Resolution;
+        public int Video;
+        public int NeedPhoto;
+        public int IsKeyImg;
+        public bool NewFlag;
+        public int Time;
+        public int TakeTime;
+        public int Length;
+        public byte[] Data;
+    }
 
     public struct WifiRespInfo
     {

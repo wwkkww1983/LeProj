@@ -10,54 +10,68 @@ namespace PcVedio
     {
         private const int PORT_SEARCH = 9527, PORT_VEDIO = 80, BUFFER_SIZE = 1024;
         private const int PORT_SELF_SEARCH = 8888, PORT_SELF_VEDIO = 8889;
-        private const string ROUTE_ADDRESS = "255.255.255.255", ROUTE_ADDRESS2 = "192.168.1.255", selfAddress = "127.0.0.1";
-        private string cameraIP = "192.168.1.1";
+        private bool connectFlag = false;
+        byte[] buffVideo = new byte[0xFFFFFF];
         private UdpClient client = new UdpClient(new IPEndPoint(IPAddress.Any, PORT_SELF_SEARCH));
         private Socket socket = NetHelper.CreateTcpSocket();
-        private bool loginFlag = false;
-        private int cameraPort = 80;
 
 
         public Command()
         {
-            byte[] buff;
-            Coder.EncodeLogin2(out buff);
-
-            socket.Bind(new IPEndPoint(IPAddress.Any, PORT_SELF_VEDIO));
+            //byte[] buff;
+            //Coder.EncodePlayVedio(out buff);
 
             Thread threadRecev = new Thread(RespConnectWifi);
             threadRecev.Start();
+
+            socket.Bind(new IPEndPoint(IPAddress.Any, PORT_SELF_VEDIO));
 
             //Thread threadTCP = new Thread(ListenPort);
             //threadTCP.Start();
         }
 
-
-        public void ConnectWifi()
+        /// <summary>
+        /// 当前状态
+        /// </summary>
+        public bool Status
         {
-            IPEndPoint targetPoint = new IPEndPoint(IPAddress.Broadcast, PORT_SEARCH);
+            get { return this.connectFlag; }
+        }
+
+        public string ConnectWifi()
+        {
+            string strResult = string.Empty;
+
+            IPEndPoint targetPoint = new IPEndPoint(IPAddress.Broadcast, PORT_SEARCH); 
 
             byte[] buff;
             Coder.EncodeWifiSearch(out buff);
             client.EnableBroadcast = true;
             client.Send(buff, 5, targetPoint);
+
+            return strResult;
         }
 
         public void RespConnectWifi()
         {
             IPEndPoint serverPoint = new IPEndPoint(IPAddress.Any, 0);
 
-            while (true)
+            while (!connectFlag)
             {
                 byte[] buff = client.Receive(ref serverPoint);
                 WifiRespInfo info = Coder.DecodeWifiSearch(buff);
-                Login1(info.IP, info.Port);
+                Login(info.IP, info.Port);
             }
         }
 
-        public void Login1(string ip, int port)
+        public string Login(string ip, int port)
         {
-            if (NetHelper.Connect(socket, ip, port))
+            string strResult = string.Empty;
+            if (!NetHelper.Connect(socket, ip, port))
+            {
+                strResult = "连接失败";
+            }
+            else
             {
                 byte[] buff;
                 Coder.EncodeLogin1(out buff);
@@ -68,22 +82,60 @@ namespace PcVedio
                 NormalDataStruct dataInfo = Coder.DecodeData(buffReceive);
                 Login1Struct loginInfo = Coder.DecodeLogin1(dataInfo.Content);
 
+
                 Coder.EncodeLogin2(out buff);
                 socket.Send(buff);
-
                 byteBuff = socket.Receive(buffReceive);
                 dataInfo = Coder.DecodeData(buffReceive);
+                enumRespResult loginResult = Coder.DecodeResult(dataInfo.Content);
+                if (loginResult != enumRespResult.Success)
+                {
+                    strResult = loginResult.ToString();
+                }
+                else
+                {
+                    Coder.EncodePlayVedio(out buff);
+                    socket.Send(buff);
+                    byteBuff = socket.Receive(buffReceive);
+                    dataInfo = Coder.DecodeData(buffReceive);
+                    enumRespResult playResult = Coder.DecodeResult(dataInfo.Content);
 
-                //Coder.EncodePlayVedio(out buff);
-                //socket.Send(buff);
+                    if (playResult != enumRespResult.Success)
+                    {
+                        strResult = playResult.ToString();
+                    }
+                    else
+                    {
+                        connectFlag = true;
+                        //byte[] buffVedio = new byte[] { };
+                        //while (true)
+                        //{
+                        //    buffVedio = this.PlayVideo(buffVedio);
+                        //}
+                    }
+                }
 
-                //byte[] buffReceive = new byte[BUFFER_SIZE];
-                //int byteBuff = socket.Receive(buffReceive);
-                //NormalDataStruct dataInfo = Coder.DecodeData(buffReceive);
-
-                string strMsg = ConvertHelper.BytesToString(buff, System.Text.Encoding.UTF8);
-                Console.WriteLine(strMsg);
+                //string strMsg = ConvertHelper.BytesToString(buff, System.Text.Encoding.UTF8);
+                //Console.WriteLine(strMsg);
             }
+            return strResult;
+        }
+
+        public byte[] PlayVideo(byte [] beforeVideo,ref bool newFlag)
+        {
+            Array.Clear(buffVideo, 0, buffVideo.Length);
+            int byteBuff = socket.Receive(buffVideo);
+            VideoData video = Coder.DecodeVideo(byteBuff, buffVideo, beforeVideo);
+            newFlag = video.NewFlag;
+
+            return video.Data;
+        }
+
+        public void KeepAlive()
+        {
+            byte[] buff;
+            Coder.EncodeKeepAlive(out buff);
+            socket.Send(buff);
         }
 
         public void ListenPort()
@@ -103,6 +155,14 @@ namespace PcVedio
                 Console.WriteLine(strMsg);
             }
 
+        }
+
+        public void CloseWifi()
+        {
+            socket.Close();
+            socket.Dispose();
+
+            client.Close();
         }
     }
 }
