@@ -12,45 +12,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Diagnostics;
 
 namespace PcVedio
 {
     public partial class FormMain : Form
     {
-        private bool photo = false, record = false;
+        private bool photo = false, record = false,active=false;
         private bool NewFlag = false,InitialFlag = false;
         private string photoName = "yyyy-MM-dd HH：mm：ss：fff.",recordName=string.Empty;
         private string imgPath = string.Empty, videoPath = string.Empty,lan = string.Empty;
+        private string VideoTmpFolder = "\\tmp\\", currentFolder = System.Environment.CurrentDirectory;
         private byte[] buffVedio = new byte[] { }, buffNew;
-        private Command cmd =null;
+        private int rIdx = 1;
+        private Command cmd = new Command();
+        private Process p = new Process();
         
 
         public FormMain()
         {
             InitializeComponent();
-
-            //FFmpegSharp.Executor.Encoder.Create()
-            //    .WidthInput("img\\13-03-2017_23-04-01-222.jpg")
-            //    .To<Mp4>("14-03-2017.mp4")
-            //    .Execute();
-                
-            //VideoInfo input1 = VideoInfo.FromFileInfo(new FileInfo("img\\13-03-2017_23-04-01-222.jpg"));
-            //encoder.ToMp4(input1, new FileInfo("img\\13-03-2017_23-04-01-222.mp4"));
-            //VideoInfo output1 = VideoInfo.FromFileInfo(new FileInfo("img\\13-03-2017_23-04-01-222.mp4"));
-
-            //VideoInfo input2 = VideoInfo.FromFileInfo(new FileInfo("img\\13-03-2017_2304-02-536.jpg"));
-            //encoder.ToMp4(input1, new FileInfo("img\\13-03-2017_2304-02-536.mp4"));
-            //VideoInfo output2 = VideoInfo.FromFileInfo(new FileInfo("img\\13-03-2017_2304-02-536.mp4"));
-
-
-
-            //encoder.Join(new FileInfo("14-03-2017.mp4"), new VideoInfo[] { output1 }); 
-            //VideoInfo output = VideoInfo.FromFileInfo(new FileInfo("14-03-2017.mp4"));
-
-            //encoder.Join(new FileInfo("15-03-2017.mp4"), new VideoInfo[] { output,output2 }); 
-            ////VideoInfo input2 = VideoInfo.FromFileInfo(new FileInfo("img\\13-03-2017_2304-02-536.jpg"));
-            
-
             lan = Ini.GetItemValue("lan");
             imgPath = Ini.GetItemValue("img");
             videoPath = Ini.GetItemValue("video");
@@ -62,13 +43,17 @@ namespace PcVedio
 
         private void wifiConnToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            cmd = new Command();
-            System.Threading.Thread.Sleep(500);
-            this.timerPlay.Enabled = true;
-            this.timerAlive.Enabled = true;
             cmd.ConnectWifi();
+            System.Threading.Thread.Sleep(500);
+            int iCount = 1;
+            this.active = true;
             while (buffVedio.Length < 10)
             {
+                if (!cmd.Status && iCount > 10)
+                {
+                    MessageBox.Show("网络连接失败");
+                    break;
+                }
                 if (cmd.Status)
                 {
                     buffVedio = cmd.PlayVideo(buffVedio, ref NewFlag);
@@ -76,19 +61,29 @@ namespace PcVedio
                     InitialFlag = true;
                     break;
                 }
+                else
+                {
+                    cmd.ConnectWifi();
+                    System.Threading.Thread.Sleep(100);
+                    iCount++;
+                }
             }
+
+            this.timerPlay.Enabled = true;
+            this.timerAlive.Enabled = true;
         }
 
         private void wifiBreakToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.active = false;
             this.timerPlay.Enabled = false;
             this.timerAlive.Enabled = false;
-            cmd.CloseWifi();
+            //cmd.CloseWifi();
         }
 
         private void timerPlay_Tick(object sender, EventArgs e)
         {
-            if (InitialFlag)
+            if (InitialFlag && this.active)
             {
                 buffNew = cmd.PlayVideo(buffVedio, ref NewFlag);
 
@@ -102,12 +97,14 @@ namespace PcVedio
                         {
                             img.Save(imgPath + "/"+ DateTime.Now.ToString(photoName) + "jpg");
                             photo = false;
-                        }
-                        else if (record)
+                        }                        
+                        if (record)
                         {
-                            //var input1 = VideoInfo.FromFileInfo(new FileInfo("13-03-2017_23-04-01-222.jpg"));
-                            //var input2 = VideoInfo.FromFileInfo(new FileInfo("13-03-2017_23-04-01-222.jpg"));
-                            //encoder.ToMp4(input1, new FileInfo("13-03-2017.mp4"));
+                            img.Save(videoPath + VideoTmpFolder + string.Format("{0:0000}", rIdx++) + ".jpg");
+                            if (rIdx >= 9999)
+                            {
+                                MessageBox.Show("Time Over");
+                            }
                         }
                     }
                 }
@@ -166,7 +163,8 @@ namespace PcVedio
 
         private void pictureToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            photo = true;
+            if(CheckVideo())
+                photo = true;
         }
 
         private void setToolStripMenuItem_Click(object sender, EventArgs e)
@@ -179,13 +177,83 @@ namespace PcVedio
             form.ShowDialog();
         }
 
+        private bool CheckVideo()
+        {
+            if (!this.active)
+            {
+                MessageBox.Show("No Data");
+            }
+            return this.active;
+        }
+
         private void videoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (videoToolStripMenuItem.Text != "Record" || videoToolStripMenuItem.Text != "录像")
+            if (!CheckVideo()) return;
+
+            if (videoToolStripMenuItem.Text == "Record" || videoToolStripMenuItem.Text == "录像")
             {
+                if (lan == "en")
+                {
+                    videoToolStripMenuItem.Text = "Stop";
+                }
+                else
+                {
+                    videoToolStripMenuItem.Text = "停止";
+                }
+                rIdx = 1;
+                if (this.p.StartInfo.Arguments.Length > 10 && !this.p.HasExited)
+                    this.p.Kill();
+                videoToolStripMenuItem.BackColor = Color.Red;
                 record = true;
-                recordName = imgPath + DateTime.Now.ToString(photoName) + "mp4";
+                Directory.CreateDirectory(videoPath + "\\tmp");
             }
+            else
+            {
+                if (lan == "en")
+                {
+                    videoToolStripMenuItem.Text = "Record";
+                }
+                else
+                {
+                    videoToolStripMenuItem.Text = "录像";
+                }
+                videoToolStripMenuItem.BackColor = this.BackColor;
+                record = false;
+                this.CreateVideo();
+            }
+        }
+
+        private void CreateVideo()
+        {
+            string imgPath = videoPath, videoName = DateTime.Now.ToString("dd-MM-yyyy_HH-mm-ss-fff.") + "mp4";
+            if (!videoPath.Contains(':'))
+                imgPath = currentFolder + "\\"+videoPath;
+            string ffmpegPath = currentFolder + "\\tool\\ffmpeg.exe";
+            ProcessStartInfo startInfo = new ProcessStartInfo(ffmpegPath);
+            startInfo.WindowStyle = ProcessWindowStyle.Normal;
+            string outFilePath = imgPath + "\\" + videoName;
+            startInfo.Arguments = string.Format("-i {0}{1}%4d.jpg -vcodec libx264 {2}", imgPath, VideoTmpFolder, outFilePath);
+            p.StartInfo = startInfo;
+            p.Exited += RenewTmpFolder;
+            p.Start();
+        }
+
+        private void RenewTmpFolder(object sender, EventArgs e)
+        {
+            if (!videoPath.Contains(':'))
+            {
+                imgPath = currentFolder + "\\" + videoPath;
+            }
+            if (Directory.Exists(imgPath + VideoTmpFolder))
+            {
+                Directory.Delete(imgPath + VideoTmpFolder, true);
+            }
+        }
+
+        private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+            System.Environment.Exit(0); 
         }
     }
 }

@@ -21,7 +21,11 @@ namespace PcVedio
             {
                 components.Dispose();
             }
+            if (this.p.StartInfo.Arguments.Length > 10 && !this.p.HasExited)
+                this.p.Kill();
             base.Dispose(disposing);
+            this.cmd.CloseWifi();
+            
         }
 
         #region Windows 窗体设计器生成的代码
@@ -100,7 +104,6 @@ namespace PcVedio
             this.videoToolStripMenuItem.Name = "videoToolStripMenuItem";
             this.videoToolStripMenuItem.Size = new System.Drawing.Size(51, 24);
             this.videoToolStripMenuItem.Text = "录像";
-            this.videoToolStripMenuItem.Visible = false;
             this.videoToolStripMenuItem.Click += new System.EventHandler(this.videoToolStripMenuItem_Click);
             // 
             // LanguageToolStripMenuItem
@@ -115,14 +118,14 @@ namespace PcVedio
             // englishToolStripMenuItem
             // 
             this.englishToolStripMenuItem.Name = "englishToolStripMenuItem";
-            this.englishToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.englishToolStripMenuItem.Size = new System.Drawing.Size(138, 24);
             this.englishToolStripMenuItem.Text = "English";
             this.englishToolStripMenuItem.Click += new System.EventHandler(this.englishToolStripMenuItem_Click);
             // 
             // chineseToolStripMenuItem
             // 
             this.chineseToolStripMenuItem.Name = "chineseToolStripMenuItem";
-            this.chineseToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.chineseToolStripMenuItem.Size = new System.Drawing.Size(138, 24);
             this.chineseToolStripMenuItem.Text = "简体中文";
             this.chineseToolStripMenuItem.Click += new System.EventHandler(this.chineseToolStripMenuItem_Click);
             // 
@@ -164,6 +167,7 @@ namespace PcVedio
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormMain";
             this.Text = "moqo";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxVideo)).EndInit();

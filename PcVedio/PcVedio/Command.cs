@@ -62,9 +62,13 @@ namespace PcVedio
 
             while (!connectFlag)
             {
-                byte[] buff = client.Receive(ref serverPoint);
-                WifiRespInfo info = Coder.DecodeWifiSearch(buff);
-                Login(info.IP, info.Port);
+                try
+                {
+                    byte[] buff = client.Receive(ref serverPoint);
+                    WifiRespInfo info = Coder.DecodeWifiSearch(buff);
+                    Login(info.IP, info.Port);
+                }
+                catch { }
             }
         }
 
@@ -163,6 +167,8 @@ namespace PcVedio
 
         public void CloseWifi()
         {
+            this.connectFlag = false;
+
             socket.Close();
             socket.Dispose();
 
