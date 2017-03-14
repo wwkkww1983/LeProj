@@ -1,4 +1,8 @@
-﻿namespace PcVedio
+﻿/// <summary>
+/// copyright:  Zac (suoxd123@126.com)
+/// 2017-03-14
+/// </summary>
+namespace PcVedio
 {
     partial class FormMain
     {
@@ -39,10 +43,10 @@
             this.LanguageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.englishToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chineseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.picBoxVideo = new System.Windows.Forms.PictureBox();
             this.timerPlay = new System.Windows.Forms.Timer(this.components);
             this.timerAlive = new System.Windows.Forms.Timer(this.components);
-            this.setToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxVideo)).BeginInit();
             this.SuspendLayout();
@@ -97,6 +101,7 @@
             this.videoToolStripMenuItem.Size = new System.Drawing.Size(51, 24);
             this.videoToolStripMenuItem.Text = "录像";
             this.videoToolStripMenuItem.Visible = false;
+            this.videoToolStripMenuItem.Click += new System.EventHandler(this.videoToolStripMenuItem_Click);
             // 
             // LanguageToolStripMenuItem
             // 
@@ -121,6 +126,13 @@
             this.chineseToolStripMenuItem.Text = "简体中文";
             this.chineseToolStripMenuItem.Click += new System.EventHandler(this.chineseToolStripMenuItem_Click);
             // 
+            // setToolStripMenuItem
+            // 
+            this.setToolStripMenuItem.Name = "setToolStripMenuItem";
+            this.setToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
+            this.setToolStripMenuItem.Text = "文件路径";
+            this.setToolStripMenuItem.Click += new System.EventHandler(this.setToolStripMenuItem_Click);
+            // 
             // picBoxVideo
             // 
             this.picBoxVideo.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -140,13 +152,6 @@
             // 
             this.timerAlive.Interval = 5000;
             this.timerAlive.Tick += new System.EventHandler(this.timerAlive_Tick);
-            // 
-            // setToolStripMenuItem
-            // 
-            this.setToolStripMenuItem.Name = "setToolStripMenuItem";
-            this.setToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
-            this.setToolStripMenuItem.Text = "文件路径";
-            this.setToolStripMenuItem.Click += new System.EventHandler(this.setToolStripMenuItem_Click);
             // 
             // FormMain
             // 

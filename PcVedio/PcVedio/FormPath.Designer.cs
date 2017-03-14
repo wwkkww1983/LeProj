@@ -1,4 +1,8 @@
-﻿namespace PcVedio
+﻿/// <summary>
+/// copyright:  Zac (suoxd123@126.com)
+/// 2017-03-14
+/// </summary>
+namespace PcVedio
 {
     partial class FormPath
     {
@@ -31,13 +35,14 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPath));
             this.btnImg = new System.Windows.Forms.Button();
             this.tbPath = new System.Windows.Forms.TextBox();
+            this.btnOpen = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnImg
             // 
-            this.btnImg.Location = new System.Drawing.Point(25, 34);
+            this.btnImg.Location = new System.Drawing.Point(6, 34);
             this.btnImg.Name = "btnImg";
-            this.btnImg.Size = new System.Drawing.Size(134, 23);
+            this.btnImg.Size = new System.Drawing.Size(113, 23);
             this.btnImg.TabIndex = 0;
             this.btnImg.Text = "图片路径";
             this.btnImg.UseVisualStyleBackColor = true;
@@ -45,16 +50,27 @@
             // 
             // tbPath
             // 
-            this.tbPath.Location = new System.Drawing.Point(165, 35);
+            this.tbPath.Location = new System.Drawing.Point(128, 35);
             this.tbPath.Name = "tbPath";
             this.tbPath.Size = new System.Drawing.Size(269, 25);
             this.tbPath.TabIndex = 1;
+            // 
+            // btnOpen
+            // 
+            this.btnOpen.Location = new System.Drawing.Point(403, 37);
+            this.btnOpen.Name = "btnOpen";
+            this.btnOpen.Size = new System.Drawing.Size(64, 23);
+            this.btnOpen.TabIndex = 2;
+            this.btnOpen.Text = "打开";
+            this.btnOpen.UseVisualStyleBackColor = true;
+            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
             // FormPath
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(479, 104);
+            this.Controls.Add(this.btnOpen);
             this.Controls.Add(this.tbPath);
             this.Controls.Add(this.btnImg);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -71,5 +87,6 @@
 
         private System.Windows.Forms.Button btnImg;
         private System.Windows.Forms.TextBox tbPath;
+        private System.Windows.Forms.Button btnOpen;
     }
 }

@@ -1,4 +1,8 @@
-﻿using System;
+﻿/// <summary>
+/// copyright:  Zac (suoxd123@126.com)
+/// 2017-03-14
+/// </summary>
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,14 +19,37 @@ namespace PcVedio
     {
         private bool photo = false, record = false;
         private bool NewFlag = false,InitialFlag = false;
-        private string photoName = "yyyy-MM-dd HH：mm：ss：fff.jp";
+        private string photoName = "yyyy-MM-dd HH：mm：ss：fff.",recordName=string.Empty;
         private string imgPath = string.Empty, videoPath = string.Empty,lan = string.Empty;
         private byte[] buffVedio = new byte[] { }, buffNew;
         private Command cmd =null;
+        
 
         public FormMain()
         {
             InitializeComponent();
+
+            //FFmpegSharp.Executor.Encoder.Create()
+            //    .WidthInput("img\\13-03-2017_23-04-01-222.jpg")
+            //    .To<Mp4>("14-03-2017.mp4")
+            //    .Execute();
+                
+            //VideoInfo input1 = VideoInfo.FromFileInfo(new FileInfo("img\\13-03-2017_23-04-01-222.jpg"));
+            //encoder.ToMp4(input1, new FileInfo("img\\13-03-2017_23-04-01-222.mp4"));
+            //VideoInfo output1 = VideoInfo.FromFileInfo(new FileInfo("img\\13-03-2017_23-04-01-222.mp4"));
+
+            //VideoInfo input2 = VideoInfo.FromFileInfo(new FileInfo("img\\13-03-2017_2304-02-536.jpg"));
+            //encoder.ToMp4(input1, new FileInfo("img\\13-03-2017_2304-02-536.mp4"));
+            //VideoInfo output2 = VideoInfo.FromFileInfo(new FileInfo("img\\13-03-2017_2304-02-536.mp4"));
+
+
+
+            //encoder.Join(new FileInfo("14-03-2017.mp4"), new VideoInfo[] { output1 }); 
+            //VideoInfo output = VideoInfo.FromFileInfo(new FileInfo("14-03-2017.mp4"));
+
+            //encoder.Join(new FileInfo("15-03-2017.mp4"), new VideoInfo[] { output,output2 }); 
+            ////VideoInfo input2 = VideoInfo.FromFileInfo(new FileInfo("img\\13-03-2017_2304-02-536.jpg"));
+            
 
             lan = Ini.GetItemValue("lan");
             imgPath = Ini.GetItemValue("img");
@@ -73,8 +100,14 @@ namespace PcVedio
                         this.picBoxVideo.Image = img;
                         if (photo)
                         {
-                            img.Save(imgPath + DateTime.Now.ToString(photoName) + "g");
+                            img.Save(imgPath + "/"+ DateTime.Now.ToString(photoName) + "jpg");
                             photo = false;
+                        }
+                        else if (record)
+                        {
+                            //var input1 = VideoInfo.FromFileInfo(new FileInfo("13-03-2017_23-04-01-222.jpg"));
+                            //var input2 = VideoInfo.FromFileInfo(new FileInfo("13-03-2017_23-04-01-222.jpg"));
+                            //encoder.ToMp4(input1, new FileInfo("13-03-2017.mp4"));
                         }
                     }
                 }
@@ -111,7 +144,7 @@ namespace PcVedio
                 this.videoToolStripMenuItem.Text = "Record";
                 this.wifiBreakToolStripMenuItem.Text = "Disconnect";
                 this.wifiConnToolStripMenuItem.Text = "Connect";
-                this.photoName = "dd-MM-yyyy_HH-mm-ss-fff.jp";
+                this.photoName = "dd-MM-yyyy_HH-mm-ss-fff.";
                 this.setToolStripMenuItem.Text = "Picture Path";
                 lan = "en";
                 Ini.SetItemValue("lan", lan);
@@ -124,7 +157,7 @@ namespace PcVedio
                 this.videoToolStripMenuItem.Text = "录像";
                 this.wifiBreakToolStripMenuItem.Text = "断开";
                 this.wifiConnToolStripMenuItem.Text = "连接";
-                this.photoName = "yyyy-MM-dd HH：mm：ss：fff.jp";
+                this.photoName = "yyyy-MM-dd HH：mm：ss：fff.";
                 this.setToolStripMenuItem.Text = "文件路径";
                 lan = "cn";
                 Ini.SetItemValue("lan", lan);
@@ -144,6 +177,15 @@ namespace PcVedio
                 form.Text = "Change Photo Path";
             }
             form.ShowDialog();
+        }
+
+        private void videoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (videoToolStripMenuItem.Text != "Record" || videoToolStripMenuItem.Text != "录像")
+            {
+                record = true;
+                recordName = imgPath + DateTime.Now.ToString(photoName) + "mp4";
+            }
         }
     }
 }

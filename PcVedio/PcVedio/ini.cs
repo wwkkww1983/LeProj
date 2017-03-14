@@ -8,6 +8,7 @@ namespace PcVedio
     /// <summary>
     /// ¶ÁĞ´IniÅäÖÃÎÄ¼ş
     /// copyright:  Zac (suoxd123@126.com)
+    /// 2017-03-14
     /// </summary>
     public class Ini
     {

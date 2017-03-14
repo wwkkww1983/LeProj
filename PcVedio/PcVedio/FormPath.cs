@@ -1,4 +1,8 @@
-﻿using System;
+﻿/// <summary>
+/// copyright:  Zac (suoxd123@126.com)
+/// 2017-03-14
+/// </summary>
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -21,6 +25,7 @@ namespace PcVedio
             if (this.lan == "en")
             {
                 btnImg.Text = "Photo Folder";
+                btnOpen.Text = "Open";
             }
 
             this.tbPath.Text = Ini.GetItemValue("img");
@@ -35,6 +40,11 @@ namespace PcVedio
                 this.tbPath.Text = dialog.SelectedPath;
                 Ini.SetItemValue("img", this.tbPath.Text);
             }
+        }
+
+        private void btnOpen_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("Explorer.exe", this.tbPath.Text);
         }
     }
 }

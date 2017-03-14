@@ -1,4 +1,8 @@
-﻿using System;
+﻿/// <summary>
+/// copyright:  Zac (suoxd123@126.com)
+/// 2017-03-14
+/// </summary>
+using System;
 using System.Text;
 
 namespace PcVedio
