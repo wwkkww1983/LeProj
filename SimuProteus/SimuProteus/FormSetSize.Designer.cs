@@ -43,11 +43,11 @@
             this.tbDragDistance = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tbHeightBoard = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.tbWidthBoard = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tbHeightWindow = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.tbWidthWindow = new System.Windows.Forms.TextBox();
@@ -107,7 +107,7 @@
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 2;
-            this.btnSave.Text = "保存";
+            this.btnSave.Text = "应用";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
@@ -183,20 +183,6 @@
             this.tabPage1.Text = "画板尺寸";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.tbHeightWindow);
-            this.tabPage2.Controls.Add(this.label10);
-            this.tabPage2.Controls.Add(this.tbWidthWindow);
-            this.tabPage2.Controls.Add(this.label11);
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(386, 110);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "窗口尺寸";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
             // tbHeightBoard
             // 
             this.tbHeightBoard.Location = new System.Drawing.Point(257, 43);
@@ -228,6 +214,20 @@
             this.label9.Size = new System.Drawing.Size(22, 15);
             this.label9.TabIndex = 4;
             this.label9.Text = "宽";
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.tbHeightWindow);
+            this.tabPage2.Controls.Add(this.label10);
+            this.tabPage2.Controls.Add(this.tbWidthWindow);
+            this.tabPage2.Controls.Add(this.label11);
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(386, 110);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "窗口尺寸";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // tbHeightWindow
             // 

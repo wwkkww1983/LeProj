@@ -403,6 +403,17 @@ namespace SimuProteus
                 }
             }
         }
+
+        private void UpdateShowSize()
+        {
+           this.boardWidth = int.Parse(Ini.GetItemValue("sizeInfo", "pixelBoardWidth"));
+           this.boardHeight = int.Parse(Ini.GetItemValue("sizeInfo", "pixelBoardHeight"));
+           this.defaultWidth = int.Parse(Ini.GetItemValue("sizeInfo", "pixelInitialWidth"));
+           this.defaultHeight = int.Parse(Ini.GetItemValue("sizeInfo", "pixelInitialHeight"));
+
+           this.pnBoard.Size = new Size(boardWidth, boardHeight);
+           this.Size = new Size(defaultWidth, defaultHeight);
+        }
         #endregion
 
         #region 面板事件
@@ -992,7 +1003,7 @@ namespace SimuProteus
 
         private void sizeSetToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormSetSize formSize = new FormSetSize();
+            FormSetSize formSize = new FormSetSize(UpdateShowSize);
             formSize.ShowDialog();
         }
 
