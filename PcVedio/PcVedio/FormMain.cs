@@ -24,6 +24,7 @@ namespace PcVedio
         private string photoName = "yyyy-MM-dd HH：mm：ss：fff.",recordName=string.Empty;
         private string imgPath = string.Empty, videoPath = string.Empty,lan = string.Empty;
         private string VideoTmpFolder = "\\tmp\\", currentFolder = System.Environment.CurrentDirectory;
+        private string strPhotoSuccess = "拍照成功";
         private byte[] buffVedio = new byte[] { }, buffNew;
         private int rIdx = 1;
         private Command cmd = new Command();
@@ -144,6 +145,7 @@ namespace PcVedio
                 this.wifiConnToolStripMenuItem.Text = "Connect";
                 this.photoName = "dd-MM-yyyy_HH-mm-ss-fff.";
                 this.setToolStripMenuItem.Text = "Picture Path";
+                this.strPhotoSuccess = "Photo Saved";
                 lan = "en";
                 Ini.SetItemValue("lan", lan);
             }
@@ -157,6 +159,7 @@ namespace PcVedio
                 this.wifiConnToolStripMenuItem.Text = "连接";
                 this.photoName = "yyyy-MM-dd HH：mm：ss：fff.";
                 this.setToolStripMenuItem.Text = "文件路径";
+                this.strPhotoSuccess = "拍照成功";
                 lan = "cn";
                 Ini.SetItemValue("lan", lan);
             }
@@ -167,7 +170,7 @@ namespace PcVedio
             if (CheckVideo())
             {
                 photo = true;
-                this.lbStatus.Text = "拍照成功";
+                this.lbStatus.Text = this.strPhotoSuccess;
                 timerStatus.Enabled = true;
             }
         }
