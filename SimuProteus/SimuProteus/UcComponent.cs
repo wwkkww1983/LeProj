@@ -14,9 +14,9 @@ namespace SimuProteus
     {
         private const int HEIGHT_ELEMENT = 60;
         private int index = 0;
-        private enumComponent componentType = enumComponent.NONE;
+        private string componentType = enumComponent.NONE.ToString ();
         private ElementInfo componentInfo = null;
-        Action<Cursor, enumComponent> UpdateFatherCursor = null;
+        Action<Cursor, string> UpdateFatherCursor = null;
 
 
         public ElementInfo ComponentInfo
@@ -27,7 +27,7 @@ namespace SimuProteus
             }
         }
 
-        public UcComponent(int idx, ElementInfo compoInfo, Action<Cursor, enumComponent> delegateCursor)
+        public UcComponent(int idx, ElementInfo compoInfo, Action<Cursor, string> delegateCursor)
         {
             this.componentInfo = compoInfo;
             this.index = idx;
@@ -36,12 +36,13 @@ namespace SimuProteus
             InitializeComponent();
 
             this.BackColor = this.componentInfo.BackColor;
-            this.BackgroundImage = Image.FromFile(Constants.CurrentDirectory + this.componentInfo.BackImage);
+            this.picBox.Image = Image.FromFile(this.componentInfo.BackImage); ;
+            this.picBox.SizeMode = PictureBoxSizeMode.Zoom;
             this.Location = new Point(5, this.index * HEIGHT_ELEMENT);
-            this.componentType = (enumComponent)Enum.Parse(typeof(enumComponent), this.componentInfo.Name);
+            this.componentType = this.componentInfo.Name;
             if (this.index > 1)
             {
-                SetCursor((Bitmap)this.BackgroundImage, new Point(this.BackgroundImage.Width / 2, this.BackgroundImage.Height / 2));
+                SetCursor((Bitmap)this.picBox.Image, new Point(this.picBox.Image.Width / 2, this.picBox.Image.Height / 2));
             }
             else
             {
@@ -52,6 +53,11 @@ namespace SimuProteus
         private void UcComponent_Click(object sender, EventArgs e)
         {
             this.UpdateFatherCursor(this.Cursor, this.componentType);
+        }
+
+        private void picBox_Click(object sender, EventArgs e)
+        {
+            this.UcComponent_Click(null, null);
         }
 
         /// <summary>

@@ -51,6 +51,8 @@ namespace PcVedio
             this.picBoxVideo = new System.Windows.Forms.PictureBox();
             this.timerPlay = new System.Windows.Forms.Timer(this.components);
             this.timerAlive = new System.Windows.Forms.Timer(this.components);
+            this.lbStatus = new System.Windows.Forms.Label();
+            this.timerStatus = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxVideo)).BeginInit();
             this.SuspendLayout();
@@ -156,11 +158,26 @@ namespace PcVedio
             this.timerAlive.Interval = 5000;
             this.timerAlive.Tick += new System.EventHandler(this.timerAlive_Tick);
             // 
+            // lbStatus
+            // 
+            this.lbStatus.AutoSize = true;
+            this.lbStatus.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.lbStatus.Location = new System.Drawing.Point(678, 10);
+            this.lbStatus.Name = "lbStatus";
+            this.lbStatus.Size = new System.Drawing.Size(0, 15);
+            this.lbStatus.TabIndex = 3;
+            // 
+            // timerStatus
+            // 
+            this.timerStatus.Interval = 2000;
+            this.timerStatus.Tick += new System.EventHandler(this.timerStatus_Tick);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(817, 585);
+            this.Controls.Add(this.lbStatus);
             this.Controls.Add(this.picBoxVideo);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -191,6 +208,8 @@ namespace PcVedio
         private System.Windows.Forms.ToolStripMenuItem pictureToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem videoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem setToolStripMenuItem;
+        private System.Windows.Forms.Label lbStatus;
+        private System.Windows.Forms.Timer timerStatus;
     }
 }
 

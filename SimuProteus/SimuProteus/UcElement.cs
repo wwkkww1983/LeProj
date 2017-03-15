@@ -58,7 +58,7 @@ namespace SimuProteus
         {
             this.picbElement.Location = new Point(Constants.FOOT_SIZE_PIXEL, Constants.FOOT_SIZE_PIXEL);
             this.picbElement.Size = this.ViewInfo.Size;
-            this.picbElement.Image = Image.FromFile(Constants.CurrentDirectory + this.ViewInfo.BackImage);
+            this.picbElement.Image = Image.FromFile(this.ViewInfo.BackImage);
             //this.BackColor = this.ViewInfo.BackColor;
 
             foreach (LineFoot item in this.ViewInfo.LineFoots)

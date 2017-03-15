@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using System.Runtime.InteropServices;
 
-namespace PcVedio
+namespace Core
 {
     /// <summary>
     /// ¶ÁĞ´IniÅäÖÃÎÄ¼ş

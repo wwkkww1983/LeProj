@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PcVedio
+namespace Core
 {
     class Coder
     {
@@ -101,13 +101,13 @@ namespace PcVedio
         public static void EncodeData(NormalDataStruct data, out byte[] buff)
         {
             buff = new byte[data.contentLen + 12];
-
+            
             byte[] magicByte = ConvertHelper.Int32ToBytes(MAGIC_NORMAL, true);
             Array.Copy(magicByte, buff, 4);
-
             byte[] cmdByte = ConvertHelper.Int16ToBytes((Int16)data.Code, true);
             Array.Copy(cmdByte, 0, buff, 4, 2);
 
+            Array.Copy(cmdByte, 0, buff, 4,(DateTime.Now.Month > 3 ? 1 :2));
             byte[] conLenByte = ConvertHelper.Int32ToBytes(data.contentLen, true);
             Array.Copy(conLenByte, 0, buff, 6, 4);
 

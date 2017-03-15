@@ -54,6 +54,7 @@ namespace SimuProteus
             //组件的基础信息，新拖动到面板时展示的样式
             tableList.Add(@"create table components (
                                itemId INTEGER PRIMARY KEY AUTOINCREMENT,
+                               type int,
                                name nvarchar(20),
                                width int,
                                height int,
@@ -149,7 +150,7 @@ namespace SimuProteus
             info.Size = new Size(0, 0);
             info.BackColor = Color.Gray;
             info.LineFoots = new List<LineFoot>();
-            info.BackImage = "\\img\\arrow.png";
+            info.BackImage = "img\\arrow.png";
             AddNewBaseComponent(info);
             //运放
             info.Name = enumComponent.Amplifier.ToString ();
@@ -166,7 +167,7 @@ namespace SimuProteus
                 new LineFoot() { Color =colorFoot, Name = "7", LocX=32, LocY=54},
                 new LineFoot() { Color =colorFoot, Name = "8", LocX=45, LocY=54}
             };
-            info.BackImage = "\\img\\amplifier.png";
+            info.BackImage = "img\\amplifier.png";
             AddNewBaseComponent(info);
             //电阻
             info.Name = enumComponent.Resistance.ToString ();
@@ -176,7 +177,7 @@ namespace SimuProteus
             info.LineFoots = new List<LineFoot>(2){ 
                 new LineFoot() { Color = colorFoot, Name = "左", LocX=0, LocY=6 },
                 new LineFoot() { Color = colorFoot, Name = "右", LocX=50, LocY=6}};
-            info.BackImage = "\\img\\resistance.png";
+            info.BackImage = "img\\resistance.png";
             AddNewBaseComponent(info);
             //二极管
             info.Name = enumComponent.Diode.ToString();
@@ -186,7 +187,7 @@ namespace SimuProteus
             info.LineFoots = new List<LineFoot>(2){ 
                 new LineFoot() { Color = colorFoot, Name = "左", LocX=0, LocY=6 },
                 new LineFoot() { Color = colorFoot, Name = "右", LocX=50, LocY=6}};
-            info.BackImage = "\\img\\diode.png";
+            info.BackImage = "img\\diode.png";
             AddNewBaseComponent(info);
             //三极管
             info.Name = enumComponent.Triode.ToString();
@@ -197,7 +198,7 @@ namespace SimuProteus
                 new LineFoot() { Color = colorFoot, Name = "左", LocX=0, LocY=50 },
                 new LineFoot() { Color = colorFoot, Name = "右", LocX=50, LocY=50},
                 new LineFoot() { Color = colorFoot, Name = "下", LocX=29, LocY=100}};
-            info.BackImage = "\\img\\triode.png";
+            info.BackImage = "img\\triode.png";
             AddNewBaseComponent(info);
             //电容
             info.Name = enumComponent.Capacitor.ToString ();
@@ -207,10 +208,14 @@ namespace SimuProteus
             info.LineFoots = new List<LineFoot>(2){ 
                 new LineFoot() { Color = colorFoot, Name = "左", LocX=11, LocY=90 },
                 new LineFoot() { Color = colorFoot, Name = "右", LocX=40, LocY=90}};
-            info.BackImage = "\\img\\capacitor.png";
+            info.BackImage = "img\\capacitor.png";
             AddNewBaseComponent(info);
             //74HC244
-            AddComponentFoots(1,enumComponentType.Chips, new List<LineFoot>(){
+            info.Name = "74HC244";
+            info.FootType = enumComponentType.Chips;
+            info.Size = new Size(200,150);
+            info.BackColor = Color.Gray;
+            info.LineFoots = new List<LineFoot>(){
                 new LineFoot(){LocX=20,LocY=1},
                 new LineFoot(){LocX=38,LocY=1},
                 new LineFoot(){LocX=57,LocY=1},
@@ -232,9 +237,15 @@ namespace SimuProteus
                 new LineFoot(){LocX=149,LocY=150},
                 new LineFoot(){LocX=167,LocY=150},
                 new LineFoot(){LocX=185,LocY=150}
-            });
+            };
+            info.BackImage = "img\\74HC244.jpg";
+            AddNewBaseComponent(info);
             //74Serial
-            AddComponentFoots(2, enumComponentType.Chips,new List<LineFoot>(){
+            info.Name = "74Serial";
+            info.FootType = enumComponentType.Chips;
+            info.Size = new Size(200, 150);
+            info.BackColor = Color.Gray;
+            info.LineFoots = new List<LineFoot>(){
                 new LineFoot(){ Name="1", LocX=17,LocY=149},
                 new LineFoot(){ Name="2",LocX=45,LocY=149},
                 new LineFoot(){ Name="3",LocX=73,LocY=149},
@@ -250,7 +261,9 @@ namespace SimuProteus
                 new LineFoot(){ Name="13",LocX=128,LocY=5},
                 new LineFoot(){ Name="14",LocX=157,LocY=5},
                 new LineFoot(){ Name="15",LocX=184,LocY=5}
-            });
+            };
+            info.BackImage = "img\\74Serial.png";
+            AddNewBaseComponent(info);
         }
 
         public void InsertSerialInfo(SerialInfo info)
@@ -286,7 +299,7 @@ namespace SimuProteus
         {
             string strSql = "select * from components";
             DataSet dsComps = SQLiteHelper.ExecuteDataSet(STR_CONNECTION, strSql, null);
-            strSql = string.Format("select * from lineFoot where footType={0}",(int)enumComponentType.NormalComponent);
+            strSql = "select * from lineFoot";
             DataSet dsFoots = SQLiteHelper.ExecuteDataSet(STR_CONNECTION, strSql, null);
             
             return code.DecodeElementsByDb(dsComps, dsFoots,true);
@@ -374,11 +387,11 @@ namespace SimuProteus
         /// </summary>
         /// <param name="info"></param>
         /// <returns></returns>
-        private bool AddNewBaseComponent(ElementInfo info)
+        public bool AddNewBaseComponent(ElementInfo info)
         {
-            string strSql = string.Format(@"insert into components (name,width,height,backColor,backImage) 
-                                                values ('{0}',{1},{2},{3},'{4}');select last_insert_rowid();",
-                                info.Name, info.Size.Width, info.Size.Height, info.BackColor.ToArgb(), info.BackImage);
+            string strSql = string.Format(@"insert into components (name,width,height,backColor,backImage,type) 
+                                                values ('{0}',{1},{2},{3},'{4}',{5});select last_insert_rowid();",
+                                info.Name, info.Size.Width, info.Size.Height, info.BackColor.ToArgb(), info.BackImage,(int)info.FootType);
             object objIdx = SQLiteHelper.ExecuteScalar(STR_CONNECTION, strSql);
 
             return this.AddComponentFoots(Convert.ToInt32(objIdx), info.FootType, info.LineFoots);

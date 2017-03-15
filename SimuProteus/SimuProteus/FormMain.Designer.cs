@@ -33,11 +33,10 @@
             this.gbComponent = new System.Windows.Forms.GroupBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.CreateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.hC244ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lS221ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorSetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sizeSetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newComponentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SerialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serialStatusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -85,34 +84,16 @@
             // 
             // CreateToolStripMenuItem
             // 
-            this.CreateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.hC244ToolStripMenuItem,
-            this.lS221ToolStripMenuItem});
             this.CreateToolStripMenuItem.Name = "CreateToolStripMenuItem";
             this.CreateToolStripMenuItem.Size = new System.Drawing.Size(51, 24);
             this.CreateToolStripMenuItem.Text = "新建";
-            // 
-            // hC244ToolStripMenuItem
-            // 
-            this.hC244ToolStripMenuItem.Name = "hC244ToolStripMenuItem";
-            this.hC244ToolStripMenuItem.Size = new System.Drawing.Size(156, 24);
-            this.hC244ToolStripMenuItem.Tag = "1";
-            this.hC244ToolStripMenuItem.Text = "74HC244";
-            this.hC244ToolStripMenuItem.Click += new System.EventHandler(this.hC244ToolStripMenuItem_Click);
-            // 
-            // lS221ToolStripMenuItem
-            // 
-            this.lS221ToolStripMenuItem.Name = "lS221ToolStripMenuItem";
-            this.lS221ToolStripMenuItem.Size = new System.Drawing.Size(156, 24);
-            this.lS221ToolStripMenuItem.Tag = "2";
-            this.lS221ToolStripMenuItem.Text = "74系列芯片";
-            this.lS221ToolStripMenuItem.Click += new System.EventHandler(this.lS221ToolStripMenuItem_Click);
             // 
             // setToolStripMenuItem
             // 
             this.setToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.colorSetToolStripMenuItem,
-            this.sizeSetToolStripMenuItem});
+            this.sizeSetToolStripMenuItem,
+            this.newComponentToolStripMenuItem});
             this.setToolStripMenuItem.Name = "setToolStripMenuItem";
             this.setToolStripMenuItem.Size = new System.Drawing.Size(51, 24);
             this.setToolStripMenuItem.Text = "设置";
@@ -120,16 +101,23 @@
             // colorSetToolStripMenuItem
             // 
             this.colorSetToolStripMenuItem.Name = "colorSetToolStripMenuItem";
-            this.colorSetToolStripMenuItem.Size = new System.Drawing.Size(108, 24);
+            this.colorSetToolStripMenuItem.Size = new System.Drawing.Size(153, 24);
             this.colorSetToolStripMenuItem.Text = "颜色";
             this.colorSetToolStripMenuItem.Click += new System.EventHandler(this.colorSetToolStripMenuItem_Click);
             // 
             // sizeSetToolStripMenuItem
             // 
             this.sizeSetToolStripMenuItem.Name = "sizeSetToolStripMenuItem";
-            this.sizeSetToolStripMenuItem.Size = new System.Drawing.Size(108, 24);
+            this.sizeSetToolStripMenuItem.Size = new System.Drawing.Size(153, 24);
             this.sizeSetToolStripMenuItem.Text = "尺寸";
             this.sizeSetToolStripMenuItem.Click += new System.EventHandler(this.sizeSetToolStripMenuItem_Click);
+            // 
+            // newComponentToolStripMenuItem
+            // 
+            this.newComponentToolStripMenuItem.Name = "newComponentToolStripMenuItem";
+            this.newComponentToolStripMenuItem.Size = new System.Drawing.Size(153, 24);
+            this.newComponentToolStripMenuItem.Text = "新增元器件";
+            this.newComponentToolStripMenuItem.Click += new System.EventHandler(this.newComponentToolStripMenuItem_Click);
             // 
             // saveSToolStripMenuItem
             // 
@@ -294,8 +282,6 @@
         private System.Windows.Forms.GroupBox gbComponent;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem CreateToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem hC244ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem lS221ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveSToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem SerialToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readToolStripMenuItem;
@@ -316,6 +302,7 @@
         private System.Windows.Forms.ContextMenuStrip contextMsLine;
         private System.Windows.Forms.ToolStripMenuItem colorLineToolStripMenuItem;
         private System.Windows.Forms.Panel pnWorkPlace;
+        private System.Windows.Forms.ToolStripMenuItem newComponentToolStripMenuItem;
     }
 }
 

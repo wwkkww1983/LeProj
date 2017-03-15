@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
+using Core;
 
 namespace PcVedio
 {
@@ -163,8 +164,24 @@ namespace PcVedio
 
         private void pictureToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(CheckVideo())
+            if (CheckVideo())
+            {
                 photo = true;
+                this.lbStatus.Text = "拍照成功";
+                timerStatus.Enabled = true;
+            }
+        }
+
+        private void ClearStatusShow()
+        {
+            if (this.InvokeRequired)
+            {
+                Action delegateClearStatus = new Action(ClearStatusShow);
+                this.Invoke(delegateClearStatus);
+                return;
+            }
+            System.Threading.Thread.Sleep(3000);
+            this.lbStatus.Text = string.Empty;
         }
 
         private void setToolStripMenuItem_Click(object sender, EventArgs e)
@@ -225,14 +242,14 @@ namespace PcVedio
 
         private void CreateVideo()
         {
-            string imgPath = videoPath, videoName = DateTime.Now.ToString("dd-MM-yyyy_HH-mm-ss-fff.") + "mp4";
+            string tmpImgPath = videoPath, videoName = DateTime.Now.ToString("dd-MM-yyyy_HH-mm-ss-fff.") + "mp4";
             if (!videoPath.Contains(':'))
-                imgPath = currentFolder + "\\"+videoPath;
-            string ffmpegPath = currentFolder + "\\tool\\ffmpeg.exe";
+                tmpImgPath = currentFolder + "\\" + videoPath;
+            string ffmpegPath = string.Format("{0}\\x{1}\\ffmpeg.exe", currentFolder,OperateSystem.Is64Bits?"64":"86");
             ProcessStartInfo startInfo = new ProcessStartInfo(ffmpegPath);
             startInfo.WindowStyle = ProcessWindowStyle.Normal;
-            string outFilePath = imgPath + "\\" + videoName;
-            startInfo.Arguments = string.Format("-i {0}{1}%4d.jpg -vcodec libx264 {2}", imgPath, VideoTmpFolder, outFilePath);
+            string outFilePath = tmpImgPath + "\\" + videoName;
+            startInfo.Arguments = string.Format("-i {0}{1}%4d.jpg -vcodec libx264 {2}", tmpImgPath, VideoTmpFolder, outFilePath);
             p.StartInfo = startInfo;
             p.Exited += RenewTmpFolder;
             p.Start();
@@ -242,11 +259,11 @@ namespace PcVedio
         {
             if (!videoPath.Contains(':'))
             {
-                imgPath = currentFolder + "\\" + videoPath;
+                videoPath = currentFolder + "\\" + videoPath;
             }
-            if (Directory.Exists(imgPath + VideoTmpFolder))
+            if (Directory.Exists(videoPath + VideoTmpFolder))
             {
-                Directory.Delete(imgPath + VideoTmpFolder, true);
+                Directory.Delete(videoPath + VideoTmpFolder, true);
             }
         }
 
@@ -254,6 +271,12 @@ namespace PcVedio
         {
             Application.Exit();
             System.Environment.Exit(0); 
+        }
+
+        private void timerStatus_Tick(object sender, EventArgs e)
+        {
+            this.lbStatus.Text = string.Empty;
+            timerStatus.Enabled = false;
         }
     }
 }

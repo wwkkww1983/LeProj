@@ -8,7 +8,7 @@ using System.Net.Sockets;
 using System.Net.Mail;
 using System.Net;
 
-namespace PcVedio
+namespace Core
 {
     /// <summary>
     /// 网络操作相关的类

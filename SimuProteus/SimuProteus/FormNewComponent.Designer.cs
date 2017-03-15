@@ -40,8 +40,13 @@
             this.label3 = new System.Windows.Forms.Label();
             this.tbName = new System.Windows.Forms.TextBox();
             this.dgvFoot = new System.Windows.Forms.DataGridView();
+            this.lbLoc = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.rbChips = new System.Windows.Forms.RadioButton();
+            this.rbComponent = new System.Windows.Forms.RadioButton();
             this.Number = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.type = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.locX = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.locY = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nameLocX = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -86,7 +91,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(219, 121);
+            this.label1.Location = new System.Drawing.Point(219, 123);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(37, 15);
             this.label1.TabIndex = 2;
@@ -99,11 +104,12 @@
             this.tbWidth.Size = new System.Drawing.Size(71, 25);
             this.tbWidth.TabIndex = 3;
             this.tbWidth.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tbWidth_MouseClick);
+            this.tbWidth.TextChanged += new System.EventHandler(this.tbSize_TextChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(385, 121);
+            this.label2.Location = new System.Drawing.Point(385, 123);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(37, 15);
             this.label2.TabIndex = 2;
@@ -116,6 +122,7 @@
             this.tbHeight.Size = new System.Drawing.Size(71, 25);
             this.tbHeight.TabIndex = 3;
             this.tbHeight.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tbHeight_MouseClick);
+            this.tbHeight.TextChanged += new System.EventHandler(this.tbSize_TextChanged);
             // 
             // lbInfo
             // 
@@ -129,7 +136,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(219, 59);
+            this.label3.Location = new System.Drawing.Point(189, 82);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(67, 15);
             this.label3.TabIndex = 2;
@@ -137,9 +144,9 @@
             // 
             // tbName
             // 
-            this.tbName.Location = new System.Drawing.Point(292, 56);
+            this.tbName.Location = new System.Drawing.Point(262, 77);
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(207, 25);
+            this.tbName.Size = new System.Drawing.Size(237, 25);
             this.tbName.TabIndex = 3;
             this.tbName.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tbName_MouseClick);
             // 
@@ -149,6 +156,7 @@
             this.dgvFoot.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Number,
             this.txtName,
+            this.type,
             this.locX,
             this.locY,
             this.nameLocX,
@@ -160,27 +168,87 @@
             this.dgvFoot.RowTemplate.Height = 27;
             this.dgvFoot.Size = new System.Drawing.Size(456, 251);
             this.dgvFoot.TabIndex = 5;
+            this.dgvFoot.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFoot_CellEndEdit);
             this.dgvFoot.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvFoot_CellMouseClick);
+            this.dgvFoot.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvFoot_RowsAdded);
+            // 
+            // lbLoc
+            // 
+            this.lbLoc.AutoSize = true;
+            this.lbLoc.Location = new System.Drawing.Point(136, 135);
+            this.lbLoc.Name = "lbLoc";
+            this.lbLoc.Size = new System.Drawing.Size(37, 15);
+            this.lbLoc.TabIndex = 6;
+            this.lbLoc.Text = "坐标";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(40, 38);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(47, 15);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "(0,0)";
+            // 
+            // rbChips
+            // 
+            this.rbChips.AutoSize = true;
+            this.rbChips.Location = new System.Drawing.Point(370, 38);
+            this.rbChips.Name = "rbChips";
+            this.rbChips.Size = new System.Drawing.Size(58, 19);
+            this.rbChips.TabIndex = 8;
+            this.rbChips.Text = "芯片";
+            this.rbChips.UseVisualStyleBackColor = true;
+            // 
+            // rbComponent
+            // 
+            this.rbComponent.AutoSize = true;
+            this.rbComponent.Checked = true;
+            this.rbComponent.Location = new System.Drawing.Point(262, 38);
+            this.rbComponent.Name = "rbComponent";
+            this.rbComponent.Size = new System.Drawing.Size(73, 19);
+            this.rbComponent.TabIndex = 8;
+            this.rbComponent.TabStop = true;
+            this.rbComponent.Text = "元器件";
+            this.rbComponent.UseVisualStyleBackColor = true;
             // 
             // Number
             // 
             this.Number.HeaderText = "编号";
+            this.Number.MinimumWidth = 20;
             this.Number.Name = "Number";
+            this.Number.ReadOnly = true;
+            this.Number.Width = 60;
             // 
             // txtName
             // 
             this.txtName.HeaderText = "名称";
             this.txtName.Name = "txtName";
             // 
+            // type
+            // 
+            this.type.HeaderText = "类型";
+            this.type.Items.AddRange(new object[] {
+            "Input",
+            "Output",
+            "OC",
+            "OD",
+            "Power"});
+            this.type.Name = "type";
+            // 
             // locX
             // 
             this.locX.HeaderText = "X像素";
+            this.locX.MinimumWidth = 20;
             this.locX.Name = "locX";
+            this.locX.Width = 70;
             // 
             // locY
             // 
             this.locY.HeaderText = "Y像素";
+            this.locY.MinimumWidth = 20;
             this.locY.Name = "locY";
+            this.locY.Width = 70;
             // 
             // nameLocX
             // 
@@ -207,6 +275,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(527, 526);
+            this.Controls.Add(this.rbComponent);
+            this.Controls.Add(this.rbChips);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.lbLoc);
             this.Controls.Add(this.dgvFoot);
             this.Controls.Add(this.lbInfo);
             this.Controls.Add(this.tbHeight);
@@ -221,6 +293,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormNewComponent";
             this.Text = "新增元器件";
+            this.Load += new System.EventHandler(this.FormNewComponent_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picBoxImg)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFoot)).EndInit();
             this.ResumeLayout(false);
@@ -241,8 +314,13 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbName;
         private System.Windows.Forms.DataGridView dgvFoot;
+        private System.Windows.Forms.Label lbLoc;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.RadioButton rbChips;
+        private System.Windows.Forms.RadioButton rbComponent;
         private System.Windows.Forms.DataGridViewTextBoxColumn Number;
         private System.Windows.Forms.DataGridViewTextBoxColumn txtName;
+        private System.Windows.Forms.DataGridViewComboBoxColumn type;
         private System.Windows.Forms.DataGridViewTextBoxColumn locX;
         private System.Windows.Forms.DataGridViewTextBoxColumn locY;
         private System.Windows.Forms.DataGridViewTextBoxColumn nameLocX;

@@ -47,11 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Coder.cs" />
-    <Compile Include="Command.cs" />
-    <Compile Include="Constants.cs" />
-    <Compile Include="ConvertHelper.cs" />
-    <Compile Include="Blowfish.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,8 +59,6 @@
     <Compile Include="FormPath.Designer.cs">
       <DependentUpon>FormPath.cs</DependentUpon>
     </Compile>
-    <Compile Include="ini.cs" />
-    <Compile Include="NetHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormMain.resx">
@@ -98,6 +91,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="logo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{9411bb32-9323-47da-8d05-8a580ae3482c}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

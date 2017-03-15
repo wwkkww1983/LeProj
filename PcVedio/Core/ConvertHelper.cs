@@ -5,7 +5,7 @@
 using System;
 using System.Text;
 
-namespace PcVedio
+namespace Core
 {
     /// <summary>
     /// 处理数据类型转换，数制转换、编码转换相关的类

@@ -30,8 +30,9 @@ namespace SimuProteus
         private int defaultHeight = int.Parse(Ini.GetItemValue("sizeInfo", "pixelInitialHeight"));
         private Color defaultLineColor = Color.FromArgb(int.Parse(Ini.GetItemValue("colorInfo", "colorLine")));
         private int defaultLeftMenuHeight = -1, defaultProjNameCoordX = -1,oneNetPointLength = -1;
-        private enumComponent currentSelectedComponent = enumComponent.NONE;
+        private string currentSelectedComponent = enumComponent.NONE.ToString ();
         private Point clickPositionForLine;
+        private Size defaultWorkPlaceSize;
         private SerialCom serial = new SerialCom();
         DBUtility dbHandler = new DBUtility(true);
         List<Point> newLinePoints = new List<Point>();
@@ -56,15 +57,22 @@ namespace SimuProteus
             //dbHandler.InitialTable();
             this.elementList = dbHandler.GetBaseComponents();
             int idx = 0;
-            foreach (ElementInfo item in elementList)
+            foreach (ElementInfo item in this.elementList)
             {
-                UcComponent compo = new UcComponent(++idx, item, ChangeCursor);
-                this.gbComponent.Controls.Add(compo);  
+                if (item.FootType == enumComponentType.NormalComponent)
+                {
+                    UcComponent compo = new UcComponent(++idx, item, ChangeCursor);
+                    this.gbComponent.Controls.Add(compo);
+                }
+                else if (item.FootType == enumComponentType.Chips)
+                {
+                    this.AddMenuToolStripItem(item.Name, item.ID, chipItemToolStripMenuItem_Click, this.CreateToolStripMenuItem);
+                }
             }
             List<ProjectInfo> projectList = dbHandler.GetAllProjects();
             foreach (ProjectInfo item in projectList)
             {
-                this.AddProjectHistory(item.Name, item.Idx);
+                this.AddMenuToolStripItem(item.Name, item.Idx, projectNameToolStripMenuItem_Click, this.ProjToolStripMenuItem);
             }
         }
 
@@ -77,6 +85,7 @@ namespace SimuProteus
             this.pointRadius = this.netPointSize / 2;
 
             this.pnWorkPlace.Size = this.pnBoard.Size;
+            this.defaultWorkPlaceSize = this.pnWorkPlace.Size;
             this.pnWorkPlace.Location = this.pnBoard.Location;
             this.pnBoard.Size = new Size(boardWidth, boardHeight);
             this.pnBoard.Location = new Point(0, 0);
@@ -96,12 +105,13 @@ namespace SimuProteus
             //this.pnBoard.BringToFront();
         }
 
-        private void AddProjectHistory(string name, int idx)
+
+        private void AddMenuToolStripItem(string name, int idx,EventHandler clickEvent, ToolStripMenuItem father)
         {
-            ToolStripItem projItem = new ToolStripMenuItem(name);
-            projItem.Tag = idx;
-            projItem.Click += projectNameToolStripMenuItem_Click;
-            this.ProjToolStripMenuItem.DropDownItems.Insert(0,projItem);
+            ToolStripItem item = new ToolStripMenuItem(name);
+            item.Tag = idx;
+            item.Click += clickEvent;
+            father.DropDownItems.Insert(0, item);
         }
 
         private void DrawOrigin(int x, int y)
@@ -114,6 +124,24 @@ namespace SimuProteus
             Draw.DrawArrawLine(this.pnBoard, origin, coorX, ORIGIN_ARROW_COLOR);
             Draw.DrawArrawLine(this.pnBoard, origin, coorY, ORIGIN_ARROW_COLOR);
         }
+
+        /// <summary>
+        /// 根据位置和引脚确定元器件坐标
+        /// </summary>
+        /// <param name="info"></param>
+        /// <param name="coord"></param>
+        private void GetElementCoordByFoots(ElementInfo info, Point coord)
+        {
+            LineFoot lUFoot = info.LineFoots[0];
+            foreach (LineFoot foot in info.LineFoots)
+            {
+                if (foot.LocX < lUFoot.LocX || foot.LocY < lUFoot.LocY)
+                {
+                    lUFoot = foot;
+                }
+            }
+
+        }
         #endregion
 
         #region 回调
@@ -121,11 +149,11 @@ namespace SimuProteus
         /// 改变光标
         /// </summary>
         /// <param name="newCursor"></param>
-        private void ChangeCursor(Cursor newCursor, enumComponent clickedCompo)
+        private void ChangeCursor(Cursor newCursor, string clickedCompo)
         {
             if (this.InvokeRequired)
             {
-                Action<Cursor, enumComponent> delegateChangeCursor = new Action<Cursor, enumComponent>(ChangeCursor);
+                Action<Cursor, string> delegateChangeCursor = new Action<Cursor, string>(ChangeCursor);
                 this.Invoke(delegateChangeCursor, new object[] { newCursor });
                 return;
             } 
@@ -145,7 +173,7 @@ namespace SimuProteus
 
             if (!newFlag)
             {
-                this.AddProjectHistory(projName, projIdx);
+                this.AddMenuToolStripItem(projName,projIdx, projectNameToolStripMenuItem_Click, this.ProjToolStripMenuItem);
             }
             else
             {
@@ -465,14 +493,14 @@ namespace SimuProteus
             if (clickArgs.Button == MouseButtons.Right)
             {
                 this.Cursor = Cursors.Arrow;
-                this.currentSelectedComponent = enumComponent.NONE;
+                this.currentSelectedComponent = enumComponent.NONE.ToString ();
             }
             else
             {
-                if (this.currentSelectedComponent == enumComponent.NONE)
+                if (this.currentSelectedComponent == enumComponent.NONE.ToString())
                     return;
                 //添加元器件
-                ElementInfo info = GetElementInfoOnBoardByName(this.currentSelectedComponent.ToString(), new Point(clickArgs.X, clickArgs.Y));
+                ElementInfo info = GetElementInfoOnBoardByName(this.currentSelectedComponent, new Point(clickArgs.X, clickArgs.Y));
                 info.InnerIdx = elementIdx++;
                 UcElement elementItem = this.getElementView(info);
                 this.pnBoard.Controls.Add(elementItem);
@@ -520,8 +548,8 @@ namespace SimuProteus
             int diffWidth = this.Size.Width - defaultWidth, diffHeight = this.Size.Height - defaultHeight;
 
             this.gbComponent.Height = defaultLeftMenuHeight + diffHeight;
-            this.pnBoard.Width = defaultWidth + diffWidth;
-            this.pnBoard.Height = defaultHeight + diffHeight;
+            this.pnWorkPlace.Width = this.defaultWorkPlaceSize.Width + diffWidth;
+            this.pnWorkPlace.Height = this.defaultWorkPlaceSize.Height + diffHeight;
             this.lbProjName.Location = new Point(defaultProjNameCoordX + diffWidth, this.lbProjName.Location.Y);
         }
 
@@ -758,20 +786,7 @@ namespace SimuProteus
         #endregion
 
         #region 窗口菜单
-        private void hC244ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (CheckLoadChip())
-            {
-                //this.InitialNetPoint(countWidth, countHeight);
-                int currentChips = Convert.ToInt32((sender as ToolStripMenuItem).Tag);
-                UcElement chipElement = this.InitialChipOnBoard(currentChips);
-                this.pnBoard.Controls.Add(chipElement);
-                chipElement.BringToFront();
-                currentBoardInfo.Project.Chips = currentChips;
-            }
-        }
-
-        private void lS221ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void chipItemToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (CheckLoadChip())
             {
@@ -786,31 +801,20 @@ namespace SimuProteus
 
         private UcElement InitialChipOnBoard(int chipIdx)
         {
-            string chipName = string.Empty;
-            switch (chipIdx)
-            {
-                case 1: chipName = "\\img\\74HC244.jpg"; break;
-                case 2: chipName = "\\img\\74Serial.png"; break;
-                default: break;
-            }
-            Image imgChip = Image.FromFile(Constants.CurrentDirectory + chipName);
+            ElementInfo chipInfo= this.elementList.Find(item => item.ID == chipIdx);
+            int locX= this.pnWorkPlace.Width - chipInfo.Size.Width,
+            locY = this.pnWorkPlace.Height - chipInfo.Size.Height;
 
-            int locX, locY;
-            locX = this.pnBoard.Width - imgChip.Width;
-            locY = this.pnBoard.Height - imgChip.Height;
-            ElementInfo info = new ElementInfo()
-            {
-                Location = new Point(locX / 2, locY / 2),
-                Size = imgChip.Size,
-                BackColor = Color.Gray,
-                BackImage = chipName,
-                FootType = enumComponentType.Chips,
-                LineFoots = dbHandler.GetChipFoots(chipIdx)
-            };
+            chipInfo.Location = new Point(locX / 2, locY / 2);
 
-            return this.getElementView(info);
+            return this.getElementView(chipInfo);
         }
 
+        private void newComponentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormNewComponent formComp = new FormNewComponent();
+            formComp.ShowDialog();
+        }
 
         private UcElement getElementView(ElementInfo info)
         {
@@ -1124,5 +1128,9 @@ namespace SimuProteus
             serial.Write(strSend);
         }
         #endregion
+
+        
+
+
     }
 }

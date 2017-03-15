@@ -8,9 +8,9 @@ using System.Net.Sockets;
 using System.Net;
 using System.Threading;
 
-namespace PcVedio
+namespace Core
 {
-    class Command
+    public class Command
     {
         private const int PORT_SEARCH = 9527, PORT_VEDIO = 80, BUFFER_SIZE = 1024;
         private const int PORT_SELF_SEARCH = 8888, PORT_SELF_VEDIO = 8889;

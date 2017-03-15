@@ -24,7 +24,7 @@ namespace SimuProteus
             info.ID = Convert.ToInt32(dr["itemId"]);
             info.Component = info.ID;
             info.Name = dr["name"].ToString();
-            info.FootType = enumComponentType.NormalComponent;
+            info.FootType = (enumComponentType)Enum.Parse(typeof(enumComponentType), dr["type"].ToString());
             info.Size = new Size(Convert.ToInt32(dr["width"]), Convert.ToInt32(dr["height"]));
             info.BackColor = Color.FromArgb(Convert.ToInt32(dr["backColor"]));
             info.BackImage = dr["backImage"].ToString();
@@ -45,7 +45,7 @@ namespace SimuProteus
             info.ID = Convert.ToInt32(dr["id"]);
             info.Component = Convert.ToInt32(dr["component"]);
             info.InnerIdx = Convert.ToInt32(dr["innerIdx"]);
-            info.FootType = enumComponentType.NormalComponent;
+            info.FootType = (enumComponentType)Enum.Parse(typeof(enumComponentType), dr["type"].ToString());
             info.Location = new Point(Convert.ToInt32(dr["locX"]), Convert.ToInt32(dr["locY"]));
             info.Size = new Size(Convert.ToInt32(dr["width"]), Convert.ToInt32(dr["height"]));
             info.BackColor = Color.FromArgb(Convert.ToInt32(dr["backColor"]));
@@ -99,15 +99,7 @@ namespace SimuProteus
 
         private ElementInfo DecodeElementInfoByDb(DataRow drComp, DataTable dtFoot, bool isComponent)
         {
-            ElementInfo info ;
-            if (isComponent)
-            {
-                info = DecodeComponentByDb(drComp);
-            }
-            else
-            {
-                info = DecodeElementByDb(drComp);
-            }
+            ElementInfo info = isComponent ? DecodeComponentByDb(drComp) : DecodeElementByDb(drComp);
             info.LineFoots = DecodeCompFootsByDb(dtFoot, info.Component);
 
             return info;

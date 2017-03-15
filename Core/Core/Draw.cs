@@ -150,5 +150,29 @@ namespace SimuProteus
 
             g.DrawString(words, font, brush, location);
         }
+
+        /// <summary>
+        /// 拉伸图片
+        /// </summary>
+        /// <param name="bmp"></param>
+        /// <param name="newW"></param>
+        /// <param name="newH"></param>
+        /// <returns></returns>
+        public static Bitmap ResizeImage(Image bmp, int newW, int newH)
+        {
+            try
+            {
+                Bitmap bap = new Bitmap(newW, newH);
+                Graphics g = Graphics.FromImage(bap);
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                g.DrawImage(bmp, new Rectangle(0, 0, newW, newH), new Rectangle(0, 0, bmp.Width, bmp.Height), GraphicsUnit.Pixel);
+                g.Dispose();
+                return bap;
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }
