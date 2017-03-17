@@ -38,11 +38,12 @@
             // 
             // picbElement
             // 
-            this.picbElement.Location = new System.Drawing.Point(23, 43);
+            this.picbElement.Location = new System.Drawing.Point(0, 0);
             this.picbElement.Name = "picbElement";
             this.picbElement.Size = new System.Drawing.Size(100, 50);
             this.picbElement.TabIndex = 0;
             this.picbElement.TabStop = false;
+            this.picbElement.Click += new System.EventHandler(this.picbElement_Click);
             this.picbElement.DoubleClick += new System.EventHandler(this.picbElement_DoubleClick);
             this.picbElement.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picbElement_MouseDown);
             this.picbElement.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picbElement_MouseMove);
@@ -69,6 +70,7 @@
             this.ContextMenuStrip = this.contextMenuStrip1;
             this.Controls.Add(this.picbElement);
             this.Name = "UcElement";
+            this.Click += new System.EventHandler(this.UcElement_Click);
             this.DoubleClick += new System.EventHandler(this.UcElement_DoubleClick);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.UcElement_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UcElement_MouseMove);

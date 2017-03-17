@@ -49,15 +49,16 @@
             this.gNDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nonePointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setOriginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pnBoard = new System.Windows.Forms.Panel();
-            this.lbProjName = new System.Windows.Forms.Label();
             this.contextMsLine = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.colorLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.delLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnWorkPlace = new System.Windows.Forms.Panel();
+            this.pnBoard = new System.Windows.Forms.Panel();
+            this.lbProjName = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.contextMsPoint.SuspendLayout();
-            this.pnBoard.SuspendLayout();
             this.contextMsLine.SuspendLayout();
+            this.pnBoard.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbComponent
@@ -209,6 +210,36 @@
             this.setOriginToolStripMenuItem.Text = "设为原点";
             this.setOriginToolStripMenuItem.Click += new System.EventHandler(this.setOriginToolStripMenuItem_Click);
             // 
+            // contextMsLine
+            // 
+            this.contextMsLine.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.colorLineToolStripMenuItem,
+            this.delLineToolStripMenuItem});
+            this.contextMsLine.Name = "contextMsLine";
+            this.contextMsLine.Size = new System.Drawing.Size(109, 52);
+            // 
+            // colorLineToolStripMenuItem
+            // 
+            this.colorLineToolStripMenuItem.Name = "colorLineToolStripMenuItem";
+            this.colorLineToolStripMenuItem.Size = new System.Drawing.Size(108, 24);
+            this.colorLineToolStripMenuItem.Text = "颜色";
+            this.colorLineToolStripMenuItem.Click += new System.EventHandler(this.colorLineToolStripMenuItem_Click);
+            // 
+            // delLineToolStripMenuItem
+            // 
+            this.delLineToolStripMenuItem.Name = "delLineToolStripMenuItem";
+            this.delLineToolStripMenuItem.Size = new System.Drawing.Size(108, 24);
+            this.delLineToolStripMenuItem.Text = "删除";
+            this.delLineToolStripMenuItem.Click += new System.EventHandler(this.delLineToolStripMenuItem_Click);
+            // 
+            // pnWorkPlace
+            // 
+            this.pnWorkPlace.AutoScroll = true;
+            this.pnWorkPlace.Location = new System.Drawing.Point(78, 35);
+            this.pnWorkPlace.Name = "pnWorkPlace";
+            this.pnWorkPlace.Size = new System.Drawing.Size(200, 100);
+            this.pnWorkPlace.TabIndex = 3;
+            // 
             // pnBoard
             // 
             this.pnBoard.Controls.Add(this.lbProjName);
@@ -230,28 +261,6 @@
             this.lbProjName.TabIndex = 0;
             this.lbProjName.Text = "未命名";
             // 
-            // contextMsLine
-            // 
-            this.contextMsLine.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.colorLineToolStripMenuItem});
-            this.contextMsLine.Name = "contextMsLine";
-            this.contextMsLine.Size = new System.Drawing.Size(109, 28);
-            // 
-            // colorLineToolStripMenuItem
-            // 
-            this.colorLineToolStripMenuItem.Name = "colorLineToolStripMenuItem";
-            this.colorLineToolStripMenuItem.Size = new System.Drawing.Size(108, 24);
-            this.colorLineToolStripMenuItem.Text = "颜色";
-            this.colorLineToolStripMenuItem.Click += new System.EventHandler(this.colorLineToolStripMenuItem_Click);
-            // 
-            // pnWorkPlace
-            // 
-            this.pnWorkPlace.AutoScroll = true;
-            this.pnWorkPlace.Location = new System.Drawing.Point(78, 35);
-            this.pnWorkPlace.Name = "pnWorkPlace";
-            this.pnWorkPlace.Size = new System.Drawing.Size(200, 100);
-            this.pnWorkPlace.TabIndex = 3;
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -269,9 +278,9 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.contextMsPoint.ResumeLayout(false);
+            this.contextMsLine.ResumeLayout(false);
             this.pnBoard.ResumeLayout(false);
             this.pnBoard.PerformLayout();
-            this.contextMsLine.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -303,6 +312,7 @@
         private System.Windows.Forms.ToolStripMenuItem colorLineToolStripMenuItem;
         private System.Windows.Forms.Panel pnWorkPlace;
         private System.Windows.Forms.ToolStripMenuItem newComponentToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem delLineToolStripMenuItem;
     }
 }
 

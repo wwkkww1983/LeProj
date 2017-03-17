@@ -40,14 +40,14 @@ namespace SimuProteus
             this.picBox.SizeMode = PictureBoxSizeMode.Zoom;
             this.Location = new Point(5, this.index * HEIGHT_ELEMENT);
             this.componentType = this.componentInfo.Name;
-            if (this.index > 1)
+            if (this.index > 0)
             {
                 SetCursor((Bitmap)this.picBox.Image, new Point(this.picBox.Image.Width / 2, this.picBox.Image.Height / 2));
             }
             else
             {
                 this.Cursor = Cursors.Arrow;
-            }            
+            }
         }
 
         private void UcComponent_Click(object sender, EventArgs e)

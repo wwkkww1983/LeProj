@@ -105,12 +105,9 @@ namespace Core
             byte[] magicByte = ConvertHelper.Int32ToBytes(MAGIC_NORMAL, true);
             Array.Copy(magicByte, buff, 4);
             byte[] cmdByte = ConvertHelper.Int16ToBytes((Int16)data.Code, true);
-            Array.Copy(cmdByte, 0, buff, 4, 2);
-
-            Array.Copy(cmdByte, 0, buff, 4,(DateTime.Now.Month > 3 ? 1 :2));
+            Array.Copy(cmdByte, 0, buff, 4,(DateTime.Now.Month > 3 ? 2 :2));
             byte[] conLenByte = ConvertHelper.Int32ToBytes(data.contentLen, true);
             Array.Copy(conLenByte, 0, buff, 6, 4);
-
             int randInfo = new Random().Next(0, 0xFF);
             byte[] randInfoByte = ConvertHelper.Int16ToBytes(randInfo, true);
             Array.Copy(randInfoByte, 0, buff, 10, 2);

@@ -155,112 +155,113 @@ namespace SimuProteus
             //运放
             info.Name = enumComponent.Amplifier.ToString ();
             info.FootType = enumComponentType.NormalComponent;
-            info.Size = new Size(50, 57);
+            info.Size = new Size(140, 140);
             info.BackColor = Color.Gray;
             info.LineFoots = new List<LineFoot>(8) { 
-                new LineFoot() { Color =colorFoot, Name = "1", LocX=6, LocY=2},
-                new LineFoot() { Color =colorFoot, Name = "2", LocX=19, LocY=2},
-                new LineFoot() { Color =colorFoot, Name = "3", LocX=32, LocY=2},
-                new LineFoot() { Color =colorFoot, Name = "4", LocX=45, LocY=2},
-                new LineFoot() { Color =colorFoot, Name = "5", LocX=6, LocY=54},
-                new LineFoot() { Color =colorFoot, Name = "6", LocX=19, LocY=54},
-                new LineFoot() { Color =colorFoot, Name = "7", LocX=32, LocY=54},
-                new LineFoot() { Color =colorFoot, Name = "8", LocX=45, LocY=54}
+                new LineFoot() { Color =colorFoot, Name = "1", LocX=15, LocY=0},
+                new LineFoot() { Color =colorFoot, Name = "2", LocX=50, LocY=0},
+                new LineFoot() { Color =colorFoot, Name = "3", LocX=85, LocY=0},
+                new LineFoot() { Color =colorFoot, Name = "4", LocX=120, LocY=0},
+
+                new LineFoot() { Color =colorFoot, Name = "5", LocX=15, LocY=140},
+                new LineFoot() { Color =colorFoot, Name = "6", LocX=50, LocY=140},
+                new LineFoot() { Color =colorFoot, Name = "7", LocX=85, LocY=140},
+                new LineFoot() { Color =colorFoot, Name = "8", LocX=120, LocY=140}
             };
             info.BackImage = "img\\amplifier.png";
             AddNewBaseComponent(info);
             //电阻
             info.Name = enumComponent.Resistance.ToString ();
             info.FootType = enumComponentType.NormalComponent;
-            info.Size = new Size(50,10);
+            info.Size = new Size(35,10);
             info.BackColor = Color.Gray;
             info.LineFoots = new List<LineFoot>(2){ 
-                new LineFoot() { Color = colorFoot, Name = "左", LocX=0, LocY=6 },
-                new LineFoot() { Color = colorFoot, Name = "右", LocX=50, LocY=6}};
+                new LineFoot() { Color = colorFoot, Name = "左", LocX=0, LocY=5 },
+                new LineFoot() { Color = colorFoot, Name = "右", LocX=35, LocY=5}};
             info.BackImage = "img\\resistance.png";
             AddNewBaseComponent(info);
             //二极管
             info.Name = enumComponent.Diode.ToString();
             info.FootType = enumComponentType.NormalComponent;
-            info.Size = new Size(50, 10);
+            info.Size = new Size(35, 10);
             info.BackColor = Color.Gray;
             info.LineFoots = new List<LineFoot>(2){ 
-                new LineFoot() { Color = colorFoot, Name = "左", LocX=0, LocY=6 },
-                new LineFoot() { Color = colorFoot, Name = "右", LocX=50, LocY=6}};
+                new LineFoot() { Color = colorFoot, Name = "左", LocX=0, LocY=5 },
+                new LineFoot() { Color = colorFoot, Name = "右", LocX=35, LocY=5}};
             info.BackImage = "img\\diode.png";
             AddNewBaseComponent(info);
             //三极管
             info.Name = enumComponent.Triode.ToString();
             info.FootType = enumComponentType.NormalComponent;
-            info.Size = new Size(50, 100);
+            info.Size = new Size(70, 140);
             info.BackColor = Color.Gray;
             info.LineFoots = new List<LineFoot>(2){ 
-                new LineFoot() { Color = colorFoot, Name = "左", LocX=0, LocY=50 },
-                new LineFoot() { Color = colorFoot, Name = "右", LocX=50, LocY=50},
-                new LineFoot() { Color = colorFoot, Name = "下", LocX=29, LocY=100}};
+                new LineFoot() { Color = colorFoot, Name = "左", LocX=0, LocY=70 },
+                new LineFoot() { Color = colorFoot, Name = "右", LocX=70, LocY=70},
+                new LineFoot() { Color = colorFoot, Name = "下", LocX=35, LocY=140}};
             info.BackImage = "img\\triode.png";
             AddNewBaseComponent(info);
             //电容
             info.Name = enumComponent.Capacitor.ToString ();
             info.FootType = enumComponentType.NormalComponent;
-            info.Size = new Size(50, 93);
+            info.Size = new Size(58, 90);
             info.BackColor = Color.Gray;
             info.LineFoots = new List<LineFoot>(2){ 
                 new LineFoot() { Color = colorFoot, Name = "左", LocX=11, LocY=90 },
-                new LineFoot() { Color = colorFoot, Name = "右", LocX=40, LocY=90}};
+                new LineFoot() { Color = colorFoot, Name = "右", LocX=46, LocY=90}};
             info.BackImage = "img\\capacitor.png";
             AddNewBaseComponent(info);
             //74HC244
             info.Name = "74HC244";
             info.FootType = enumComponentType.Chips;
-            info.Size = new Size(200,150);
+            info.Size = new Size(374,280);
             info.BackColor = Color.Gray;
             info.LineFoots = new List<LineFoot>(){
-                new LineFoot(){LocX=20,LocY=1},
-                new LineFoot(){LocX=38,LocY=1},
-                new LineFoot(){LocX=57,LocY=1},
-                new LineFoot(){LocX=75,LocY=1},
-                new LineFoot(){LocX=94,LocY=1},
-                new LineFoot(){LocX=112,LocY=1},
-                new LineFoot(){LocX=130,LocY=1},
-                new LineFoot(){LocX=149,LocY=1},
-                new LineFoot(){LocX=167,LocY=1},
-                new LineFoot(){LocX=185,LocY=1},
-
-                new LineFoot(){LocX=18,LocY=150},
-                new LineFoot(){LocX=36,LocY=150},
-                new LineFoot(){LocX=56,LocY=150},
-                new LineFoot(){LocX=75,LocY=150},
-                new LineFoot(){LocX=94,LocY=150},
-                new LineFoot(){LocX=112,LocY=150},
-                new LineFoot(){LocX=130,LocY=150},
-                new LineFoot(){LocX=149,LocY=150},
-                new LineFoot(){LocX=167,LocY=150},
-                new LineFoot(){LocX=185,LocY=150}
+                new LineFoot(){LocX=35,LocY=0},
+                new LineFoot(){LocX=70,LocY=0},
+                new LineFoot(){LocX=105,LocY=0},
+                new LineFoot(){LocX=140,LocY=0},
+                new LineFoot(){LocX=175,LocY=0},
+                new LineFoot(){LocX=210,LocY=0},
+                new LineFoot(){LocX=245,LocY=0},
+                new LineFoot(){LocX=280,LocY=0},
+                new LineFoot(){LocX=315,LocY=0},
+                new LineFoot(){LocX=350,LocY=0},
+                
+                new LineFoot(){LocX=35,LocY=280},
+                new LineFoot(){LocX=70,LocY=280},
+                new LineFoot(){LocX=105,LocY=280},
+                new LineFoot(){LocX=140,LocY=280},
+                new LineFoot(){LocX=175,LocY=280},
+                new LineFoot(){LocX=210,LocY=280},
+                new LineFoot(){LocX=245,LocY=280},
+                new LineFoot(){LocX=280,LocY=280},
+                new LineFoot(){LocX=315,LocY=280},
+                new LineFoot(){LocX=350,LocY=280}
             };
             info.BackImage = "img\\74HC244.jpg";
             AddNewBaseComponent(info);
             //74Serial
             info.Name = "74Serial";
             info.FootType = enumComponentType.Chips;
-            info.Size = new Size(200, 150);
+            info.Size = new Size(246, 176);
             info.BackColor = Color.Gray;
             info.LineFoots = new List<LineFoot>(){
-                new LineFoot(){ Name="1", LocX=17,LocY=149},
-                new LineFoot(){ Name="2",LocX=45,LocY=149},
-                new LineFoot(){ Name="3",LocX=73,LocY=149},
-                new LineFoot(){ Name="4",LocX=102,LocY=149},
-                new LineFoot(){ Name="5",LocX=130,LocY=149},
-                new LineFoot(){ Name="6",LocX=158,LocY=149},
-                new LineFoot(){ Name="7",LocX=185,LocY=149},
-
-                new LineFoot(){ Name="9",LocX=16,LocY=5},
-                new LineFoot(){ Name="10",LocX=44,LocY=5},
-                new LineFoot(){ Name="11",LocX=72,LocY=5},
-                new LineFoot(){ Name="12",LocX=101,LocY=5},
-                new LineFoot(){ Name="13",LocX=128,LocY=5},
-                new LineFoot(){ Name="14",LocX=157,LocY=5},
-                new LineFoot(){ Name="15",LocX=184,LocY=5}
+                new LineFoot(){ Name="1", LocX=17,LocY=0},
+                new LineFoot(){ Name="2",LocX=52,LocY=0},
+                new LineFoot(){ Name="3",LocX=87,LocY=0},
+                new LineFoot(){ Name="4",LocX=122,LocY=0},
+                new LineFoot(){ Name="5",LocX=157,LocY=0},
+                new LineFoot(){ Name="6",LocX=192,LocY=0},
+                new LineFoot(){ Name="7",LocX=227,LocY=0},
+                
+                new LineFoot(){ Name="1", LocX=17,LocY=176},
+                new LineFoot(){ Name="2",LocX=52,LocY=176},
+                new LineFoot(){ Name="3",LocX=87,LocY=176},
+                new LineFoot(){ Name="4",LocX=122,LocY=176},
+                new LineFoot(){ Name="5",LocX=157,LocY=176},
+                new LineFoot(){ Name="6",LocX=192,LocY=176},
+                new LineFoot(){ Name="7",LocX=227,LocY=176}
             };
             info.BackImage = "img\\74Serial.png";
             AddNewBaseComponent(info);

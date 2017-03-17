@@ -90,7 +90,6 @@ namespace Core
                 NormalDataStruct dataInfo = Coder.DecodeData(buffReceive);
                 Login1Struct loginInfo = Coder.DecodeLogin1(dataInfo.Content);
 
-
                 Coder.EncodeLogin2(out buff);
                 socket.Send(buff);
                 byteBuff = socket.Receive(buffReceive);
@@ -122,7 +121,6 @@ namespace Core
                         //}
                     }
                 }
-
                 //string strMsg = ConvertHelper.BytesToString(buff, System.Text.Encoding.UTF8);
                 //Console.WriteLine(strMsg);
             }

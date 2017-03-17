@@ -56,32 +56,32 @@ namespace SimuProteus
         /// </summary>
         private void InitialShow()
         {
-            this.picbElement.Location = new Point(Constants.FOOT_SIZE_PIXEL, Constants.FOOT_SIZE_PIXEL);
+            //this.picbElement.Location = new Point(Constants.FOOT_SIZE_PIXEL, Constants.FOOT_SIZE_PIXEL);
             this.picbElement.Size = this.ViewInfo.Size;
             this.picbElement.Image = Image.FromFile(this.ViewInfo.BackImage);
             //this.BackColor = this.ViewInfo.BackColor;
 
-            foreach (LineFoot item in this.ViewInfo.LineFoots)
-            {
-                UcFoot footView = new UcFoot(item.Idx, item.LocX, item.LocY);
-                footView.ClickFoot = this.ExchangeCoordinate;
-                this.Controls.Add(footView);
-                footView.BringToFront();
-            }
-            this.Width = this.ViewInfo.Size.Width + Constants.FOOT_SIZE_PIXEL * 2;
-            this.Height = this.ViewInfo.Size.Height + Constants.FOOT_SIZE_PIXEL * 2;
+            //foreach (LineFoot item in this.ViewInfo.LineFoots)
+            //{
+            //    UcFoot footView = new UcFoot(item.Idx, item.LocX, item.LocY);
+            //    footView.ClickFoot = this.ExchangeCoordinate;
+            //    this.Controls.Add(footView);
+            //    footView.BringToFront();
+            //}
+            //this.Width = this.ViewInfo.Size.Width + Constants.FOOT_SIZE_PIXEL * 2;
+            //this.Height = this.ViewInfo.Size.Height + Constants.FOOT_SIZE_PIXEL * 2;
+            this.Width = this.ViewInfo.Size.Width;
+            this.Height = this.ViewInfo.Size.Height;
             this.Location = this.ViewInfo.Location;
 
             if (this.ViewInfo.FootType == enumComponentType.Chips)
                 this.ContextMenuStrip = null;
         }
 
-
         private void ExchangeCoordinate(int footIdx,int locX, int locY)
         {
             this.ClickFoot(this.ViewInfo.InnerIdx,footIdx, locX + this.Location.X + Constants.FOOT_SIZE_PIXEL / 2, locY + this.Location.Y + Constants.FOOT_SIZE_PIXEL / 2);
         }
-
 
         /// <summary>
         /// 移动组件
@@ -117,10 +117,13 @@ namespace SimuProteus
 
         private void picbElement_MouseDown(object sender, MouseEventArgs e)
         {
-            mouseDownFlag = true;
-            //坐标补偿
-            currentX = e.X + Constants.FOOT_SIZE_PIXEL;
-            currentY = e.Y + Constants.FOOT_SIZE_PIXEL;
+            if (this.ViewInfo.FootType == enumComponentType.NormalComponent)
+            {
+                mouseDownFlag = true;
+                //坐标补偿
+                currentX = e.X + Constants.FOOT_SIZE_PIXEL;
+                currentY = e.Y + Constants.FOOT_SIZE_PIXEL;
+            }
         }
 
         private void picbElement_MouseUp(object sender, MouseEventArgs e)
@@ -147,6 +150,16 @@ namespace SimuProteus
         private void picbElement_DoubleClick(object sender, EventArgs e)
         {
             this.UcElement_DoubleClick(sender, e);
+        }
+
+        private void UcElement_Click(object sender, EventArgs e)
+        {
+            this.BorderStyle = BorderStyle.Fixed3D;
+        }
+
+        private void picbElement_Click(object sender, EventArgs e)
+        {
+            this.UcElement_Click(null, null);
         }
         
     }

@@ -64,7 +64,6 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.ContextMenuStrip = this.contextMenuStrip1;
             this.Name = "UcLine";
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.UcLine_Paint);
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 

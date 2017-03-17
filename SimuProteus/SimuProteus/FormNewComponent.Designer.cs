@@ -73,7 +73,7 @@
             this.btnAdd.Location = new System.Drawing.Point(168, 451);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
-            this.btnAdd.TabIndex = 1;
+            this.btnAdd.TabIndex = 10;
             this.btnAdd.Text = "添加";
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
@@ -83,7 +83,7 @@
             this.btnCancel.Location = new System.Drawing.Point(289, 451);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 1;
+            this.btnCancel.TabIndex = 11;
             this.btnCancel.Text = "取消";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -95,14 +95,14 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(37, 15);
             this.label1.TabIndex = 2;
-            this.label1.Text = "高度";
+            this.label1.Text = "宽度";
             // 
             // tbWidth
             // 
             this.tbWidth.Location = new System.Drawing.Point(262, 118);
             this.tbWidth.Name = "tbWidth";
             this.tbWidth.Size = new System.Drawing.Size(71, 25);
-            this.tbWidth.TabIndex = 3;
+            this.tbWidth.TabIndex = 4;
             this.tbWidth.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tbWidth_MouseClick);
             this.tbWidth.TextChanged += new System.EventHandler(this.tbSize_TextChanged);
             // 
@@ -113,14 +113,14 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(37, 15);
             this.label2.TabIndex = 2;
-            this.label2.Text = "宽度";
+            this.label2.Text = "高度";
             // 
             // tbHeight
             // 
             this.tbHeight.Location = new System.Drawing.Point(428, 118);
             this.tbHeight.Name = "tbHeight";
             this.tbHeight.Size = new System.Drawing.Size(71, 25);
-            this.tbHeight.TabIndex = 3;
+            this.tbHeight.TabIndex = 5;
             this.tbHeight.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tbHeight_MouseClick);
             this.tbHeight.TextChanged += new System.EventHandler(this.tbSize_TextChanged);
             // 
@@ -167,7 +167,7 @@
             this.dgvFoot.Name = "dgvFoot";
             this.dgvFoot.RowTemplate.Height = 27;
             this.dgvFoot.Size = new System.Drawing.Size(456, 251);
-            this.dgvFoot.TabIndex = 5;
+            this.dgvFoot.TabIndex = 6;
             this.dgvFoot.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFoot_CellEndEdit);
             this.dgvFoot.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvFoot_CellMouseClick);
             this.dgvFoot.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvFoot_RowsAdded);
@@ -196,7 +196,7 @@
             this.rbChips.Location = new System.Drawing.Point(370, 38);
             this.rbChips.Name = "rbChips";
             this.rbChips.Size = new System.Drawing.Size(58, 19);
-            this.rbChips.TabIndex = 8;
+            this.rbChips.TabIndex = 2;
             this.rbChips.Text = "芯片";
             this.rbChips.UseVisualStyleBackColor = true;
             // 
@@ -207,7 +207,7 @@
             this.rbComponent.Location = new System.Drawing.Point(262, 38);
             this.rbComponent.Name = "rbComponent";
             this.rbComponent.Size = new System.Drawing.Size(73, 19);
-            this.rbComponent.TabIndex = 8;
+            this.rbComponent.TabIndex = 1;
             this.rbComponent.TabStop = true;
             this.rbComponent.Text = "元器件";
             this.rbComponent.UseVisualStyleBackColor = true;
@@ -238,36 +238,36 @@
             // 
             // locX
             // 
-            this.locX.HeaderText = "X像素";
+            this.locX.HeaderText = "X坐标";
             this.locX.MinimumWidth = 20;
             this.locX.Name = "locX";
             this.locX.Width = 70;
             // 
             // locY
             // 
-            this.locY.HeaderText = "Y像素";
+            this.locY.HeaderText = "Y坐标";
             this.locY.MinimumWidth = 20;
             this.locY.Name = "locY";
             this.locY.Width = 70;
             // 
             // nameLocX
             // 
-            this.nameLocX.HeaderText = "名称X像素";
+            this.nameLocX.HeaderText = "名称X坐标";
             this.nameLocX.Name = "nameLocX";
             // 
             // nameLocY
             // 
-            this.nameLocY.HeaderText = "名称Y像素";
+            this.nameLocY.HeaderText = "名称Y坐标";
             this.nameLocY.Name = "nameLocY";
             // 
             // numLocX
             // 
-            this.numLocX.HeaderText = "编号X像素";
+            this.numLocX.HeaderText = "编号X坐标";
             this.numLocX.Name = "numLocX";
             // 
             // numLocY
             // 
-            this.numLocY.HeaderText = "编号Y像素";
+            this.numLocY.HeaderText = "编号Y坐标";
             this.numLocY.Name = "numLocY";
             // 
             // FormNewComponent
