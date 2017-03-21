@@ -29,10 +29,10 @@ namespace SimuProteus
         private int defaultWidth = int.Parse(Ini.GetItemValue("sizeInfo", "pixelInitialWidth"));
         private int defaultHeight = int.Parse(Ini.GetItemValue("sizeInfo", "pixelInitialHeight"));
         private Color defaultLineColor = Color.FromArgb(int.Parse(Ini.GetItemValue("colorInfo", "colorLine")));
-        private int defaultLeftMenuHeight = -1, defaultProjNameCoordX = -1,oneNetPointLength = -1;
+        private int defaultLeftMenuHeight = 655, defaultProjNameCoordX = 586,oneNetPointLength = -1;
         private string currentSelectedComponent = enumComponent.NONE.ToString ();
         private Point clickPositionForLine;
-        private Size defaultWorkPlaceSize;
+        private Size defaultWorkPlaceSize = new Size(798, 645);
         private SerialCom serial = new SerialCom();
         DBUtility dbHandler = new DBUtility(true);
         List<Point> newLinePoints = new List<Point>();
@@ -72,13 +72,9 @@ namespace SimuProteus
         private void InitialControl()
         {
             this.Size = new Size(defaultWidth, defaultHeight);
-            this.defaultLeftMenuHeight = this.gbComponent.Height;
-            this.defaultProjNameCoordX = this.lbProjName.Location.X;
             this.oneNetPointLength = this.netPointGap + this.netPointSize;
             this.pointRadius = this.netPointSize / 2;
-
-            this.pnWorkPlace.Size = this.pnBoard.Size;
-            this.defaultWorkPlaceSize = this.pnWorkPlace.Size;
+            this.pnWorkPlace.Size = this.defaultWorkPlaceSize;
             this.pnWorkPlace.Location = this.pnBoard.Location;
             this.pnBoard.Size = new Size(boardWidth, boardHeight);
             this.pnBoard.Location = new Point(0, 0);
@@ -281,8 +277,7 @@ namespace SimuProteus
                 }
             }
         }
-
-
+        
         private void DeleteLineLink(int idx)
         {
             for (int i = 0; i < this.currentBoardInfo.linesList.Count; i++)
@@ -303,6 +298,8 @@ namespace SimuProteus
                     i--;
                 }
             }
+
+            this.DeleteAllSeletedElementLines();
         }
 
         private void DeleteElement(int idx)
@@ -324,6 +321,26 @@ namespace SimuProteus
                 {
                     this.pnBoard.Controls.RemoveAt(i);
                     break;
+                }
+            }
+
+            this.DeleteAllSeletedElementLines();
+        }
+
+        private void DeleteAllSeletedElementLines()
+        {
+            for (int i = this.pnBoard.Controls.Count-1; i >=0 ; i--)
+            {
+                Control item = this.pnBoard.Controls[i];
+                if (item.GetType() == typeof(UcElement) && (item as UcElement).Selected)
+                {
+                    this.currentBoardInfo.elementList.Remove(this.currentBoardInfo.elementList.Find(ele => ele.InnerIdx == (item as UcElement).ViewInfo.InnerIdx));
+                    this.pnBoard.Controls.RemoveAt(i);
+                }
+                else if (item.GetType() == typeof(UcLine) && (item as UcLine).Selected)
+                {
+                    this.currentBoardInfo.linesList.Remove(this.currentBoardInfo.linesList.Find(ele => ele.InnerIdx == (item as UcLine).ElementIdx));
+                    this.pnBoard.Controls.RemoveAt(i);
                 }
             }
         }
@@ -391,6 +408,19 @@ namespace SimuProteus
             }
         }
 
+        private void SelectLines(int lineIdx)
+        {
+            for (int i = 0; i < this.pnBoard.Controls.Count; i++)
+            {
+                Control item = this.pnBoard.Controls[i];
+                if (item.GetType() == typeof(UcLine) && (item as UcLine).ElementIdx == lineIdx)
+                {
+
+                    (item as UcLine).AddSelectedBulk();
+                }
+            }
+        }
+
         private void UpdateElementName(int idx, string name)
         {
             for (int i = 0; i < this.currentBoardInfo.elementList.Count; i++)
@@ -419,27 +449,35 @@ namespace SimuProteus
                 }
             }
 
-            if (!foundFlag)
+            for (int i = 0; i < this.currentBoardInfo.elementList.Count; i++)
             {
-                for (int i = 0; i < this.currentBoardInfo.elementList.Count; i++)
-                {
-                    ElementInfo elementTmp = this.currentBoardInfo.elementList[i];
-                    if (elementTmp.InnerIdx != foot.Element)
-                        continue;
+                ElementInfo elementTmp = this.currentBoardInfo.elementList[i];
+                if (elementTmp.InnerIdx != foot.Element)
+                    continue;
 
-                    foreach (LineFoot footItem in elementTmp.LineFoots)
+                for (int j = 0; j < elementTmp.LineFoots.Count; j++)
+                {
+                    LineFoot footItem = elementTmp.LineFoots[j];
+                    if (footItem.Idx == foot.Foot)
+                    {
+                        elementTmp.LineFoots.Remove(footItem);
+                        footItem.Name = foot.PinsName;
+                        footItem.PinsType = foot.PinsType;
+                        elementTmp.LineFoots.Insert(j,footItem);
+                    }
+                    if (!foundFlag)
                     {
                         this.currentBoardInfo.footsList.Add(new LineFootView()
                         {
                             Component = elementTmp.ID,
                             Element = elementTmp.InnerIdx,
                             Foot = footItem.Idx,
-                            PinsName = footItem.Idx == foot.Foot ? foot.PinsName : footItem.Name,
-                            PinsType = footItem.Idx == foot.Foot ? foot.PinsType : footItem.PinsType
+                            PinsName = footItem.Name,
+                            PinsType = footItem.PinsType
                         });
                     }
-                    break;
                 }
+                break;
             }
         }
 
@@ -468,40 +506,17 @@ namespace SimuProteus
         {
             MouseEventArgs clickArgs = (MouseEventArgs)e;
             if (this.newLinePoints.Count > 0)
-            {
+            {//绘线状态
                 if (clickArgs.Button == MouseButtons.Right)
-                {
-                    this.newLinePoints.Clear();
-                    //删除已绘线条
-                    //pnLineTmp.Invalidate();
-                    //pnLineTmp.Update();
-                    //pnLineTmp.Refresh();                    
+                {//删除已绘线条
+                    this.RemoveTempNewLine();                 
                 }
                 else
                 {
-                    Point clickLocIdx = this.CalcNearestLocIdxByCoordinate(clickArgs.X, clickArgs.Y);
-                    Point locOther = this.newLinePoints[this.newLinePoints.Count - 1];
-                    Point locOne = new Point ();
-                    if (Math.Abs(clickLocIdx.X - locOther.X) > Math.Abs(clickLocIdx.Y - locOther.Y))
-                    {
-                        locOne.Y = locOther.Y;
-                        locOne.X = clickLocIdx.X;
-                    }
-                    else
-                    {
-                        locOne.X = locOther.X;
-                        locOne.Y = clickLocIdx.Y;
-                    }
-                    Point coordiOne = this.CalcCoordinateByLocIdx(locOne.X, locOne.Y);
-                    Point coordiOther = this.CalcCoordinateByLocIdx(locOther.X,locOther.Y);
-                    this.newLinePoints.Add(locOne);
-                    //Draw.DrawSolidLine(this.pnBoard, coordiOne, coordiOther, true);
-                    UcLine lineOne = new UcLine(elementIdx,coordiOne,coordiOther, DeleteLineLink, ChangeLineColor);
-                    this.pnBoard.Controls.Add(lineOne);
+                    this.DrawTempNewLine(clickArgs.X, clickArgs.Y);
                 }
-                return;
             }
-            if (clickArgs.Button == MouseButtons.Right)
+            else if (clickArgs.Button == MouseButtons.Right)
             {
                 this.Cursor = Cursors.Arrow;
                 this.currentSelectedComponent = enumComponent.NONE.ToString ();
@@ -509,43 +524,108 @@ namespace SimuProteus
             else
             {
                 if (this.currentSelectedComponent == enumComponent.NONE.ToString())
-                    return;
-                //添加元器件
-                ElementInfo info = GetElementInfoOnBoardByName(this.currentSelectedComponent);
-                info.InnerIdx = elementIdx++;
-                UcElement elementItem = this.getElementView(info);
-                elementItem.Location = this.CalcElementCoord(info, new Point(clickArgs.X, clickArgs.Y));
-                info.Location = elementItem.Location;
-                
-                this.pnBoard.Controls.Add(elementItem);
-                elementItem.BringToFront();
-                this.currentBoardInfo.elementList.Add(info);
+                {
+                    this.DeselectAllElementLines();
+                }
+                else
+                {
+                    this.AddOneElementOnBoard(this.currentSelectedComponent, clickArgs.X, clickArgs.Y);
+                }
             }
         }
 
         private void pnBoard_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            Point pointIdx = CalcLocIdxByCoordinate(e.X, e.Y);
-            if (pointIdx.X > 0 && pointIdx.Y > 0)
+            Point pointIdx = this.CalcNearestLocIdxByCoordinate(e.X, e.Y);
+            if (this.newLinePoints.Count == 0)
             {
-                if (this.newLinePoints.Count == 0)
+                this.newLinePoints.Add(pointIdx);
+                this.Cursor = Cursors.Cross;
+                elementIdx++;
+            }
+            else
+            {//结束绘线
+                this.Cursor = Cursors.Arrow;
+                if (this.newLinePoints.Count <= 1)
                 {
-                    this.newLinePoints.Add(pointIdx);
-                    this.Cursor = Cursors.Cross;
-                    elementIdx++;
-                }
-                else
-                {//结束绘线
-                    this.Cursor = Cursors.Arrow;
-                    if (this.newLinePoints.Count <= 1)
-                    {
-                        this.newLinePoints.Clear();
-                        return;
-                    }
-                    this.ChangeLinesItemColor(elementIdx, this.defaultLineColor);
-                    this.SaveDemoLine();
-                    //this.DrawLinesByLastPoints();
                     this.newLinePoints.Clear();
+                    return;
+                }
+                //this.RemoveLatestTempLine();//双击事件会先触发单击事件
+                this.ChangeLinesItemColor(elementIdx, this.defaultLineColor);
+                this.SaveDemoLine();
+                //this.DrawLinesByLastPoints();
+                this.newLinePoints.Clear();
+            }
+        }
+
+        private void DrawTempNewLine(int coorX, int coorY)
+        {
+            Point clickLocIdx = this.CalcNearestLocIdxByCoordinate(coorX, coorY);
+            Point locOther = this.newLinePoints[this.newLinePoints.Count - 1];
+            if (clickLocIdx.X == locOther.X && clickLocIdx.Y == locOther.Y)
+                return;
+            Point locOne = new Point();
+            if (Math.Abs(clickLocIdx.X - locOther.X) > Math.Abs(clickLocIdx.Y - locOther.Y))
+            {
+                locOne.Y = locOther.Y;
+                locOne.X = clickLocIdx.X;
+            }
+            else
+            {
+                locOne.X = locOther.X;
+                locOne.Y = clickLocIdx.Y;
+            }
+            Point coordiOne = this.CalcCoordinateByLocIdx(locOne.X, locOne.Y);
+            Point coordiOther = this.CalcCoordinateByLocIdx(locOther.X, locOther.Y);
+            this.newLinePoints.Add(locOne);
+            //Draw.DrawSolidLine(this.pnBoard, coordiOne, coordiOther, true);
+            UcLine lineOne = new UcLine(elementIdx, coordiOne, coordiOther, DeleteLineLink, ChangeLineColor, SelectLines);
+            this.pnBoard.Controls.Add(lineOne);
+        }
+
+        private void RemoveTempNewLine()
+        {
+            this.newLinePoints.Clear();
+            this.Cursor = Cursors.Arrow;
+            //pnLineTmp.Invalidate();
+            //pnLineTmp.Update();
+            //pnLineTmp.Refresh();   
+            for (int i = this.pnBoard.Controls.Count-1; i >=0 ; i--)
+            {
+                Control item = this.pnBoard.Controls[i];
+                if (item.GetType() == typeof(UcLine) && !(item as UcLine).Status)
+                {
+                    this.pnBoard.Controls.RemoveAt(i);
+                }
+            }
+        }
+
+        private void AddOneElementOnBoard(string strComp,int coorX,int coorY)
+        {   //添加元器件
+            ElementInfo info = GetElementInfoOnBoardByName(strComp);
+            info.InnerIdx = elementIdx++;
+            UcElement elementItem = this.getElementView(info);
+            elementItem.Location = this.CalcElementCoord(info, new Point(coorX - info.Size.Width/2, coorY - info.Size.Height/2));
+            info.Location = elementItem.Location;
+
+            this.pnBoard.Controls.Add(elementItem);
+            elementItem.BringToFront();
+            this.currentBoardInfo.elementList.Add(info);
+        }
+
+        private void DeselectAllElementLines()
+        {
+            for (int i = 0; i < this.pnBoard.Controls.Count; i++)
+            {
+                Control item = this.pnBoard.Controls[i];
+                if (item.GetType() == typeof(UcLine))
+                {
+                    (item as UcLine).RemoveSelectedBulk();
+                }
+                else if (item.GetType() == typeof(UcElement))
+                {
+                    (item as UcElement).RemoveSelectedBulk();
                 }
             }
         }
@@ -581,8 +661,15 @@ namespace SimuProteus
                 if (item.GetType() == typeof(UcLine) && (item as UcLine).ElementIdx == idx)
                 {
                     (item as UcLine).BackColor = color;
+                    (item as UcLine).Status = true;
                 }
             }
+        }
+
+        private void RemoveLatestTempLine()
+        {
+            this.pnBoard.Controls.RemoveAt(this.pnBoard.Controls.Count - 1);
+            this.newLinePoints.RemoveAt(this.newLinePoints.Count - 1);
         }
 
         private void DrawLinesByLastPoints()
@@ -707,7 +794,7 @@ namespace SimuProteus
                     lUFoot = foot;
                 }
             }
-
+            //coord.X -= info.BackImage.w
             Point coorLUReal = new Point(coord.X + lUFoot.LocX, coord.Y + lUFoot.LocY);
             Point locLUReal = this.CalcNearestLocIdxByCoordinate(coorLUReal.X, coorLUReal.Y);
             Point coorLUAdjust = this.CalcCoordinateByLocIdx(locLUReal.X, locLUReal.Y);
@@ -837,6 +924,14 @@ namespace SimuProteus
                 this.pnBoard.Controls.Add(lbTmp);
             }
         }
+
+        private void FormMain_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                this.DeleteAllSeletedElementLines();
+            }
+        }
         #endregion
 
         #region 窗口菜单
@@ -845,6 +940,7 @@ namespace SimuProteus
             if (CheckLoadChip())
             {
                 //this.InitialNetPoint(countWidth, countHeight);
+                this.Refresh();
                 int currentChips = Convert.ToInt32((sender as ToolStripMenuItem).Tag);
                 UcElement chipElement = this.InitialChipOnBoard(currentChips);
                 this.pnBoard.Controls.Add(chipElement);
@@ -887,10 +983,15 @@ namespace SimuProteus
                     this.lbProjName.Tag = null;
                     this.lbProjName.Text = "未命名";
                     this.pnBoard.Controls.Add(this.lbProjName);
-                    currentBoardInfo.linesList.Clear();
-                    currentBoardInfo.elementList.Clear();
-                    currentBoardInfo.footsList.Clear();
-                    currentBoardInfo.pointsList.Clear();
+                    this.currentBoardInfo.Project.OriginX = 1;
+                    this.currentBoardInfo.Project.OriginY= 1;
+                    this.currentBoardInfo.Project.Name = string.Empty;
+                    this.currentBoardInfo.Project.Description = string.Empty;
+                    this.currentBoardInfo.Project.Idx = 0;
+                    this.currentBoardInfo.linesList.Clear();
+                    this.currentBoardInfo.elementList.Clear();
+                    this.currentBoardInfo.footsList.Clear();
+                    this.currentBoardInfo.pointsList.Clear();
                 }
                 else
                 {//不清空
@@ -972,7 +1073,6 @@ namespace SimuProteus
 
             ProjectDetails projInfo = dbHandler.getProjectDetail(Convert.ToInt32(projItem.Tag));
             this.currentBoardInfo = projInfo;
-            //this.InitialNetPoint(projInfo.Project.Width, projInfo.Project.Length);
             this.LoadElementByHistoryItem(projInfo);
         }
 
@@ -980,7 +1080,7 @@ namespace SimuProteus
         {
             this.lbProjName.Text = projInfo.Project.Name;
             this.lbProjName.Tag = projInfo.Project.Idx;
-            //this.InitialNetPoint(projInfo.Project.Width,projInfo.Project.Length);
+            this.pnBoard.Refresh();
 
             if (projInfo.Project.Chips > 0)
             {
@@ -994,10 +1094,8 @@ namespace SimuProteus
                 this.pnBoard.Controls.Add(ucTmp);
                 ucTmp.BringToFront();
             }
-            List<int> addedLine = new List<int>();
             foreach (ElementLine line in projInfo.linesList)
             {
-                if (addedLine.Contains(line.Idx)) continue;
                 ElementLine eleOne = new ElementLine()
                 {   
                     Color = line.Color,
@@ -1010,46 +1108,17 @@ namespace SimuProteus
                     otherFoot = line.otherFoot,
                     Name = line.Name
                 };
-                addedLine.Add(line.Idx);
-                ElementLine eleOther = new ElementLine();
-                foreach (ElementLine lineChild in projInfo.linesList)
-                {
-                    if (addedLine.Contains(lineChild.Idx)) continue;
-                    if (lineChild.LocOtherX == line.LocOtherX && lineChild.LocOtherY == line.LocOtherY)
-                    {
-                        eleOther.Color = lineChild.Color;
-                        eleOther.LocX = lineChild.LocX;
-                        eleOther.LocY = lineChild.LocY;
-                        eleOther.LocOtherX = lineChild.LocOtherX;
-                        eleOther.LocOtherY = lineChild.LocOtherY;
-                        eleOther.Idx = lineChild.Idx;
-                        eleOther.oneFoot = lineChild.oneFoot;
-                        eleOther.otherFoot = lineChild.otherFoot;
-                        eleOther.Name = lineChild.Name;
-                    }
-                }
                 UcLine lineOne = new UcLine(eleOne, DeleteLineLink, ChangeLineColor);
-                UcLine lineOther = new UcLine(eleOther, DeleteLineLink, ChangeLineColor);
-                //lineOne.OtherLine = lineOther;
-                //lineOther.OtherLine = lineOne;
                 this.pnBoard.Controls.Add(lineOne);
-                this.pnBoard.Controls.Add(lineOther);
                 lineOne.BringToFront();
-                lineOther.BringToFront();
             }
             foreach (NetPoint point in projInfo.pointsList)
             {
                 if (point.Type == enumNetPointType.NONE) continue;
-                for (int i = 0; i < this.pnBoard.Controls.Count; i++)
-                {
-                    Control item = this.pnBoard.Controls[i];
-                    if (item.GetType() == typeof(UcPoint) && (item as UcPoint).X == point.X && (item as UcPoint).Y == point.Y)
-                    {
-                        //UcPoint itemPoint = (item as UcPoint);
-                        //itemPoint.UpdateStatusOnInitialLoad(point.Type);
-                        //UpdatePointName(itemPoint, point.Type);
-                    }
-                }
+
+                Point luCoordi = this.CalcCoordinateByLocIdx(point.X, point.Y);
+                Draw.DrawSolidCircle(this.pnBoard, point.Type, luCoordi.X, luCoordi.Y);
+                this.UpdatePointName(new Point(point.X, point.Y), point.Type);
             }
         }
 
@@ -1197,6 +1266,5 @@ namespace SimuProteus
             serial.Write(strSend);
         }
         #endregion
-
     }
 }

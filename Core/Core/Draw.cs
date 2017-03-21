@@ -136,6 +136,24 @@ namespace SimuProteus
         }
 
         /// <summary>
+        /// 画实心矩形
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="luCoor"></param>
+        /// <param name="size"></param>
+        /// <param name="color"></param>
+        public static void DrawSolidRect(Control board, Point luCoor, Size size,Color color)
+        {
+            Rectangle rect = new Rectangle(luCoor, size);
+
+            Graphics g = board.CreateGraphics();
+            Pen pen = new Pen(color);
+            g.DrawEllipse(pen, rect);
+            Brush brush = new SolidBrush(color);
+            g.FillRectangle(brush, rect);
+        }
+
+        /// <summary>
         /// 写字
         /// </summary>
         /// <param name="board"></param>

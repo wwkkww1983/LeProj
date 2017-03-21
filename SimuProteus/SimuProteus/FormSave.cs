@@ -44,6 +44,11 @@ namespace SimuProteus
         {
             DBUtility dbhandler = new DBUtility();
 
+            if (this.tbName.Text.Trim().Equals(string.Empty))
+            {
+                MessageBox.Show("请输入项目名称");
+                return;
+            }
             this.Project.Project.Name = this.tbName.Text.Trim();
             this.Project.Project.Description = this.tbDesc.Text.Trim();
             this.Project.Project.UpdateTime = DateTime.Now;
@@ -57,11 +62,6 @@ namespace SimuProteus
             }
             else
             {
-                if (this.tbName.Text.Trim().Equals(string.Empty))
-                {
-                    MessageBox.Show("请输入项目名称");
-                    return;
-                }
                 this.Project.Project.CreateTime = DateTime.Now;
 
                 if (dbhandler.CheckProjectNameExists(this.Project.Project.Name))

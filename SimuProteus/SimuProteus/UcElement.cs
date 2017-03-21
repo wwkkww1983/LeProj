@@ -30,6 +30,14 @@ namespace SimuProteus
             get;
             set;
         }
+        /// <summary>
+        /// 选中状态
+        /// </summary>
+        public bool Selected
+        {
+            get;
+            set;
+        }
 
         public UcElement()
         {
@@ -154,13 +162,56 @@ namespace SimuProteus
 
         private void UcElement_Click(object sender, EventArgs e)
         {
-            this.BorderStyle = BorderStyle.Fixed3D;
+            this.Selected = true;
+            int bulkLen = Constants.SELECT_ELEMENT_BULK_SIZE;
+            Color bulkColor = Constants.SELECT_BULK_COLOR;
+            int ruleSize = bulkLen * 2;
+            Size bulkSize = new Size(bulkLen, bulkLen);
+            if (Width > ruleSize && Height > ruleSize)
+            {//四个脚
+                Point two = new Point(this.Width - bulkLen, 0);
+                Point three = new Point(0, this.Height - bulkLen);
+                Point four = new Point(this.Width - bulkLen, this.Height - bulkLen);
+                Draw.DrawSolidRect(this.picbElement, new Point(0, 0), bulkSize, bulkColor);
+                Draw.DrawSolidRect(this.picbElement, two, bulkSize, bulkColor);
+                Draw.DrawSolidRect(this.picbElement, three, bulkSize, bulkColor);
+                Draw.DrawSolidRect(this.picbElement, four, bulkSize, bulkColor);
+            }
+            else if (Width > ruleSize)
+            {//左右两个脚
+                int coorY = (this.Height - bulkLen)/2;
+                Point one = new Point(this.Width - bulkLen, coorY);
+                Point two = new Point(0, coorY);
+                Draw.DrawSolidRect(this.picbElement, one, bulkSize, bulkColor);
+                Draw.DrawSolidRect(this.picbElement, two, bulkSize, bulkColor);
+            }
+            else if (Height > ruleSize)
+            {//上下两个脚
+                int coorX = (this.Width - bulkLen) / 2;
+                Point one = new Point(coorX, this.Height - bulkLen);
+                Point two = new Point(coorX,0);
+                Draw.DrawSolidRect(this.picbElement, one, bulkSize, bulkColor);
+                Draw.DrawSolidRect(this.picbElement, two, bulkSize, bulkColor);
+            }
+            else
+            {//中间一个脚
+                int coorX = (this.Width - bulkLen) / 2;
+                int coorY = (this.Height - bulkLen) / 2;
+                Point one = new Point(Math.Max(coorX, 0), Math.Max(coorY, 0));
+                Draw.DrawSolidRect(this.picbElement, one, bulkSize, bulkColor);
+            }
         }
 
         private void picbElement_Click(object sender, EventArgs e)
         {
             this.UcElement_Click(null, null);
         }
-        
+
+        public void RemoveSelectedBulk()
+        {
+            this.Selected = false;
+            this.picbElement.CreateGraphics().Clear(this.BackColor);
+            this.picbElement.Image = Image.FromFile(this.ViewInfo.BackImage);
+        }
     }
 }

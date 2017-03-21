@@ -41,6 +41,20 @@ namespace SimuProteus
             }
         }
 
+        /// <summary>
+        /// 线条选中标志的方块尺寸
+        /// </summary>
+        public const int SELECT_LINE_BULK_SIZE = 3;
+
+        /// <summary>
+        /// 元器件选中标志的方块尺寸
+        /// </summary>
+        public const int SELECT_ELEMENT_BULK_SIZE = 10;
+
+        /// <summary>
+        /// 元器件选中标志的方块颜色
+        /// </summary>
+        public static System.Drawing.Color SELECT_BULK_COLOR = System.Drawing.Color.Blue;
     }
 
     public enum enumComponent

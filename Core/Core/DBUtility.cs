@@ -85,6 +85,7 @@ namespace SimuProteus
                                projIdx int,
                                component int,
                                innerIdx int,
+                               type int,
                                name nvarchar(20),
                                locX int,
                                locY int,
@@ -452,51 +453,59 @@ namespace SimuProteus
             int projIdx = Convert.ToInt32(objIdx);
             if (projIdx <= 0) return projIdx;
 
-            strSql = string.Empty;
-            if (project.elementList.Count == 0) return projIdx;
-            foreach (ElementInfo item in project.elementList)
+            if (project.elementList.Count > 0)
             {
-                strSql += string.Format(@"insert into componentView (projIdx,component,name,locX,locY,width,height,backColor,backImage,innerIdx) 
-                                        values ({0},{1},'{2}',{3},{4},{5},{6},{7},'{8}',{9});",
-                             projIdx, item.Component, item.Name, item.Location.X, item.Location.Y, item.Size.Width, item.Size.Height, item.BackColor.ToArgb(), item.BackImage,item.InnerIdx);
-            } 
-            objIdx = SQLiteHelper.ExecuteNonQuery(STR_CONNECTION, strSql);
-            if(Convert.ToInt32(objIdx) != project.elementList.Count) 
-                return -1;
+                strSql = string.Empty;
+                foreach (ElementInfo item in project.elementList)
+                {
+                    strSql += string.Format(@"insert into componentView (projIdx,component,name,locX,locY,width,height,backColor,backImage,innerIdx,type) 
+                                        values ({0},{1},'{2}',{3},{4},{5},{6},{7},'{8}',{9},{10});",
+                                 projIdx, item.Component, item.Name, item.Location.X, item.Location.Y, item.Size.Width, item.Size.Height, item.BackColor.ToArgb(), item.BackImage, item.InnerIdx,(int)item.FootType);
+                }
+                objIdx = SQLiteHelper.ExecuteNonQuery(STR_CONNECTION, strSql);
+                if (Convert.ToInt32(objIdx) != project.elementList.Count)
+                    return -1;
+            }
 
-            strSql = string.Empty;
-            if (project.linesList.Count == 0) return projIdx;
-            foreach (ElementLine item in project.linesList)
+            if (project.linesList.Count > 0)
             {
-                strSql += string.Format(@"insert into lineLink (project,name,oneFoot,otherFoot,locX,locY,locOtherX,locOtherY,color,oneElement,otherElement) 
+                strSql = string.Empty;
+                foreach (ElementLine item in project.linesList)
+                {
+                    strSql += string.Format(@"insert into lineLink (project,name,oneFoot,otherFoot,locX,locY,locOtherX,locOtherY,color,oneElement,otherElement) 
                                         values ({0},'{1}',{2},{3},{4},{5},{6},{7},'{8}',{9},{10});",
-                             projIdx, item.Name, item.oneFoot, item.otherFoot, item.LocX, item.LocY, item.LocOtherX, item.LocOtherY, item.Color.ToArgb (),item.oneElement,item.otherElement);
+                                 projIdx, item.Name, item.oneFoot, item.otherFoot, item.LocX, item.LocY, item.LocOtherX, item.LocOtherY, item.Color.ToArgb(), item.oneElement, item.otherElement);
+                }
+                objIdx = SQLiteHelper.ExecuteNonQuery(STR_CONNECTION, strSql);
+                if (Convert.ToInt32(objIdx) != project.linesList.Count)
+                    return -1;
             }
-            objIdx = SQLiteHelper.ExecuteNonQuery(STR_CONNECTION, strSql);
-            if (Convert.ToInt32(objIdx) != project.linesList.Count)
-                return -1;
 
-            strSql = string.Empty;
-            if (project.footsList.Count == 0) return projIdx;
-            foreach (LineFootView lineItem in project.footsList)
+            if (project.footsList.Count > 0)
             {
-                strSql += string.Format("insert into lineFootView (projIdx,component,innerIdx,name,pinsType,footIdx) values ({0},{1},{2},'{3}',{4},{5});",
-                    projIdx, lineItem.Component, lineItem.Element, lineItem.PinsName, (int)lineItem.PinsType, lineItem.Foot);
+                strSql = string.Empty;
+                foreach (LineFootView lineItem in project.footsList)
+                {
+                    strSql += string.Format("insert into lineFootView (projIdx,component,innerIdx,name,pinsType,footIdx) values ({0},{1},{2},'{3}',{4},{5});",
+                        projIdx, lineItem.Component, lineItem.Element, lineItem.PinsName, (int)lineItem.PinsType, lineItem.Foot);
+                }
+                objIdx = SQLiteHelper.ExecuteNonQuery(STR_CONNECTION, strSql);
+                if (Convert.ToInt32(objIdx) != project.footsList.Count)
+                    return -1;
             }
-            objIdx = SQLiteHelper.ExecuteNonQuery(STR_CONNECTION, strSql);
-            if (Convert.ToInt32(objIdx) != project.footsList.Count)
-                return -1;
 
-            strSql = string.Empty;
-            if (project.pointsList.Count == 0) return projIdx;
-            foreach (NetPoint pointItem in project.pointsList)
+            if (project.pointsList.Count > 0)
             {
-                strSql += string.Format("insert into netPoints (projIdx,x,y,status) values ({0},{1},{2},{3});",
-                    projIdx, pointItem.X, pointItem.Y, (int)pointItem.Type);
+                strSql = string.Empty;
+                foreach (NetPoint pointItem in project.pointsList)
+                {
+                    strSql += string.Format("insert into netPoints (projIdx,x,y,status) values ({0},{1},{2},{3});",
+                        projIdx, pointItem.X, pointItem.Y, (int)pointItem.Type);
+                }
+                objIdx = SQLiteHelper.ExecuteNonQuery(STR_CONNECTION, strSql);
+                if (Convert.ToInt32(objIdx) != project.pointsList.Count)
+                    return -1;
             }
-            objIdx = SQLiteHelper.ExecuteNonQuery(STR_CONNECTION, strSql);
-            if (Convert.ToInt32(objIdx) != project.pointsList.Count)
-                return -1;
 
             return projIdx;
         }

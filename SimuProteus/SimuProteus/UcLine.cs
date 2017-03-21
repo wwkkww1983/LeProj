@@ -15,9 +15,23 @@ namespace SimuProteus
         private const int UNCOVER_LINE_POINT = 1;
         private static int pointSize = int.Parse(Ini.GetItemValue("sizeInfo", "pixelNetPoint"));
         private static int pointRadius = pointSize / 2;
-        private Action<int> RemoveElement = null;
+        private Action<int> RemoveElement = null, SelectLine = null;
         private Action<int, Color> ChangeColor = null;
         public int ElementIdx
+        {
+            get;
+            set;
+        }
+
+        public bool Status
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 选中状态
+        /// </summary>
+        public bool Selected
         {
             get;
             set;
@@ -28,11 +42,12 @@ namespace SimuProteus
             set;
         }
 
-        public UcLine(int element, Point start, Point end, Action<int> removeLine, Action<int, Color> changeColor)
+        public UcLine(int element, Point start, Point end, Action<int> removeLine, Action<int, Color> changeColor,Action<int> selectLine)
         {
             this.ElementIdx = element;
             this.RemoveElement = removeLine;
             this.ChangeColor = changeColor;
+            this.SelectLine = selectLine;
 
             InitializeComponent();
 
@@ -49,6 +64,7 @@ namespace SimuProteus
                 this.Width = Math.Abs(start.X - end.X);
             }
             this.BackColor = Color.Black;
+            this.Status = false;
         }
 
         public UcLine(ElementLine info, Action<int> removeLine, Action<int, Color> changeColor)
@@ -88,6 +104,29 @@ namespace SimuProteus
                 this.ChangeColor(this.ElementIdx, lineColor);
                 //this.ChangeColor(this.OtherLine.LineInfo.Idx, lineColor.ToArgb());
             }
+        }
+
+        private void UcLine_Click(object sender, EventArgs e)
+        {
+            if (this.Status)
+            {
+                this.SelectLine(this.ElementIdx);
+            }
+        }
+
+        public void AddSelectedBulk()
+        {
+            this.Selected = true;
+            Size bulkSize = new Size(Constants.SELECT_LINE_BULK_SIZE, Constants.SELECT_LINE_BULK_SIZE);
+            Point other = new Point(this.Width - Constants.SELECT_LINE_BULK_SIZE, this.Height - Constants.SELECT_LINE_BULK_SIZE);
+            Draw.DrawSolidRect(this, new Point(0, 0),bulkSize , Constants.SELECT_BULK_COLOR);
+            Draw.DrawSolidRect(this, other, bulkSize, Constants.SELECT_BULK_COLOR);
+        }
+
+        public void RemoveSelectedBulk()
+        {
+            this.Selected = false;
+            this.CreateGraphics().Clear(this.BackColor);
         }
     }
 }

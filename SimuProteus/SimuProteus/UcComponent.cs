@@ -42,7 +42,9 @@ namespace SimuProteus
             this.componentType = this.componentInfo.Name;
             if (this.index > 0)
             {
-                SetCursor((Bitmap)this.picBox.Image, new Point(this.picBox.Image.Width / 2, this.picBox.Image.Height / 2));
+                Bitmap myNewCursor = new Bitmap((Bitmap)this.picBox.Image);
+                this.Cursor = new Cursor(myNewCursor.GetHicon());
+                myNewCursor.Dispose();
             }
             else
             {
@@ -58,26 +60,6 @@ namespace SimuProteus
         private void picBox_Click(object sender, EventArgs e)
         {
             this.UcComponent_Click(null, null);
-        }
-
-        /// <summary>
-        /// 设置鼠标样式
-        /// </summary>
-        /// <param name="cursor"></param>
-        /// <param name="hotPoint"></param>
-        public void SetCursor(Bitmap cursor, Point hotPoint)
-        {
-            int hotX = hotPoint.X;
-            int hotY = hotPoint.Y;
-            Bitmap myNewCursor = new Bitmap(cursor.Width * 2 - hotX, cursor.Height * 2 - hotY);
-            Graphics g = Graphics.FromImage(myNewCursor);
-            g.Clear(Color.FromArgb(0, 0, 0, 0));
-            g.DrawImage(cursor, cursor.Width - hotX, cursor.Height - hotY, cursor.Width, cursor.Height);
-
-            this.Cursor = new Cursor(myNewCursor.GetHicon());
-
-            g.Dispose();
-            myNewCursor.Dispose();
         }
     }
 }

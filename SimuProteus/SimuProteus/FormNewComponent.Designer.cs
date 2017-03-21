@@ -40,10 +40,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.tbName = new System.Windows.Forms.TextBox();
             this.dgvFoot = new System.Windows.Forms.DataGridView();
-            this.lbLoc = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.rbChips = new System.Windows.Forms.RadioButton();
-            this.rbComponent = new System.Windows.Forms.RadioButton();
             this.Number = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.type = new System.Windows.Forms.DataGridViewComboBoxColumn();
@@ -53,6 +49,10 @@
             this.nameLocY = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.numLocX = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.numLocY = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lbLoc = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.rbChips = new System.Windows.Forms.RadioButton();
+            this.rbComponent = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxImg)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFoot)).BeginInit();
             this.SuspendLayout();
@@ -70,7 +70,7 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(168, 451);
+            this.btnAdd.Location = new System.Drawing.Point(326, 452);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
             this.btnAdd.TabIndex = 10;
@@ -80,7 +80,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(289, 451);
+            this.btnCancel.Location = new System.Drawing.Point(447, 452);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 11;
@@ -91,7 +91,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(219, 123);
+            this.label1.Location = new System.Drawing.Point(280, 121);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(37, 15);
             this.label1.TabIndex = 2;
@@ -99,7 +99,7 @@
             // 
             // tbWidth
             // 
-            this.tbWidth.Location = new System.Drawing.Point(262, 118);
+            this.tbWidth.Location = new System.Drawing.Point(323, 116);
             this.tbWidth.Name = "tbWidth";
             this.tbWidth.Size = new System.Drawing.Size(71, 25);
             this.tbWidth.TabIndex = 4;
@@ -109,7 +109,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(385, 123);
+            this.label2.Location = new System.Drawing.Point(495, 121);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(37, 15);
             this.label2.TabIndex = 2;
@@ -117,7 +117,7 @@
             // 
             // tbHeight
             // 
-            this.tbHeight.Location = new System.Drawing.Point(428, 118);
+            this.tbHeight.Location = new System.Drawing.Point(538, 116);
             this.tbHeight.Name = "tbHeight";
             this.tbHeight.Size = new System.Drawing.Size(71, 25);
             this.tbHeight.TabIndex = 5;
@@ -127,7 +127,7 @@
             // lbInfo
             // 
             this.lbInfo.AutoSize = true;
-            this.lbInfo.Location = new System.Drawing.Point(9, 499);
+            this.lbInfo.Location = new System.Drawing.Point(40, 493);
             this.lbInfo.Name = "lbInfo";
             this.lbInfo.Size = new System.Drawing.Size(37, 15);
             this.lbInfo.TabIndex = 4;
@@ -136,7 +136,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(189, 82);
+            this.label3.Location = new System.Drawing.Point(465, 61);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(67, 15);
             this.label3.TabIndex = 2;
@@ -144,7 +144,7 @@
             // 
             // tbName
             // 
-            this.tbName.Location = new System.Drawing.Point(262, 77);
+            this.tbName.Location = new System.Drawing.Point(538, 56);
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(237, 25);
             this.tbName.TabIndex = 3;
@@ -166,51 +166,11 @@
             this.dgvFoot.Location = new System.Drawing.Point(43, 177);
             this.dgvFoot.Name = "dgvFoot";
             this.dgvFoot.RowTemplate.Height = 27;
-            this.dgvFoot.Size = new System.Drawing.Size(456, 251);
+            this.dgvFoot.Size = new System.Drawing.Size(775, 251);
             this.dgvFoot.TabIndex = 6;
             this.dgvFoot.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFoot_CellEndEdit);
             this.dgvFoot.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvFoot_CellMouseClick);
             this.dgvFoot.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvFoot_RowsAdded);
-            // 
-            // lbLoc
-            // 
-            this.lbLoc.AutoSize = true;
-            this.lbLoc.Location = new System.Drawing.Point(136, 135);
-            this.lbLoc.Name = "lbLoc";
-            this.lbLoc.Size = new System.Drawing.Size(37, 15);
-            this.lbLoc.TabIndex = 6;
-            this.lbLoc.Text = "坐标";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(40, 38);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(47, 15);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "(0,0)";
-            // 
-            // rbChips
-            // 
-            this.rbChips.AutoSize = true;
-            this.rbChips.Location = new System.Drawing.Point(370, 38);
-            this.rbChips.Name = "rbChips";
-            this.rbChips.Size = new System.Drawing.Size(58, 19);
-            this.rbChips.TabIndex = 2;
-            this.rbChips.Text = "芯片";
-            this.rbChips.UseVisualStyleBackColor = true;
-            // 
-            // rbComponent
-            // 
-            this.rbComponent.AutoSize = true;
-            this.rbComponent.Checked = true;
-            this.rbComponent.Location = new System.Drawing.Point(262, 38);
-            this.rbComponent.Name = "rbComponent";
-            this.rbComponent.Size = new System.Drawing.Size(73, 19);
-            this.rbComponent.TabIndex = 1;
-            this.rbComponent.TabStop = true;
-            this.rbComponent.Text = "元器件";
-            this.rbComponent.UseVisualStyleBackColor = true;
             // 
             // Number
             // 
@@ -270,11 +230,51 @@
             this.numLocY.HeaderText = "编号Y坐标";
             this.numLocY.Name = "numLocY";
             // 
+            // lbLoc
+            // 
+            this.lbLoc.AutoSize = true;
+            this.lbLoc.Location = new System.Drawing.Point(136, 135);
+            this.lbLoc.Name = "lbLoc";
+            this.lbLoc.Size = new System.Drawing.Size(37, 15);
+            this.lbLoc.TabIndex = 6;
+            this.lbLoc.Text = "坐标";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(40, 38);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(47, 15);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "(0,0)";
+            // 
+            // rbChips
+            // 
+            this.rbChips.AutoSize = true;
+            this.rbChips.Location = new System.Drawing.Point(336, 59);
+            this.rbChips.Name = "rbChips";
+            this.rbChips.Size = new System.Drawing.Size(58, 19);
+            this.rbChips.TabIndex = 2;
+            this.rbChips.Text = "芯片";
+            this.rbChips.UseVisualStyleBackColor = true;
+            // 
+            // rbComponent
+            // 
+            this.rbComponent.AutoSize = true;
+            this.rbComponent.Checked = true;
+            this.rbComponent.Location = new System.Drawing.Point(228, 59);
+            this.rbComponent.Name = "rbComponent";
+            this.rbComponent.Size = new System.Drawing.Size(73, 19);
+            this.rbComponent.TabIndex = 1;
+            this.rbComponent.TabStop = true;
+            this.rbComponent.Text = "元器件";
+            this.rbComponent.UseVisualStyleBackColor = true;
+            // 
             // FormNewComponent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(527, 526);
+            this.ClientSize = new System.Drawing.Size(851, 526);
             this.Controls.Add(this.rbComponent);
             this.Controls.Add(this.rbChips);
             this.Controls.Add(this.label4);
@@ -291,6 +291,8 @@
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.picBoxImg);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(869, 571);
+            this.MinimumSize = new System.Drawing.Size(869, 571);
             this.Name = "FormNewComponent";
             this.Text = "新增元器件";
             this.Load += new System.EventHandler(this.FormNewComponent_Load);
