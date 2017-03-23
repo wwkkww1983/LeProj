@@ -82,12 +82,19 @@ namespace PcVedio
             this.timerAlive.Enabled = false;
             //cmd.CloseWifi();
         }
-
+        int falseCount;
         private void timerPlay_Tick(object sender, EventArgs e)
         {
             if (InitialFlag && this.active)
             {
                 buffNew = cmd.PlayVideo(buffVedio, ref NewFlag);
+                //if (NewFlag)
+                //{
+                //    Console.WriteLine(falseCount);
+                //    falseCount = 0;
+                //}
+                //else
+                //    falseCount++;
 
                 if (NewFlag)
                 {
@@ -250,7 +257,7 @@ namespace PcVedio
                 tmpImgPath = currentFolder + "\\" + videoPath;
             string ffmpegPath = string.Format("{0}\\x{1}\\ffmpeg.exe", currentFolder,OperateSystem.Is64Bits?"64":"86");
             ProcessStartInfo startInfo = new ProcessStartInfo(ffmpegPath);
-            startInfo.WindowStyle = ProcessWindowStyle.Normal;
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             string outFilePath = tmpImgPath + "\\" + videoName;
             startInfo.Arguments = string.Format("-i {0}{1}%4d.jpg -vcodec libx264 {2}", tmpImgPath, VideoTmpFolder, outFilePath);
             p.StartInfo = startInfo;
