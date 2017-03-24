@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Collections.Generic;
 
 namespace CamInter
 {
@@ -11,6 +12,11 @@ namespace CamInter
         /// <param name="dr"></param>
         /// <returns></returns>
         ValueType DecodeOneItemByDb(DataRow dr);
+        /// <summary>
+        /// 获取所有信息列表
+        /// </summary>
+        /// <returns></returns>
+        List<ValueType> GetAllData();
         /// <summary>
         /// 表结构
         /// </summary>

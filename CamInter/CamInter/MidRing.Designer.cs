@@ -28,137 +28,221 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tbInterB = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
+            this.lbInterB = new System.Windows.Forms.Label();
             this.tbInRadius = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lbLenRange = new System.Windows.Forms.Label();
             this.tbLength = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.tbInterA = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lbLength = new System.Windows.Forms.Label();
+            this.lbInterA = new System.Windows.Forms.Label();
+            this.lbWeight = new System.Windows.Forms.Label();
             this.tbWeight = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.lbName = new System.Windows.Forms.Label();
+            this.tbName = new System.Windows.Forms.TextBox();
+            this.lbNumber = new System.Windows.Forms.Label();
+            this.tbNumber = new System.Windows.Forms.TextBox();
+            this.lbInner = new System.Windows.Forms.Label();
+            this.tbLenMin = new System.Windows.Forms.TextBox();
+            this.tbLenMax = new System.Windows.Forms.TextBox();
+            this.lbRangeInter = new System.Windows.Forms.Label();
+            this.cbInterA = new System.Windows.Forms.ComboBox();
+            this.cbInterB = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
-            // tbInterB
+            // lbInterB
             // 
-            this.tbInterB.Location = new System.Drawing.Point(303, 37);
-            this.tbInterB.Name = "tbInterB";
-            this.tbInterB.Size = new System.Drawing.Size(100, 25);
-            this.tbInterB.TabIndex = 2;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(244, 40);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(53, 15);
-            this.label7.TabIndex = 7;
-            this.label7.Text = "接口 B";
+            this.lbInterB.AutoSize = true;
+            this.lbInterB.Location = new System.Drawing.Point(221, 71);
+            this.lbInterB.Name = "lbInterB";
+            this.lbInterB.Size = new System.Drawing.Size(69, 15);
+            this.lbInterB.TabIndex = 7;
+            this.lbInterB.Text = "接口 B *";
             // 
             // tbInRadius
             // 
-            this.tbInRadius.Location = new System.Drawing.Point(303, 66);
+            this.tbInRadius.Location = new System.Drawing.Point(296, 153);
             this.tbInRadius.Name = "tbInRadius";
             this.tbInRadius.Size = new System.Drawing.Size(100, 25);
-            this.tbInRadius.TabIndex = 4;
+            this.tbInRadius.TabIndex = 9;
             // 
-            // label3
+            // lbLenRange
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(260, 71);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(37, 15);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "内径";
+            this.lbLenRange.AutoSize = true;
+            this.lbLenRange.Location = new System.Drawing.Point(223, 114);
+            this.lbLenRange.Name = "lbLenRange";
+            this.lbLenRange.Size = new System.Drawing.Size(67, 15);
+            this.lbLenRange.TabIndex = 8;
+            this.lbLenRange.Text = "长度范围";
             // 
             // tbLength
             // 
-            this.tbLength.Location = new System.Drawing.Point(85, 66);
+            this.tbLength.Location = new System.Drawing.Point(104, 109);
             this.tbLength.Name = "tbLength";
             this.tbLength.Size = new System.Drawing.Size(100, 25);
-            this.tbLength.TabIndex = 3;
+            this.tbLength.TabIndex = 5;
             // 
-            // label2
+            // lbLength
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(42, 71);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(37, 15);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "长度";
+            this.lbLength.AutoSize = true;
+            this.lbLength.Location = new System.Drawing.Point(13, 114);
+            this.lbLength.Name = "lbLength";
+            this.lbLength.Size = new System.Drawing.Size(85, 15);
+            this.lbLength.TabIndex = 9;
+            this.lbLength.Text = "长度(mm) *";
             // 
-            // tbInterA
+            // lbInterA
             // 
-            this.tbInterA.Location = new System.Drawing.Point(85, 35);
-            this.tbInterA.Name = "tbInterA";
-            this.tbInterA.Size = new System.Drawing.Size(100, 25);
-            this.tbInterA.TabIndex = 1;
+            this.lbInterA.AutoSize = true;
+            this.lbInterA.Location = new System.Drawing.Point(29, 71);
+            this.lbInterA.Name = "lbInterA";
+            this.lbInterA.Size = new System.Drawing.Size(69, 15);
+            this.lbInterA.TabIndex = 10;
+            this.lbInterA.Text = "接口 A *";
             // 
-            // label1
+            // lbWeight
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 40);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 15);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "接口 A";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(42, 102);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(37, 15);
-            this.label4.TabIndex = 9;
-            this.label4.Text = "重量";
+            this.lbWeight.AutoSize = true;
+            this.lbWeight.Location = new System.Drawing.Point(61, 158);
+            this.lbWeight.Name = "lbWeight";
+            this.lbWeight.Size = new System.Drawing.Size(37, 15);
+            this.lbWeight.TabIndex = 9;
+            this.lbWeight.Text = "重量";
             // 
             // tbWeight
             // 
-            this.tbWeight.Location = new System.Drawing.Point(85, 97);
+            this.tbWeight.Location = new System.Drawing.Point(104, 153);
             this.tbWeight.Name = "tbWeight";
             this.tbWeight.Size = new System.Drawing.Size(100, 25);
-            this.tbWeight.TabIndex = 5;
+            this.tbWeight.TabIndex = 8;
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(119, 151);
+            this.btnSave.Location = new System.Drawing.Point(146, 216);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 6;
+            this.btnSave.TabIndex = 10;
             this.btnSave.Text = "保存";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(247, 151);
+            this.btnCancel.Location = new System.Drawing.Point(240, 216);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 7;
+            this.btnCancel.TabIndex = 11;
             this.btnCancel.Text = "取消";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // lbName
+            // 
+            this.lbName.AutoSize = true;
+            this.lbName.Location = new System.Drawing.Point(45, 28);
+            this.lbName.Name = "lbName";
+            this.lbName.Size = new System.Drawing.Size(53, 15);
+            this.lbName.TabIndex = 10;
+            this.lbName.Text = "名称 *";
+            // 
+            // tbName
+            // 
+            this.tbName.Location = new System.Drawing.Point(104, 23);
+            this.tbName.Name = "tbName";
+            this.tbName.Size = new System.Drawing.Size(100, 25);
+            this.tbName.TabIndex = 1;
+            // 
+            // lbNumber
+            // 
+            this.lbNumber.AutoSize = true;
+            this.lbNumber.Location = new System.Drawing.Point(237, 28);
+            this.lbNumber.Name = "lbNumber";
+            this.lbNumber.Size = new System.Drawing.Size(53, 15);
+            this.lbNumber.TabIndex = 7;
+            this.lbNumber.Text = "货号 *";
+            // 
+            // tbNumber
+            // 
+            this.tbNumber.Location = new System.Drawing.Point(296, 23);
+            this.tbNumber.Name = "tbNumber";
+            this.tbNumber.Size = new System.Drawing.Size(100, 25);
+            this.tbNumber.TabIndex = 2;
+            // 
+            // lbInner
+            // 
+            this.lbInner.AutoSize = true;
+            this.lbInner.Location = new System.Drawing.Point(253, 158);
+            this.lbInner.Name = "lbInner";
+            this.lbInner.Size = new System.Drawing.Size(37, 15);
+            this.lbInner.TabIndex = 8;
+            this.lbInner.Text = "内径";
+            // 
+            // tbLenMin
+            // 
+            this.tbLenMin.Location = new System.Drawing.Point(296, 109);
+            this.tbLenMin.Name = "tbLenMin";
+            this.tbLenMin.Size = new System.Drawing.Size(37, 25);
+            this.tbLenMin.TabIndex = 6;
+            // 
+            // tbLenMax
+            // 
+            this.tbLenMax.Location = new System.Drawing.Point(360, 109);
+            this.tbLenMax.Name = "tbLenMax";
+            this.tbLenMax.Size = new System.Drawing.Size(37, 25);
+            this.tbLenMax.TabIndex = 7;
+            // 
+            // lbRangeInter
+            // 
+            this.lbRangeInter.AutoSize = true;
+            this.lbRangeInter.Location = new System.Drawing.Point(339, 114);
+            this.lbRangeInter.Name = "lbRangeInter";
+            this.lbRangeInter.Size = new System.Drawing.Size(15, 15);
+            this.lbRangeInter.TabIndex = 8;
+            this.lbRangeInter.Text = "-";
+            // 
+            // cbInterA
+            // 
+            this.cbInterA.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbInterA.FormattingEnabled = true;
+            this.cbInterA.Location = new System.Drawing.Point(104, 67);
+            this.cbInterA.Name = "cbInterA";
+            this.cbInterA.Size = new System.Drawing.Size(100, 23);
+            this.cbInterA.TabIndex = 12;
+            // 
+            // cbInterB
+            // 
+            this.cbInterB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbInterB.FormattingEnabled = true;
+            this.cbInterB.Location = new System.Drawing.Point(296, 67);
+            this.cbInterB.Name = "cbInterB";
+            this.cbInterB.Size = new System.Drawing.Size(100, 23);
+            this.cbInterB.TabIndex = 12;
             // 
             // MidRing
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(428, 204);
+            this.ClientSize = new System.Drawing.Size(428, 259);
+            this.Controls.Add(this.cbInterB);
+            this.Controls.Add(this.cbInterA);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.tbInterB);
-            this.Controls.Add(this.label7);
+            this.Controls.Add(this.tbNumber);
+            this.Controls.Add(this.lbNumber);
+            this.Controls.Add(this.lbInterB);
+            this.Controls.Add(this.tbLenMax);
+            this.Controls.Add(this.tbLenMin);
+            this.Controls.Add(this.lbRangeInter);
+            this.Controls.Add(this.lbInner);
             this.Controls.Add(this.tbInRadius);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.lbLenRange);
             this.Controls.Add(this.tbWeight);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.lbWeight);
             this.Controls.Add(this.tbLength);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.tbInterA);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.tbName);
+            this.Controls.Add(this.lbLength);
+            this.Controls.Add(this.lbName);
+            this.Controls.Add(this.lbInterA);
             this.Name = "MidRing";
             this.Text = "MidRing";
             this.Load += new System.EventHandler(this.MidRing_Load);
@@ -169,17 +253,25 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox tbInterB;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lbInterB;
         private System.Windows.Forms.TextBox tbInRadius;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lbLenRange;
         private System.Windows.Forms.TextBox tbLength;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tbInterA;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lbLength;
+        private System.Windows.Forms.Label lbInterA;
+        private System.Windows.Forms.Label lbWeight;
         private System.Windows.Forms.TextBox tbWeight;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Label lbName;
+        private System.Windows.Forms.TextBox tbName;
+        private System.Windows.Forms.Label lbNumber;
+        private System.Windows.Forms.TextBox tbNumber;
+        private System.Windows.Forms.Label lbInner;
+        private System.Windows.Forms.TextBox tbLenMin;
+        private System.Windows.Forms.TextBox tbLenMax;
+        private System.Windows.Forms.Label lbRangeInter;
+        private System.Windows.Forms.ComboBox cbInterA;
+        private System.Windows.Forms.ComboBox cbInterB;
     }
 }

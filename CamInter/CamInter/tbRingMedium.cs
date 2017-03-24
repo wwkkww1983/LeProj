@@ -36,31 +36,44 @@ namespace CamInter
         {
             return @"create table ringMedium (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        name nvarchar(100),
+                        number nvarchar(100),
                         ringType int,
                         interUp int,
                         interDown int,
                         innerDiameter int,
                         weight int,
-                        lengthMin int,
-                        lengthMax int);";
+                        length float,
+                        lengthMin float,
+                        lengthMax float);";
         }
 
         public bool InsertOneItem(ValueType item)
         {
             RingMedium info = (RingMedium)item;
 
-            string strSql = "insert into camLens (ringType,interUp,interDown,innerDiameter,weight,lengthMin,lengthMax) values (@ringType,@interUp,@interDown,@innerDiameter,@weight,@lengthMin,@lengthMax)";
+            string strSql = "insert into ringMedium (name,number,ringType,interUp,interDown,innerDiameter,weight,length,lengthMin,lengthMax) values (@name,@number,@ringType,@interUp,@interDown,@innerDiameter,@weight,@length,@lengthMin,@lengthMax)";
             List<SQLiteParameter> paraList = new List<SQLiteParameter>();
+            paraList.Add(SQLiteHelper.CreateParameter("@name", DbType.String, info.InterUp));
+            paraList.Add(SQLiteHelper.CreateParameter("@number", DbType.String, info.InterUp));
             paraList.Add(SQLiteHelper.CreateParameter("@ringType", DbType.Int32, (int)info.RingType));
             paraList.Add(SQLiteHelper.CreateParameter("@interUp", DbType.Int32, info.InterUp));
             paraList.Add(SQLiteHelper.CreateParameter("@interDown", DbType.Int32, info.InterDown));
             paraList.Add(SQLiteHelper.CreateParameter("@innerDiameter", DbType.Int32, info.InnerDiameter));
             paraList.Add(SQLiteHelper.CreateParameter("@weight", DbType.Int32, info.Weight));
-            paraList.Add(SQLiteHelper.CreateParameter("@lengthMin", DbType.Int32, info.LengthMin));
-            paraList.Add(SQLiteHelper.CreateParameter("@lengthMax", DbType.Int32, info.LengthMax));
+            paraList.Add(SQLiteHelper.CreateParameter("@length", DbType.Decimal, info.Length));
+            paraList.Add(SQLiteHelper.CreateParameter("@lengthMin", DbType.Decimal, info.LengthMin));
+            paraList.Add(SQLiteHelper.CreateParameter("@lengthMax", DbType.Decimal, info.LengthMax));
 
             SQLiteCommand command = SQLiteHelper.CreateCommand(this.STR_CONNECTION, strSql, paraList.ToArray());
             return SQLiteHelper.ExecuteNonQuery(command) > 0;
+        }
+
+        public List<ValueType> GetAllData()
+        {
+            string strSql = "select * from ringMedium";
+            DataSet dsConnector = SQLiteHelper.ExecuteDataSet(STR_CONNECTION, strSql, null);
+            return new Coder().DecodeListByDb(dsConnector.Tables[0], this);
         }
     }
 
@@ -71,6 +84,14 @@ namespace CamInter
     public struct RingMedium
     {
         public int Idx;
+        /// <summary>
+        /// 名称
+        /// </summary>
+        public string Name;
+        /// <summary>
+        /// 货号
+        /// </summary>
+        public string Number;
         /// <summary>
         /// 中间环类型
         /// </summary>
@@ -92,12 +113,16 @@ namespace CamInter
         /// </summary>
         public int Weight;
         /// <summary>
+        /// 长度（中间值）mm
+        /// </summary>
+        public float Length;
+        /// <summary>
         /// 延长范围（最小值）
         /// </summary>
-        public int LengthMin;
+        public float LengthMin;
         /// <summary>
         /// 延长范围（最大值）
         /// </summary>
-        public int LengthMax;
+        public float LengthMax;
     }
 }

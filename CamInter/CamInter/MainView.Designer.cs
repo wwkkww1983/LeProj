@@ -29,8 +29,12 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.tbLength = new System.Windows.Forms.TextBox();
             this.tbPixelSize = new System.Windows.Forms.TextBox();
+            this.tbWidth = new System.Windows.Forms.TextBox();
+            this.tbDistanRange = new System.Windows.Forms.TextBox();
             this.tbDistance = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.rbShort = new System.Windows.Forms.RadioButton();
@@ -53,10 +57,7 @@
             this.FocusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AdapterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExtendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label8 = new System.Windows.Forms.Label();
-            this.tbDistanRange = new System.Windows.Forms.TextBox();
-            this.tbWidth = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
+            this.connToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -87,6 +88,24 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "查询条件";
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(208, 440);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(22, 15);
+            this.label9.TabIndex = 15;
+            this.label9.Text = "×";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(208, 334);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(22, 15);
+            this.label8.TabIndex = 15;
+            this.label8.Text = "±";
+            // 
             // tbLength
             // 
             this.tbLength.Location = new System.Drawing.Point(139, 435);
@@ -100,6 +119,20 @@
             this.tbPixelSize.Name = "tbPixelSize";
             this.tbPixelSize.Size = new System.Drawing.Size(147, 25);
             this.tbPixelSize.TabIndex = 13;
+            // 
+            // tbWidth
+            // 
+            this.tbWidth.Location = new System.Drawing.Point(236, 435);
+            this.tbWidth.Name = "tbWidth";
+            this.tbWidth.Size = new System.Drawing.Size(50, 25);
+            this.tbWidth.TabIndex = 12;
+            // 
+            // tbDistanRange
+            // 
+            this.tbDistanRange.Location = new System.Drawing.Point(236, 329);
+            this.tbDistanRange.Name = "tbDistanRange";
+            this.tbDistanRange.Size = new System.Drawing.Size(50, 25);
+            this.tbDistanRange.TabIndex = 12;
             // 
             // tbDistance
             // 
@@ -236,6 +269,7 @@
             this.cbCamInter.Name = "cbCamInter";
             this.cbCamInter.Size = new System.Drawing.Size(147, 23);
             this.cbCamInter.TabIndex = 0;
+            this.cbCamInter.SelectedIndexChanged += new System.EventHandler(this.cbCamInter_SelectedIndexChanged);
             // 
             // dataGridView1
             // 
@@ -262,10 +296,11 @@
             this.CamLensToolStripMenuItem,
             this.FocusToolStripMenuItem,
             this.AdapterToolStripMenuItem,
-            this.ExtendToolStripMenuItem});
+            this.ExtendToolStripMenuItem,
+            this.connToolStripMenuItem});
             this.录入ToolStripMenuItem.Name = "录入ToolStripMenuItem";
             this.录入ToolStripMenuItem.Size = new System.Drawing.Size(51, 24);
-            this.录入ToolStripMenuItem.Text = "录入";
+            this.录入ToolStripMenuItem.Text = "新增";
             // 
             // CamLensToolStripMenuItem
             // 
@@ -295,37 +330,12 @@
             this.ExtendToolStripMenuItem.Text = "延长环";
             this.ExtendToolStripMenuItem.Click += new System.EventHandler(this.ExtendToolStripMenuItem_Click);
             // 
-            // label8
+            // connToolStripMenuItem
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(208, 334);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(22, 15);
-            this.label8.TabIndex = 15;
-            this.label8.Text = "±";
-            // 
-            // tbDistanRange
-            // 
-            this.tbDistanRange.Location = new System.Drawing.Point(236, 329);
-            this.tbDistanRange.Name = "tbDistanRange";
-            this.tbDistanRange.Size = new System.Drawing.Size(50, 25);
-            this.tbDistanRange.TabIndex = 12;
-            // 
-            // tbWidth
-            // 
-            this.tbWidth.Location = new System.Drawing.Point(236, 435);
-            this.tbWidth.Name = "tbWidth";
-            this.tbWidth.Size = new System.Drawing.Size(50, 25);
-            this.tbWidth.TabIndex = 12;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(208, 440);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(22, 15);
-            this.label9.TabIndex = 15;
-            this.label9.Text = "×";
+            this.connToolStripMenuItem.Name = "connToolStripMenuItem";
+            this.connToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.connToolStripMenuItem.Text = "接口";
+            this.connToolStripMenuItem.Click += new System.EventHandler(this.connToolStripMenuItem_Click);
             // 
             // MainView
             // 
@@ -381,6 +391,7 @@
         private System.Windows.Forms.TextBox tbDistanRange;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox tbWidth;
+        private System.Windows.Forms.ToolStripMenuItem connToolStripMenuItem;
     }
 }
 

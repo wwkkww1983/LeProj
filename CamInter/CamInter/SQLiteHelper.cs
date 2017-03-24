@@ -15,13 +15,21 @@ namespace CamInter
     class SQLiteHelper
     {
         private static bool HasPwdFlag = false;
-        private static string Password = "vejoe2017";
+        private static string Password = "suoxd123";
 
         public static bool SetPassWordFlag
         {
             set
             {
                 HasPwdFlag = value;
+            }
+        }
+
+        public static string SetSignature
+        {
+            set
+            {
+                Password = value; ;
             }
         }
 
@@ -397,10 +405,13 @@ namespace CamInter
         /// </summary>
         /// <param name="cmd">CMD.</param>
         /// <returns></returns>
-        public static int ExecuteNonQuery(IDbCommand cmd)
+        public static int ExecuteNonQuery(SQLiteCommand cmd)
         {
             if (cmd.Connection.State == ConnectionState.Closed)
+            {
+                if (HasPwdFlag) cmd.Connection.SetPassword(Password);
                 cmd.Connection.Open();
+            }
 
             int result = cmd.ExecuteNonQuery();
             cmd.Connection.Close();
@@ -587,7 +598,7 @@ namespace CamInter
         /// <param name="command">Command.</param>
         /// <param name="dataRow">Data row.</param>
         /// <returns>Integer result code</returns>
-        public static int ExecuteNonQueryTypedParams(IDbCommand command, DataRow dataRow)
+        public static int ExecuteNonQueryTypedParams(SQLiteCommand command, DataRow dataRow)
         {
             int retVal = 0;
 

@@ -29,8 +29,12 @@ namespace CamInter
         /// <summary>
         /// 延长环
         /// </summary>
-        Extend
+        Extend,
 
+        /// <summary>
+        /// 接口
+        /// </summary>
+        Interface
     }
 
     /// <summary>
@@ -57,6 +61,11 @@ namespace CamInter
         /// 延长环
         /// </summary>
         public const string EXTEND = "延长环";
+
+        /// <summary>
+        /// 延长环
+        /// </summary>
+        public const string INTERFACE = "接口";
 
     }
 }

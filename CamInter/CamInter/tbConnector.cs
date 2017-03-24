@@ -35,6 +35,13 @@ namespace CamInter
                         desc varchar(100));";
         }
 
+        public List<ValueType> GetAllData()
+        {
+            string strSql = "select * from connectors";
+            DataSet dsConnector = SQLiteHelper.ExecuteDataSet(STR_CONNECTION, strSql, null);
+            return new Coder().DecodeListByDb(dsConnector.Tables[0], this);
+        }
+
         public bool InsertOneItem(ValueType item)
         {
             Connectors info = (Connectors)item;

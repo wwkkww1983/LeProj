@@ -66,6 +66,12 @@ namespace CamInter
             SQLiteCommand command = SQLiteHelper.CreateCommand(this.STR_CONNECTION, strSql, paraList.ToArray());
             return SQLiteHelper.ExecuteNonQuery(command) > 0;
         }
+        public List<ValueType> GetAllData()
+        {
+            string strSql = "select * from camLens";
+            DataSet dsConnector = SQLiteHelper.ExecuteDataSet(STR_CONNECTION, strSql, null);
+            return new Coder().DecodeListByDb(dsConnector.Tables[0], this);
+        }
     }
 
 
@@ -76,21 +82,45 @@ namespace CamInter
     {
         public int Idx;
         /// <summary>
-        /// 长度
+        /// 名称
         /// </summary>
-        public int Length;
+        public string Name;
         /// <summary>
-        /// 焦距
+        /// 货号
         /// </summary>
-        public int FocusLength;
+        public string Number;
         /// <summary>
-        /// 后焦距
+        /// 相机Sensor
         /// </summary>
-        public int FocusLengthBak;
+        public int Sensor;
+        /// <summary>
+        /// 视野
+        /// </summary>
+        public int Fov;
         /// <summary>
         /// 接口
         /// </summary>
         public int Connector;
+        /// <summary>
+        /// 焦距
+        /// </summary>
+        public float Focus;
+        /// <summary>
+        /// 相机法兰距（后焦距）
+        /// </summary>
+        public int Flange;
+        /// <summary>
+        /// 最小放大倍率
+        /// </summary>
+        public float RatioMin;
+        /// <summary>
+        /// 最大放大倍率
+        /// </summary>
+        public float RatioMax;
+        /// <summary>
+        /// 最大靶面
+        /// </summary>
+        public int Target;
         /// <summary>
         /// 重量
         /// </summary>
@@ -100,12 +130,12 @@ namespace CamInter
         /// </summary>
         public int Contrast;
         /// <summary>
-        /// 靶面
-        /// </summary>
-        public int TargetSurface;
-        /// <summary>
         /// 畸变量
         /// </summary>
         public int Distort;
+        /// <summary>
+        /// 放大倍率
+        /// </summary>
+        public float Ratio;
     }
 }
