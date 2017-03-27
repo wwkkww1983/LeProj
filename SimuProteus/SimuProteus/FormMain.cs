@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-
 using System.Runtime.InteropServices;
+using Sunisoft.IrisSkin;
 
 namespace SimuProteus
 {
@@ -34,11 +34,13 @@ namespace SimuProteus
         private Point clickPositionForLine;
         private Size defaultWorkPlaceSize = new Size(798, 645);
         private SerialCom serial = new SerialCom();
-        DBUtility dbHandler = new DBUtility(true);
-        List<Point> newLinePoints = new List<Point>();
-        List<ElementInfo> elementList = null;
-        List<ElementLine> createLinePoint = new List<ElementLine>(2);
-        FormNewComponent formComp;
+        private DBUtility dbHandler = new DBUtility(true);
+        private List<Point> newLinePoints = new List<Point>();
+        private List<ElementInfo> elementList = null;
+        private List<ElementLine> createLinePoint = new List<ElementLine>(2);
+        private SkinEngine skin = null;
+        private FormNewComponent formComp;
+
         ProjectDetails currentBoardInfo = new ProjectDetails()
         {
             Project = new ProjectInfo() { 
@@ -79,6 +81,8 @@ namespace SimuProteus
             this.pnBoard.Size = new Size(boardWidth, boardHeight);
             this.pnBoard.Location = new Point(0, 0);
             this.pnBoard.Parent = this.pnWorkPlace;
+            this.skin = new SkinEngine(this);
+            this.skin.SkinFile = "Wave.ssk";
 
             //this.ucPnLine.Size = this.pnBoard.Size;
             //this.ucPnLine.BackColor = this.pnBoard.BackColor;

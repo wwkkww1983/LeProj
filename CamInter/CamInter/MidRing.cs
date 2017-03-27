@@ -81,7 +81,7 @@ namespace CamInter
                     item.LengthMin = int.Parse(this.tbLenMin.Text);
                     item.LengthMax = int.Parse(this.tbLenMax.Text);
                 }
-                this.handlerAfterSave(this, this.typeName, new DBUtility().InsertItem(item));
+                this.handlerAfterSave(this, this.typeName, dbHandler.InsertItem(item));
             }
         }
 

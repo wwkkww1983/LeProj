@@ -18,7 +18,7 @@ namespace CamInter
         {
             InitializeComponent();
 
-            //dbHandler.InitialTable();
+            dbHandler.InitialTable();
             this.InitialCamInter();
         }
 
@@ -54,7 +54,7 @@ namespace CamInter
         #region 菜单
         private void CamLensToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ViewLens viewShow = new ViewLens();
+            ViewLens viewShow = new ViewLens(this.HanderAfterAddItem);
             viewShow.ShowDialog();
         }
 

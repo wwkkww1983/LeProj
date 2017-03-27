@@ -22,13 +22,19 @@ namespace CamInter
             CameraLens info = new CameraLens();
 
             info.Idx = Convert.ToInt32(dr["id"]);
-            info.Length = Convert.ToInt32(dr["length"]);
-            info.FocusLength = Convert.ToInt32(dr["focusLength"]);
-            info.FocusLengthBak = Convert.ToInt32(dr["focusLengthBak"]);
+            info.Name = dr["name"].ToString ();
+            info.Number = dr["number"].ToString();
+            info.Sensor = Convert.ToInt32(dr["sensor"]);
+            info.Fov = Convert.ToInt32(dr["fov"]);
+            info.Focus = Convert.ToSingle(dr["focus"]);
+            info.Flange = Convert.ToSingle(dr["flange"]);
             info.Connector = Convert.ToInt32(dr["connector"]);
+            info.Ratio = Convert.ToSingle(dr["ratio"]);
+            info.RatioMin = Convert.ToSingle(dr["ratioMin"]);
+            info.RatioMax = Convert.ToSingle(dr["ratioMax"]);
             info.Weight = Convert.ToInt32(dr["weight"]);
             info.Contrast = Convert.ToInt32(dr["contrast"]);
-            info.TargetSurface = Convert.ToInt32(dr["targetSurface"]);
+            info.Target = Convert.ToSingle(dr["target"]);
             info.Distort = Convert.ToInt32(dr["distort"]);
 
             return info;
@@ -38,13 +44,19 @@ namespace CamInter
         {
             return @"create table camLens(
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        length int,
-                        focusLength int,
-                        focusLengthBak int,
+                        name nvarchar(20),
+                        number nvarchar(20),
+                        sensor int,
+                        fov int,
                         connector int,
+                        focus float,
+                        flange float,
+                        ratio float,
+                        ratioMin float,
+                        ratioMax float,
+                        target float,
                         weight int,
                         contrast int,
-                        targetSurface int,
                         distort int);";
         }
 
@@ -52,15 +64,22 @@ namespace CamInter
         {
             CameraLens info = (CameraLens)item;
 
-            string strSql = "insert into camLens (length,focusLength,focusLengthBak,connector,weight,contrast,targetSurface,distort) values (@length,@focusLength,@focusLengthBak,@connector,@weight,@contrast,@targetSurface,@distort)";
+            string strSql = @"insert into camLens (name,number,sensor,fov,connector,focus,flange,ratio,ratioMin,ratioMax,target,weight,contrast,distort) 
+                                   values (@name,@number,@sensor,@fov,@connector,@focus,@flange,@ratio,@ratioMin,@ratioMax,@target,@weight,@contrast,@distort)";
             List<SQLiteParameter> paraList = new List<SQLiteParameter>();
-            paraList.Add(SQLiteHelper.CreateParameter("@length", DbType.Int32, info.Length));
-            paraList.Add(SQLiteHelper.CreateParameter("@focusLength", DbType.Int32, info.FocusLength));
-            paraList.Add(SQLiteHelper.CreateParameter("@focusLengthBak", DbType.Int32, info.FocusLengthBak));
+            paraList.Add(SQLiteHelper.CreateParameter("@name", DbType.String, info.Name));
+            paraList.Add(SQLiteHelper.CreateParameter("@number", DbType.String, info.Number));
+            paraList.Add(SQLiteHelper.CreateParameter("@sensor", DbType.Int32, info.Sensor));
+            paraList.Add(SQLiteHelper.CreateParameter("@fov", DbType.Int32, info.Fov));
             paraList.Add(SQLiteHelper.CreateParameter("@connector", DbType.Int32, info.Connector));
+            paraList.Add(SQLiteHelper.CreateParameter("@focus", DbType.Single, info.Focus));
+            paraList.Add(SQLiteHelper.CreateParameter("@flange", DbType.Single, info.Flange));
+            paraList.Add(SQLiteHelper.CreateParameter("@ratio", DbType.Single, info.Ratio));
+            paraList.Add(SQLiteHelper.CreateParameter("@ratioMin", DbType.Single, info.RatioMin));
+            paraList.Add(SQLiteHelper.CreateParameter("@ratioMax", DbType.Single, info.RatioMax));
+            paraList.Add(SQLiteHelper.CreateParameter("@target", DbType.Single, info.Target));
             paraList.Add(SQLiteHelper.CreateParameter("@weight", DbType.Int32, info.Weight));
             paraList.Add(SQLiteHelper.CreateParameter("@contrast", DbType.Int32, info.Contrast));
-            paraList.Add(SQLiteHelper.CreateParameter("@targetSurface", DbType.Int32, info.TargetSurface));
             paraList.Add(SQLiteHelper.CreateParameter("@distort", DbType.Int32, info.Distort));
 
             SQLiteCommand command = SQLiteHelper.CreateCommand(this.STR_CONNECTION, strSql, paraList.ToArray());
@@ -108,7 +127,7 @@ namespace CamInter
         /// <summary>
         /// 相机法兰距（后焦距）
         /// </summary>
-        public int Flange;
+        public float Flange;
         /// <summary>
         /// 最小放大倍率
         /// </summary>
@@ -120,7 +139,7 @@ namespace CamInter
         /// <summary>
         /// 最大靶面
         /// </summary>
-        public int Target;
+        public float Target;
         /// <summary>
         /// 重量
         /// </summary>

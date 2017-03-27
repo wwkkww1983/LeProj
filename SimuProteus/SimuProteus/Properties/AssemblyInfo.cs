@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("SimuProteus")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyCompany("Vejoe")]
 [assembly: AssemblyProduct("SimuProteus")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2017")]
+[assembly: AssemblyCopyright("深圳维周机器人科技有限公司")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

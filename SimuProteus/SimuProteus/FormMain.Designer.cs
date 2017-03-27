@@ -265,7 +265,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(880, 700);
+            this.ClientSize = new System.Drawing.Size(880, 720);
             this.Controls.Add(this.pnWorkPlace);
             this.Controls.Add(this.pnBoard);
             this.Controls.Add(this.gbComponent);

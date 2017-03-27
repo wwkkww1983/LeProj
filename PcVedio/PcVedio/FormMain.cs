@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
 using Core;
+using Sunisoft.IrisSkin;
 
 namespace PcVedio
 {
@@ -27,6 +28,7 @@ namespace PcVedio
         private string strPhotoSuccess = "拍照成功";
         private byte[] buffVedio = new byte[] { }, buffNew;
         private int rIdx = 1;
+        private SkinEngine skin = null;
         private Command cmd = new Command();
         private Process p = new Process();
         
@@ -41,6 +43,8 @@ namespace PcVedio
             {
                 SetLan(true);
             }
+            this.skin = new SkinEngine(this);
+            this.skin.SkinFile = "Wave.ssk";
         }
 
         private void wifiConnToolStripMenuItem_Click(object sender, EventArgs e)

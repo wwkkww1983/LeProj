@@ -12,7 +12,7 @@ namespace SimuProteus
 {
     public partial class UcComponent : UserControl
     {
-        private const int HEIGHT_ELEMENT = 60;
+        private const int HEIGHT_ELEMENT = 60, MARGIN_UP=10;
         private int index = 0;
         private string componentType = enumComponent.NONE.ToString ();
         private ElementInfo componentInfo = null;
@@ -38,7 +38,7 @@ namespace SimuProteus
             this.BackColor = this.componentInfo.BackColor;
             this.picBox.Image = Image.FromFile(this.componentInfo.BackImage); ;
             this.picBox.SizeMode = PictureBoxSizeMode.Zoom;
-            this.Location = new Point(5, this.index * HEIGHT_ELEMENT);
+            this.Location = new Point(5, this.index * HEIGHT_ELEMENT + MARGIN_UP);
             this.componentType = this.componentInfo.Name;
             if (this.index > 0)
             {

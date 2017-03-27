@@ -192,6 +192,7 @@
             this.tbSensor.Name = "tbSensor";
             this.tbSensor.Size = new System.Drawing.Size(100, 25);
             this.tbSensor.TabIndex = 4;
+            this.tbSensor.TextChanged += new System.EventHandler(this.tbRatioCondition_TextChanged);
             // 
             // lbFov
             // 
@@ -240,6 +241,7 @@
             this.tbFov.Name = "tbFov";
             this.tbFov.Size = new System.Drawing.Size(100, 25);
             this.tbFov.TabIndex = 5;
+            this.tbFov.TextChanged += new System.EventHandler(this.tbRatioCondition_TextChanged);
             // 
             // lbFlange
             // 
@@ -260,11 +262,11 @@
             // lbRatio
             // 
             this.lbRatio.AutoSize = true;
-            this.lbRatio.Location = new System.Drawing.Point(73, 299);
+            this.lbRatio.Location = new System.Drawing.Point(57, 299);
             this.lbRatio.Name = "lbRatio";
-            this.lbRatio.Size = new System.Drawing.Size(67, 15);
+            this.lbRatio.Size = new System.Drawing.Size(83, 15);
             this.lbRatio.TabIndex = 0;
-            this.lbRatio.Text = "放大倍率";
+            this.lbRatio.Text = "放大倍率 *";
             // 
             // tbRatio
             // 
