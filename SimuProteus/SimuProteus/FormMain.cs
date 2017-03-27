@@ -623,11 +623,11 @@ namespace SimuProteus
             for (int i = 0; i < this.pnBoard.Controls.Count; i++)
             {
                 Control item = this.pnBoard.Controls[i];
-                if (item.GetType() == typeof(UcLine))
+                if (item.GetType() == typeof(UcLine)  && (item as UcLine).Selected)
                 {
                     (item as UcLine).RemoveSelectedBulk();
                 }
-                else if (item.GetType() == typeof(UcElement))
+                else if (item.GetType() == typeof(UcElement) && (item as UcElement).Selected)
                 {
                     (item as UcElement).RemoveSelectedBulk();
                 }
