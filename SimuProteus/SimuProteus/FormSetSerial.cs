@@ -54,6 +54,13 @@ namespace SimuProteus
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
+            if (this.serial.IsOpen)
+            {
+                MessageBox.Show("串口已经打开");
+                this.Close();
+                return;
+            }
+
             this.serial.PortName = this.serialInfo.PortName;
             this.serial.BaudRate = this.serialInfo.BaudRate;
             this.serial.Parity = (Parity)this.serialInfo.Parity;

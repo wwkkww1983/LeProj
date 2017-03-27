@@ -39,7 +39,7 @@ namespace SimuProteus
         private List<ElementInfo> elementList = null;
         private List<ElementLine> createLinePoint = new List<ElementLine>(2);
         private SkinEngine skin = null;
-        private FormNewComponent formComp;
+        private FormNewComponent formComp = null;
 
         ProjectDetails currentBoardInfo = new ProjectDetails()
         {
@@ -1035,8 +1035,8 @@ namespace SimuProteus
                 return;
             }
 
-            Thread threadSerial = new Thread(ListenSerialPort);
-            threadSerial.Start();
+            //Thread threadSerial = new Thread(ListenSerialPort);
+            //threadSerial.Start();
             
             serialReadFlag = true;
         }
@@ -1138,6 +1138,17 @@ namespace SimuProteus
             formSize.ShowDialog();
         }
 
+        private void debugSerialToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //if (!this.serial.IsOpen)
+            //{
+            //    MessageBox.Show("串口未打开");
+            //    return ;
+            //}
+            //FormSerial formSeiral = new FormSerial(this.serial);
+            FormSerial formSeiral = new FormSerial();
+            formSeiral.ShowDialog();
+        }
         #endregion 
 
         #region 右键菜单
@@ -1270,5 +1281,6 @@ namespace SimuProteus
             serial.Write(strSend);
         }
         #endregion
+
     }
 }

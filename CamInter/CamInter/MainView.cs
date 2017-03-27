@@ -13,21 +13,33 @@ namespace CamInter
     public partial class MainView : Form
     {
         #region 实例化
-        DBUtility dbHandler = new DBUtility(true);
+        private bool initialConditionFlag = false;
+        private DBUtility dbHandler = new DBUtility(true);
+        private Algorithm alg = null;
+
         public MainView()
         {
             InitializeComponent();
 
-            dbHandler.InitialTable();
+            //dbHandler.InitialTable();
             this.InitialCamInter();
         }
 
         private void InitialCamInter()
         {
-            this.cbCamInter.DataSource = dbHandler.GetAllConnector();
+            DataTable dt = dbHandler.GetAllConnector();
+            this.cbCamInter.DataSource = dt;
             this.cbCamInter.DisplayMember = "Name";
             this.cbCamInter.ValueMember = "Idx";
             this.cbCamInter.SelectedIndex = -1;
+
+            this.cbLensInter.DataSource = dt.Copy();
+            this.cbLensInter.DisplayMember = "Name";
+            this.cbLensInter.ValueMember = "Idx";
+            this.cbLensInter.SelectedIndex = -1;
+
+            this.initialConditionFlag = true;
+            this.alg = new Algorithm(dbHandler.GetAllDevices(enumProductType.Focus));
         }
 
         #endregion
@@ -84,11 +96,18 @@ namespace CamInter
         #endregion
 
         #region 用户行为
-        private void cbCamInter_SelectedIndexChanged(object sender, EventArgs e)
-        {
 
+
+        private void selectPatchItems(object sender, EventArgs e)
+        {
+            if (!initialConditionFlag || this.tbInterLength.Text.Trim().Equals(string.Empty)) return;
+
+            int lenInter = Convert.ToInt32(this.cbLensInter.SelectedValue);
+            int camInter = Convert.ToInt32(this.cbCamInter.SelectedValue);
+            float interLength = Convert.ToSingle(this.tbInterLength.Text);
         }
 
         #endregion
+
     }
 }

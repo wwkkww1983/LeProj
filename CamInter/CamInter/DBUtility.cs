@@ -75,8 +75,7 @@ namespace CamInter
             dt.Columns.Add(dc);
             dc = new DataColumn("Name");
             dt.Columns.Add(dc);
-            itable handler = this.GetTableHandlerByType(enumProductType.Interface);
-            List<ValueType> list = handler.GetAllData();
+            List<ValueType> list = this.GetAllDevices(enumProductType.Interface);
             foreach (ValueType item in list)
             {                
                 DataRow dr = dt.NewRow();
@@ -85,6 +84,12 @@ namespace CamInter
                 dt.Rows.Add(dr);
             }
             return dt;
+        }
+
+        public List<ValueType> GetAllDevices(enumProductType type)
+        {
+            itable handler = this.GetTableHandlerByType(enumProductType.Focus);
+            return handler.GetAllData();
         }
 
         private List<ValueType> GetDataList(string strSql, itable table)

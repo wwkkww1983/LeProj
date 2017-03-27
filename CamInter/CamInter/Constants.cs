@@ -68,4 +68,40 @@ namespace CamInter
         public const string INTERFACE = "接口";
 
     }
+
+    /// <summary>
+    /// 中间环计算结果
+    /// </summary>
+    public struct RingResult
+    {
+        /// <summary>
+        /// 方案序号
+        /// </summary>
+        string Idx;
+
+        /// <summary>
+        /// 调焦环（最多一个）
+        /// </summary>
+        RingMedium Focus;
+
+        /// <summary>
+        /// 转接环数量
+        /// </summary>
+        int AdapterCount;
+
+        /// <summary>
+        /// 转接环列表
+        /// </summary>
+        List<RingMedium> AdapterList;
+
+        /// <summary>
+        /// 延长环数量
+        /// </summary>
+        int ExtendCount;
+
+        /// <summary>
+        /// 延长环列表
+        /// </summary>
+        List<RingMedium> ExtendList;
+    }
 }

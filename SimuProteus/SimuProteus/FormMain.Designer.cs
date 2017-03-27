@@ -55,6 +55,7 @@
             this.pnWorkPlace = new System.Windows.Forms.Panel();
             this.pnBoard = new System.Windows.Forms.Panel();
             this.lbProjName = new System.Windows.Forms.Label();
+            this.debugSerialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.contextMsPoint.SuspendLayout();
             this.contextMsLine.SuspendLayout();
@@ -92,9 +93,9 @@
             // setToolStripMenuItem
             // 
             this.setToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newComponentToolStripMenuItem,
             this.colorSetToolStripMenuItem,
-            this.sizeSetToolStripMenuItem,
-            this.newComponentToolStripMenuItem});
+            this.sizeSetToolStripMenuItem});
             this.setToolStripMenuItem.Name = "setToolStripMenuItem";
             this.setToolStripMenuItem.Size = new System.Drawing.Size(51, 24);
             this.setToolStripMenuItem.Text = "设置";
@@ -132,6 +133,7 @@
             this.SerialToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.serialStatusToolStripMenuItem,
             this.freeSerialToolStripMenuItem,
+            this.debugSerialToolStripMenuItem,
             this.readToolStripMenuItem,
             this.writeToolStripMenuItem});
             this.SerialToolStripMenuItem.Name = "SerialToolStripMenuItem";
@@ -141,28 +143,28 @@
             // serialStatusToolStripMenuItem
             // 
             this.serialStatusToolStripMenuItem.Name = "serialStatusToolStripMenuItem";
-            this.serialStatusToolStripMenuItem.Size = new System.Drawing.Size(138, 24);
+            this.serialStatusToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.serialStatusToolStripMenuItem.Text = "串口设置";
             this.serialStatusToolStripMenuItem.Click += new System.EventHandler(this.serialStatusToolStripMenuItem_Click);
             // 
             // freeSerialToolStripMenuItem
             // 
             this.freeSerialToolStripMenuItem.Name = "freeSerialToolStripMenuItem";
-            this.freeSerialToolStripMenuItem.Size = new System.Drawing.Size(138, 24);
+            this.freeSerialToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.freeSerialToolStripMenuItem.Text = "释放串口";
             this.freeSerialToolStripMenuItem.Click += new System.EventHandler(this.freeSerialToolStripMenuItem_Click);
             // 
             // readToolStripMenuItem
             // 
             this.readToolStripMenuItem.Name = "readToolStripMenuItem";
-            this.readToolStripMenuItem.Size = new System.Drawing.Size(138, 24);
+            this.readToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.readToolStripMenuItem.Text = "读取";
             this.readToolStripMenuItem.Click += new System.EventHandler(this.readToolStripMenuItem_Click);
             // 
             // writeToolStripMenuItem
             // 
             this.writeToolStripMenuItem.Name = "writeToolStripMenuItem";
-            this.writeToolStripMenuItem.Size = new System.Drawing.Size(138, 24);
+            this.writeToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.writeToolStripMenuItem.Text = "写入";
             this.writeToolStripMenuItem.Click += new System.EventHandler(this.writeToolStripMenuItem_Click);
             // 
@@ -261,6 +263,13 @@
             this.lbProjName.TabIndex = 0;
             this.lbProjName.Text = "未命名";
             // 
+            // debugSerialToolStripMenuItem
+            // 
+            this.debugSerialToolStripMenuItem.Name = "debugSerialToolStripMenuItem";
+            this.debugSerialToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.debugSerialToolStripMenuItem.Text = "串口调试";
+            this.debugSerialToolStripMenuItem.Click += new System.EventHandler(this.debugSerialToolStripMenuItem_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -315,6 +324,7 @@
         private System.Windows.Forms.Panel pnWorkPlace;
         private System.Windows.Forms.ToolStripMenuItem newComponentToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem delLineToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem debugSerialToolStripMenuItem;
     }
 }
 

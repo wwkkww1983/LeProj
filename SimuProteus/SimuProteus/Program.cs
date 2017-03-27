@@ -17,7 +17,7 @@ namespace SimuProteus
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new FormMain());
-            //Application.Run(new FormNewComponent());
+            //Application.Run(new FormSerial());
             
         }
     }
