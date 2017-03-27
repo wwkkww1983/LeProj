@@ -26,18 +26,20 @@ namespace SimuProteus
             //用配置中的连接信息初始化界面展示
             this.cbPorts.Text = this.serialInfo.PortName;
             this.tbDatabits.Text = this.serialInfo.DataBits.ToString ();
-            if(this.serialInfo.Parity > 0) this.rbSingle.Checked = true;
-            else this.rbDouble.Checked = true;
-            this.tbStopbits.Text = this.serialInfo.StopBits.ToString();
+            this.cbParity.SelectedIndex = this.serialInfo.Parity; ;
+            this.cbStopbits.SelectedIndex = this.serialInfo.StopBits;
             this.tbTimeout.Text = this.serialInfo.TimeOut.ToString();
-            for (int i = 0; i < this.cbBaudrate.Items.Count; i++)
-            {
-                if (Convert.ToInt32(this.cbBaudrate.Items[i]) == this.serialInfo.BaudRate)
-                {
-                    this.cbBaudrate.SelectedIndex = i;
-                    break;
-                }
-            }
+            this.cbBaudrate.SelectedIndex = this.serialInfo.BaudRate;
+        }
+
+        private void GetCurrentInfo()
+        {
+            this.serialInfo.PortName = this.cbPorts.Text;
+            this.serialInfo.DataBits = Convert.ToInt32(this.tbDatabits.Text);
+            this.serialInfo.Parity = this.cbParity.SelectedIndex;
+            this.serialInfo.StopBits = this.cbStopbits.SelectedIndex;
+            this.serialInfo.TimeOut = Convert.ToInt32(this.tbTimeout.Text);
+            this.serialInfo.BaudRate = this.cbBaudrate.SelectedIndex;
         }
 
         private void btnFresh_Click(object sender, EventArgs e)
@@ -61,6 +63,7 @@ namespace SimuProteus
                 return;
             }
 
+            this.GetCurrentInfo();
             this.serial.PortName = this.serialInfo.PortName;
             this.serial.BaudRate = this.serialInfo.BaudRate;
             this.serial.Parity = (Parity)this.serialInfo.Parity;
@@ -85,12 +88,7 @@ namespace SimuProteus
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            this.serialInfo.PortName = this.cbPorts.Text;
-            this.serialInfo.DataBits = int.Parse(this.tbDatabits.Text);
-            this.serialInfo.Parity = this.rbDouble.Checked?0:1;
-            this.serialInfo.StopBits = int.Parse(this.tbStopbits.Text);
-            this.serialInfo.TimeOut = int.Parse(this.tbTimeout.Text);
-            this.serialInfo.BaudRate = Convert.ToInt32(this.cbBaudrate.SelectedItem);
+            this.GetCurrentInfo();
 
             if (!dbhandler.UpdateSerialInfo(this.serialInfo))
                 MessageBox.Show("保存失败");

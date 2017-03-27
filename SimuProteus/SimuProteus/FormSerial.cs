@@ -10,17 +10,21 @@ namespace SimuProteus
 {
     public partial class FormSerial : Form
     {
+        #region 初始化
         private const string SEND_LABEL = "==>>", RECE_LABEL = "<<==";
         private SerialCom serial = null;
         SerialInfo serialInfo;
-        //public FormSerial(SerialCom serial)
         public FormSerial()
         {
-            //this.serial = serial;
-
             InitializeComponent();
 
             this.InitialSeiralInfo();
+        }
+
+
+        private void FormSerial_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.CloseSeiral();
         }
 
         private void InitialSeiralInfo()
@@ -30,18 +34,10 @@ namespace SimuProteus
             //用配置中的连接信息初始化界面展示
             this.cbPorts.Text = this.serialInfo.PortName;
             this.tbDatabits.Text = this.serialInfo.DataBits.ToString();
-            if (this.serialInfo.Parity > 0) this.rbSingle.Checked = true;
-            else this.rbDouble.Checked = true;
-            this.tbStopbits.Text = this.serialInfo.StopBits.ToString();
+            this.cbParity.SelectedIndex = this.serialInfo.Parity; ;
+            this.cbStopbits.SelectedIndex = this.serialInfo.StopBits;
             this.tbTimeout.Text = this.serialInfo.TimeOut.ToString();
-            for (int i = 0; i < this.cbBaudrate.Items.Count; i++)
-            {
-                if (Convert.ToInt32(this.cbBaudrate.Items[i]) == this.serialInfo.BaudRate)
-                {
-                    this.cbBaudrate.SelectedIndex = i;
-                    break;
-                }
-            }
+            this.cbBaudrate.SelectedIndex = this.serialInfo.BaudRate;
 
             this.serial = new SerialCom();
             this.DisableSendComponent(true);
@@ -52,15 +48,17 @@ namespace SimuProteus
             this.btnSend.Enabled = !flag;
             this.btnFresh.Enabled = flag;
             this.tbDatabits.Enabled = flag;
-            this.tbStopbits.Enabled = flag;
+            this.cbStopbits.Enabled = flag;
             this.tbTimeout.Enabled = flag;
             this.cbBaudrate.Enabled = flag;
             this.cbPorts.Enabled = flag;
-            this.rbSingle.Enabled = flag;
-            this.rbDouble.Enabled = flag;
+            this.cbParity.Enabled = flag;
             this.btnConnect.Text = flag ? "连接" : "断开";
         }
 
+        #endregion
+
+        #region 窗口事件
         private void btnClearSend_Click(object sender, EventArgs e)
         {
             this.tbSend.Text = string.Empty;
@@ -106,6 +104,87 @@ namespace SimuProteus
             this.rtbHistory.SelectionColor = color;
         }
 
+
+        private void GetCurrentInfo()
+        {
+            this.serialInfo.PortName = this.cbPorts.Text;
+            this.serialInfo.DataBits = Convert.ToInt32(this.tbDatabits.Text);
+            this.serialInfo.Parity = this.cbParity.SelectedIndex;
+            this.serialInfo.StopBits = this.cbStopbits.SelectedIndex;
+            this.serialInfo.TimeOut = Convert.ToInt32(this.tbTimeout.Text);
+            this.serialInfo.BaudRate = this.cbBaudrate.SelectedIndex;
+        }
+
+        private void btnConnect_Click(object sender, EventArgs e)
+        {
+            if (this.btnConnect.Text == "断开")
+            {
+                this.CloseSeiral();
+                this.DisableSendComponent(true);
+                return;
+            }
+
+            this.GetCurrentInfo();
+            this.serial.PortName = this.serialInfo.PortName;
+            this.serial.BaudRate = this.serialInfo.BaudRate;
+            this.serial.Parity = (Parity)this.serialInfo.Parity;
+            this.serial.DataBits = this.serialInfo.DataBits;
+            this.serial.StopBits = (StopBits)this.serialInfo.StopBits;
+            this.serial.TimeOut = this.serialInfo.TimeOut;
+            this.serial.ReceivedBytesThreshold = 1;
+            this.serial.DataReceived += new SerialDataReceivedEventHandler(ReceiveInfo);
+
+            if (!serial.IsOpen)
+            {
+                serial.Open();
+            }
+
+            if (!serial.IsOpen)
+            {
+                MessageBox.Show(string.Format("打开串口{0}失败！", this.serial.PortName));
+                return;
+            }
+
+            this.DisableSendComponent(false);
+        }
+
+        private void btnFresh_Click(object sender, EventArgs e)
+        {
+            cbPorts.Items.Clear();
+            string[] portStringA = System.IO.Ports.SerialPort.GetPortNames();
+            foreach (string portName in portStringA)
+            {
+                cbPorts.Items.Add(portName);
+            }
+
+            btnConnect.Enabled = (cbPorts.Items.Count > 0);
+        }
+
+        private void CloseSeiral()
+        {
+            if (this.serial.IsOpen)
+            {
+                this.serial.Close();
+                this.serial.Dispose();
+            }
+        }
+
+        private void rtbHistory_TextChanged(object sender, EventArgs e)
+        {
+            this.rtbHistory.SelectionStart = this.rtbHistory.Text.Length;
+            this.rtbHistory.SelectionLength = 0;
+            this.rtbHistory.Focus();
+            //this.rtbHistory.ScrollToCaret();
+        }
+
+        #endregion 
+
+        #region 串口消息
+        /// <summary>
+        /// 串口消息
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ReceiveInfo(Object sender, SerialDataReceivedEventArgs e)
         {
             try
@@ -121,6 +200,7 @@ namespace SimuProteus
                 this.SetWordsColor("接收返回消息异常！具体原因：" + ex.Message, false);
             }
         }
+        #endregion
 
         #region 编码解码
         private void CodeContentByAscii(byte[] buff, string content)
@@ -173,71 +253,5 @@ namespace SimuProteus
             return sbTmp.ToString();
         }
         #endregion 
-
-        private void btnConnect_Click(object sender, EventArgs e)
-        {
-            if (this.btnConnect.Text  == "断开")
-            {
-                this.CloseSeiral();
-                this.DisableSendComponent(true);
-                return;
-            }
-
-            this.serial.PortName = this.cbPorts.Text;
-            this.serial.BaudRate = Convert.ToInt32(this.tbDatabits.Text);
-            this.serial.Parity = this.rbSingle.Checked?Parity.Odd:Parity.Even;
-            this.serial.DataBits = Convert.ToInt32(this.tbDatabits.Text);
-            this.serial.StopBits = this.tbStopbits.Text=="1"?StopBits.One: StopBits.Two;
-            this.serial.TimeOut = Convert.ToInt32 (this.tbTimeout.Text);
-            this.serial.ReceivedBytesThreshold = 1;
-            this.serial.DataReceived += new SerialDataReceivedEventHandler(ReceiveInfo);
-
-            if (!serial.IsOpen)
-            {
-                serial.Open();
-            }
-
-            if (!serial.IsOpen)
-            {
-                MessageBox.Show(string.Format("打开串口{0}失败！", this.serial.PortName));
-                return;
-            }
-
-            this.DisableSendComponent(false);
-        }
-
-        private void btnFresh_Click(object sender, EventArgs e)
-        {
-            cbPorts.Items.Clear();
-            string[] portStringA = System.IO.Ports.SerialPort.GetPortNames();
-            foreach (string portName in portStringA)
-            {
-                cbPorts.Items.Add(portName);
-            }
-
-            btnConnect.Enabled = (cbPorts.Items.Count > 0);
-        }
-
-        private void FormSerial_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            this.CloseSeiral();
-        }
-
-        private void CloseSeiral()
-        {
-            if (this.serial.IsOpen)
-            {
-                this.serial.Close();
-                this.serial.Dispose();
-            }
-        }
-
-        private void rtbHistory_TextChanged(object sender, EventArgs e)
-        {
-            this.rtbHistory.SelectionStart = this.rtbHistory.Text.Length;
-            this.rtbHistory.SelectionLength = 0;
-            this.rtbHistory.Focus();
-            //this.rtbHistory.ScrollToCaret();
-        }
     }
 }

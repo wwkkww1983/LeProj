@@ -47,7 +47,7 @@ namespace SimuProteus
             tableList.Add(@"create table serialInfo(
                                portName varchar(10),
                                baudRate int,
-                               parity int,
+                               parity nvarchar(5),
                                databits int,
                                stopbits int,
                                timeOut int);");
@@ -137,7 +137,7 @@ namespace SimuProteus
             this.InsertSerialInfo(new SerialInfo()
             {
                 PortName = "COM1",
-                BaudRate = 9600,
+                BaudRate = 1,
                 DataBits = 8,
                 Parity = 1,
                 StopBits = 1,
