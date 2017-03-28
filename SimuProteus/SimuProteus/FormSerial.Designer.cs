@@ -183,11 +183,11 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(-20, 209);
+            this.label6.Location = new System.Drawing.Point(10, 209);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(113, 15);
+            this.label6.Size = new System.Drawing.Size(83, 15);
             this.label6.TabIndex = 69;
-            this.label6.Text = "超时时间（ms）";
+            this.label6.Text = "超时（ms）";
             // 
             // label5
             // 
@@ -318,6 +318,8 @@
             this.Controls.Add(this.tbSend);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(919, 563);
+            this.MinimumSize = new System.Drawing.Size(919, 543);
             this.Name = "FormSerial";
             this.Text = "串口调试";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormSerial_FormClosed);

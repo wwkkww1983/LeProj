@@ -11,6 +11,7 @@ namespace SimuProteus
     public partial class FormSerial : Form
     {
         #region 初始化
+        private const int BUFFER_SIZE = 1024;
         private const string SEND_LABEL = "==>>", RECE_LABEL = "<<==";
         private SerialCom serial = null;
         SerialInfo serialInfo;
@@ -29,7 +30,8 @@ namespace SimuProteus
 
         private void InitialSeiralInfo()
         {
-            this.serialInfo = new DBUtility(true).GetSerialInfo();
+            this.serialInfo = new DBUtility().GetSerialInfo();
+            this.btnFresh_Click(null, null);
 
             //用配置中的连接信息初始化界面展示
             this.cbPorts.Text = this.serialInfo.PortName;
@@ -73,13 +75,13 @@ namespace SimuProteus
             {
                 buff = new byte[strInfo.Length];
                 this.CodeContentByHex(buff, strInfo);
-                strInfo = this.DecodeByHex(buff);
+                strInfo = this.DecodeByHex(buff, buff.Length);
             }
             else
             {
                 buff = new byte[strInfo.Length * 2];
                 this.CodeContentByAscii(buff, strInfo);
-                strInfo = this.DecodeByAscii(buff);
+                strInfo = this.DecodeByAscii(buff, buff.Length);
             }
 
             this.serial.Write(buff, 0, buff.Length);
@@ -93,8 +95,8 @@ namespace SimuProteus
                 Action<string, bool> delegateChangeCursor = new Action<string, bool>(SetWordsColor);
                 this.Invoke(delegateChangeCursor, new object[] { content, isSend });
                 return;
-            } 
-            Color color =  Color.DarkViolet;
+            }
+            Color color = Color.DarkViolet;
             if (isSend) color = Color.Blue;
             this.rtbHistory.AppendText("\r\n");
             int start = this.rtbHistory.Text.Length;
@@ -177,7 +179,7 @@ namespace SimuProteus
             //this.rtbHistory.ScrollToCaret();
         }
 
-        #endregion 
+        #endregion
 
         #region 串口消息
         /// <summary>
@@ -189,11 +191,18 @@ namespace SimuProteus
         {
             try
             {
-                int len = this.serial.BytesToRead;
-                Byte[] readBuffer = new Byte[len];
-                this.serial.Read(readBuffer, 0, len);
-                string strReci = this.rbHex.Checked ? this.DecodeByHex(readBuffer) : this.DecodeByAscii(readBuffer);
-                this.SetWordsColor(RECE_LABEL + strReci, false);
+                if (this.serial.BytesToRead > 0)
+                {
+                    Byte[] readBuffer = new Byte[BUFFER_SIZE];
+                    int count = this.serial.ReadBuffer(readBuffer, BUFFER_SIZE);
+                    // Console.WriteLine(count);
+                    string strReci = this.rbHex.Checked ? this.DecodeByHex(readBuffer, count) : this.DecodeByAscii(readBuffer, count);
+                    this.SetWordsColor(RECE_LABEL + strReci, false);
+                }
+            }
+            catch (TimeoutException timeEx)
+            {
+                Console.WriteLine("超时");
             }
             catch (Exception ex)
             {
@@ -205,7 +214,7 @@ namespace SimuProteus
         #region 编码解码
         private void CodeContentByAscii(byte[] buff, string content)
         {
-            for (int i = 0; i < content.Length; i ++)
+            for (int i = 0; i < content.Length; i++)
             {
                 buff[i * 2] = (byte)((content[i] & 0X0F0) >> 4);
                 buff[i * 2 + 1] = (byte)((content[i] & 0X0F));
@@ -216,32 +225,32 @@ namespace SimuProteus
         {
             for (int i = 0; i < content.Length; i++)
             {
-                buff[i] = (byte)(content[i] > '9'?content[i] - 'a'+10:content[i] - '0');
+                buff[i] = (byte)(content[i] > '9' ? content[i] - 'a' + 10 : content[i] - '0');
             }
         }
 
-        private string DecodeByAscii(byte[] buff)
+        private string DecodeByAscii(byte[] buff, int count)
         {
             StringBuilder sbTmp = new StringBuilder();
-            for (int i = 0; i+1< buff.Length; i+=2)
+            for (int i = 0; i + 1 < count; i += 2)
             {
                 sbTmp.Append((char)((buff[i] << 4) & 0X0F0 | buff[i + 1] & 0X0F));
             }
-            if (buff.Length % 2 > 0)
+            if (count % 2 > 0)
             {
-                sbTmp.Append((char)buff[buff.Length - 1]);
+                sbTmp.Append((char)buff[count - 1]);
             }
             return sbTmp.ToString();
         }
 
-        private string DecodeByHex(byte[] buff)
+        private string DecodeByHex(byte[] buff, int count)
         {
             StringBuilder sbTmp = new StringBuilder();
-            for (int i = 0; i < buff.Length; i++)
+            for (int i = 0; i < count; i++)
             {
-                sbTmp.Append( (char)(buff[i]> 9 ?buff[i] - 10 + 'A':buff[i] + '0'));
+                sbTmp.Append((char)(buff[i] > 9 ? buff[i] - 10 + 'A' : buff[i] + '0'));
             }
-            if (buff.Length % 2 > 0)
+            if (count % 2 > 0)
             {
                 sbTmp.Append('0');
             }
@@ -252,6 +261,6 @@ namespace SimuProteus
             }
             return sbTmp.ToString();
         }
-        #endregion 
+        #endregion
     }
 }

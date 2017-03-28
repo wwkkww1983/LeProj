@@ -1259,7 +1259,7 @@ namespace SimuProteus
 
                 serial.DiscardInBuffer();
                 serial.DiscardOutBuffer();
-                if (!serial.ReadBuffer(byteRecvive, 5))
+                if (!serial.ReadBufferCount(byteRecvive, 5))
                 {
                     Console.WriteLine("数据标志位失败");
                 }
