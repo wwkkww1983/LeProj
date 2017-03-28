@@ -85,11 +85,6 @@ namespace CamInter
         public RingMedium Focus;
 
         /// <summary>
-        /// 转接环数量
-        /// </summary>
-        public int AdapterCount;
-
-        /// <summary>
         /// 转接环列表
         /// </summary>
         public List<RingMedium> AdapterList;
@@ -97,6 +92,6 @@ namespace CamInter
         /// <summary>
         /// 延长环
         /// </summary>
-        public RingMedium Extend;
+        public List<RingMedium> ExtendList;
     }
 }

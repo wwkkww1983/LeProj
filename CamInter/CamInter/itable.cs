@@ -29,4 +29,10 @@ namespace CamInter
         /// <param name="item"></param>
         bool InsertOneItem(ValueType item);
     }
+
+    public interface iGetComm
+    {
+        int Idx { get; }
+        string Name { get; }
+    }
 }

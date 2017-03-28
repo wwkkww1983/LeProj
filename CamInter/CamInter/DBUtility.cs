@@ -364,12 +364,143 @@ namespace CamInter
             #region 镜头
             this.InsertItem(new CameraLens
             {
+                Name = "Mk-CPN-S 5.6/100",
+                Number = "35142",
+                Focus = 102.34f,
+                Target = 90f,
+                Flange = 95.87f,
+                Connector = 5,
+                Sensor = 28,
+                Fov = 60,
+                Ratio = 0.47f,
+                RatioMin = 0,
+                RatioMax = 1
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Mk-APO-CPN 4.5/90",
+                Number = "1070213",
+                Focus = 91.2f,
+                Target = 90f,
+                Flange = 86.5f,
+                Connector = 5,
+                Sensor = 28,
+                Fov = 60,
+                Ratio = 0.47f,
+                RatioMin = 0,
+                RatioMax = 1
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Makro MSR 5.6/80**",
+                Number = "1070160",
+                Focus = 82.4f,
+                Target = 80f,
+                Flange = 77.6f,
+                Connector = 5,
+                Sensor = 28,
+                Fov = 60,
+                Ratio = 0.47f,
+                RatioMin = 0,
+                RatioMax = 1
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Mk-CPN-S 4.0/80",
+                Number = "14780",
+                Focus = 80.34f,
+                Target = 80f,
+                Flange = 77.5f,
+                Connector = 5,
+                Sensor = 28,
+                Fov = 60,
+                Ratio = 0.47f,
+                RatioMin = 0,
+                RatioMax = 1
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Mk-APO-CPN 4.0/60",
+                Number = "14802",
+                Focus = 59.94f,
+                Target = 60f,
+                Flange = 53.29f,
+                Connector = 5,
+                Sensor = 28,
+                Fov = 60,
+                Ratio = 0.47f,
+                RatioMin = 0,
+                RatioMax = 1
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Mk-CPN-S 2.8/50",
+                Number = "14796",
+                Focus = 50.17f,
+                Target = 43.2f,
+                Flange = 42f,
+                Connector = 5,
+                Sensor = 28,
+                Fov = 60,
+                Ratio = 0.47f,
+                RatioMin = 0,
+                RatioMax = 1
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Mk-APO-CPN 4.0/45",
+                Number = "14783",
+                Focus = 46.53f,
+                Target = 43.2f,
+                Flange = 42.35f,
+                Connector = 5,
+                Sensor = 28,
+                Fov = 60,
+                Ratio = 0.47f,
+                RatioMin = 0,
+                RatioMax = 1
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Mk-APO-CPN 2.8/40",
+                Number = "14798",
+                Focus = 41.52f,
+                Target = 43.2f,
+                Flange = 38.11f,
+                Connector = 5,
+                Sensor = 28,
+                Fov = 60,
+                Ratio = 0.47f,
+                RatioMin = 0,
+                RatioMax = 1
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Mk-CPN 2.8/35",
+                Number = "14792",
+                Focus = 34.98f,
+                Target = 32.5f,
+                Flange = 30.75f,
+                Connector = 5,
+                Sensor = 28,
+                Fov = 60,
+                Ratio = 0.47f,
+                RatioMin = 0,
+                RatioMax = 1
+            });
+            this.InsertItem(new CameraLens
+            {
                 Name = "Mk-CPN 2.8/28",
                 Number = "14794",
-                 Focus = 29.29f,
-                  Connector = 5,
-                   Target = 30f,
-                    Flange=25.13f,
+                Focus = 29.29f,
+                Connector = 5,
+                Target = 30f,
+                Flange = 25.13f,
+                Sensor = 28,
+                Fov = 60,
+                Ratio = 0.47f,
+                RatioMin = 0,
+                RatioMax = 1
             });
             #endregion
         }
@@ -378,19 +509,19 @@ namespace CamInter
         /// 获取当前所有接口
         /// </summary>
         /// <returns></returns>
-        public DataTable GetAllConnector()
+        public DataTable GetDropDownListInfo(enumProductType type)
         {
             DataTable dt = new DataTable();
             DataColumn dc = new DataColumn("Idx");
             dt.Columns.Add(dc);
             dc = new DataColumn("Name");
             dt.Columns.Add(dc);
-            List<ValueType> list = this.GetAllDevices(enumProductType.Interface);
+            List<ValueType> list = this.GetAllDevices(type);
             foreach (ValueType item in list)
-            {                
+            {
                 DataRow dr = dt.NewRow();
-                dr["Idx"] = ((Connectors)item).Idx;
-                dr["Name"] = ((Connectors)item).Name;
+                dr["Idx"] = ((iGetComm)item).Idx;
+                dr["Name"] = ((iGetComm)item).Name;
                 dt.Rows.Add(dr);
             }
             return dt;

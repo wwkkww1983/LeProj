@@ -9,7 +9,8 @@ namespace CamInter
         private List<RingMedium> adapterList = new List<RingMedium>();
         private List<RingMedium> extendList = new List<RingMedium>();
         private List<RingMedium> adapterVisitedList = new List<RingMedium>();
-        private List<RingResult> results = new List<RingResult>();
+        private List<RingMedium> extendVisitedList = new List<RingMedium>();
+        private List<RingResult> results = null;
         public Algorithm(List<ValueType> interList)
         {
             foreach (ValueType item in interList)
@@ -23,15 +24,6 @@ namespace CamInter
                     default: Console.WriteLine("Error Type"); break;
                 }
             }
-        }
-
-        /// <summary>
-        /// 相机基本信息
-        /// </summary>
-        public CameraLens Camera
-        {
-            get;
-            set;
         }
 
         /// <summary>
@@ -51,7 +43,6 @@ namespace CamInter
                 this.findAdpater(item,item.InterDown, camera, length - item.LengthMax, length - item.LengthMin);
             }
 
-            float realLen = length - this.Camera.Flange;
             return results;
         }
 
@@ -118,28 +109,38 @@ namespace CamInter
         /// <param name="inter">接口类型</param>
         /// <param name="minLen">最小长度</param>
         /// <param name="maxLen">最大长度</param>
-        private void FindExtend(RingMedium focus,List<RingMedium> adapter,int inter, float minLen, float maxLen)
+        private void FindExtend(RingMedium focus, List<RingMedium> adapter, int inter, float minLen, float maxLen)
+        {
+            if (maxLen <= 0)
+            {//上一层已经结束
+                this.extendVisitedList.RemoveAt(extendVisitedList.Count - 1);
+            }
+            if (minLen <= 0 && maxLen >=0)
+            {
+                this.CombinationStruct(focus, adapter, extendVisitedList);
+            }
+            foreach (RingMedium item in this.extendList)
+            {
+                if (item.InterUp == inter && item.Length <= maxLen)
+                {
+                    this.extendVisitedList.Add(item);
+                    this.FindExtend(focus, adapter, inter, minLen - item.Length, maxLen - item.Length);
+                }
+            }
+        }
+
+        private void CombinationStruct(RingMedium focus,List<RingMedium> adapter, List<RingMedium> extend)
         {
             List<RingMedium> adapterTmp = new List<RingMedium>(adapter);
+            List<RingMedium> extendTmp = new List<RingMedium>(extend);
             RingResult oneResult = new RingResult()
             {
                 Idx = this.results.Count,
                 Focus = focus,
-                AdapterCount = adapterTmp.Count,
-                AdapterList = adapterTmp
+                AdapterList = adapterTmp,
+                ExtendList = extendTmp
             };
-            if (minLen <= 0)
-            {
-                this.results.Add(oneResult);
-            }
-            foreach (RingMedium item in this.extendList)
-            {
-                if (item.InterUp == inter && item.Length <= maxLen && item.Length >= minLen)
-                {
-                    oneResult.Extend = item;
-                    this.results.Add(oneResult);
-                }
-            }
+            this.results.Add(oneResult);
         }
     }
 }

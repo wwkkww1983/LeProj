@@ -20,14 +20,17 @@ namespace CamInter
         {
             RingMedium info = new RingMedium();
 
-            info.Idx = Convert.ToInt32(dr["lineIdx"]);
+            info.Idx = Convert.ToInt32(dr["id"]);
+            info.Name = dr["name"].ToString();
+            info.Number = dr["number"].ToString();
             info.RingType = (enumProductType)Convert.ToInt32(dr["ringType"]);
             info.InterUp = Convert.ToInt32(dr["interUp"]);
             info.InterDown = Convert.ToInt32(dr["interDown"]);
             info.InnerDiameter = Convert.ToInt32(dr["innerDiameter"]);
             info.Weight = Convert.ToInt32(dr["weight"]);
-            info.LengthMin = Convert.ToInt32(dr["lengthMin"]);
-            info.LengthMax = Convert.ToInt32(dr["lengthMax"]);
+            info.Length = Convert.ToSingle(dr["length"]);
+            info.LengthMin = Convert.ToSingle(dr["lengthMin"]);
+            info.LengthMax = Convert.ToSingle(dr["lengthMax"]);
 
             return info;
         }

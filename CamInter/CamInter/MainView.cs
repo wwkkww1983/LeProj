@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Core;
 
 namespace CamInter
 {
@@ -14,6 +15,7 @@ namespace CamInter
     {
         #region 实例化
         private bool initialConditionFlag = false;
+        private List<ValueType> cameList = null;
         private DBUtility dbHandler = new DBUtility(true);
         private Algorithm alg = null;
 
@@ -27,19 +29,22 @@ namespace CamInter
 
         private void InitialCamInter()
         {
-            DataTable dt = dbHandler.GetAllConnector();
-            this.cbCamInter.DataSource = dt;
+            DataTable dtCam = dbHandler.GetDropDownListInfo(enumProductType.CamLens);
+            this.cbCamInter.DataSource = dtCam;
             this.cbCamInter.DisplayMember = "Name";
             this.cbCamInter.ValueMember = "Idx";
             this.cbCamInter.SelectedIndex = -1;
 
-            this.cbLensInter.DataSource = dt.Copy();
+            DataTable dtLens = dbHandler.GetDropDownListInfo(enumProductType.Interface);
+            this.cbLensInter.DataSource = dtLens;
             this.cbLensInter.DisplayMember = "Name";
             this.cbLensInter.ValueMember = "Idx";
             this.cbLensInter.SelectedIndex = -1;
 
             this.initialConditionFlag = true;
-            this.alg = new Algorithm(dbHandler.GetAllDevices(enumProductType.Focus));
+            List<ValueType> ringList = dbHandler.GetAllDevices(enumProductType.Focus);
+            this.cameList = dbHandler.GetAllDevices(enumProductType.CamLens);
+            this.alg = new Algorithm(ringList);
         }
 
         #endregion
@@ -100,14 +105,50 @@ namespace CamInter
 
         private void selectPatchItems(object sender, EventArgs e)
         {
-            if (!initialConditionFlag || this.tbInterLength.Text.Trim().Equals(string.Empty)) return;
+            if (!this.PreCheckUserDataIsEnough()) return;
 
             int lenInter = Convert.ToInt32(this.cbLensInter.SelectedValue);
-            int camInter = Convert.ToInt32(this.cbCamInter.SelectedValue);
-            float interLength = Convert.ToSingle(this.tbInterLength.Text);
+            int camIdx = Convert.ToInt32(this.cbCamInter.SelectedValue);
+            float sensor = Convert.ToSingle(this.tbSensor.Text);
+            float fov = Convert.ToSingle(this.tbFov.Text);
+            float ratio = sensor / fov;
+            this.lbRatio.Text = ratio.ToString();
+
+            CameraLens cam= this.GetCamInfoById(camIdx);
+            float allLength = cam.Fov * ratio - cam.Flange;
+            List<RingResult> resultList= this.alg.GetDevicesByBaseInfo(lenInter, cam.Connector, allLength);
         }
 
-        #endregion
+        private bool PreCheckUserDataIsEnough()
+        {
+            return initialConditionFlag &&
+                    this.cbLensInter.SelectedIndex > 0 &&
+                    this.cbCamInter.SelectedIndex > 0 &&
+                    !this.tbSensor.Text.Trim().Equals(string.Empty) &&
+                    !this.tbFov.Text.Trim().Equals(string.Empty) &&
+                    StringValidator.IsEmptyOrUnsignedRealNumber(this.tbSensor) &&
+                    StringValidator.IsEmptyOrUnsignedRealNumber(this.tbFov) &&
+                    StringValidator.IsEmptyOrUnsignedRealNumber(this.tbTarget) &&
+                    StringValidator.IsEmptyOrUnsignedRealNumber(this.tbDistance) &&
+                    StringValidator.IsEmptyOrUnsignedRealNumber(this.tbDistanRange) &&
+                    StringValidator.IsEmptyOrUnsignedRealNumber(this.tbLength) &&
+                    StringValidator.IsEmptyOrUnsignedRealNumber(this.tbWidth);
+        }
 
+        private CameraLens GetCamInfoById(int idx)
+        {
+            CameraLens cam=new CameraLens ();
+
+            foreach (ValueType item in cameList)
+            {
+                if (((CameraLens)item).Idx == idx)
+                {
+                    cam = (CameraLens)item;
+                    break;
+                }
+            }
+            return cam;
+        }
+        #endregion
     }
 }

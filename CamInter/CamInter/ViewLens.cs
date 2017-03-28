@@ -26,7 +26,7 @@ namespace CamInter
 
         private void InitialCamInter()
         {
-            this.cbInter.DataSource = dbHandler.GetAllConnector();
+            this.cbInter.DataSource = dbHandler.GetDropDownListInfo(enumProductType.Interface);
             this.cbInter.DisplayMember = "Name";
             this.cbInter.ValueMember = "Idx";
             this.cbInter.SelectedIndex = -1;

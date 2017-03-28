@@ -58,13 +58,21 @@ namespace CamInter
     /// <summary>
     /// 接口
     /// </summary>
-    public struct Connectors
+    public struct Connectors : iGetComm
     {
-        public int Idx;
+        public int Idx
+        {
+            get;
+            set;
+        }
         /// <summary>
         /// 接口名称
         /// </summary>
-        public string Name;
+        public string Name
+        {
+            get;
+            set;
+        }
         /// <summary>
         /// 详细备注
         /// </summary>

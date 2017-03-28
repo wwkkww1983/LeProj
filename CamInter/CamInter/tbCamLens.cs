@@ -97,13 +97,21 @@ namespace CamInter
     /// <summary>
     /// 相机镜头
     /// </summary>
-    public struct CameraLens
+    public struct CameraLens : iGetComm
     {
-        public int Idx;
+        public int Idx
+        {
+            get;
+            set;
+        }
         /// <summary>
         /// 名称
         /// </summary>
-        public string Name;
+        public string Name
+        {
+            get;
+            set;
+        }
         /// <summary>
         /// 货号
         /// </summary>

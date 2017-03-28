@@ -27,7 +27,7 @@ namespace CamInter
 
         private void MidRing_Load(object sender, EventArgs e)
         {
-            DataTable dt = dbHandler.GetAllConnector();
+            DataTable dt = dbHandler.GetDropDownListInfo(enumProductType.Interface);
             this.cbInterA.DataSource = dt;
             this.cbInterA.DisplayMember = "Name";
             this.cbInterA.ValueMember = "Idx";
