@@ -56,12 +56,322 @@ namespace CamInter
 
         private void InitialTableData()
         {
-            this.InsertItem(new Connectors() { Name = "M42" });
-            this.InsertItem(new Connectors() { Name = "M58" });
-            this.InsertItem(new Connectors() { Name = "M72" });
-            this.InsertItem(new Connectors() { Name = "M90" });
-            this.InsertItem(new Connectors() { Name = "V38" });
-            this.InsertItem(new Connectors() { Name = "V70" });
+            #region 接口
+            this.InsertItem(new Connectors() { Name = "M42", Idx=1 });
+            this.InsertItem(new Connectors() { Name = "M58", Idx = 2 });
+            this.InsertItem(new Connectors() { Name = "M72", Idx = 3 });
+            this.InsertItem(new Connectors() { Name = "M90", Idx = 4});
+            this.InsertItem(new Connectors() { Name = "V38", Idx = 5 });
+            this.InsertItem(new Connectors() { Name = "V70", Idx = 6 });
+            this.InsertItem(new Connectors() { Name = "C", Idx = 7 });
+            this.InsertItem(new Connectors() { Name = "F", Idx = 8 });
+            this.InsertItem(new Connectors() { Name = "Basler", Idx = 9 });
+            this.InsertItem(new Connectors() { Name = "M95", Idx = 10 });
+            #endregion
+
+            #region 调焦环
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Focus,
+                Name = "Smart Focus 5",
+                Number = "902002A",
+                Length = 18.3f,
+                LengthMin = 15.8f,
+                LengthMax = 20.8f,
+                InterUp = 5,
+                InterDown = 9
+            });
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Focus,
+                Name = "Smart Focus 7(M72)",
+                Number = "902004A",
+                Length = 23.5f,
+                LengthMin = 20f,
+                LengthMax = 27f,
+                InterUp = 5,
+                InterDown = 3
+            });
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Focus,
+                Name = "Smart Focus 7(M58)",
+                Number = "1054532A",
+                Length = 23.5f,
+                LengthMin = 20f,
+                LengthMax = 27f,
+                InterUp = 5,
+                InterDown = 2
+            });
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Focus,
+                Name = "Smart Focus 7(M42)",
+                Number = "902003A",
+                Length = 18.85f,
+                LengthMin = 15.7f,
+                LengthMax = 22f,
+                InterUp = 5,
+                InterDown = 1
+            });
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Focus,
+                Name = "Smart Focus 7",
+                Number = "1001041A",
+                Length = 23.5f,
+                LengthMin = 20f,
+                LengthMax = 27f,
+                InterUp = 5,
+                InterDown = 5
+            });
+            this.InsertItem(new RingMedium() {
+                 RingType= enumProductType.Focus,
+                Name = "Smart Focus 23",
+                Number = "902001A",
+                Length = 32.1f,
+                LengthMin = 20.6f,
+                LengthMax = 43.6f,
+                 InterUp = 1,
+                 InterDown = 2
+            }); 
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Focus,
+                Name = "Smart Focus V/C",
+                Number = "1011634A",
+                Length = 21.7f,
+                LengthMin = 19.2f,
+                LengthMax = 24.2f,
+                InterUp = 5,
+                InterDown = 7
+            });
+            #endregion
+
+            #region 转接环
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Adapter,
+                Name = "V70 to M72",
+                Number = "1072419A",
+                Length = 10f,
+                InterUp = 6,
+                InterDown = 3
+            });
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Adapter,
+                Name = "M90 to M95",
+                Number = "903001A",
+                Length = 4f,
+                InterUp = 4,
+                InterDown = 10
+            });
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Adapter,
+                Name = "M72 to M58",
+                Number = "1075556A",
+                Length = 6f,
+                InterUp = 3,
+                InterDown = 2
+            });
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Adapter,
+                Name = "M72 to M90",
+                Number = "1084879A",
+                Length = 4f,
+                InterUp = 3,
+                InterDown = 4
+            });
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Adapter,
+                Name = "M72 to M90",
+                Number = "1084879A",
+                Length = 4f,
+                InterUp = 3,
+                InterDown = 4
+            });
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Adapter,
+                Name = "M58  to Nikon F-Mount",
+                Number = "903002A",
+                Length = 9f,
+                InterUp = 2,
+                InterDown = 8
+            });
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Adapter,
+                Name = "M58 to M72",
+                Number = "13052A",
+                Length = 2f,
+                InterUp = 2,
+                InterDown = 3
+            });
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Adapter,
+                Name = "V38 to Nikon F-Mount",
+                Number = "21610A",
+                Length = 9.3f,
+                InterUp = 5,
+                InterDown = 8
+            });
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Adapter,
+                Name = "V38 to M58",
+                Number = "1018385A",
+                Length = 10f,
+                InterUp = 5,
+                InterDown = 2
+            });
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Adapter,
+                Name = "V38 to M42",
+                Number = "20059A",
+                Length = 6.5f,
+                InterUp = 5,
+                InterDown = 1
+            });
+            #endregion
+
+            #region 延长环
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Extend,
+                Name = "Ext.Tube V38 / V38",
+                Number = "20176A",
+                Length = 6f,
+                InterUp = 5,
+                InterDown = 5
+            });
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Extend,
+                Name = "Ext.Tube V38 / V38",
+                Number = "20178A",
+                Length = 10f,
+                InterUp = 5,
+                InterDown = 5
+            });
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Extend,
+                Name = "Ext.Tube V38 / V38",
+                Number = "20179A",
+                Length = 25f,
+                InterUp = 5,
+                InterDown = 5
+            });
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Extend,
+                Name = "Ext.Tube M42 x 1.0",
+                Number = "904001A",
+                Length = 25f,
+                InterUp = 1,
+                InterDown = 1
+            });
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Extend,
+                Name = "Ext.Tube M58 x 0.75",
+                Number = "13051A",
+                Length = 10f,
+                InterUp = 2,
+                InterDown = 2
+            });
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Extend,
+                Name = "Ext.Tube M58 x 0.75",
+                Number = "13050A",
+                Length = 25f,
+                InterUp = 2,
+                InterDown = 2
+            });
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Extend,
+                Name = "Ext.Tube M72 x 0,75",
+                Number = "1072421A",
+                Length = 10f,
+                InterUp = 3,
+                InterDown = 3
+            });
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Extend,
+                Name = "Ext.Tube M72 x 0,75",
+                Number = "26406A",
+                Length = 25f,
+                InterUp = 3,
+                InterDown = 3
+            });
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Extend,
+                Name = "Ext.Tube M72 x 0,75",
+                Number = "1054733A",
+                Length = 50f,
+                InterUp = 3,
+                InterDown = 3
+            });
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Extend,
+                Name = "Ext.Tube M90 x 1.0",
+                Number = "1084875A",
+                Length = 10f,
+                InterUp = 4,
+                InterDown = 4
+            });
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Extend,
+                Name = "Ext.Tube M90 x 1.0",
+                Number = "1084876A",
+                Length = 25f,
+                InterUp = 4,
+                InterDown = 4
+            });
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Extend,
+                Name = "Ext.Tube M90 x 1.0",
+                Number = "1084877A",
+                Length = 50f,
+                InterUp = 4,
+                InterDown = 4
+            });
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Extend,
+                Name = "Ext.Tube M90 x 1.0",
+                Number = "1084878A",
+                Length = 100f,
+                InterUp = 4,
+                InterDown = 4
+            });
+            #endregion
+
+            #region 镜头
+            this.InsertItem(new CameraLens
+            {
+                Name = "Mk-CPN 2.8/28",
+                Number = "14794",
+                 Focus = 29.29f,
+                  Connector = 5,
+                   Target = 30f,
+                    Flange=25.13f,
+            });
+            #endregion
         }
 
         /// <summary>
@@ -88,7 +398,7 @@ namespace CamInter
 
         public List<ValueType> GetAllDevices(enumProductType type)
         {
-            itable handler = this.GetTableHandlerByType(enumProductType.Focus);
+            itable handler = this.GetTableHandlerByType(type);
             return handler.GetAllData();
         }
 

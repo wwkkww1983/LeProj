@@ -77,31 +77,26 @@ namespace CamInter
         /// <summary>
         /// 方案序号
         /// </summary>
-        string Idx;
+        public int Idx;
 
         /// <summary>
         /// 调焦环（最多一个）
         /// </summary>
-        RingMedium Focus;
+        public RingMedium Focus;
 
         /// <summary>
         /// 转接环数量
         /// </summary>
-        int AdapterCount;
+        public int AdapterCount;
 
         /// <summary>
         /// 转接环列表
         /// </summary>
-        List<RingMedium> AdapterList;
+        public List<RingMedium> AdapterList;
 
         /// <summary>
-        /// 延长环数量
+        /// 延长环
         /// </summary>
-        int ExtendCount;
-
-        /// <summary>
-        /// 延长环列表
-        /// </summary>
-        List<RingMedium> ExtendList;
+        public RingMedium Extend;
     }
 }
