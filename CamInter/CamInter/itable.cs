@@ -30,7 +30,7 @@ namespace CamInter
         bool InsertOneItem(ValueType item);
     }
 
-    public interface iGetComm
+    public interface iGetIDName
     {
         int Idx { get; }
         string Name { get; }

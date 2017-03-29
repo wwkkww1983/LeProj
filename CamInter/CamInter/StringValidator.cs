@@ -43,7 +43,7 @@ namespace Core
         /// <returns></returns>
         public static bool IsUnsignedNumber(string strCheck)
         {
-            return RegexCheck(strCheck, "仅可输入正整数", RegexHelper.IsNumberUnsignedinteger);
+            return RegexCheck(strCheck, "仅可输入正整数", RegexHelper.IsNumberUnsignedInteger);
         }
 
         /// <summary>
@@ -118,7 +118,17 @@ namespace Core
         /// <returns></returns>
         public static bool IsEmptyOrUnsignedRealNumber(Control ctrl)
         {
-            return RegexEmptyOrCheck(ctrl, "仅可输入正实数", RegexHelper.IsUnsignedRealNumber);;
+            return RegexEmptyOrCheck(ctrl, "仅可输入正实数", RegexHelper.IsUnsignedRealNumber); ;
+        }
+
+        /// <summary>
+        /// 空或正整数
+        /// </summary>
+        /// <param name="ctrl"></param>
+        /// <returns></returns>
+        public static bool IsEmptyOrUnsignedInteger(Control ctrl)
+        {
+            return RegexEmptyOrCheck(ctrl, "仅可输入正整数", RegexHelper.IsNumberUnsignedInteger); ;
         }
 
         /// <summary>
@@ -136,9 +146,9 @@ namespace Core
         /// </summary>
         /// <param name="strCheck"></param>
         /// <returns></returns>
-        public static bool IsUnsignedNumber(Control ctrl)
+        public static bool IsUnsignedInteger(Control ctrl)
         {
-            return RegexCheck(ctrl, "仅可输入正整数", RegexHelper.IsNumberUnsignedinteger);
+            return RegexCheck(ctrl, "仅可输入正整数", RegexHelper.IsNumberUnsignedInteger);
         }
         #endregion
     }

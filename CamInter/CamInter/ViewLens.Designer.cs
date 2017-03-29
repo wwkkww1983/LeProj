@@ -42,28 +42,30 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.cbInter = new System.Windows.Forms.ComboBox();
-            this.lbSensor = new System.Windows.Forms.Label();
-            this.tbSensor = new System.Windows.Forms.TextBox();
-            this.lbFov = new System.Windows.Forms.Label();
+            this.lbResoLength = new System.Windows.Forms.Label();
+            this.tbResoLength = new System.Windows.Forms.TextBox();
+            this.lbResoWidth = new System.Windows.Forms.Label();
             this.tbNumber = new System.Windows.Forms.TextBox();
             this.lbName = new System.Windows.Forms.Label();
             this.tbName = new System.Windows.Forms.TextBox();
             this.lbNumber = new System.Windows.Forms.Label();
-            this.tbFov = new System.Windows.Forms.TextBox();
+            this.tbResoWidth = new System.Windows.Forms.TextBox();
             this.lbFlange = new System.Windows.Forms.Label();
             this.tbFlange = new System.Windows.Forms.TextBox();
-            this.lbRatio = new System.Windows.Forms.Label();
-            this.tbRatio = new System.Windows.Forms.TextBox();
+            this.lbLength = new System.Windows.Forms.Label();
+            this.tbLength = new System.Windows.Forms.TextBox();
             this.tbRatioMax = new System.Windows.Forms.TextBox();
             this.tbRatioMin = new System.Windows.Forms.TextBox();
             this.lbRangeInter = new System.Windows.Forms.Label();
             this.lbRatioRange = new System.Windows.Forms.Label();
+            this.lbHH = new System.Windows.Forms.Label();
+            this.tbHH = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // lbFocus
             // 
             this.lbFocus.AutoSize = true;
-            this.lbFocus.Location = new System.Drawing.Point(287, 123);
+            this.lbFocus.Location = new System.Drawing.Point(287, 79);
             this.lbFocus.Name = "lbFocus";
             this.lbFocus.Size = new System.Drawing.Size(85, 15);
             this.lbFocus.TabIndex = 0;
@@ -71,7 +73,7 @@
             // 
             // tbFocus
             // 
-            this.tbFocus.Location = new System.Drawing.Point(378, 118);
+            this.tbFocus.Location = new System.Drawing.Point(378, 74);
             this.tbFocus.Name = "tbFocus";
             this.tbFocus.Size = new System.Drawing.Size(100, 25);
             this.tbFocus.TabIndex = 8;
@@ -79,7 +81,7 @@
             // lbInter
             // 
             this.lbInter.AutoSize = true;
-            this.lbInter.Location = new System.Drawing.Point(87, 123);
+            this.lbInter.Location = new System.Drawing.Point(87, 79);
             this.lbInter.Name = "lbInter";
             this.lbInter.Size = new System.Drawing.Size(53, 15);
             this.lbInter.TabIndex = 0;
@@ -104,7 +106,7 @@
             // lbFreq
             // 
             this.lbFreq.AutoSize = true;
-            this.lbFreq.Location = new System.Drawing.Point(305, 211);
+            this.lbFreq.Location = new System.Drawing.Point(305, 255);
             this.lbFreq.Name = "lbFreq";
             this.lbFreq.Size = new System.Drawing.Size(67, 15);
             this.lbFreq.TabIndex = 0;
@@ -112,7 +114,7 @@
             // 
             // tbFreq
             // 
-            this.tbFreq.Location = new System.Drawing.Point(378, 206);
+            this.tbFreq.Location = new System.Drawing.Point(378, 250);
             this.tbFreq.Name = "tbFreq";
             this.tbFreq.Size = new System.Drawing.Size(100, 25);
             this.tbFreq.TabIndex = 17;
@@ -120,7 +122,7 @@
             // lbTarget
             // 
             this.lbTarget.AutoSize = true;
-            this.lbTarget.Location = new System.Drawing.Point(25, 211);
+            this.lbTarget.Location = new System.Drawing.Point(25, 167);
             this.lbTarget.Name = "lbTarget";
             this.lbTarget.Size = new System.Drawing.Size(115, 15);
             this.lbTarget.TabIndex = 0;
@@ -128,7 +130,7 @@
             // 
             // tbTarget
             // 
-            this.tbTarget.Location = new System.Drawing.Point(146, 206);
+            this.tbTarget.Location = new System.Drawing.Point(146, 162);
             this.tbTarget.Name = "tbTarget";
             this.tbTarget.Size = new System.Drawing.Size(100, 25);
             this.tbTarget.TabIndex = 15;
@@ -136,7 +138,7 @@
             // lbDistort
             // 
             this.lbDistort.AutoSize = true;
-            this.lbDistort.Location = new System.Drawing.Point(320, 255);
+            this.lbDistort.Location = new System.Drawing.Point(320, 211);
             this.lbDistort.Name = "lbDistort";
             this.lbDistort.Size = new System.Drawing.Size(52, 15);
             this.lbDistort.TabIndex = 0;
@@ -144,7 +146,7 @@
             // 
             // tbDistort
             // 
-            this.tbDistort.Location = new System.Drawing.Point(378, 250);
+            this.tbDistort.Location = new System.Drawing.Point(378, 206);
             this.tbDistort.Name = "tbDistort";
             this.tbDistort.Size = new System.Drawing.Size(100, 25);
             this.tbDistort.TabIndex = 22;
@@ -172,36 +174,35 @@
             // cbInter
             // 
             this.cbInter.FormattingEnabled = true;
-            this.cbInter.Location = new System.Drawing.Point(146, 119);
+            this.cbInter.Location = new System.Drawing.Point(146, 75);
             this.cbInter.Name = "cbInter";
             this.cbInter.Size = new System.Drawing.Size(100, 23);
             this.cbInter.TabIndex = 7;
             // 
-            // lbSensor
+            // lbResoLength
             // 
-            this.lbSensor.AutoSize = true;
-            this.lbSensor.Location = new System.Drawing.Point(39, 79);
-            this.lbSensor.Name = "lbSensor";
-            this.lbSensor.Size = new System.Drawing.Size(101, 15);
-            this.lbSensor.TabIndex = 0;
-            this.lbSensor.Text = "相机Sensor *";
+            this.lbResoLength.AutoSize = true;
+            this.lbResoLength.Location = new System.Drawing.Point(57, 299);
+            this.lbResoLength.Name = "lbResoLength";
+            this.lbResoLength.Size = new System.Drawing.Size(83, 15);
+            this.lbResoLength.TabIndex = 0;
+            this.lbResoLength.Text = "分辨率(长)";
             // 
-            // tbSensor
+            // tbResoLength
             // 
-            this.tbSensor.Location = new System.Drawing.Point(146, 74);
-            this.tbSensor.Name = "tbSensor";
-            this.tbSensor.Size = new System.Drawing.Size(100, 25);
-            this.tbSensor.TabIndex = 4;
-            this.tbSensor.TextChanged += new System.EventHandler(this.tbRatioCondition_TextChanged);
+            this.tbResoLength.Location = new System.Drawing.Point(146, 294);
+            this.tbResoLength.Name = "tbResoLength";
+            this.tbResoLength.Size = new System.Drawing.Size(100, 25);
+            this.tbResoLength.TabIndex = 4;
             // 
-            // lbFov
+            // lbResoWidth
             // 
-            this.lbFov.AutoSize = true;
-            this.lbFov.Location = new System.Drawing.Point(279, 79);
-            this.lbFov.Name = "lbFov";
-            this.lbFov.Size = new System.Drawing.Size(93, 15);
-            this.lbFov.TabIndex = 0;
-            this.lbFov.Text = "视野(Fov) *";
+            this.lbResoWidth.AutoSize = true;
+            this.lbResoWidth.Location = new System.Drawing.Point(289, 299);
+            this.lbResoWidth.Name = "lbResoWidth";
+            this.lbResoWidth.Size = new System.Drawing.Size(83, 15);
+            this.lbResoWidth.TabIndex = 0;
+            this.lbResoWidth.Text = "分辨率(宽)";
             // 
             // tbNumber
             // 
@@ -235,18 +236,17 @@
             this.lbNumber.TabIndex = 0;
             this.lbNumber.Text = "货号 *";
             // 
-            // tbFov
+            // tbResoWidth
             // 
-            this.tbFov.Location = new System.Drawing.Point(378, 74);
-            this.tbFov.Name = "tbFov";
-            this.tbFov.Size = new System.Drawing.Size(100, 25);
-            this.tbFov.TabIndex = 5;
-            this.tbFov.TextChanged += new System.EventHandler(this.tbRatioCondition_TextChanged);
+            this.tbResoWidth.Location = new System.Drawing.Point(378, 294);
+            this.tbResoWidth.Name = "tbResoWidth";
+            this.tbResoWidth.Size = new System.Drawing.Size(100, 25);
+            this.tbResoWidth.TabIndex = 5;
             // 
             // lbFlange
             // 
             this.lbFlange.AutoSize = true;
-            this.lbFlange.Location = new System.Drawing.Point(10, 167);
+            this.lbFlange.Location = new System.Drawing.Point(10, 123);
             this.lbFlange.Name = "lbFlange";
             this.lbFlange.Size = new System.Drawing.Size(130, 15);
             this.lbFlange.TabIndex = 0;
@@ -254,38 +254,39 @@
             // 
             // tbFlange
             // 
-            this.tbFlange.Location = new System.Drawing.Point(146, 162);
+            this.tbFlange.Location = new System.Drawing.Point(146, 118);
             this.tbFlange.Name = "tbFlange";
             this.tbFlange.Size = new System.Drawing.Size(100, 25);
             this.tbFlange.TabIndex = 10;
             // 
-            // lbRatio
+            // lbLength
             // 
-            this.lbRatio.AutoSize = true;
-            this.lbRatio.Location = new System.Drawing.Point(57, 299);
-            this.lbRatio.Name = "lbRatio";
-            this.lbRatio.Size = new System.Drawing.Size(83, 15);
-            this.lbRatio.TabIndex = 0;
-            this.lbRatio.Text = "放大倍率 *";
+            this.lbLength.AutoSize = true;
+            this.lbLength.Location = new System.Drawing.Point(25, 211);
+            this.lbLength.Name = "lbLength";
+            this.lbLength.Size = new System.Drawing.Size(115, 15);
+            this.lbLength.TabIndex = 0;
+            this.lbLength.Text = "镜头长度(mm) *";
             // 
-            // tbRatio
+            // tbLength
             // 
-            this.tbRatio.Enabled = false;
-            this.tbRatio.Location = new System.Drawing.Point(146, 294);
-            this.tbRatio.Name = "tbRatio";
-            this.tbRatio.Size = new System.Drawing.Size(100, 25);
-            this.tbRatio.TabIndex = 23;
+            this.tbLength.Enabled = false;
+            this.tbLength.Location = new System.Drawing.Point(146, 206);
+            this.tbLength.Name = "tbLength";
+            this.tbLength.Size = new System.Drawing.Size(100, 25);
+            this.tbLength.TabIndex = 23;
+            this.tbLength.Text = "28.6";
             // 
             // tbRatioMax
             // 
-            this.tbRatioMax.Location = new System.Drawing.Point(442, 162);
+            this.tbRatioMax.Location = new System.Drawing.Point(442, 118);
             this.tbRatioMax.Name = "tbRatioMax";
             this.tbRatioMax.Size = new System.Drawing.Size(37, 25);
             this.tbRatioMax.TabIndex = 12;
             // 
             // tbRatioMin
             // 
-            this.tbRatioMin.Location = new System.Drawing.Point(378, 162);
+            this.tbRatioMin.Location = new System.Drawing.Point(378, 118);
             this.tbRatioMin.Name = "tbRatioMin";
             this.tbRatioMin.Size = new System.Drawing.Size(37, 25);
             this.tbRatioMin.TabIndex = 11;
@@ -293,7 +294,7 @@
             // lbRangeInter
             // 
             this.lbRangeInter.AutoSize = true;
-            this.lbRangeInter.Location = new System.Drawing.Point(421, 167);
+            this.lbRangeInter.Location = new System.Drawing.Point(421, 123);
             this.lbRangeInter.Name = "lbRangeInter";
             this.lbRangeInter.Size = new System.Drawing.Size(15, 15);
             this.lbRangeInter.TabIndex = 14;
@@ -302,11 +303,28 @@
             // lbRatioRange
             // 
             this.lbRatioRange.AutoSize = true;
-            this.lbRatioRange.Location = new System.Drawing.Point(259, 167);
+            this.lbRatioRange.Location = new System.Drawing.Point(259, 123);
             this.lbRatioRange.Name = "lbRatioRange";
             this.lbRatioRange.Size = new System.Drawing.Size(113, 15);
             this.lbRatioRange.TabIndex = 15;
             this.lbRatioRange.Text = "放大倍率范围 *";
+            // 
+            // lbHH
+            // 
+            this.lbHH.AutoSize = true;
+            this.lbHH.Location = new System.Drawing.Point(333, 167);
+            this.lbHH.Name = "lbHH";
+            this.lbHH.Size = new System.Drawing.Size(39, 15);
+            this.lbHH.TabIndex = 0;
+            this.lbHH.Text = "HH *";
+            // 
+            // tbHH
+            // 
+            this.tbHH.Enabled = false;
+            this.tbHH.Location = new System.Drawing.Point(378, 162);
+            this.tbHH.Name = "tbHH";
+            this.tbHH.Size = new System.Drawing.Size(100, 25);
+            this.tbHH.TabIndex = 23;
             // 
             // ViewLens
             // 
@@ -322,22 +340,24 @@
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.tbDistort);
             this.Controls.Add(this.lbDistort);
-            this.Controls.Add(this.tbRatio);
-            this.Controls.Add(this.lbRatio);
+            this.Controls.Add(this.tbHH);
+            this.Controls.Add(this.lbHH);
+            this.Controls.Add(this.tbLength);
+            this.Controls.Add(this.lbLength);
             this.Controls.Add(this.tbFlange);
             this.Controls.Add(this.lbFlange);
             this.Controls.Add(this.tbTarget);
             this.Controls.Add(this.lbTarget);
             this.Controls.Add(this.tbFreq);
             this.Controls.Add(this.lbFreq);
-            this.Controls.Add(this.tbFov);
+            this.Controls.Add(this.tbResoWidth);
             this.Controls.Add(this.lbNumber);
             this.Controls.Add(this.tbNumber);
-            this.Controls.Add(this.lbFov);
+            this.Controls.Add(this.lbResoWidth);
             this.Controls.Add(this.tbName);
             this.Controls.Add(this.lbName);
-            this.Controls.Add(this.tbSensor);
-            this.Controls.Add(this.lbSensor);
+            this.Controls.Add(this.tbResoLength);
+            this.Controls.Add(this.lbResoLength);
             this.Controls.Add(this.tbWeight);
             this.Controls.Add(this.lbWeight);
             this.Controls.Add(this.lbInter);
@@ -366,21 +386,23 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.ComboBox cbInter;
-        private System.Windows.Forms.Label lbSensor;
-        private System.Windows.Forms.TextBox tbSensor;
-        private System.Windows.Forms.Label lbFov;
+        private System.Windows.Forms.Label lbResoLength;
+        private System.Windows.Forms.TextBox tbResoLength;
+        private System.Windows.Forms.Label lbResoWidth;
         private System.Windows.Forms.TextBox tbNumber;
         private System.Windows.Forms.Label lbName;
         private System.Windows.Forms.TextBox tbName;
         private System.Windows.Forms.Label lbNumber;
-        private System.Windows.Forms.TextBox tbFov;
+        private System.Windows.Forms.TextBox tbResoWidth;
         private System.Windows.Forms.Label lbFlange;
         private System.Windows.Forms.TextBox tbFlange;
-        private System.Windows.Forms.Label lbRatio;
-        private System.Windows.Forms.TextBox tbRatio;
+        private System.Windows.Forms.Label lbLength;
+        private System.Windows.Forms.TextBox tbLength;
         private System.Windows.Forms.TextBox tbRatioMax;
         private System.Windows.Forms.TextBox tbRatioMin;
         private System.Windows.Forms.Label lbRangeInter;
         private System.Windows.Forms.Label lbRatioRange;
+        private System.Windows.Forms.Label lbHH;
+        private System.Windows.Forms.TextBox tbHH;
     }
 }

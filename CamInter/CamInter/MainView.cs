@@ -14,7 +14,8 @@ namespace CamInter
     public partial class MainView : Form
     {
         #region 实例化
-        private bool initialConditionFlag = false;
+        private bool initialConditionFlag = false, areaBoardSelected = true;
+        private int resolutionSide, resolutionOther;
         private List<ValueType> cameList = null;
         private DBUtility dbHandler = new DBUtility(true);
         private Algorithm alg = null;
@@ -23,28 +24,22 @@ namespace CamInter
         {
             InitializeComponent();
 
-            //dbHandler.InitialTable();
+            dbHandler.InitialTable();
             this.InitialCamInter();
         }
 
         private void InitialCamInter()
         {
-            DataTable dtCam = dbHandler.GetDropDownListInfo(enumProductType.CamLens);
-            this.cbCamInter.DataSource = dtCam;
+            DataTable dt = dbHandler.GetDropDownListInfo(enumProductType.Interface);
+            this.cbCamInter.DataSource = dt;
             this.cbCamInter.DisplayMember = "Name";
             this.cbCamInter.ValueMember = "Idx";
             this.cbCamInter.SelectedIndex = -1;
 
-            DataTable dtLens = dbHandler.GetDropDownListInfo(enumProductType.Interface);
-            this.cbLensInter.DataSource = dtLens;
-            this.cbLensInter.DisplayMember = "Name";
-            this.cbLensInter.ValueMember = "Idx";
-            this.cbLensInter.SelectedIndex = -1;
-
             this.initialConditionFlag = true;
             List<ValueType> ringList = dbHandler.GetAllDevices(enumProductType.Focus);
             this.cameList = dbHandler.GetAllDevices(enumProductType.CamLens);
-            this.alg = new Algorithm(ringList);
+            this.alg = new Algorithm(ringList, this.cameList);
         }
 
         #endregion
@@ -101,38 +96,93 @@ namespace CamInter
         #endregion
 
         #region 用户行为
+        private void btnSelect_Click(object sender, EventArgs e)
+        {
 
+        }
+
+        private void tbSensor_TextChanged(object sender, EventArgs e)
+        {
+            if (this.tbSensorSide.Text.Trim().Equals(string.Empty) || this.tbSensorOther.Text.Trim().Equals(string.Empty))
+                return;
+            float sensorSide = Convert.ToSingle(this.tbSensorSide.Text);
+            float sensorOther = Convert.ToSingle(this.tbSensorOther.Text);
+            this.tbTarget.Text = Math.Sqrt(sensorSide * sensorSide + sensorOther * sensorOther).ToString();
+        }
 
         private void selectPatchItems(object sender, EventArgs e)
         {
             if (!this.PreCheckUserDataIsEnough()) return;
+            float ratio = areaBoardSelected ? this.PreFilterUserAreaData() : this.PreFilterUserLineData();
+            int camInter = Convert.ToInt32(this.cbCamInter.SelectedValue);
+            float flange = Convert.ToSingle(this.tbFlange.Text);
+            float target = Convert.ToSingle(this.tbTarget.Text);
+            float workDistance = Convert.ToSingle(this.tbDistance.Text);
+            float workDistanceRange = Convert.ToSingle(this.tbDistanRange.Text);
 
-            int lenInter = Convert.ToInt32(this.cbLensInter.SelectedValue);
-            int camIdx = Convert.ToInt32(this.cbCamInter.SelectedValue);
-            float sensor = Convert.ToSingle(this.tbSensor.Text);
-            float fov = Convert.ToSingle(this.tbFov.Text);
-            float ratio = sensor / fov;
-            this.lbRatio.Text = ratio.ToString();
-
-            CameraLens cam= this.GetCamInfoById(camIdx);
-            float allLength = cam.Fov * ratio - cam.Flange;
-            List<RingResult> resultList= this.alg.GetDevicesByBaseInfo(lenInter, cam.Connector, allLength);
+            List<RingResult> resultList = this.alg.GetDevicesByBaseInfo(camInter, flange, target, resolutionSide, resolutionOther, ratio, workDistance, workDistanceRange);
+            
         }
 
         private bool PreCheckUserDataIsEnough()
         {
+            areaBoardSelected = this.tcCamera.SelectedIndex == 0;
             return initialConditionFlag &&
-                    this.cbLensInter.SelectedIndex > 0 &&
-                    this.cbCamInter.SelectedIndex > 0 &&
-                    !this.tbSensor.Text.Trim().Equals(string.Empty) &&
-                    !this.tbFov.Text.Trim().Equals(string.Empty) &&
-                    StringValidator.IsEmptyOrUnsignedRealNumber(this.tbSensor) &&
-                    StringValidator.IsEmptyOrUnsignedRealNumber(this.tbFov) &&
+                   (areaBoardSelected &&
+                        StringValidator.HasContent(this.tbSensorSide, this.lbSensor.Text) &&
+                        StringValidator.HasContent(this.tbSensorOther, this.lbSensor.Text) &&
+                        StringValidator.HasContent(this.tbFovSide, this.lbFov.Text) &&
+                        StringValidator.HasContent(this.tbFovOther, this.lbFov.Text) &&
+                        StringValidator.IsUnsignedRealNumber(this.tbSensorSide) &&
+                        StringValidator.IsUnsignedRealNumber(this.tbSensorOther) &&
+                        StringValidator.IsUnsignedRealNumber(this.tbFovSide) &&
+                        StringValidator.IsUnsignedRealNumber(this.tbFovOther) &&
+                        StringValidator.IsEmptyOrUnsignedRealNumber(this.tbResolutionSide) &&
+                        StringValidator.IsEmptyOrUnsignedRealNumber(this.tbResolutionOther)
+                    ||
+                        !areaBoardSelected &&
+                        StringValidator.HasContent(this.tbLineSensor, this.lbLineSensor.Text) &&
+                        StringValidator.HasContent(this.tbLineFov, this.lbLineFov.Text) &&
+                        StringValidator.IsUnsignedRealNumber(this.tbLineSensor) &&
+                        StringValidator.IsUnsignedRealNumber(this.tbLineFov) &&
+                        StringValidator.IsEmptyOrUnsignedRealNumber(this.tbLineResolution)
+                    ) &&
+                    StringValidator.HasContent(this.cbCamInter, this.lbCamInter.Text) &&
+                    StringValidator.HasContent(this.tbFlange, this.lbFlange.Text) &&
+                    StringValidator.IsUnsignedRealNumber(this.tbFlange) &&
                     StringValidator.IsEmptyOrUnsignedRealNumber(this.tbTarget) &&
                     StringValidator.IsEmptyOrUnsignedRealNumber(this.tbDistance) &&
-                    StringValidator.IsEmptyOrUnsignedRealNumber(this.tbDistanRange) &&
-                    StringValidator.IsEmptyOrUnsignedRealNumber(this.tbLength) &&
-                    StringValidator.IsEmptyOrUnsignedRealNumber(this.tbWidth);
+                    StringValidator.IsEmptyOrUnsignedRealNumber(this.tbDistanRange);
+        }
+
+        private float PreFilterUserAreaData()
+        {
+            float sensorSide = Convert.ToSingle(this.tbSensorSide.Text);
+            float sensorOther = Convert.ToSingle(this.tbSensorOther.Text);
+            float fovSide = Convert.ToSingle(this.tbFovSide.Text);
+            float fovOther = Convert.ToSingle(this.tbFovOther.Text);
+            if (!this.tbResolutionSide.Text.Trim().Equals(string.Empty))
+            {
+                resolutionSide = Convert.ToInt32(this.tbResolutionSide.Text);
+                resolutionOther = Convert.ToInt32(this.tbResolutionOther.Text);
+            }
+
+            return Math.Min(sensorSide / fovSide, sensorOther / fovOther);
+        }
+
+        private float PreFilterUserLineData()
+        {
+            float sensor = Convert.ToSingle(this.tbLineSensor.Text);
+            float fov = Convert.ToSingle(this.tbLineFov.Text);
+            if (!this.tbLineResolution.Text.Trim().Equals(string.Empty))
+            {
+                int resolution = Convert.ToInt32(this.tbLineResolution.Text);
+                if (this.rbLineLength.Checked)
+                    resolutionSide = resolution;
+                else resolutionOther = resolution;
+            }
+
+            return sensor / fov;
         }
 
         private CameraLens GetCamInfoById(int idx)
@@ -147,8 +197,11 @@ namespace CamInter
                     break;
                 }
             }
+            
             return cam;
         }
         #endregion
+
+
     }
 }

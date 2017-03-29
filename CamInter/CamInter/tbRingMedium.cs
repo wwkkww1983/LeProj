@@ -100,11 +100,11 @@ namespace CamInter
         /// </summary>
         public enumProductType RingType;
         /// <summary>
-        /// 上端接口（A - 镜头）
+        /// 上端接口（B - 相机）
         /// </summary>
         public int InterUp;
         /// <summary>
-        /// 下端接口（B - 相机）
+        /// 下端接口（A - 镜头）
         /// </summary>
         public int InterDown;
         /// <summary>

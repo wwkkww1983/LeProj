@@ -28,28 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.lbRatio = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.tbFov = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.tbSensor = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.tbLength = new System.Windows.Forms.TextBox();
-            this.tbTarget = new System.Windows.Forms.TextBox();
-            this.tbWidth = new System.Windows.Forms.TextBox();
-            this.tbDistanRange = new System.Windows.Forms.TextBox();
-            this.tbDistance = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.cbLensInter = new System.Windows.Forms.ComboBox();
-            this.cbCamInter = new System.Windows.Forms.ComboBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.录入ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,223 +37,56 @@
             this.ExtendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.connToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.语言ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.中文ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.enlishToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tcCamera = new System.Windows.Forms.TabControl();
+            this.tpArea = new System.Windows.Forms.TabPage();
+            this.tpLine = new System.Windows.Forms.TabPage();
+            this.label11 = new System.Windows.Forms.Label();
+            this.tbSensorSide = new System.Windows.Forms.TextBox();
+            this.tbSensorOther = new System.Windows.Forms.TextBox();
+            this.lbSensor = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.tbResolutionOther = new System.Windows.Forms.TextBox();
+            this.tbResolutionSide = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.lbFov = new System.Windows.Forms.Label();
+            this.tbFovOther = new System.Windows.Forms.TextBox();
+            this.tbFovSide = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.tbLineFov = new System.Windows.Forms.TextBox();
+            this.tbLineResolution = new System.Windows.Forms.TextBox();
+            this.lbLineFov = new System.Windows.Forms.Label();
+            this.tbLineSensor = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.lbLineSensor = new System.Windows.Forms.Label();
+            this.rbLineLength = new System.Windows.Forms.RadioButton();
+            this.rbLineWidth = new System.Windows.Forms.RadioButton();
+            this.cbCamInter = new System.Windows.Forms.ComboBox();
+            this.lbCamInter = new System.Windows.Forms.Label();
+            this.lbFlange = new System.Windows.Forms.Label();
+            this.tbFlange = new System.Windows.Forms.TextBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.tbTarget = new System.Windows.Forms.TextBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.tbDistance = new System.Windows.Forms.TextBox();
+            this.tbDistanRange = new System.Windows.Forms.TextBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.btnSelect = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            this.tcCamera.SuspendLayout();
+            this.tpArea.SuspendLayout();
+            this.tpLine.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.groupBox2);
-            this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.label8);
-            this.groupBox1.Controls.Add(this.tbLength);
-            this.groupBox1.Controls.Add(this.tbTarget);
-            this.groupBox1.Controls.Add(this.tbWidth);
-            this.groupBox1.Controls.Add(this.tbDistanRange);
-            this.groupBox1.Controls.Add(this.tbDistance);
-            this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.cbLensInter);
-            this.groupBox1.Controls.Add(this.cbCamInter);
-            this.groupBox1.Location = new System.Drawing.Point(12, 43);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(333, 489);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "查询条件";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.lbRatio);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.tbFov);
-            this.groupBox2.Controls.Add(this.label10);
-            this.groupBox2.Controls.Add(this.tbSensor);
-            this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Location = new System.Drawing.Point(37, 148);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(249, 140);
-            this.groupBox2.TabIndex = 16;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "相机规格（mm）";
-            // 
-            // lbRatio
-            // 
-            this.lbRatio.AutoSize = true;
-            this.lbRatio.Location = new System.Drawing.Point(127, 112);
-            this.lbRatio.Name = "lbRatio";
-            this.lbRatio.Size = new System.Drawing.Size(15, 15);
-            this.lbRatio.TabIndex = 14;
-            this.lbRatio.Text = "0";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(42, 113);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(82, 15);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "放大倍率：";
-            // 
-            // tbFov
-            // 
-            this.tbFov.Location = new System.Drawing.Point(127, 71);
-            this.tbFov.Name = "tbFov";
-            this.tbFov.Size = new System.Drawing.Size(91, 25);
-            this.tbFov.TabIndex = 13;
-            this.tbFov.TextChanged += new System.EventHandler(this.selectPatchItems);
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(42, 74);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(77, 15);
-            this.label10.TabIndex = 6;
-            this.label10.Text = "视野(Fov)";
-            // 
-            // tbSensor
-            // 
-            this.tbSensor.Location = new System.Drawing.Point(127, 40);
-            this.tbSensor.Name = "tbSensor";
-            this.tbSensor.Size = new System.Drawing.Size(91, 25);
-            this.tbSensor.TabIndex = 13;
-            this.tbSensor.TextChanged += new System.EventHandler(this.selectPatchItems);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(42, 43);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(67, 15);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "相机芯片";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(208, 436);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(22, 15);
-            this.label9.TabIndex = 15;
-            this.label9.Text = "×";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(208, 385);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(22, 15);
-            this.label8.TabIndex = 15;
-            this.label8.Text = "±";
-            // 
-            // tbLength
-            // 
-            this.tbLength.Location = new System.Drawing.Point(139, 431);
-            this.tbLength.Name = "tbLength";
-            this.tbLength.Size = new System.Drawing.Size(64, 25);
-            this.tbLength.TabIndex = 14;
-            // 
-            // tbTarget
-            // 
-            this.tbTarget.Location = new System.Drawing.Point(139, 318);
-            this.tbTarget.Name = "tbTarget";
-            this.tbTarget.Size = new System.Drawing.Size(147, 25);
-            this.tbTarget.TabIndex = 13;
-            // 
-            // tbWidth
-            // 
-            this.tbWidth.Location = new System.Drawing.Point(236, 431);
-            this.tbWidth.Name = "tbWidth";
-            this.tbWidth.Size = new System.Drawing.Size(50, 25);
-            this.tbWidth.TabIndex = 12;
-            // 
-            // tbDistanRange
-            // 
-            this.tbDistanRange.Location = new System.Drawing.Point(236, 380);
-            this.tbDistanRange.Name = "tbDistanRange";
-            this.tbDistanRange.Size = new System.Drawing.Size(50, 25);
-            this.tbDistanRange.TabIndex = 12;
-            // 
-            // tbDistance
-            // 
-            this.tbDistance.Location = new System.Drawing.Point(139, 380);
-            this.tbDistance.Name = "tbDistance";
-            this.tbDistance.Size = new System.Drawing.Size(64, 25);
-            this.tbDistance.TabIndex = 12;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(5, 436);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(128, 15);
-            this.label7.TabIndex = 7;
-            this.label7.Text = "相机分辨率(像素)";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(34, 321);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(99, 15);
-            this.label6.TabIndex = 6;
-            this.label6.Text = "最小靶面(mm)";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(34, 385);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(99, 15);
-            this.label5.TabIndex = 5;
-            this.label5.Text = "工作距离(mm)";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(66, 96);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(67, 15);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "相机镜头";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(66, 40);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(67, 15);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "匹配接口";
-            // 
-            // cbLensInter
-            // 
-            this.cbLensInter.FormattingEnabled = true;
-            this.cbLensInter.Location = new System.Drawing.Point(139, 37);
-            this.cbLensInter.Name = "cbLensInter";
-            this.cbLensInter.Size = new System.Drawing.Size(147, 23);
-            this.cbLensInter.TabIndex = 0;
-            this.cbLensInter.SelectedIndexChanged += new System.EventHandler(this.selectPatchItems);
-            // 
-            // cbCamInter
-            // 
-            this.cbCamInter.FormattingEnabled = true;
-            this.cbCamInter.Location = new System.Drawing.Point(139, 93);
-            this.cbCamInter.Name = "cbCamInter";
-            this.cbCamInter.Size = new System.Drawing.Size(147, 23);
-            this.cbCamInter.TabIndex = 0;
             // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(351, 53);
+            this.dataGridView1.Location = new System.Drawing.Point(335, 53);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 27;
             this.dataGridView1.Size = new System.Drawing.Size(601, 256);
@@ -284,10 +95,11 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.录入ToolStripMenuItem});
+            this.录入ToolStripMenuItem,
+            this.语言ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(985, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(946, 28);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -306,67 +118,419 @@
             // CamLensToolStripMenuItem
             // 
             this.CamLensToolStripMenuItem.Name = "CamLensToolStripMenuItem";
-            this.CamLensToolStripMenuItem.Size = new System.Drawing.Size(123, 24);
+            this.CamLensToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.CamLensToolStripMenuItem.Text = "镜头";
             this.CamLensToolStripMenuItem.Click += new System.EventHandler(this.CamLensToolStripMenuItem_Click);
             // 
             // FocusToolStripMenuItem
             // 
             this.FocusToolStripMenuItem.Name = "FocusToolStripMenuItem";
-            this.FocusToolStripMenuItem.Size = new System.Drawing.Size(123, 24);
+            this.FocusToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.FocusToolStripMenuItem.Text = "调焦环";
             this.FocusToolStripMenuItem.Click += new System.EventHandler(this.FocusToolStripMenuItem_Click);
             // 
             // AdapterToolStripMenuItem
             // 
             this.AdapterToolStripMenuItem.Name = "AdapterToolStripMenuItem";
-            this.AdapterToolStripMenuItem.Size = new System.Drawing.Size(123, 24);
+            this.AdapterToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.AdapterToolStripMenuItem.Text = "转接环";
             this.AdapterToolStripMenuItem.Click += new System.EventHandler(this.AdapterToolStripMenuItem_Click);
             // 
             // ExtendToolStripMenuItem
             // 
             this.ExtendToolStripMenuItem.Name = "ExtendToolStripMenuItem";
-            this.ExtendToolStripMenuItem.Size = new System.Drawing.Size(123, 24);
+            this.ExtendToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.ExtendToolStripMenuItem.Text = "延长环";
             this.ExtendToolStripMenuItem.Click += new System.EventHandler(this.ExtendToolStripMenuItem_Click);
             // 
             // connToolStripMenuItem
             // 
             this.connToolStripMenuItem.Name = "connToolStripMenuItem";
-            this.connToolStripMenuItem.Size = new System.Drawing.Size(123, 24);
+            this.connToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.connToolStripMenuItem.Text = "接口";
             this.connToolStripMenuItem.Click += new System.EventHandler(this.connToolStripMenuItem_Click);
             // 
             // dataGridView2
             // 
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(351, 315);
+            this.dataGridView2.Location = new System.Drawing.Point(335, 315);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowTemplate.Height = 27;
             this.dataGridView2.Size = new System.Drawing.Size(601, 217);
             this.dataGridView2.TabIndex = 1;
             // 
+            // 语言ToolStripMenuItem
+            // 
+            this.语言ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.中文ToolStripMenuItem,
+            this.enlishToolStripMenuItem});
+            this.语言ToolStripMenuItem.Name = "语言ToolStripMenuItem";
+            this.语言ToolStripMenuItem.Size = new System.Drawing.Size(51, 24);
+            this.语言ToolStripMenuItem.Text = "语言";
+            // 
+            // 中文ToolStripMenuItem
+            // 
+            this.中文ToolStripMenuItem.Name = "中文ToolStripMenuItem";
+            this.中文ToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.中文ToolStripMenuItem.Text = "中文";
+            // 
+            // enlishToolStripMenuItem
+            // 
+            this.enlishToolStripMenuItem.Name = "enlishToolStripMenuItem";
+            this.enlishToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.enlishToolStripMenuItem.Text = "Enlish";
+            // 
+            // tcCamera
+            // 
+            this.tcCamera.Controls.Add(this.tpArea);
+            this.tcCamera.Controls.Add(this.tpLine);
+            this.tcCamera.Location = new System.Drawing.Point(12, 46);
+            this.tcCamera.Name = "tcCamera";
+            this.tcCamera.SelectedIndex = 0;
+            this.tcCamera.Size = new System.Drawing.Size(317, 252);
+            this.tcCamera.TabIndex = 3;
+            // 
+            // tpArea
+            // 
+            this.tpArea.Controls.Add(this.label16);
+            this.tpArea.Controls.Add(this.label14);
+            this.tpArea.Controls.Add(this.label1);
+            this.tpArea.Controls.Add(this.label11);
+            this.tpArea.Controls.Add(this.tbFovSide);
+            this.tpArea.Controls.Add(this.tbFovOther);
+            this.tpArea.Controls.Add(this.tbResolutionSide);
+            this.tpArea.Controls.Add(this.tbResolutionOther);
+            this.tpArea.Controls.Add(this.lbFov);
+            this.tpArea.Controls.Add(this.tbSensorSide);
+            this.tpArea.Controls.Add(this.label13);
+            this.tpArea.Controls.Add(this.tbSensorOther);
+            this.tpArea.Controls.Add(this.lbSensor);
+            this.tpArea.Location = new System.Drawing.Point(4, 25);
+            this.tpArea.Name = "tpArea";
+            this.tpArea.Padding = new System.Windows.Forms.Padding(3);
+            this.tpArea.Size = new System.Drawing.Size(309, 223);
+            this.tpArea.TabIndex = 0;
+            this.tpArea.Text = "面阵";
+            this.tpArea.UseVisualStyleBackColor = true;
+            // 
+            // tpLine
+            // 
+            this.tpLine.Controls.Add(this.rbLineWidth);
+            this.tpLine.Controls.Add(this.rbLineLength);
+            this.tpLine.Controls.Add(this.tbLineFov);
+            this.tpLine.Controls.Add(this.tbLineResolution);
+            this.tpLine.Controls.Add(this.lbLineFov);
+            this.tpLine.Controls.Add(this.tbLineSensor);
+            this.tpLine.Controls.Add(this.label18);
+            this.tpLine.Controls.Add(this.lbLineSensor);
+            this.tpLine.Location = new System.Drawing.Point(4, 25);
+            this.tpLine.Name = "tpLine";
+            this.tpLine.Padding = new System.Windows.Forms.Padding(3);
+            this.tpLine.Size = new System.Drawing.Size(309, 223);
+            this.tpLine.TabIndex = 1;
+            this.tpLine.Text = "线阵";
+            this.tpLine.UseVisualStyleBackColor = true;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(209, 55);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(22, 15);
+            this.label11.TabIndex = 19;
+            this.label11.Text = "×";
+            // 
+            // tbSensorSide
+            // 
+            this.tbSensorSide.Location = new System.Drawing.Point(147, 50);
+            this.tbSensorSide.Name = "tbSensorSide";
+            this.tbSensorSide.Size = new System.Drawing.Size(60, 25);
+            this.tbSensorSide.TabIndex = 1;
+            this.tbSensorSide.TextChanged += new System.EventHandler(this.tbSensor_TextChanged);
+            // 
+            // tbSensorOther
+            // 
+            this.tbSensorOther.Location = new System.Drawing.Point(236, 50);
+            this.tbSensorOther.Name = "tbSensorOther";
+            this.tbSensorOther.Size = new System.Drawing.Size(60, 25);
+            this.tbSensorOther.TabIndex = 2;
+            this.tbSensorOther.TextChanged += new System.EventHandler(this.tbSensor_TextChanged);
+            // 
+            // lbSensor
+            // 
+            this.lbSensor.AutoSize = true;
+            this.lbSensor.Location = new System.Drawing.Point(7, 55);
+            this.lbSensor.Name = "lbSensor";
+            this.lbSensor.Size = new System.Drawing.Size(133, 15);
+            this.lbSensor.TabIndex = 16;
+            this.lbSensor.Text = "Sensor尺寸(mm) *";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(26, 165);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(114, 15);
+            this.label13.TabIndex = 16;
+            this.label13.Text = "相机分辨率(mm)";
+            // 
+            // tbResolutionOther
+            // 
+            this.tbResolutionOther.Location = new System.Drawing.Point(236, 160);
+            this.tbResolutionOther.Name = "tbResolutionOther";
+            this.tbResolutionOther.Size = new System.Drawing.Size(60, 25);
+            this.tbResolutionOther.TabIndex = 4;
+            // 
+            // tbResolutionSide
+            // 
+            this.tbResolutionSide.Location = new System.Drawing.Point(147, 160);
+            this.tbResolutionSide.Name = "tbResolutionSide";
+            this.tbResolutionSide.Size = new System.Drawing.Size(60, 25);
+            this.tbResolutionSide.TabIndex = 3;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(209, 165);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(22, 15);
+            this.label14.TabIndex = 19;
+            this.label14.Text = "×";
+            // 
+            // lbFov
+            // 
+            this.lbFov.AutoSize = true;
+            this.lbFov.Location = new System.Drawing.Point(31, 110);
+            this.lbFov.Name = "lbFov";
+            this.lbFov.Size = new System.Drawing.Size(109, 15);
+            this.lbFov.TabIndex = 16;
+            this.lbFov.Text = "视野Fov(mm) *";
+            // 
+            // tbFovOther
+            // 
+            this.tbFovOther.Location = new System.Drawing.Point(236, 105);
+            this.tbFovOther.Name = "tbFovOther";
+            this.tbFovOther.Size = new System.Drawing.Size(60, 25);
+            this.tbFovOther.TabIndex = 6;
+            // 
+            // tbFovSide
+            // 
+            this.tbFovSide.Location = new System.Drawing.Point(147, 105);
+            this.tbFovSide.Name = "tbFovSide";
+            this.tbFovSide.Size = new System.Drawing.Size(60, 25);
+            this.tbFovSide.TabIndex = 5;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(209, 110);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(22, 15);
+            this.label16.TabIndex = 19;
+            this.label16.Text = "×";
+            // 
+            // tbLineFov
+            // 
+            this.tbLineFov.Location = new System.Drawing.Point(147, 119);
+            this.tbLineFov.Name = "tbLineFov";
+            this.tbLineFov.Size = new System.Drawing.Size(149, 25);
+            this.tbLineFov.TabIndex = 5;
+            // 
+            // tbLineResolution
+            // 
+            this.tbLineResolution.Location = new System.Drawing.Point(147, 160);
+            this.tbLineResolution.Name = "tbLineResolution";
+            this.tbLineResolution.Size = new System.Drawing.Size(149, 25);
+            this.tbLineResolution.TabIndex = 4;
+            // 
+            // lbLineFov
+            // 
+            this.lbLineFov.AutoSize = true;
+            this.lbLineFov.Location = new System.Drawing.Point(31, 124);
+            this.lbLineFov.Name = "lbLineFov";
+            this.lbLineFov.Size = new System.Drawing.Size(109, 15);
+            this.lbLineFov.TabIndex = 18;
+            this.lbLineFov.Text = "视野Fov(mm) *";
+            // 
+            // tbLineSensor
+            // 
+            this.tbLineSensor.Location = new System.Drawing.Point(147, 79);
+            this.tbLineSensor.Name = "tbLineSensor";
+            this.tbLineSensor.Size = new System.Drawing.Size(149, 25);
+            this.tbLineSensor.TabIndex = 3;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(26, 165);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(114, 15);
+            this.label18.TabIndex = 19;
+            this.label18.Text = "相机分辨率(mm)";
+            // 
+            // lbLineSensor
+            // 
+            this.lbLineSensor.AutoSize = true;
+            this.lbLineSensor.Location = new System.Drawing.Point(7, 84);
+            this.lbLineSensor.Name = "lbLineSensor";
+            this.lbLineSensor.Size = new System.Drawing.Size(133, 15);
+            this.lbLineSensor.TabIndex = 20;
+            this.lbLineSensor.Text = "Sensor尺寸(mm) *";
+            // 
+            // rbLineLength
+            // 
+            this.rbLineLength.AutoSize = true;
+            this.rbLineLength.Checked = true;
+            this.rbLineLength.Location = new System.Drawing.Point(85, 33);
+            this.rbLineLength.Name = "rbLineLength";
+            this.rbLineLength.Size = new System.Drawing.Size(43, 19);
+            this.rbLineLength.TabIndex = 1;
+            this.rbLineLength.TabStop = true;
+            this.rbLineLength.Text = "长";
+            this.rbLineLength.UseVisualStyleBackColor = true;
+            // 
+            // rbLineWidth
+            // 
+            this.rbLineWidth.AutoSize = true;
+            this.rbLineWidth.Location = new System.Drawing.Point(185, 33);
+            this.rbLineWidth.Name = "rbLineWidth";
+            this.rbLineWidth.Size = new System.Drawing.Size(43, 19);
+            this.rbLineWidth.TabIndex = 2;
+            this.rbLineWidth.Text = "宽";
+            this.rbLineWidth.UseVisualStyleBackColor = true;
+            // 
+            // cbCamInter
+            // 
+            this.cbCamInter.FormattingEnabled = true;
+            this.cbCamInter.Location = new System.Drawing.Point(178, 318);
+            this.cbCamInter.Name = "cbCamInter";
+            this.cbCamInter.Size = new System.Drawing.Size(147, 23);
+            this.cbCamInter.TabIndex = 10;
+            // 
+            // lbCamInter
+            // 
+            this.lbCamInter.AutoSize = true;
+            this.lbCamInter.Location = new System.Drawing.Point(59, 322);
+            this.lbCamInter.Name = "lbCamInter";
+            this.lbCamInter.Size = new System.Drawing.Size(113, 15);
+            this.lbCamInter.TabIndex = 1;
+            this.lbCamInter.Text = "相机法兰接口 *";
+            // 
+            // lbFlange
+            // 
+            this.lbFlange.AutoSize = true;
+            this.lbFlange.Location = new System.Drawing.Point(39, 368);
+            this.lbFlange.Name = "lbFlange";
+            this.lbFlange.Size = new System.Drawing.Size(133, 15);
+            this.lbFlange.TabIndex = 6;
+            this.lbFlange.Text = "Sensor深度(mm) *";
+            // 
+            // tbFlange
+            // 
+            this.tbFlange.Location = new System.Drawing.Point(178, 363);
+            this.tbFlange.Name = "tbFlange";
+            this.tbFlange.Size = new System.Drawing.Size(147, 25);
+            this.tbFlange.TabIndex = 13;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(10, 415);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(162, 15);
+            this.label22.TabIndex = 6;
+            this.label22.Text = "Sensor对角线长度(mm)";
+            // 
+            // tbTarget
+            // 
+            this.tbTarget.Location = new System.Drawing.Point(178, 410);
+            this.tbTarget.Name = "tbTarget";
+            this.tbTarget.Size = new System.Drawing.Size(147, 25);
+            this.tbTarget.TabIndex = 15;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(73, 462);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(99, 15);
+            this.label23.TabIndex = 5;
+            this.label23.Text = "工作距离(mm)";
+            // 
+            // tbDistance
+            // 
+            this.tbDistance.Location = new System.Drawing.Point(178, 457);
+            this.tbDistance.Name = "tbDistance";
+            this.tbDistance.Size = new System.Drawing.Size(60, 25);
+            this.tbDistance.TabIndex = 17;
+            // 
+            // tbDistanRange
+            // 
+            this.tbDistanRange.Location = new System.Drawing.Point(264, 457);
+            this.tbDistanRange.Name = "tbDistanRange";
+            this.tbDistanRange.Size = new System.Drawing.Size(60, 25);
+            this.tbDistanRange.TabIndex = 18;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(240, 462);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(22, 15);
+            this.label24.TabIndex = 15;
+            this.label24.Text = "±";
+            // 
+            // btnSelect
+            // 
+            this.btnSelect.Location = new System.Drawing.Point(12, 498);
+            this.btnSelect.Name = "btnSelect";
+            this.btnSelect.Size = new System.Drawing.Size(313, 34);
+            this.btnSelect.TabIndex = 20;
+            this.btnSelect.Text = "查询";
+            this.btnSelect.UseVisualStyleBackColor = true;
+            this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(162, 28);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(116, 15);
+            this.label1.TabIndex = 19;
+            this.label1.Text = "长    ×    宽";
+            // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(985, 544);
+            this.ClientSize = new System.Drawing.Size(946, 539);
+            this.Controls.Add(this.btnSelect);
+            this.Controls.Add(this.tcCamera);
             this.Controls.Add(this.dataGridView2);
+            this.Controls.Add(this.label24);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.tbTarget);
+            this.Controls.Add(this.tbFlange);
+            this.Controls.Add(this.tbDistanRange);
+            this.Controls.Add(this.tbDistance);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.cbCamInter);
+            this.Controls.Add(this.label22);
+            this.Controls.Add(this.label23);
+            this.Controls.Add(this.lbCamInter);
+            this.Controls.Add(this.lbFlange);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainView";
             this.Text = "相机镜头配对";
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            this.tcCamera.ResumeLayout(false);
+            this.tpArea.ResumeLayout(false);
+            this.tpArea.PerformLayout();
+            this.tpLine.ResumeLayout(false);
+            this.tpLine.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -374,15 +538,6 @@
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox cbCamInter;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox tbLength;
-        private System.Windows.Forms.TextBox tbTarget;
-        private System.Windows.Forms.TextBox tbDistance;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem 录入ToolStripMenuItem;
@@ -390,21 +545,46 @@
         private System.Windows.Forms.ToolStripMenuItem FocusToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem AdapterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ExtendToolStripMenuItem;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox tbDistanRange;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox tbWidth;
         private System.Windows.Forms.ToolStripMenuItem connToolStripMenuItem;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox cbLensInter;
         private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.TextBox tbSensor;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tbFov;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label lbRatio;
+        private System.Windows.Forms.ToolStripMenuItem 语言ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 中文ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem enlishToolStripMenuItem;
+        private System.Windows.Forms.TabControl tcCamera;
+        private System.Windows.Forms.TabPage tpArea;
+        private System.Windows.Forms.TabPage tpLine;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox tbSensorSide;
+        private System.Windows.Forms.TextBox tbSensorOther;
+        private System.Windows.Forms.Label lbSensor;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox tbResolutionSide;
+        private System.Windows.Forms.TextBox tbResolutionOther;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.TextBox tbFovSide;
+        private System.Windows.Forms.TextBox tbFovOther;
+        private System.Windows.Forms.Label lbFov;
+        private System.Windows.Forms.TextBox tbLineFov;
+        private System.Windows.Forms.TextBox tbLineResolution;
+        private System.Windows.Forms.Label lbLineFov;
+        private System.Windows.Forms.TextBox tbLineSensor;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label lbLineSensor;
+        private System.Windows.Forms.RadioButton rbLineLength;
+        private System.Windows.Forms.RadioButton rbLineWidth;
+        private System.Windows.Forms.ComboBox cbCamInter;
+        private System.Windows.Forms.Label lbCamInter;
+        private System.Windows.Forms.Label lbFlange;
+        private System.Windows.Forms.TextBox tbFlange;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.TextBox tbTarget;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.TextBox tbDistance;
+        private System.Windows.Forms.TextBox tbDistanRange;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Button btnSelect;
+        private System.Windows.Forms.Label label1;
     }
 }
 

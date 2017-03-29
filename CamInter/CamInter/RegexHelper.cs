@@ -234,7 +234,7 @@ namespace Core
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static bool IsNumberUnsignedinteger(string input)
+        public static bool IsNumberUnsignedInteger(string input)
         {
             string strPattern = @"^[1-9]\d*$";
             return IsMatch(input, strPattern);

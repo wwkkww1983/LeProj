@@ -370,9 +370,8 @@ namespace CamInter
                 Target = 90f,
                 Flange = 95.87f,
                 Connector = 5,
-                Sensor = 28,
-                Fov = 60,
-                Ratio = 0.47f,
+                HH = -2.38f,
+                Length = 28.6f,
                 RatioMin = 0,
                 RatioMax = 1
             });
@@ -384,9 +383,8 @@ namespace CamInter
                 Target = 90f,
                 Flange = 86.5f,
                 Connector = 5,
-                Sensor = 28,
-                Fov = 60,
-                Ratio = 0.47f,
+                HH = -3.6f,
+                Length = 28.6f,
                 RatioMin = 0,
                 RatioMax = 1
             });
@@ -398,9 +396,8 @@ namespace CamInter
                 Target = 80f,
                 Flange = 77.6f,
                 Connector = 5,
-                Sensor = 28,
-                Fov = 60,
-                Ratio = 0.47f,
+                HH = -1.31f,
+                Length = 28.6f,
                 RatioMin = 0,
                 RatioMax = 1
             });
@@ -412,9 +409,8 @@ namespace CamInter
                 Target = 80f,
                 Flange = 77.5f,
                 Connector = 5,
-                Sensor = 28,
-                Fov = 60,
-                Ratio = 0.47f,
+                HH = -1.81f,
+                Length = 28.6f,
                 RatioMin = 0,
                 RatioMax = 1
             });
@@ -426,9 +422,8 @@ namespace CamInter
                 Target = 60f,
                 Flange = 53.29f,
                 Connector = 5,
-                Sensor = 28,
-                Fov = 60,
-                Ratio = 0.47f,
+                HH = -1.85f,
+                Length = 28.6f,
                 RatioMin = 0,
                 RatioMax = 1
             });
@@ -440,9 +435,8 @@ namespace CamInter
                 Target = 43.2f,
                 Flange = 42f,
                 Connector = 5,
-                Sensor = 28,
-                Fov = 60,
-                Ratio = 0.47f,
+                HH = -3.14f,
+                Length = 28.6f,
                 RatioMin = 0,
                 RatioMax = 1
             });
@@ -454,9 +448,8 @@ namespace CamInter
                 Target = 43.2f,
                 Flange = 42.35f,
                 Connector = 5,
-                Sensor = 28,
-                Fov = 60,
-                Ratio = 0.47f,
+                HH = -1.8f,
+                Length = 28.6f,
                 RatioMin = 0,
                 RatioMax = 1
             });
@@ -468,9 +461,8 @@ namespace CamInter
                 Target = 43.2f,
                 Flange = 38.11f,
                 Connector = 5,
-                Sensor = 28,
-                Fov = 60,
-                Ratio = 0.47f,
+                HH = -2.19f,
+                Length = 28.6f,
                 RatioMin = 0,
                 RatioMax = 1
             });
@@ -482,9 +474,8 @@ namespace CamInter
                 Target = 32.5f,
                 Flange = 30.75f,
                 Connector = 5,
-                Sensor = 28,
-                Fov = 60,
-                Ratio = 0.47f,
+                HH = -3.54f,
+                Length = 28.6f,
                 RatioMin = 0,
                 RatioMax = 1
             });
@@ -496,9 +487,8 @@ namespace CamInter
                 Connector = 5,
                 Target = 30f,
                 Flange = 25.13f,
-                Sensor = 28,
-                Fov = 60,
-                Ratio = 0.47f,
+                HH = -2.94f,
+                Length = 28.6f,
                 RatioMin = 0,
                 RatioMax = 1
             });
@@ -520,8 +510,8 @@ namespace CamInter
             foreach (ValueType item in list)
             {
                 DataRow dr = dt.NewRow();
-                dr["Idx"] = ((iGetComm)item).Idx;
-                dr["Name"] = ((iGetComm)item).Name;
+                dr["Idx"] = ((iGetIDName)item).Idx;
+                dr["Name"] = ((iGetIDName)item).Name;
                 dt.Rows.Add(dr);
             }
             return dt;
