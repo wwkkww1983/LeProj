@@ -93,5 +93,26 @@ namespace CamInter
         /// 延长环
         /// </summary>
         public List<RingMedium> ExtendList;
+
+        /// <summary>
+        /// 放大倍率
+        /// </summary>
+        public float Ratio;
+
+        /// <summary>
+        /// 工作距离
+        /// </summary>
+        public float WorkDistance;
+
+        /// <summary>
+        /// 视野尺寸
+        /// </summary>
+        public float FovLength;
+        
+        /// <summary>
+        /// 视野尺寸
+        /// </summary>
+        public float FovWidth;
+
     }
 }

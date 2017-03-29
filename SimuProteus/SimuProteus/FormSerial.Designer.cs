@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSerial));
             this.label1 = new System.Windows.Forms.Label();
             this.tbSend = new System.Windows.Forms.TextBox();
@@ -55,9 +54,8 @@
             this.cbPorts = new System.Windows.Forms.ComboBox();
             this.btnClearHistory = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.cbSendTimer = new System.Windows.Forms.CheckBox();
             this.tbSendTimer = new System.Windows.Forms.TextBox();
-            this.timerSend = new System.Windows.Forms.Timer(this.components);
+            this.ckbSendTimer = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -311,23 +309,13 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.tbSendTimer);
-            this.groupBox2.Controls.Add(this.cbSendTimer);
+            this.groupBox2.Controls.Add(this.ckbSendTimer);
             this.groupBox2.Location = new System.Drawing.Point(2, 400);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(197, 58);
             this.groupBox2.TabIndex = 78;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "定时发送(毫秒)";
-            // 
-            // cbSendTimer
-            // 
-            this.cbSendTimer.AutoSize = true;
-            this.cbSendTimer.Location = new System.Drawing.Point(27, 24);
-            this.cbSendTimer.Name = "cbSendTimer";
-            this.cbSendTimer.Size = new System.Drawing.Size(18, 17);
-            this.cbSendTimer.TabIndex = 0;
-            this.cbSendTimer.UseVisualStyleBackColor = true;
-            this.cbSendTimer.CheckedChanged += new System.EventHandler(this.cbSendTimer_CheckedChanged);
             // 
             // tbSendTimer
             // 
@@ -337,9 +325,15 @@
             this.tbSendTimer.TabIndex = 1;
             this.tbSendTimer.Text = "1000";
             // 
-            // timerSend
+            // ckbSendTimer
             // 
-            this.timerSend.Tick += new System.EventHandler(this.timerSend_Tick);
+            this.ckbSendTimer.AutoSize = true;
+            this.ckbSendTimer.Location = new System.Drawing.Point(27, 24);
+            this.ckbSendTimer.Name = "ckbSendTimer";
+            this.ckbSendTimer.Size = new System.Drawing.Size(18, 17);
+            this.ckbSendTimer.TabIndex = 0;
+            this.ckbSendTimer.UseVisualStyleBackColor = true;
+            this.ckbSendTimer.CheckedChanged += new System.EventHandler(this.cbSendTimer_CheckedChanged);
             // 
             // FormSerial
             // 
@@ -411,8 +405,7 @@
         private System.Windows.Forms.ComboBox cbPorts;
         private System.Windows.Forms.Button btnClearHistory;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.CheckBox cbSendTimer;
+        private System.Windows.Forms.CheckBox ckbSendTimer;
         private System.Windows.Forms.TextBox tbSendTimer;
-        private System.Windows.Forms.Timer timerSend;
     }
 }

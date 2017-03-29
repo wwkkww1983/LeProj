@@ -14,7 +14,9 @@ namespace SimuProteus
         private const int BUFFER_SIZE = 1024;
         private const string SEND_LABEL = "==>>", RECE_LABEL = "<<==";
         private SerialCom serial = null;
+        private System.Timers.Timer timerSend = new System.Timers.Timer();
         SerialInfo serialInfo;
+        private static readonly object timerSendLocker = new object();
         public FormSerial()
         {
             InitializeComponent();
@@ -48,6 +50,7 @@ namespace SimuProteus
         private void DisableSendComponent(bool flag)
         {
             this.btnSend.Enabled = !flag;
+            this.ckbSendTimer.Enabled = !flag;
             this.btnFresh.Enabled = flag;
             this.tbDatabits.Enabled = flag;
             this.cbStopbits.Enabled = flag;
@@ -92,8 +95,14 @@ namespace SimuProteus
                 strInfo = this.DecodeByAscii(buff, count);
             }
 
-            this.serial.Write(buff, 0, count);
-            this.SetWordsColor(SEND_LABEL + strInfo, true);
+            lock (timerSendLocker)
+            {
+                if (this.serial.IsOpen)
+                {
+                    this.serial.Write(buff, 0, count);
+                    this.SetWordsColor(SEND_LABEL + strInfo, true);
+                }
+            }
         }
 
         private void SetWordsColor(string content, bool isSend)
@@ -128,9 +137,13 @@ namespace SimuProteus
         {
             if (this.btnConnect.Text == "断开")
             {
-                this.cbSendTimer.Checked = false;
-                this.CloseSeiral();
+                if (this.ckbSendTimer.Checked)
+                {
+                    MessageBox.Show("先结束定时器");
+                    return;
+                }
                 this.DisableSendComponent(true);
+                this.CloseSeiral();
                 return;
             }
 
@@ -172,10 +185,18 @@ namespace SimuProteus
 
         private void CloseSeiral()
         {
-            if (this.serial.IsOpen)
+            while (this.timerSend.Enabled)
             {
-                this.serial.Close();
-                this.serial.Dispose();
+                System.Threading.Thread.Sleep(100);
+                this.timerSend.Enabled = false;
+            }
+            lock (timerSendLocker)
+            {
+                if (this.serial.IsOpen)
+                {
+                    this.serial.Close();
+                    this.serial.Dispose();
+                }
             }
         }
 
@@ -190,10 +211,13 @@ namespace SimuProteus
         private void cbSendTimer_CheckedChanged(object sender, EventArgs e)
         {
             this.timerSend.Interval = Convert.ToInt32(this.tbSendTimer.Text);
-            this.timerSend.Enabled = (sender as CheckBox).Checked;
+            this.timerSend.Enabled = this.ckbSendTimer.Checked && this.serial.IsOpen;
+            this.timerSend.AutoReset = true;
+            this.timerSend.Elapsed += new System.Timers.ElapsedEventHandler(timer_Elapsed);
+
         }
 
-        private void timerSend_Tick(object sender, EventArgs e)
+        private void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             this.btnSend_Click(null, null);
         }

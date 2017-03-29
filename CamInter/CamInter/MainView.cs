@@ -19,6 +19,7 @@ namespace CamInter
         private List<ValueType> cameList = null;
         private DBUtility dbHandler = new DBUtility(true);
         private Algorithm alg = null;
+        List<RingResult> resultList = null;
 
         public MainView()
         {
@@ -98,6 +99,15 @@ namespace CamInter
         #region 用户行为
         private void btnSelect_Click(object sender, EventArgs e)
         {
+            if (!this.PreCheckUserDataIsEnough()) return;
+            float ratio = areaBoardSelected ? this.PreFilterUserAreaData() : this.PreFilterUserLineData();
+            int camInter = Convert.ToInt32(this.cbCamInter.SelectedValue);
+            float flange = Convert.ToSingle(this.tbFlange.Text);
+            float target = Convert.ToSingle(this.tbTarget.Text);
+            float workDistance = Convert.ToSingle(this.tbDistance.Text);
+            float workDistanceRange = Convert.ToSingle(this.tbDistanRange.Text);
+
+            resultList = this.alg.GetDevicesByBaseInfo(camInter, flange, target, resolutionSide, resolutionOther, ratio, workDistance, workDistanceRange);
 
         }
 
@@ -110,17 +120,8 @@ namespace CamInter
             this.tbTarget.Text = Math.Sqrt(sensorSide * sensorSide + sensorOther * sensorOther).ToString();
         }
 
-        private void selectPatchItems(object sender, EventArgs e)
+        private void showResults(List<RingResult> result)
         {
-            if (!this.PreCheckUserDataIsEnough()) return;
-            float ratio = areaBoardSelected ? this.PreFilterUserAreaData() : this.PreFilterUserLineData();
-            int camInter = Convert.ToInt32(this.cbCamInter.SelectedValue);
-            float flange = Convert.ToSingle(this.tbFlange.Text);
-            float target = Convert.ToSingle(this.tbTarget.Text);
-            float workDistance = Convert.ToSingle(this.tbDistance.Text);
-            float workDistanceRange = Convert.ToSingle(this.tbDistanRange.Text);
-
-            List<RingResult> resultList = this.alg.GetDevicesByBaseInfo(camInter, flange, target, resolutionSide, resolutionOther, ratio, workDistance, workDistanceRange);
             
         }
 
