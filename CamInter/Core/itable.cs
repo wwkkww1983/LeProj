@@ -2,7 +2,7 @@
 using System.Data;
 using System.Collections.Generic;
 
-namespace CamInter
+namespace Core
 {
     public interface itable
     {

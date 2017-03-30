@@ -3,7 +3,7 @@ using System.Data;
 using System.Collections.Generic;
 using System.Data.SQLite;
 
-namespace CamInter
+namespace Core
 {
     /// <summary>
     /// 接口

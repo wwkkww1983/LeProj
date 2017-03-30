@@ -5,7 +5,7 @@ using System.Text;
 using System.Data;
 using System.Drawing;
 
-namespace CamInter
+namespace Core
 {
     /// <summary>
     /// 显示信息的编码解码

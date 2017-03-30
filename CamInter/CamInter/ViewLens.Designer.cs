@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ViewLens));
             this.lbFocus = new System.Windows.Forms.Label();
             this.tbFocus = new System.Windows.Forms.TextBox();
             this.lbInter = new System.Windows.Forms.Label();
@@ -64,273 +65,173 @@
             // 
             // lbFocus
             // 
-            this.lbFocus.AutoSize = true;
-            this.lbFocus.Location = new System.Drawing.Point(287, 79);
+            resources.ApplyResources(this.lbFocus, "lbFocus");
             this.lbFocus.Name = "lbFocus";
-            this.lbFocus.Size = new System.Drawing.Size(85, 15);
-            this.lbFocus.TabIndex = 0;
-            this.lbFocus.Text = "焦距(mm) *";
             // 
             // tbFocus
             // 
-            this.tbFocus.Location = new System.Drawing.Point(378, 74);
+            resources.ApplyResources(this.tbFocus, "tbFocus");
             this.tbFocus.Name = "tbFocus";
-            this.tbFocus.Size = new System.Drawing.Size(100, 25);
-            this.tbFocus.TabIndex = 8;
             // 
             // lbInter
             // 
-            this.lbInter.AutoSize = true;
-            this.lbInter.Location = new System.Drawing.Point(87, 79);
+            resources.ApplyResources(this.lbInter, "lbInter");
             this.lbInter.Name = "lbInter";
-            this.lbInter.Size = new System.Drawing.Size(53, 15);
-            this.lbInter.TabIndex = 0;
-            this.lbInter.Text = "接口 *";
             // 
             // lbWeight
             // 
-            this.lbWeight.AutoSize = true;
-            this.lbWeight.Location = new System.Drawing.Point(103, 255);
+            resources.ApplyResources(this.lbWeight, "lbWeight");
             this.lbWeight.Name = "lbWeight";
-            this.lbWeight.Size = new System.Drawing.Size(37, 15);
-            this.lbWeight.TabIndex = 0;
-            this.lbWeight.Text = "重量";
             // 
             // tbWeight
             // 
-            this.tbWeight.Location = new System.Drawing.Point(146, 250);
+            resources.ApplyResources(this.tbWeight, "tbWeight");
             this.tbWeight.Name = "tbWeight";
-            this.tbWeight.Size = new System.Drawing.Size(100, 25);
-            this.tbWeight.TabIndex = 20;
             // 
             // lbFreq
             // 
-            this.lbFreq.AutoSize = true;
-            this.lbFreq.Location = new System.Drawing.Point(305, 255);
+            resources.ApplyResources(this.lbFreq, "lbFreq");
             this.lbFreq.Name = "lbFreq";
-            this.lbFreq.Size = new System.Drawing.Size(67, 15);
-            this.lbFreq.TabIndex = 0;
-            this.lbFreq.Text = "空间频率";
             // 
             // tbFreq
             // 
-            this.tbFreq.Location = new System.Drawing.Point(378, 250);
+            resources.ApplyResources(this.tbFreq, "tbFreq");
             this.tbFreq.Name = "tbFreq";
-            this.tbFreq.Size = new System.Drawing.Size(100, 25);
-            this.tbFreq.TabIndex = 17;
             // 
             // lbTarget
             // 
-            this.lbTarget.AutoSize = true;
-            this.lbTarget.Location = new System.Drawing.Point(25, 167);
+            resources.ApplyResources(this.lbTarget, "lbTarget");
             this.lbTarget.Name = "lbTarget";
-            this.lbTarget.Size = new System.Drawing.Size(115, 15);
-            this.lbTarget.TabIndex = 0;
-            this.lbTarget.Text = "最大靶面(mm) *";
             // 
             // tbTarget
             // 
-            this.tbTarget.Location = new System.Drawing.Point(146, 162);
+            resources.ApplyResources(this.tbTarget, "tbTarget");
             this.tbTarget.Name = "tbTarget";
-            this.tbTarget.Size = new System.Drawing.Size(100, 25);
-            this.tbTarget.TabIndex = 15;
             // 
             // lbDistort
             // 
-            this.lbDistort.AutoSize = true;
-            this.lbDistort.Location = new System.Drawing.Point(320, 211);
+            resources.ApplyResources(this.lbDistort, "lbDistort");
             this.lbDistort.Name = "lbDistort";
-            this.lbDistort.Size = new System.Drawing.Size(52, 15);
-            this.lbDistort.TabIndex = 0;
-            this.lbDistort.Text = "畸变量";
             // 
             // tbDistort
             // 
-            this.tbDistort.Location = new System.Drawing.Point(378, 206);
+            resources.ApplyResources(this.tbDistort, "tbDistort");
             this.tbDistort.Name = "tbDistort";
-            this.tbDistort.Size = new System.Drawing.Size(100, 25);
-            this.tbDistort.TabIndex = 22;
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(176, 348);
+            resources.ApplyResources(this.btnSave, "btnSave");
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 16;
-            this.btnSave.Text = "保存";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(262, 348);
+            resources.ApplyResources(this.btnCancel, "btnCancel");
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 30;
-            this.btnCancel.Text = "取消";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // cbInter
             // 
             this.cbInter.FormattingEnabled = true;
-            this.cbInter.Location = new System.Drawing.Point(146, 75);
+            resources.ApplyResources(this.cbInter, "cbInter");
             this.cbInter.Name = "cbInter";
-            this.cbInter.Size = new System.Drawing.Size(100, 23);
-            this.cbInter.TabIndex = 7;
             // 
             // lbResoLength
             // 
-            this.lbResoLength.AutoSize = true;
-            this.lbResoLength.Location = new System.Drawing.Point(57, 299);
+            resources.ApplyResources(this.lbResoLength, "lbResoLength");
             this.lbResoLength.Name = "lbResoLength";
-            this.lbResoLength.Size = new System.Drawing.Size(83, 15);
-            this.lbResoLength.TabIndex = 0;
-            this.lbResoLength.Text = "分辨率(长)";
             // 
             // tbResoLength
             // 
-            this.tbResoLength.Location = new System.Drawing.Point(146, 294);
+            resources.ApplyResources(this.tbResoLength, "tbResoLength");
             this.tbResoLength.Name = "tbResoLength";
-            this.tbResoLength.Size = new System.Drawing.Size(100, 25);
-            this.tbResoLength.TabIndex = 4;
             // 
             // lbResoWidth
             // 
-            this.lbResoWidth.AutoSize = true;
-            this.lbResoWidth.Location = new System.Drawing.Point(289, 299);
+            resources.ApplyResources(this.lbResoWidth, "lbResoWidth");
             this.lbResoWidth.Name = "lbResoWidth";
-            this.lbResoWidth.Size = new System.Drawing.Size(83, 15);
-            this.lbResoWidth.TabIndex = 0;
-            this.lbResoWidth.Text = "分辨率(宽)";
             // 
             // tbNumber
             // 
-            this.tbNumber.Location = new System.Drawing.Point(378, 30);
+            resources.ApplyResources(this.tbNumber, "tbNumber");
             this.tbNumber.Name = "tbNumber";
-            this.tbNumber.Size = new System.Drawing.Size(100, 25);
-            this.tbNumber.TabIndex = 2;
             // 
             // lbName
             // 
-            this.lbName.AutoSize = true;
-            this.lbName.Location = new System.Drawing.Point(87, 35);
+            resources.ApplyResources(this.lbName, "lbName");
             this.lbName.Name = "lbName";
-            this.lbName.Size = new System.Drawing.Size(53, 15);
-            this.lbName.TabIndex = 0;
-            this.lbName.Text = "名称 *";
             // 
             // tbName
             // 
-            this.tbName.Location = new System.Drawing.Point(146, 30);
+            resources.ApplyResources(this.tbName, "tbName");
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(100, 25);
-            this.tbName.TabIndex = 1;
             // 
             // lbNumber
             // 
-            this.lbNumber.AutoSize = true;
-            this.lbNumber.Location = new System.Drawing.Point(319, 35);
+            resources.ApplyResources(this.lbNumber, "lbNumber");
             this.lbNumber.Name = "lbNumber";
-            this.lbNumber.Size = new System.Drawing.Size(53, 15);
-            this.lbNumber.TabIndex = 0;
-            this.lbNumber.Text = "货号 *";
             // 
             // tbResoWidth
             // 
-            this.tbResoWidth.Location = new System.Drawing.Point(378, 294);
+            resources.ApplyResources(this.tbResoWidth, "tbResoWidth");
             this.tbResoWidth.Name = "tbResoWidth";
-            this.tbResoWidth.Size = new System.Drawing.Size(100, 25);
-            this.tbResoWidth.TabIndex = 5;
             // 
             // lbFlange
             // 
-            this.lbFlange.AutoSize = true;
-            this.lbFlange.Location = new System.Drawing.Point(10, 123);
+            resources.ApplyResources(this.lbFlange, "lbFlange");
             this.lbFlange.Name = "lbFlange";
-            this.lbFlange.Size = new System.Drawing.Size(130, 15);
-            this.lbFlange.TabIndex = 0;
-            this.lbFlange.Text = "相机法兰距(mm) *";
             // 
             // tbFlange
             // 
-            this.tbFlange.Location = new System.Drawing.Point(146, 118);
+            resources.ApplyResources(this.tbFlange, "tbFlange");
             this.tbFlange.Name = "tbFlange";
-            this.tbFlange.Size = new System.Drawing.Size(100, 25);
-            this.tbFlange.TabIndex = 10;
             // 
             // lbLength
             // 
-            this.lbLength.AutoSize = true;
-            this.lbLength.Location = new System.Drawing.Point(25, 211);
+            resources.ApplyResources(this.lbLength, "lbLength");
             this.lbLength.Name = "lbLength";
-            this.lbLength.Size = new System.Drawing.Size(115, 15);
-            this.lbLength.TabIndex = 0;
-            this.lbLength.Text = "镜头长度(mm) *";
             // 
             // tbLength
             // 
-            this.tbLength.Enabled = false;
-            this.tbLength.Location = new System.Drawing.Point(146, 206);
+            resources.ApplyResources(this.tbLength, "tbLength");
             this.tbLength.Name = "tbLength";
-            this.tbLength.Size = new System.Drawing.Size(100, 25);
-            this.tbLength.TabIndex = 23;
-            this.tbLength.Text = "28.6";
             // 
             // tbRatioMax
             // 
-            this.tbRatioMax.Location = new System.Drawing.Point(442, 118);
+            resources.ApplyResources(this.tbRatioMax, "tbRatioMax");
             this.tbRatioMax.Name = "tbRatioMax";
-            this.tbRatioMax.Size = new System.Drawing.Size(37, 25);
-            this.tbRatioMax.TabIndex = 12;
             // 
             // tbRatioMin
             // 
-            this.tbRatioMin.Location = new System.Drawing.Point(378, 118);
+            resources.ApplyResources(this.tbRatioMin, "tbRatioMin");
             this.tbRatioMin.Name = "tbRatioMin";
-            this.tbRatioMin.Size = new System.Drawing.Size(37, 25);
-            this.tbRatioMin.TabIndex = 11;
             // 
             // lbRangeInter
             // 
-            this.lbRangeInter.AutoSize = true;
-            this.lbRangeInter.Location = new System.Drawing.Point(421, 123);
+            resources.ApplyResources(this.lbRangeInter, "lbRangeInter");
             this.lbRangeInter.Name = "lbRangeInter";
-            this.lbRangeInter.Size = new System.Drawing.Size(15, 15);
-            this.lbRangeInter.TabIndex = 14;
-            this.lbRangeInter.Text = "-";
             // 
             // lbRatioRange
             // 
-            this.lbRatioRange.AutoSize = true;
-            this.lbRatioRange.Location = new System.Drawing.Point(259, 123);
+            resources.ApplyResources(this.lbRatioRange, "lbRatioRange");
             this.lbRatioRange.Name = "lbRatioRange";
-            this.lbRatioRange.Size = new System.Drawing.Size(113, 15);
-            this.lbRatioRange.TabIndex = 15;
-            this.lbRatioRange.Text = "放大倍率范围 *";
             // 
             // lbHH
             // 
-            this.lbHH.AutoSize = true;
-            this.lbHH.Location = new System.Drawing.Point(333, 167);
+            resources.ApplyResources(this.lbHH, "lbHH");
             this.lbHH.Name = "lbHH";
-            this.lbHH.Size = new System.Drawing.Size(39, 15);
-            this.lbHH.TabIndex = 0;
-            this.lbHH.Text = "HH *";
             // 
             // tbHH
             // 
-            this.tbHH.Enabled = false;
-            this.tbHH.Location = new System.Drawing.Point(378, 162);
+            resources.ApplyResources(this.tbHH, "tbHH");
             this.tbHH.Name = "tbHH";
-            this.tbHH.Size = new System.Drawing.Size(100, 25);
-            this.tbHH.TabIndex = 23;
             // 
             // ViewLens
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(506, 389);
             this.Controls.Add(this.tbRatioMax);
             this.Controls.Add(this.tbRatioMin);
             this.Controls.Add(this.lbRangeInter);
@@ -364,7 +265,6 @@
             this.Controls.Add(this.tbFocus);
             this.Controls.Add(this.lbFocus);
             this.Name = "ViewLens";
-            this.Text = "镜头";
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CamInter
+namespace Core
 {
     /// <summary>
     /// 产品类型
@@ -34,7 +34,12 @@ namespace CamInter
         /// <summary>
         /// 接口
         /// </summary>
-        Interface
+        Interface,
+
+        /// <summary>
+        /// 相机
+        /// </summary>
+        Camera
     }
 
     /// <summary>
@@ -42,30 +47,45 @@ namespace CamInter
     /// </summary>
     public class Constants
     {
+        public static string GetNameByType(enumProductType type)
+        {
+            string strTypeName = string.Empty;
+            switch (type)
+            {
+                case enumProductType.Focus: strTypeName = FOCUS; break;
+                case enumProductType.Adapter: strTypeName = ADAPTER; break;
+                case enumProductType.Extend: strTypeName = EXTEND; break;
+                case enumProductType.Interface: strTypeName = INTERFACE; break;
+                case enumProductType.CamLens: strTypeName = CAM_LENS; break;
+                default: break;
+            }
+            return strTypeName;
+        }
+
         /// <summary>
         /// 镜头
         /// </summary>
-        public const string CAM_LENS = "镜头";
+        private const string CAM_LENS = "镜头";
 
         /// <summary>
         /// 调焦环
         /// </summary>
-        public const string FOCUS = "调焦环";
+        private const string FOCUS = "调焦环";
 
         /// <summary>
         /// 转接环
         /// </summary>
-        public const string ADAPTER = "转接环";
+        private const string ADAPTER = "转接环";
 
         /// <summary>
         /// 延长环
         /// </summary>
-        public const string EXTEND = "延长环";
+        private const string EXTEND = "延长环";
 
         /// <summary>
         /// 延长环
         /// </summary>
-        public const string INTERFACE = "接口";
+        private const string INTERFACE = "接口";
 
     }
 
@@ -78,6 +98,11 @@ namespace CamInter
         /// 方案序号
         /// </summary>
         public int Idx;
+
+        /// <summary>
+        /// 镜头（有且仅有一个）
+        /// </summary>
+        public CameraLens Lens;
 
         /// <summary>
         /// 调焦环（最多一个）
@@ -109,6 +134,49 @@ namespace CamInter
         /// </summary>
         public float FovLength;
         
+        /// <summary>
+        /// 视野尺寸
+        /// </summary>
+        public float FovWidth;
+
+    }
+
+
+    /// <summary>
+    /// 中间环计算结果
+    /// </summary>
+    public struct RingResults
+    {
+        /// <summary>
+        /// 方案序号
+        /// </summary>
+        public int Idx;
+
+        /// <summary>
+        /// 镜头（有且仅有一个）
+        /// </summary>
+        public CameraLens Lens;
+
+        /// <summary>
+        /// 中间环列表
+        /// </summary>
+        public List<RingMedium> ringList;
+
+        /// <summary>
+        /// 放大倍率
+        /// </summary>
+        public float Ratio;
+
+        /// <summary>
+        /// 工作距离
+        /// </summary>
+        public float WorkDistance;
+
+        /// <summary>
+        /// 视野尺寸
+        /// </summary>
+        public float FovLength;
+
         /// <summary>
         /// 视野尺寸
         /// </summary>

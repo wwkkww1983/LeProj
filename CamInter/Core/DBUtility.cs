@@ -4,9 +4,9 @@ using System.Drawing;
 using System.Data.SQLite;
 using System.Collections.Generic;
 
-namespace CamInter
+namespace Core
 {
-    class DBUtility
+    public class DBUtility
     {
         private const string STR_CONNECTION = "Data Source=cam.s;Version=3;";
         private Coder code = new Coder();
@@ -78,8 +78,8 @@ namespace CamInter
                 Length = 18.3f,
                 LengthMin = 15.8f,
                 LengthMax = 20.8f,
-                InterUp = 5,
-                InterDown = 9
+                InterUp = 9,
+                InterDown = 5
             });
             this.InsertItem(new RingMedium()
             {
@@ -89,8 +89,8 @@ namespace CamInter
                 Length = 23.5f,
                 LengthMin = 20f,
                 LengthMax = 27f,
-                InterUp = 5,
-                InterDown = 3
+                InterUp = 3,
+                InterDown = 5
             });
             this.InsertItem(new RingMedium()
             {
@@ -100,8 +100,8 @@ namespace CamInter
                 Length = 23.5f,
                 LengthMin = 20f,
                 LengthMax = 27f,
-                InterUp = 5,
-                InterDown = 2
+                InterUp = 2,
+                InterDown = 5
             });
             this.InsertItem(new RingMedium()
             {
@@ -111,8 +111,8 @@ namespace CamInter
                 Length = 18.85f,
                 LengthMin = 15.7f,
                 LengthMax = 22f,
-                InterUp = 5,
-                InterDown = 1
+                InterUp = 1,
+                InterDown = 5
             });
             this.InsertItem(new RingMedium()
             {
@@ -132,8 +132,8 @@ namespace CamInter
                 Length = 32.1f,
                 LengthMin = 20.6f,
                 LengthMax = 43.6f,
-                 InterUp = 1,
-                 InterDown = 2
+                 InterUp = 2,
+                 InterDown = 1
             }); 
             this.InsertItem(new RingMedium()
             {
@@ -143,8 +143,8 @@ namespace CamInter
                 Length = 21.7f,
                 LengthMin = 19.2f,
                 LengthMax = 24.2f,
-                InterUp = 5,
-                InterDown = 7
+                InterUp = 7,
+                InterDown = 5
             });
             #endregion
 
@@ -155,8 +155,10 @@ namespace CamInter
                 Name = "V70 to M72",
                 Number = "1072419A",
                 Length = 10f,
-                InterUp = 6,
-                InterDown = 3
+                LengthMin = 10f,
+                LengthMax = 10f,
+                InterUp = 3,
+                InterDown = 6
             });
             this.InsertItem(new RingMedium()
             {
@@ -164,8 +166,10 @@ namespace CamInter
                 Name = "M90 to M95",
                 Number = "903001A",
                 Length = 4f,
-                InterUp = 4,
-                InterDown = 10
+                LengthMin = 4f,
+                LengthMax = 4f,
+                InterUp = 10,
+                InterDown = 4
             });
             this.InsertItem(new RingMedium()
             {
@@ -173,8 +177,10 @@ namespace CamInter
                 Name = "M72 to M58",
                 Number = "1075556A",
                 Length = 6f,
-                InterUp = 3,
-                InterDown = 2
+                LengthMin = 6f,
+                LengthMax = 6f,
+                InterUp = 2,
+                InterDown = 3
             });
             this.InsertItem(new RingMedium()
             {
@@ -182,17 +188,10 @@ namespace CamInter
                 Name = "M72 to M90",
                 Number = "1084879A",
                 Length = 4f,
-                InterUp = 3,
-                InterDown = 4
-            });
-            this.InsertItem(new RingMedium()
-            {
-                RingType = enumProductType.Adapter,
-                Name = "M72 to M90",
-                Number = "1084879A",
-                Length = 4f,
-                InterUp = 3,
-                InterDown = 4
+                LengthMin = 4f,
+                LengthMax = 4f,
+                InterUp = 4,
+                InterDown = 3
             });
             this.InsertItem(new RingMedium()
             {
@@ -200,8 +199,10 @@ namespace CamInter
                 Name = "M58  to Nikon F-Mount",
                 Number = "903002A",
                 Length = 9f,
-                InterUp = 2,
-                InterDown = 8
+                LengthMin = 9f,
+                LengthMax = 9f,
+                InterUp = 8,
+                InterDown = 2
             });
             this.InsertItem(new RingMedium()
             {
@@ -209,8 +210,10 @@ namespace CamInter
                 Name = "M58 to M72",
                 Number = "13052A",
                 Length = 2f,
-                InterUp = 2,
-                InterDown = 3
+                LengthMin = 2f,
+                LengthMax = 2f,
+                InterUp = 3,
+                InterDown = 2
             });
             this.InsertItem(new RingMedium()
             {
@@ -218,8 +221,10 @@ namespace CamInter
                 Name = "V38 to Nikon F-Mount",
                 Number = "21610A",
                 Length = 9.3f,
-                InterUp = 5,
-                InterDown = 8
+                LengthMin = 9.3f,
+                LengthMax = 9.3f,
+                InterUp = 8,
+                InterDown = 5
             });
             this.InsertItem(new RingMedium()
             {
@@ -227,8 +232,10 @@ namespace CamInter
                 Name = "V38 to M58",
                 Number = "1018385A",
                 Length = 10f,
-                InterUp = 5,
-                InterDown = 2
+                LengthMin = 10f,
+                LengthMax = 10f,
+                InterUp = 2,
+                InterDown = 5
             });
             this.InsertItem(new RingMedium()
             {
@@ -236,8 +243,10 @@ namespace CamInter
                 Name = "V38 to M42",
                 Number = "20059A",
                 Length = 6.5f,
-                InterUp = 5,
-                InterDown = 1
+                LengthMin = 6.5f,
+                LengthMax = 6.5f,
+                InterUp = 1,
+                InterDown = 5
             });
             #endregion
 
@@ -248,6 +257,8 @@ namespace CamInter
                 Name = "Ext.Tube V38 / V38",
                 Number = "20176A",
                 Length = 6f,
+                LengthMin = 6f,
+                LengthMax = 6f,
                 InterUp = 5,
                 InterDown = 5
             });
@@ -257,6 +268,8 @@ namespace CamInter
                 Name = "Ext.Tube V38 / V38",
                 Number = "20178A",
                 Length = 10f,
+                LengthMin = 10f,
+                LengthMax = 10f,
                 InterUp = 5,
                 InterDown = 5
             });
@@ -266,6 +279,8 @@ namespace CamInter
                 Name = "Ext.Tube V38 / V38",
                 Number = "20179A",
                 Length = 25f,
+                LengthMin = 25f,
+                LengthMax = 25f,
                 InterUp = 5,
                 InterDown = 5
             });
@@ -275,6 +290,8 @@ namespace CamInter
                 Name = "Ext.Tube M42 x 1.0",
                 Number = "904001A",
                 Length = 25f,
+                LengthMin = 25f,
+                LengthMax = 25f,
                 InterUp = 1,
                 InterDown = 1
             });
@@ -284,6 +301,8 @@ namespace CamInter
                 Name = "Ext.Tube M58 x 0.75",
                 Number = "13051A",
                 Length = 10f,
+                LengthMin = 10f,
+                LengthMax = 10f,
                 InterUp = 2,
                 InterDown = 2
             });
@@ -293,6 +312,8 @@ namespace CamInter
                 Name = "Ext.Tube M58 x 0.75",
                 Number = "13050A",
                 Length = 25f,
+                LengthMin = 25f,
+                LengthMax = 25f,
                 InterUp = 2,
                 InterDown = 2
             });
@@ -302,6 +323,8 @@ namespace CamInter
                 Name = "Ext.Tube M72 x 0,75",
                 Number = "1072421A",
                 Length = 10f,
+                LengthMin = 10f,
+                LengthMax = 10f,
                 InterUp = 3,
                 InterDown = 3
             });
@@ -311,6 +334,8 @@ namespace CamInter
                 Name = "Ext.Tube M72 x 0,75",
                 Number = "26406A",
                 Length = 25f,
+                LengthMin = 25f,
+                LengthMax = 25f,
                 InterUp = 3,
                 InterDown = 3
             });
@@ -320,6 +345,8 @@ namespace CamInter
                 Name = "Ext.Tube M72 x 0,75",
                 Number = "1054733A",
                 Length = 50f,
+                LengthMin = 50f,
+                LengthMax = 50f,
                 InterUp = 3,
                 InterDown = 3
             });
@@ -329,6 +356,8 @@ namespace CamInter
                 Name = "Ext.Tube M90 x 1.0",
                 Number = "1084875A",
                 Length = 10f,
+                LengthMin = 10f,
+                LengthMax = 10f,
                 InterUp = 4,
                 InterDown = 4
             });
@@ -338,6 +367,8 @@ namespace CamInter
                 Name = "Ext.Tube M90 x 1.0",
                 Number = "1084876A",
                 Length = 25f,
+                LengthMin = 25f,
+                LengthMax = 25f,
                 InterUp = 4,
                 InterDown = 4
             });
@@ -347,6 +378,8 @@ namespace CamInter
                 Name = "Ext.Tube M90 x 1.0",
                 Number = "1084877A",
                 Length = 50f,
+                LengthMin = 50f,
+                LengthMax = 50f,
                 InterUp = 4,
                 InterDown = 4
             });
@@ -356,6 +389,8 @@ namespace CamInter
                 Name = "Ext.Tube M90 x 1.0",
                 Number = "1084878A",
                 Length = 100f,
+                LengthMin = 100f,
+                LengthMax = 100f,
                 InterUp = 4,
                 InterDown = 4
             });

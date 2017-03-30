@@ -3,7 +3,7 @@ using System.Data;
 using System.Collections.Generic;
 using System.Data.SQLite;
 
-namespace CamInter
+namespace Core
 {
     
     /// <summary>
@@ -24,8 +24,8 @@ namespace CamInter
             info.Idx = Convert.ToInt32(dr["id"]);
             info.Name = dr["name"].ToString ();
             info.Number = dr["number"].ToString();
-            info.HH = Convert.ToInt32(dr["hh"]);
-            info.Length = Convert.ToInt32(dr["length"]);
+            info.HH = Convert.ToSingle(dr["hh"]);
+            info.Length = Convert.ToSingle(dr["length"]);
             info.Focus = Convert.ToSingle(dr["focus"]);
             info.Flange = Convert.ToSingle(dr["flange"]);
             info.Connector = Convert.ToInt32(dr["connector"]);

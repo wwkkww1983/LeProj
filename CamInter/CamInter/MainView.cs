@@ -7,40 +7,50 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Sunisoft.IrisSkin;
 using Core;
 
 namespace CamInter
 {
     public partial class MainView : Form
     {
-        #region 实例化
+        #region 初始化
         private bool initialConditionFlag = false, areaBoardSelected = true;
-        private int resolutionSide, resolutionOther;
-        private List<ValueType> cameList = null;
+        private int resolutionLength, resolutionWidth;
+        private float fovLengthValue, fovWidthValue;
+        private const string PRE_PROJECT_NAME = "preProjectName", POST_RING_NUMBER = "postRingNumber", NAME_NONE = "nameNone";
+        private DataTable dtInter = null;
         private DBUtility dbHandler = new DBUtility(true);
         private Algorithm alg = null;
-        List<RingResult> resultList = null;
+        private SkinEngine skin = null;
+        private List<RingResults> resultList = null;
 
         public MainView()
         {
             InitializeComponent();
 
-            dbHandler.InitialTable();
+            //dbHandler.InitialTable();
             this.InitialCamInter();
         }
 
         private void InitialCamInter()
         {
-            DataTable dt = dbHandler.GetDropDownListInfo(enumProductType.Interface);
-            this.cbCamInter.DataSource = dt;
+            this.dtInter = dbHandler.GetDropDownListInfo(enumProductType.Interface);
+            this.cbCamInter.DataSource = this.dtInter;
             this.cbCamInter.DisplayMember = "Name";
             this.cbCamInter.ValueMember = "Idx";
-            this.cbCamInter.SelectedIndex = -1;
+            this.cbCamInter.SelectedIndex = 4;
+            this.tcCamera.SelectedIndex = 1;
 
             this.initialConditionFlag = true;
             List<ValueType> ringList = dbHandler.GetAllDevices(enumProductType.Focus);
-            this.cameList = dbHandler.GetAllDevices(enumProductType.CamLens);
-            this.alg = new Algorithm(ringList, this.cameList);
+            List<ValueType> cameList = dbHandler.GetAllDevices(enumProductType.CamLens);
+            this.alg = new Algorithm(ringList, cameList);
+            this.dgvProjDetail.AutoGenerateColumns = false;
+            this.dgvProjList.AutoGenerateColumns = false;
+
+            this.skin = new SkinEngine(this);
+            this.skin.SkinFile = "Wave.ssk";
         }
 
         #endregion
@@ -94,6 +104,19 @@ namespace CamInter
             ViewConnctor viewConn = new ViewConnctor(this.HanderAfterAddItem);
             viewConn.ShowDialog();
         }
+
+        private void lanToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string lang = (sender as ToolStripMenuItem).Text;
+            if (lang == "中文")
+            {
+                SetLanguage.SetLang("zh", this, typeof(MainView));
+            }
+            else
+            {
+                SetLanguage.SetLang("en", this, typeof(MainView));
+            }
+        }
         #endregion
 
         #region 用户行为
@@ -103,12 +126,12 @@ namespace CamInter
             float ratio = areaBoardSelected ? this.PreFilterUserAreaData() : this.PreFilterUserLineData();
             int camInter = Convert.ToInt32(this.cbCamInter.SelectedValue);
             float flange = Convert.ToSingle(this.tbFlange.Text);
-            float target = Convert.ToSingle(this.tbTarget.Text);
-            float workDistance = Convert.ToSingle(this.tbDistance.Text);
-            float workDistanceRange = Convert.ToSingle(this.tbDistanRange.Text);
+            float target = this.tbTarget.Text.Trim().Equals(string.Empty) ? 0 : Convert.ToSingle(this.tbTarget.Text);
+            float workDistance = this.tbDistance.Text.Trim().Equals(string.Empty)?0:Convert.ToSingle(this.tbDistance.Text);
+            float workDistanceRange = this.tbDistanRange.Text.Trim().Equals(string.Empty) ? 0 : Convert.ToSingle(this.tbDistanRange.Text);
 
-            resultList = this.alg.GetDevicesByBaseInfo(camInter, flange, target, resolutionSide, resolutionOther, ratio, workDistance, workDistanceRange);
-
+            this.resultList = this.alg.GetDevicesByBaseInfo(camInter, flange, target, resolutionLength, resolutionWidth, ratio, workDistance, workDistanceRange);
+            this.showResults(this.resultList, ratio);
         }
 
         private void tbSensor_TextChanged(object sender, EventArgs e)
@@ -120,9 +143,110 @@ namespace CamInter
             this.tbTarget.Text = Math.Sqrt(sensorSide * sensorSide + sensorOther * sensorOther).ToString();
         }
 
-        private void showResults(List<RingResult> result)
+        private void showResults(List<RingResults> result,float ratio)
         {
-            
+            string strNone = this.GetConstantsString(NAME_NONE);
+            string strProj = this.GetConstantsString(PRE_PROJECT_NAME);
+            string strNumber = this.GetConstantsString(POST_RING_NUMBER);
+
+            DataTable dt = new DataTable();
+             dt.Columns.Add(new DataColumn("Idx"));
+             dt.Columns.Add(new DataColumn("lens"));
+             dt.Columns.Add(new DataColumn("focus"));
+             dt.Columns.Add(new DataColumn("adapter"));
+             dt.Columns.Add(new DataColumn("extend"));
+             dt.Columns.Add(new DataColumn("ratio"));
+             dt.Columns.Add(new DataColumn("workDistance"));
+             dt.Columns.Add(new DataColumn("fovLength"));
+             dt.Columns.Add(new DataColumn("fovWidth"));
+            foreach (RingResults ring in result)
+            {
+                RingMedium focus = ring.ringList.Find(item => item.RingType == enumProductType.Focus);
+                List<RingMedium> adapter = ring.ringList.FindAll(item => item.RingType == enumProductType.Adapter);
+                List<RingMedium> extend = ring.ringList.FindAll(item => item.RingType == enumProductType.Extend);
+                DataRow dr = dt.NewRow();
+                dr["Idx"] = strProj + ring.Idx;
+                dr["lens"] = ring.Lens.Name;
+                dr["focus"] = focus.Name == string.Empty ? strNone : focus.Name;
+                dr["adapter"] = adapter.Count == 1 ? adapter[0].Name : adapter.Count.ToString() + strNumber;
+                dr["extend"] = extend.Count == 1 ? extend[0].Name : extend.Count.ToString() + strNumber; ;
+                dr["ratio"] = ratio;
+                dr["workDistance"] = ring.Lens.Focus * (2 + ratio + 1/ratio) + ring.Lens.HH - ring.Lens.Length;
+                dr["fovLength"] = this.fovLengthValue;
+                dr["fovWidth"] = this.fovWidthValue;
+                dt.Rows.Add(dr);
+            }
+            this.dgvProjList.DataSource = dt;
+        }
+
+        private string GetRingName(enumProductType type)
+        {
+            return this.GetResxStringByKey(typeof(MidRing),type.ToString());
+        }
+
+        private string GetConstantsString(string key)
+        {
+            return this.GetResxStringByKey(typeof(MainView), key);
+        }
+
+        private string GetResxStringByKey(Type type, string key)
+        {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(type);
+            return resources.GetObject(key).ToString();
+        }
+
+        private void dgvProjList_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string strNone = this.GetConstantsString(NAME_NONE);
+            string strProj = this.GetConstantsString(PRE_PROJECT_NAME);
+
+            if(e.RowIndex <= 0) return;
+            int projIdx = Convert.ToInt32((sender as DataGridView).Rows[e.RowIndex].Cells[0].Value.ToString().Substring(strProj.Length));
+            DataTable dt = new DataTable();
+            dt.Columns.Add(new DataColumn("detailIdx"));
+            dt.Columns.Add(new DataColumn("type"));
+            dt.Columns.Add(new DataColumn("name"));
+            dt.Columns.Add(new DataColumn("number"));
+            dt.Columns.Add(new DataColumn("interA"));
+            dt.Columns.Add(new DataColumn("interB"));
+            dt.Columns.Add(new DataColumn("length"));
+
+            RingResults ring = this.resultList.Find(item => item.Idx == projIdx);
+            int idx=1;
+            DataRow dr = dt.NewRow();
+            dr["detailIdx"] = idx;
+            dr["type"] = this.GetRingName(enumProductType.Camera);
+            dr["name"] = strNone;// NAME_NONE;
+            dr["number"] = strNone;//NAME_NONE;
+            dr["interA"] = this.GetInterNameById(Convert.ToInt32(this.cbCamInter.SelectedValue));
+            dr["interB"] = strNone;//NAME_NONE;
+            dr["length"] = this.tbFlange.Text;
+            dt.Rows.Add(dr); 
+
+            foreach (RingMedium item in ring.ringList)
+            {
+                dr = dt.NewRow();
+                dr["detailIdx"] = idx++;
+                dr["type"] = this.GetRingName(item.RingType);// Constants.GetNameByType(item.RingType);
+                dr["name"] = item.Name;
+                dr["number"] = item.Number;
+                dr["interA"] = this.GetInterNameById(item.InterDown);
+                dr["interB"] = this.GetInterNameById(item.InterUp);
+                dr["length"] = item.LengthMin == item.LengthMax ? item.Length.ToString () : string.Format("[{0},{1}]", item.LengthMin, item.LengthMax);
+                dt.Rows.Add(dr);
+            }
+
+            dr = dt.NewRow();
+            dr["detailIdx"] = idx++;
+            dr["type"] = this.GetRingName(enumProductType.CamLens);
+            dr["name"] = ring.Lens.Name;
+            dr["number"] = ring.Lens.Number;
+            dr["interA"] = strNone;//NAME_NONE;
+            dr["interB"] = this.GetInterNameById(ring.Lens.Connector);
+            dr["length"] = ring.Lens.Flange;
+            dt.Rows.Add(dr);
+
+            this.dgvProjDetail.DataSource = dt;
         }
 
         private bool PreCheckUserDataIsEnough()
@@ -160,15 +284,15 @@ namespace CamInter
         {
             float sensorSide = Convert.ToSingle(this.tbSensorSide.Text);
             float sensorOther = Convert.ToSingle(this.tbSensorOther.Text);
-            float fovSide = Convert.ToSingle(this.tbFovSide.Text);
-            float fovOther = Convert.ToSingle(this.tbFovOther.Text);
+            this.fovLengthValue = Convert.ToSingle(this.tbFovSide.Text);
+            this.fovWidthValue = Convert.ToSingle(this.tbFovOther.Text);
             if (!this.tbResolutionSide.Text.Trim().Equals(string.Empty))
             {
-                resolutionSide = Convert.ToInt32(this.tbResolutionSide.Text);
-                resolutionOther = Convert.ToInt32(this.tbResolutionOther.Text);
+                this.resolutionLength = Convert.ToInt32(this.tbResolutionSide.Text);
+                this.resolutionWidth = Convert.ToInt32(this.tbResolutionOther.Text);
             }
 
-            return Math.Min(sensorSide / fovSide, sensorOther / fovOther);
+            return Math.Min(sensorSide / this.fovLengthValue, sensorOther / this.fovWidthValue);
         }
 
         private float PreFilterUserLineData()
@@ -179,30 +303,30 @@ namespace CamInter
             {
                 int resolution = Convert.ToInt32(this.tbLineResolution.Text);
                 if (this.rbLineLength.Checked)
-                    resolutionSide = resolution;
-                else resolutionOther = resolution;
+                    this.resolutionLength = resolution;
+                else this.resolutionWidth = resolution;
             }
-
+            if (this.rbLineLength.Checked)
+                this.fovLengthValue = fov;
+            else
+                this.fovWidthValue = fov;
+            
             return sensor / fov;
         }
 
-        private CameraLens GetCamInfoById(int idx)
+        private string GetInterNameById(int idx)
         {
-            CameraLens cam=new CameraLens ();
-
-            foreach (ValueType item in cameList)
+            string name = string.Empty;
+            foreach (DataRow dr in dtInter.Rows)
             {
-                if (((CameraLens)item).Idx == idx)
+                if (Convert.ToInt32(dr["Idx"]) == idx)
                 {
-                    cam = (CameraLens)item;
+                    name = dr["Name"].ToString();
                     break;
                 }
             }
-            
-            return cam;
+            return name;
         }
         #endregion
-
-
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MidRing));
             this.lbInterB = new System.Windows.Forms.Label();
             this.tbInRadius = new System.Windows.Forms.TextBox();
             this.lbLenRange = new System.Windows.Forms.Label();
@@ -52,177 +53,117 @@
             // 
             // lbInterB
             // 
-            this.lbInterB.AutoSize = true;
-            this.lbInterB.Location = new System.Drawing.Point(221, 71);
+            resources.ApplyResources(this.lbInterB, "lbInterB");
             this.lbInterB.Name = "lbInterB";
-            this.lbInterB.Size = new System.Drawing.Size(69, 15);
-            this.lbInterB.TabIndex = 7;
-            this.lbInterB.Text = "接口 B *";
             // 
             // tbInRadius
             // 
-            this.tbInRadius.Location = new System.Drawing.Point(296, 153);
+            resources.ApplyResources(this.tbInRadius, "tbInRadius");
             this.tbInRadius.Name = "tbInRadius";
-            this.tbInRadius.Size = new System.Drawing.Size(100, 25);
-            this.tbInRadius.TabIndex = 9;
             // 
             // lbLenRange
             // 
-            this.lbLenRange.AutoSize = true;
-            this.lbLenRange.Location = new System.Drawing.Point(223, 114);
+            resources.ApplyResources(this.lbLenRange, "lbLenRange");
             this.lbLenRange.Name = "lbLenRange";
-            this.lbLenRange.Size = new System.Drawing.Size(67, 15);
-            this.lbLenRange.TabIndex = 8;
-            this.lbLenRange.Text = "长度范围";
             // 
             // tbLength
             // 
-            this.tbLength.Location = new System.Drawing.Point(104, 109);
+            resources.ApplyResources(this.tbLength, "tbLength");
             this.tbLength.Name = "tbLength";
-            this.tbLength.Size = new System.Drawing.Size(100, 25);
-            this.tbLength.TabIndex = 5;
+            this.tbLength.TextChanged += new System.EventHandler(this.tbLength_TextChanged);
             // 
             // lbLength
             // 
-            this.lbLength.AutoSize = true;
-            this.lbLength.Location = new System.Drawing.Point(13, 114);
+            resources.ApplyResources(this.lbLength, "lbLength");
             this.lbLength.Name = "lbLength";
-            this.lbLength.Size = new System.Drawing.Size(85, 15);
-            this.lbLength.TabIndex = 9;
-            this.lbLength.Text = "长度(mm) *";
             // 
             // lbInterA
             // 
-            this.lbInterA.AutoSize = true;
-            this.lbInterA.Location = new System.Drawing.Point(29, 71);
+            resources.ApplyResources(this.lbInterA, "lbInterA");
             this.lbInterA.Name = "lbInterA";
-            this.lbInterA.Size = new System.Drawing.Size(69, 15);
-            this.lbInterA.TabIndex = 10;
-            this.lbInterA.Text = "接口 A *";
             // 
             // lbWeight
             // 
-            this.lbWeight.AutoSize = true;
-            this.lbWeight.Location = new System.Drawing.Point(61, 158);
+            resources.ApplyResources(this.lbWeight, "lbWeight");
             this.lbWeight.Name = "lbWeight";
-            this.lbWeight.Size = new System.Drawing.Size(37, 15);
-            this.lbWeight.TabIndex = 9;
-            this.lbWeight.Text = "重量";
             // 
             // tbWeight
             // 
-            this.tbWeight.Location = new System.Drawing.Point(104, 153);
+            resources.ApplyResources(this.tbWeight, "tbWeight");
             this.tbWeight.Name = "tbWeight";
-            this.tbWeight.Size = new System.Drawing.Size(100, 25);
-            this.tbWeight.TabIndex = 8;
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(146, 216);
+            resources.ApplyResources(this.btnSave, "btnSave");
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 10;
-            this.btnSave.Text = "保存";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(240, 216);
+            resources.ApplyResources(this.btnCancel, "btnCancel");
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 11;
-            this.btnCancel.Text = "取消";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // lbName
             // 
-            this.lbName.AutoSize = true;
-            this.lbName.Location = new System.Drawing.Point(45, 28);
+            resources.ApplyResources(this.lbName, "lbName");
             this.lbName.Name = "lbName";
-            this.lbName.Size = new System.Drawing.Size(53, 15);
-            this.lbName.TabIndex = 10;
-            this.lbName.Text = "名称 *";
             // 
             // tbName
             // 
-            this.tbName.Location = new System.Drawing.Point(104, 23);
+            resources.ApplyResources(this.tbName, "tbName");
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(100, 25);
-            this.tbName.TabIndex = 1;
             // 
             // lbNumber
             // 
-            this.lbNumber.AutoSize = true;
-            this.lbNumber.Location = new System.Drawing.Point(237, 28);
+            resources.ApplyResources(this.lbNumber, "lbNumber");
             this.lbNumber.Name = "lbNumber";
-            this.lbNumber.Size = new System.Drawing.Size(53, 15);
-            this.lbNumber.TabIndex = 7;
-            this.lbNumber.Text = "货号 *";
             // 
             // tbNumber
             // 
-            this.tbNumber.Location = new System.Drawing.Point(296, 23);
+            resources.ApplyResources(this.tbNumber, "tbNumber");
             this.tbNumber.Name = "tbNumber";
-            this.tbNumber.Size = new System.Drawing.Size(100, 25);
-            this.tbNumber.TabIndex = 2;
             // 
             // lbInner
             // 
-            this.lbInner.AutoSize = true;
-            this.lbInner.Location = new System.Drawing.Point(253, 158);
+            resources.ApplyResources(this.lbInner, "lbInner");
             this.lbInner.Name = "lbInner";
-            this.lbInner.Size = new System.Drawing.Size(37, 15);
-            this.lbInner.TabIndex = 8;
-            this.lbInner.Text = "内径";
             // 
             // tbLenMin
             // 
-            this.tbLenMin.Location = new System.Drawing.Point(296, 109);
+            resources.ApplyResources(this.tbLenMin, "tbLenMin");
             this.tbLenMin.Name = "tbLenMin";
-            this.tbLenMin.Size = new System.Drawing.Size(37, 25);
-            this.tbLenMin.TabIndex = 6;
             // 
             // tbLenMax
             // 
-            this.tbLenMax.Location = new System.Drawing.Point(360, 109);
+            resources.ApplyResources(this.tbLenMax, "tbLenMax");
             this.tbLenMax.Name = "tbLenMax";
-            this.tbLenMax.Size = new System.Drawing.Size(37, 25);
-            this.tbLenMax.TabIndex = 7;
             // 
             // lbRangeInter
             // 
-            this.lbRangeInter.AutoSize = true;
-            this.lbRangeInter.Location = new System.Drawing.Point(339, 114);
+            resources.ApplyResources(this.lbRangeInter, "lbRangeInter");
             this.lbRangeInter.Name = "lbRangeInter";
-            this.lbRangeInter.Size = new System.Drawing.Size(15, 15);
-            this.lbRangeInter.TabIndex = 8;
-            this.lbRangeInter.Text = "-";
             // 
             // cbInterA
             // 
             this.cbInterA.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbInterA.FormattingEnabled = true;
-            this.cbInterA.Location = new System.Drawing.Point(104, 67);
+            resources.ApplyResources(this.cbInterA, "cbInterA");
             this.cbInterA.Name = "cbInterA";
-            this.cbInterA.Size = new System.Drawing.Size(100, 23);
-            this.cbInterA.TabIndex = 12;
             // 
             // cbInterB
             // 
             this.cbInterB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbInterB.FormattingEnabled = true;
-            this.cbInterB.Location = new System.Drawing.Point(296, 67);
+            resources.ApplyResources(this.cbInterB, "cbInterB");
             this.cbInterB.Name = "cbInterB";
-            this.cbInterB.Size = new System.Drawing.Size(100, 23);
-            this.cbInterB.TabIndex = 12;
             // 
             // MidRing
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(428, 259);
             this.Controls.Add(this.cbInterB);
             this.Controls.Add(this.cbInterA);
             this.Controls.Add(this.btnCancel);
@@ -244,7 +185,6 @@
             this.Controls.Add(this.lbName);
             this.Controls.Add(this.lbInterA);
             this.Name = "MidRing";
-            this.Text = "MidRing";
             this.Load += new System.EventHandler(this.MidRing_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

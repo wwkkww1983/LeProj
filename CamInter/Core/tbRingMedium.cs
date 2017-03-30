@@ -3,7 +3,7 @@ using System.Data;
 using System.Collections.Generic;
 using System.Data.SQLite;
 
-namespace CamInter
+namespace Core
 {
     /// <summary>
     /// 中间环属性
@@ -57,8 +57,8 @@ namespace CamInter
 
             string strSql = "insert into ringMedium (name,number,ringType,interUp,interDown,innerDiameter,weight,length,lengthMin,lengthMax) values (@name,@number,@ringType,@interUp,@interDown,@innerDiameter,@weight,@length,@lengthMin,@lengthMax)";
             List<SQLiteParameter> paraList = new List<SQLiteParameter>();
-            paraList.Add(SQLiteHelper.CreateParameter("@name", DbType.String, info.InterUp));
-            paraList.Add(SQLiteHelper.CreateParameter("@number", DbType.String, info.InterUp));
+            paraList.Add(SQLiteHelper.CreateParameter("@name", DbType.String, info.Name));
+            paraList.Add(SQLiteHelper.CreateParameter("@number", DbType.String, info.Number));
             paraList.Add(SQLiteHelper.CreateParameter("@ringType", DbType.Int32, (int)info.RingType));
             paraList.Add(SQLiteHelper.CreateParameter("@interUp", DbType.Int32, info.InterUp));
             paraList.Add(SQLiteHelper.CreateParameter("@interDown", DbType.Int32, info.InterDown));

@@ -33,17 +33,11 @@ namespace CamInter
             this.cbInterA.ValueMember = "Idx";
             DataTable dtB = null;
 
-            string strTypeName = string.Empty;
-            switch (this.typeName)
+            this.SetWindowName();
+            if(this.typeName == enumProductType.Extend)
             {
-                case enumProductType.Focus: strTypeName = Constants.FOCUS; break;
-                case enumProductType.Adapter: strTypeName = Constants.ADAPTER; break;
-                case enumProductType.Extend: strTypeName = Constants.EXTEND;
-                    dtB = dt;
-                    break;
-                default: break;
+                dtB = dt;
             }
-            this.Text = strTypeName;
             this.ShowLengthRange(this.typeName == enumProductType.Focus);
 
             this.cbInterB.DataSource = dtB == null ? dt.Copy() : dtB;
@@ -51,12 +45,29 @@ namespace CamInter
             this.cbInterB.ValueMember = "Idx";
         }
 
+        private void SetWindowName()
+        {
+            //string strTypeName = Constants.GetNameByType(this.typeName);
+            //this.Text = strTypeName;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MidRing));
+            this.Text = resources.GetObject(this.typeName.ToString()).ToString();
+        }
+
         private void ShowLengthRange(bool needShow)
         {
-            this.lbLenRange.Visible = needShow;
-            this.lbRangeInter.Visible = needShow;
-            this.tbLenMin.Visible = needShow;
-            this.tbLenMax.Visible = needShow;
+            this.lbLenRange.Enabled = needShow;
+            this.lbRangeInter.Enabled = needShow;
+            this.tbLenMin.Enabled = needShow;
+            this.tbLenMax.Enabled = needShow;
+        }
+
+        private void tbLength_TextChanged(object sender, EventArgs e)
+        {
+            if (this.typeName != enumProductType.Focus)
+            {
+                this.tbLenMin.Text = this.tbLength.Text;
+                this.tbLenMax.Text = this.tbLength.Text;
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -72,15 +83,12 @@ namespace CamInter
                 {
                     Name = this.tbName.Text.Trim(),
                     Number = this.tbNumber.Text.Trim(),
-                    InterUp = Convert.ToInt32(this.cbInterA.SelectedValue),
-                    InterDown = Convert.ToInt32(this.cbInterB.SelectedValue),
-                    Length = int.Parse(this.tbLength.Text)
+                    InterDown = Convert.ToInt32(this.cbInterA.SelectedValue),
+                    InterUp = Convert.ToInt32(this.cbInterB.SelectedValue),
+                    Length = float.Parse(this.tbLength.Text),
+                    LengthMin = float.Parse(this.tbLenMin.Text),
+                    LengthMax = float.Parse(this.tbLenMax.Text),
                 };
-                if (this.typeName == enumProductType.Focus)
-                {
-                    item.LengthMin = int.Parse(this.tbLenMin.Text);
-                    item.LengthMax = int.Parse(this.tbLenMax.Text);
-                }
                 this.handlerAfterSave(this, this.typeName, dbHandler.InsertItem(item));
             }
         }
@@ -98,5 +106,6 @@ namespace CamInter
             }
             return emptyFlag;
         }
+
     }
 }
