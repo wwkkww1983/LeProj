@@ -117,787 +117,181 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="lbFocus.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="lbFocus.Location" type="System.Drawing.Point, System.Drawing">
-    <value>287, 79</value>
-  </data>
-  <data name="lbFocus.Size" type="System.Drawing.Size, System.Drawing">
-    <value>85, 15</value>
-  </data>
-  <data name="lbFocus.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="lbFocus.Text" xml:space="preserve">
-    <value>焦距(mm) *</value>
-  </data>
-  <data name="&gt;&gt;lbFocus.Name" xml:space="preserve">
-    <value>lbFocus</value>
-  </data>
-  <data name="&gt;&gt;lbFocus.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbFocus.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbFocus.ZOrder" xml:space="preserve">
-    <value>31</value>
-  </data>
-  <data name="tbFocus.Location" type="System.Drawing.Point, System.Drawing">
-    <value>378, 74</value>
-  </data>
-  <data name="tbFocus.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 25</value>
-  </data>
-  <data name="tbFocus.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;tbFocus.Name" xml:space="preserve">
-    <value>tbFocus</value>
-  </data>
-  <data name="&gt;&gt;tbFocus.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbFocus.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tbFocus.ZOrder" xml:space="preserve">
-    <value>30</value>
-  </data>
-  <data name="lbInter.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbInter.Location" type="System.Drawing.Point, System.Drawing">
-    <value>87, 79</value>
-  </data>
-  <data name="lbInter.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 15</value>
-  </data>
-  <data name="lbInter.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="lbInter.Text" xml:space="preserve">
-    <value>接口 *</value>
-  </data>
-  <data name="&gt;&gt;lbInter.Name" xml:space="preserve">
-    <value>lbInter</value>
-  </data>
-  <data name="&gt;&gt;lbInter.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbInter.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbInter.ZOrder" xml:space="preserve">
-    <value>29</value>
-  </data>
-  <data name="lbWeight.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbWeight.Location" type="System.Drawing.Point, System.Drawing">
-    <value>103, 255</value>
-  </data>
-  <data name="lbWeight.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 15</value>
-  </data>
-  <data name="lbWeight.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="lbWeight.Text" xml:space="preserve">
-    <value>重量</value>
-  </data>
-  <data name="&gt;&gt;lbWeight.Name" xml:space="preserve">
-    <value>lbWeight</value>
-  </data>
-  <data name="&gt;&gt;lbWeight.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbWeight.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbWeight.ZOrder" xml:space="preserve">
-    <value>28</value>
-  </data>
-  <data name="tbWeight.Location" type="System.Drawing.Point, System.Drawing">
-    <value>146, 250</value>
-  </data>
-  <data name="tbWeight.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 25</value>
-  </data>
-  <data name="tbWeight.TabIndex" type="System.Int32, mscorlib">
-    <value>20</value>
-  </data>
-  <data name="&gt;&gt;tbWeight.Name" xml:space="preserve">
-    <value>tbWeight</value>
-  </data>
-  <data name="&gt;&gt;tbWeight.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbWeight.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tbWeight.ZOrder" xml:space="preserve">
-    <value>27</value>
-  </data>
-  <data name="lbFreq.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbFreq.Location" type="System.Drawing.Point, System.Drawing">
-    <value>305, 255</value>
-  </data>
-  <data name="lbFreq.Size" type="System.Drawing.Size, System.Drawing">
-    <value>67, 15</value>
-  </data>
-  <data name="lbFreq.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="lbFreq.Text" xml:space="preserve">
-    <value>空间频率</value>
-  </data>
-  <data name="&gt;&gt;lbFreq.Name" xml:space="preserve">
-    <value>lbFreq</value>
-  </data>
-  <data name="&gt;&gt;lbFreq.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbFreq.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbFreq.ZOrder" xml:space="preserve">
-    <value>18</value>
-  </data>
-  <data name="tbFreq.Location" type="System.Drawing.Point, System.Drawing">
-    <value>378, 250</value>
-  </data>
-  <data name="tbFreq.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 25</value>
-  </data>
-  <data name="tbFreq.TabIndex" type="System.Int32, mscorlib">
-    <value>17</value>
-  </data>
-  <data name="&gt;&gt;tbFreq.Name" xml:space="preserve">
-    <value>tbFreq</value>
-  </data>
-  <data name="&gt;&gt;tbFreq.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbFreq.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tbFreq.ZOrder" xml:space="preserve">
-    <value>17</value>
-  </data>
-  <data name="lbTarget.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbTarget.Location" type="System.Drawing.Point, System.Drawing">
-    <value>25, 167</value>
-  </data>
-  <data name="lbTarget.Size" type="System.Drawing.Size, System.Drawing">
-    <value>115, 15</value>
-  </data>
-  <data name="lbTarget.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="lbTarget.Text" xml:space="preserve">
-    <value>最大靶面(mm) *</value>
-  </data>
-  <data name="&gt;&gt;lbTarget.Name" xml:space="preserve">
-    <value>lbTarget</value>
-  </data>
-  <data name="&gt;&gt;lbTarget.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbTarget.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbTarget.ZOrder" xml:space="preserve">
-    <value>16</value>
-  </data>
-  <data name="tbTarget.Location" type="System.Drawing.Point, System.Drawing">
-    <value>146, 162</value>
-  </data>
-  <data name="tbTarget.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 25</value>
-  </data>
-  <data name="tbTarget.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
-  </data>
-  <data name="&gt;&gt;tbTarget.Name" xml:space="preserve">
-    <value>tbTarget</value>
-  </data>
-  <data name="&gt;&gt;tbTarget.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbTarget.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tbTarget.ZOrder" xml:space="preserve">
-    <value>15</value>
-  </data>
-  <data name="lbDistort.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbDistort.Location" type="System.Drawing.Point, System.Drawing">
-    <value>320, 211</value>
-  </data>
-  <data name="lbDistort.Size" type="System.Drawing.Size, System.Drawing">
-    <value>52, 15</value>
-  </data>
-  <data name="lbDistort.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="lbDistort.Text" xml:space="preserve">
-    <value>畸变量</value>
-  </data>
-  <data name="&gt;&gt;lbDistort.Name" xml:space="preserve">
-    <value>lbDistort</value>
-  </data>
-  <data name="&gt;&gt;lbDistort.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbDistort.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbDistort.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="tbDistort.Location" type="System.Drawing.Point, System.Drawing">
-    <value>378, 206</value>
-  </data>
-  <data name="tbDistort.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 25</value>
-  </data>
-  <data name="tbDistort.TabIndex" type="System.Int32, mscorlib">
-    <value>22</value>
-  </data>
-  <data name="&gt;&gt;tbDistort.Name" xml:space="preserve">
-    <value>tbDistort</value>
-  </data>
-  <data name="&gt;&gt;tbDistort.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbDistort.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tbDistort.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="btnSave.Location" type="System.Drawing.Point, System.Drawing">
-    <value>176, 348</value>
-  </data>
-  <data name="btnSave.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="btnSave.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
-  </data>
-  <data name="btnSave.Text" xml:space="preserve">
-    <value>新增</value>
-  </data>
-  <data name="&gt;&gt;btnSave.Name" xml:space="preserve">
-    <value>btnSave</value>
-  </data>
-  <data name="&gt;&gt;btnSave.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnSave.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btnSave.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>262, 348</value>
-  </data>
-  <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="btnCancel.TabIndex" type="System.Int32, mscorlib">
-    <value>30</value>
-  </data>
-  <data name="btnCancel.Text" xml:space="preserve">
-    <value>取消</value>
-  </data>
-  <data name="&gt;&gt;btnCancel.Name" xml:space="preserve">
-    <value>btnCancel</value>
-  </data>
-  <data name="&gt;&gt;btnCancel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnCancel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btnCancel.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="cbInter.Location" type="System.Drawing.Point, System.Drawing">
-    <value>146, 75</value>
-  </data>
-  <data name="cbInter.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 23</value>
-  </data>
-  <data name="cbInter.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;cbInter.Name" xml:space="preserve">
-    <value>cbInter</value>
-  </data>
-  <data name="&gt;&gt;cbInter.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cbInter.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;cbInter.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="lbResoLength.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbResoLength.Location" type="System.Drawing.Point, System.Drawing">
-    <value>57, 299</value>
-  </data>
-  <data name="lbResoLength.Size" type="System.Drawing.Size, System.Drawing">
-    <value>83, 15</value>
-  </data>
-  <data name="lbResoLength.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="lbResoLength.Text" xml:space="preserve">
-    <value>分辨率(长)</value>
-  </data>
-  <data name="&gt;&gt;lbResoLength.Name" xml:space="preserve">
-    <value>lbResoLength</value>
-  </data>
-  <data name="&gt;&gt;lbResoLength.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbResoLength.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbResoLength.ZOrder" xml:space="preserve">
-    <value>26</value>
-  </data>
-  <data name="tbResoLength.Location" type="System.Drawing.Point, System.Drawing">
-    <value>146, 294</value>
-  </data>
-  <data name="tbResoLength.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 25</value>
-  </data>
-  <data name="tbResoLength.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;tbResoLength.Name" xml:space="preserve">
-    <value>tbResoLength</value>
-  </data>
-  <data name="&gt;&gt;tbResoLength.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbResoLength.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tbResoLength.ZOrder" xml:space="preserve">
-    <value>25</value>
-  </data>
-  <data name="lbResoWidth.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbResoWidth.Location" type="System.Drawing.Point, System.Drawing">
-    <value>289, 299</value>
-  </data>
-  <data name="lbResoWidth.Size" type="System.Drawing.Size, System.Drawing">
-    <value>83, 15</value>
-  </data>
-  <data name="lbResoWidth.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="lbResoWidth.Text" xml:space="preserve">
-    <value>分辨率(宽)</value>
-  </data>
-  <data name="&gt;&gt;lbResoWidth.Name" xml:space="preserve">
-    <value>lbResoWidth</value>
-  </data>
-  <data name="&gt;&gt;lbResoWidth.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbResoWidth.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbResoWidth.ZOrder" xml:space="preserve">
-    <value>22</value>
-  </data>
-  <data name="tbNumber.Location" type="System.Drawing.Point, System.Drawing">
-    <value>378, 30</value>
-  </data>
-  <data name="tbNumber.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 25</value>
-  </data>
-  <data name="tbNumber.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;tbNumber.Name" xml:space="preserve">
-    <value>tbNumber</value>
-  </data>
-  <data name="&gt;&gt;tbNumber.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbNumber.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tbNumber.ZOrder" xml:space="preserve">
-    <value>21</value>
-  </data>
-  <data name="lbName.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>87, 35</value>
-  </data>
-  <data name="lbName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 15</value>
-  </data>
-  <data name="lbName.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="lbName.Text" xml:space="preserve">
-    <value>名称 *</value>
-  </data>
-  <data name="&gt;&gt;lbName.Name" xml:space="preserve">
-    <value>lbName</value>
-  </data>
-  <data name="&gt;&gt;lbName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbName.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbName.ZOrder" xml:space="preserve">
-    <value>24</value>
-  </data>
-  <data name="tbName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>146, 30</value>
-  </data>
-  <data name="tbName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 25</value>
-  </data>
-  <data name="tbName.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;tbName.Name" xml:space="preserve">
-    <value>tbName</value>
-  </data>
-  <data name="&gt;&gt;tbName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbName.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tbName.ZOrder" xml:space="preserve">
-    <value>23</value>
-  </data>
-  <data name="lbNumber.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbNumber.Location" type="System.Drawing.Point, System.Drawing">
-    <value>319, 35</value>
-  </data>
-  <data name="lbNumber.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 15</value>
-  </data>
-  <data name="lbNumber.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="lbNumber.Text" xml:space="preserve">
-    <value>货号 *</value>
-  </data>
-  <data name="&gt;&gt;lbNumber.Name" xml:space="preserve">
-    <value>lbNumber</value>
-  </data>
   <data name="&gt;&gt;lbNumber.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;lbNumber.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbNumber.ZOrder" xml:space="preserve">
-    <value>20</value>
-  </data>
-  <data name="tbResoWidth.Location" type="System.Drawing.Point, System.Drawing">
-    <value>378, 294</value>
-  </data>
-  <data name="tbResoWidth.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 25</value>
-  </data>
-  <data name="tbResoWidth.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;tbResoWidth.Name" xml:space="preserve">
-    <value>tbResoWidth</value>
-  </data>
-  <data name="&gt;&gt;tbResoWidth.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbResoWidth.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tbResoWidth.ZOrder" xml:space="preserve">
-    <value>19</value>
-  </data>
-  <data name="lbFlange.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbFlange.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 123</value>
-  </data>
-  <data name="lbFlange.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 15</value>
-  </data>
-  <data name="lbFlange.TabIndex" type="System.Int32, mscorlib">
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="lbResoLength.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="lbFlange.Text" xml:space="preserve">
-    <value>相机法兰距(mm) *</value>
-  </data>
-  <data name="&gt;&gt;lbFlange.Name" xml:space="preserve">
-    <value>lbFlange</value>
-  </data>
-  <data name="&gt;&gt;lbFlange.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbFlange.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbFlange.ZOrder" xml:space="preserve">
-    <value>14</value>
-  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="tbFlange.Location" type="System.Drawing.Point, System.Drawing">
     <value>146, 118</value>
-  </data>
-  <data name="tbFlange.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 25</value>
-  </data>
-  <data name="tbFlange.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;tbFlange.Name" xml:space="preserve">
-    <value>tbFlange</value>
-  </data>
-  <data name="&gt;&gt;tbFlange.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbFlange.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tbFlange.ZOrder" xml:space="preserve">
-    <value>13</value>
-  </data>
-  <data name="lbLength.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbLength.Location" type="System.Drawing.Point, System.Drawing">
-    <value>25, 211</value>
   </data>
   <data name="lbLength.Size" type="System.Drawing.Size, System.Drawing">
     <value>115, 15</value>
   </data>
-  <data name="lbLength.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="lbLength.Text" xml:space="preserve">
-    <value>镜头长度(mm) *</value>
-  </data>
-  <data name="&gt;&gt;lbLength.Name" xml:space="preserve">
-    <value>lbLength</value>
-  </data>
-  <data name="&gt;&gt;lbLength.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbLength.Parent" xml:space="preserve">
+  <data name="&gt;&gt;tbTarget.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;lbLength.ZOrder" xml:space="preserve">
-    <value>12</value>
+  <data name="tbFocus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 25</value>
   </data>
-  <data name="tbLength.Location" type="System.Drawing.Point, System.Drawing">
-    <value>146, 206</value>
+  <data name="lbResoLength.Location" type="System.Drawing.Point, System.Drawing">
+    <value>57, 299</value>
   </data>
-  <data name="tbLength.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="&gt;&gt;tbTarget.Name" xml:space="preserve">
+    <value>tbTarget</value>
+  </data>
+  <data name="&gt;&gt;tbFlange.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;lbResoLength.Name" xml:space="preserve">
+    <value>lbResoLength</value>
+  </data>
+  <data name="&gt;&gt;tbResoWidth.ZOrder" xml:space="preserve">
+    <value>19</value>
+  </data>
+  <data name="&gt;&gt;lbInter.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tbRatioMin.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 25</value>
+  </data>
+  <data name="lbInter.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;lbFreq.Name" xml:space="preserve">
+    <value>lbFreq</value>
+  </data>
+  <data name="&gt;&gt;lbFlange.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tbDistort.Location" type="System.Drawing.Point, System.Drawing">
+    <value>378, 206</value>
+  </data>
+  <data name="&gt;&gt;btnSave.Name" xml:space="preserve">
+    <value>btnSave</value>
+  </data>
+  <data name="lbDistort.Location" type="System.Drawing.Point, System.Drawing">
+    <value>320, 211</value>
+  </data>
+  <data name="tbRatioMax.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 25</value>
+  </data>
+  <data name="tbResoLength.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 25</value>
   </data>
   <data name="tbLength.TabIndex" type="System.Int32, mscorlib">
     <value>23</value>
   </data>
-  <data name="tbLength.Text" xml:space="preserve">
-    <value>28.6</value>
+  <data name="lbLength.Location" type="System.Drawing.Point, System.Drawing">
+    <value>25, 211</value>
   </data>
-  <data name="&gt;&gt;tbLength.Name" xml:space="preserve">
-    <value>tbLength</value>
+  <data name="&gt;&gt;lbNumber.ZOrder" xml:space="preserve">
+    <value>20</value>
   </data>
-  <data name="&gt;&gt;tbLength.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbLength.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tbLength.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="tbRatioMax.Location" type="System.Drawing.Point, System.Drawing">
-    <value>442, 118</value>
-  </data>
-  <data name="tbRatioMax.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 25</value>
-  </data>
-  <data name="tbRatioMax.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
-  </data>
-  <data name="&gt;&gt;tbRatioMax.Name" xml:space="preserve">
-    <value>tbRatioMax</value>
-  </data>
-  <data name="&gt;&gt;tbRatioMax.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbRatioMax.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tbRatioMax.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="tbRatioMin.Location" type="System.Drawing.Point, System.Drawing">
-    <value>378, 118</value>
-  </data>
-  <data name="tbRatioMin.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 25</value>
-  </data>
-  <data name="tbRatioMin.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="&gt;&gt;tbRatioMin.Name" xml:space="preserve">
-    <value>tbRatioMin</value>
-  </data>
-  <data name="&gt;&gt;tbRatioMin.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbRatioMin.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tbRatioMin.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="lbRangeInter.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbRangeInter.Location" type="System.Drawing.Point, System.Drawing">
-    <value>421, 123</value>
-  </data>
-  <data name="lbRangeInter.Size" type="System.Drawing.Size, System.Drawing">
-    <value>15, 15</value>
-  </data>
-  <data name="lbRangeInter.TabIndex" type="System.Int32, mscorlib">
-    <value>14</value>
-  </data>
-  <data name="lbRangeInter.Text" xml:space="preserve">
-    <value>-</value>
-  </data>
-  <data name="&gt;&gt;lbRangeInter.Name" xml:space="preserve">
-    <value>lbRangeInter</value>
-  </data>
-  <data name="&gt;&gt;lbRangeInter.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbRangeInter.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbRangeInter.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="lbRatioRange.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbRatioRange.Location" type="System.Drawing.Point, System.Drawing">
-    <value>259, 123</value>
-  </data>
-  <data name="lbRatioRange.Size" type="System.Drawing.Size, System.Drawing">
-    <value>113, 15</value>
-  </data>
-  <data name="lbRatioRange.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
-  </data>
-  <data name="lbRatioRange.Text" xml:space="preserve">
-    <value>放大倍率范围 *</value>
+  <data name="&gt;&gt;lbInter.Name" xml:space="preserve">
+    <value>lbInter</value>
   </data>
   <data name="&gt;&gt;lbRatioRange.Name" xml:space="preserve">
     <value>lbRatioRange</value>
   </data>
-  <data name="&gt;&gt;lbRatioRange.Type" xml:space="preserve">
+  <data name="&gt;&gt;lbTarget.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;lbRatioRange.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbRatioRange.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="lbHH.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbHH.Location" type="System.Drawing.Point, System.Drawing">
-    <value>333, 167</value>
-  </data>
-  <data name="lbHH.Size" type="System.Drawing.Size, System.Drawing">
-    <value>39, 15</value>
-  </data>
-  <data name="lbHH.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="lbHH.Text" xml:space="preserve">
-    <value>HH *</value>
-  </data>
-  <data name="&gt;&gt;lbHH.Name" xml:space="preserve">
-    <value>lbHH</value>
-  </data>
-  <data name="&gt;&gt;lbHH.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbHH.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbHH.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="tbHH.Location" type="System.Drawing.Point, System.Drawing">
-    <value>378, 162</value>
-  </data>
-  <data name="tbHH.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="tbDistort.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 25</value>
   </data>
-  <data name="tbHH.TabIndex" type="System.Int32, mscorlib">
-    <value>23</value>
+  <data name="&gt;&gt;tbFocus.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="&gt;&gt;tbHH.Name" xml:space="preserve">
-    <value>tbHH</value>
+  <data name="&gt;&gt;lbFlange.Name" xml:space="preserve">
+    <value>lbFlange</value>
   </data>
-  <data name="&gt;&gt;tbHH.Type" xml:space="preserve">
+  <data name="lbWeight.Text" xml:space="preserve">
+    <value>重量</value>
+  </data>
+  <data name="&gt;&gt;tbNumber.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;tbHH.Parent" xml:space="preserve">
+  <data name="tbFreq.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="lbResoLength.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 15</value>
+  </data>
+  <data name="tbTarget.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 25</value>
+  </data>
+  <data name="lbFocus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>85, 15</value>
+  </data>
+  <data name="lbFocus.Text" xml:space="preserve">
+    <value>焦距(mm) *</value>
+  </data>
+  <data name="tbLength.Text" xml:space="preserve">
+    <value>28.6</value>
+  </data>
+  <data name="lbWeight.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>新增镜头</value>
+  </data>
+  <data name="lbFreq.Location" type="System.Drawing.Point, System.Drawing">
+    <value>305, 255</value>
+  </data>
+  <data name="tbNumber.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;tbName.Parent" xml:space="preserve">
     <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lbName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lbRangeInter.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;lbDistort.Name" xml:space="preserve">
+    <value>lbDistort</value>
+  </data>
+  <data name="&gt;&gt;tbFreq.Name" xml:space="preserve">
+    <value>tbFreq</value>
+  </data>
+  <data name="lbDistort.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="lbFocus.Location" type="System.Drawing.Point, System.Drawing">
+    <value>287, 79</value>
+  </data>
+  <data name="lbFlange.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="&gt;&gt;tbHH.ZOrder" xml:space="preserve">
     <value>9</value>
   </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
+  <data name="&gt;&gt;lbHH.Name" xml:space="preserve">
+    <value>lbHH</value>
+  </data>
+  <data name="&gt;&gt;tbHH.Name" xml:space="preserve">
+    <value>tbHH</value>
+  </data>
+  <data name="&gt;&gt;btnSave.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="tbRatioMax.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="lbFlange.Text" xml:space="preserve">
+    <value>相机法兰距(mm) *</value>
+  </data>
+  <data name="lbNumber.Location" type="System.Drawing.Point, System.Drawing">
+    <value>319, 35</value>
+  </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>8, 15</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>506, 389</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1065,19 +459,625 @@
         AAA=
 </value>
   </data>
+  <data name="cbInter.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="lbRatioRange.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbFocus.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="lbTarget.Location" type="System.Drawing.Point, System.Drawing">
+    <value>25, 167</value>
+  </data>
+  <data name="lbLength.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;lbFocus.ZOrder" xml:space="preserve">
+    <value>31</value>
+  </data>
+  <data name="&gt;&gt;lbInter.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="tbResoWidth.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;lbWeight.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbResoLength.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tbFreq.Location" type="System.Drawing.Point, System.Drawing">
+    <value>378, 250</value>
+  </data>
+  <data name="&gt;&gt;lbResoWidth.Name" xml:space="preserve">
+    <value>lbResoWidth</value>
+  </data>
+  <data name="lbHH.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="tbRatioMin.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;lbRangeInter.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lbHH.Location" type="System.Drawing.Point, System.Drawing">
+    <value>333, 167</value>
+  </data>
   <data name="$this.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>524, 463</value>
+  </data>
+  <data name="lbName.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;tbWeight.ZOrder" xml:space="preserve">
+    <value>27</value>
+  </data>
+  <data name="&gt;&gt;lbNumber.Name" xml:space="preserve">
+    <value>lbNumber</value>
+  </data>
+  <data name="lbLength.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbRatioRange.Size" type="System.Drawing.Size, System.Drawing">
+    <value>113, 15</value>
+  </data>
+  <data name="&gt;&gt;tbRatioMax.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="lbInter.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 15</value>
+  </data>
+  <data name="&gt;&gt;btnCancel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tbDistort.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="tbTarget.Location" type="System.Drawing.Point, System.Drawing">
+    <value>146, 162</value>
+  </data>
+  <data name="&gt;&gt;tbRatioMax.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tbName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbFreq.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;tbFocus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbFocus.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lbResoWidth.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;cbInter.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;btnCancel.Name" xml:space="preserve">
+    <value>btnCancel</value>
+  </data>
+  <data name="lbDistort.Size" type="System.Drawing.Size, System.Drawing">
+    <value>52, 15</value>
+  </data>
+  <data name="tbFreq.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 25</value>
+  </data>
+  <data name="&gt;&gt;lbLength.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tbLength.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="lbFreq.Text" xml:space="preserve">
+    <value>空间频率</value>
+  </data>
+  <data name="lbResoLength.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;lbFlange.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tbResoLength.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="tbResoWidth.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 25</value>
+  </data>
+  <data name="&gt;&gt;tbTarget.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;tbDistort.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="tbResoWidth.Location" type="System.Drawing.Point, System.Drawing">
+    <value>378, 294</value>
+  </data>
+  <data name="&gt;&gt;lbResoWidth.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbDistort.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbResoWidth.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lbResoWidth.ZOrder" xml:space="preserve">
+    <value>22</value>
+  </data>
+  <data name="&gt;&gt;tbHH.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="lbResoWidth.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;lbFreq.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="tbWeight.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 25</value>
+  </data>
+  <data name="&gt;&gt;tbNumber.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="lbName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 35</value>
+  </data>
+  <data name="&gt;&gt;lbDistort.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="tbFocus.Location" type="System.Drawing.Point, System.Drawing">
+    <value>378, 74</value>
+  </data>
+  <data name="btnSave.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;tbHH.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lbInter.Text" xml:space="preserve">
+    <value>接口 *</value>
+  </data>
+  <data name="&gt;&gt;tbRatioMin.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="cbInter.Location" type="System.Drawing.Point, System.Drawing">
+    <value>146, 75</value>
+  </data>
+  <data name="lbTarget.Text" xml:space="preserve">
+    <value>最大靶面(mm) *</value>
+  </data>
+  <data name="&gt;&gt;lbFreq.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnCancel.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;lbInter.ZOrder" xml:space="preserve">
+    <value>29</value>
+  </data>
+  <data name="lbNumber.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 15</value>
+  </data>
+  <data name="lbFreq.Size" type="System.Drawing.Size, System.Drawing">
+    <value>67, 15</value>
+  </data>
+  <data name="&gt;&gt;lbLength.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbRangeInter.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tbDistort.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnSave.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnSave.Location" type="System.Drawing.Point, System.Drawing">
+    <value>176, 348</value>
+  </data>
+  <data name="lbResoWidth.Location" type="System.Drawing.Point, System.Drawing">
+    <value>289, 299</value>
+  </data>
+  <data name="&gt;&gt;tbFocus.Name" xml:space="preserve">
+    <value>tbFocus</value>
+  </data>
+  <data name="&gt;&gt;lbTarget.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tbFreq.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tbLength.Name" xml:space="preserve">
+    <value>tbLength</value>
+  </data>
+  <data name="&gt;&gt;lbName.ZOrder" xml:space="preserve">
+    <value>24</value>
+  </data>
+  <data name="cbInter.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 23</value>
+  </data>
+  <data name="&gt;&gt;lbResoLength.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>524, 434</value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>新增镜头</value>
+  <data name="&gt;&gt;tbNumber.Name" xml:space="preserve">
+    <value>tbNumber</value>
+  </data>
+  <data name="&gt;&gt;cbInter.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lbHH.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 15</value>
+  </data>
+  <data name="&gt;&gt;tbResoWidth.Name" xml:space="preserve">
+    <value>tbResoWidth</value>
+  </data>
+  <data name="tbResoLength.Location" type="System.Drawing.Point, System.Drawing">
+    <value>146, 294</value>
+  </data>
+  <data name="&gt;&gt;lbWeight.ZOrder" xml:space="preserve">
+    <value>28</value>
+  </data>
+  <data name="tbLength.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 25</value>
+  </data>
+  <data name="lbFlange.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbRatioRange.Text" xml:space="preserve">
+    <value>放大倍率范围 *</value>
+  </data>
+  <data name="lbDistort.Text" xml:space="preserve">
+    <value>畸变量</value>
+  </data>
+  <data name="lbName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 15</value>
+  </data>
+  <data name="&gt;&gt;tbRatioMax.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lbDistort.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;tbFreq.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="btnCancel.TabIndex" type="System.Int32, mscorlib">
+    <value>30</value>
+  </data>
+  <data name="lbResoLength.Text" xml:space="preserve">
+    <value>分辨率(长)</value>
+  </data>
+  <data name="tbRatioMin.Location" type="System.Drawing.Point, System.Drawing">
+    <value>378, 118</value>
+  </data>
+  <data name="&gt;&gt;tbLength.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lbFreq.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tbWeight.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbDistort.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="lbFreq.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;tbDistort.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="tbLength.Location" type="System.Drawing.Point, System.Drawing">
+    <value>146, 206</value>
+  </data>
+  <data name="lbNumber.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;cbInter.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lbRatioRange.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>ViewLens</value>
   </data>
+  <data name="btnCancel.Text" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="lbInter.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 79</value>
+  </data>
+  <data name="lbName.Text" xml:space="preserve">
+    <value>名称 *</value>
+  </data>
+  <data name="&gt;&gt;lbHH.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="lbResoWidth.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="lbRangeInter.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="tbTarget.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="tbWeight.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="&gt;&gt;lbHH.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="lbInter.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="lbWeight.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 15</value>
+  </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;lbRatioRange.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tbWeight.Name" xml:space="preserve">
+    <value>tbWeight</value>
+  </data>
+  <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="&gt;&gt;lbRangeInter.Name" xml:space="preserve">
+    <value>lbRangeInter</value>
+  </data>
+  <data name="&gt;&gt;lbLength.Name" xml:space="preserve">
+    <value>lbLength</value>
+  </data>
+  <data name="lbResoWidth.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 15</value>
+  </data>
+  <data name="&gt;&gt;tbRatioMin.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tbName.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;tbRatioMin.Name" xml:space="preserve">
+    <value>tbRatioMin</value>
+  </data>
+  <data name="&gt;&gt;lbLength.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;lbName.Name" xml:space="preserve">
+    <value>lbName</value>
+  </data>
+  <data name="&gt;&gt;lbResoLength.ZOrder" xml:space="preserve">
+    <value>26</value>
+  </data>
+  <data name="lbHH.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="lbHH.Text" xml:space="preserve">
+    <value>HH *</value>
+  </data>
+  <data name="tbFlange.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;lbResoLength.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tbHH.Location" type="System.Drawing.Point, System.Drawing">
+    <value>378, 162</value>
+  </data>
+  <data name="tbHH.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 25</value>
+  </data>
+  <data name="lbName.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="tbNumber.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 25</value>
+  </data>
+  <data name="&gt;&gt;lbWeight.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="lbRatioRange.Location" type="System.Drawing.Point, System.Drawing">
+    <value>259, 123</value>
+  </data>
+  <data name="btnSave.Text" xml:space="preserve">
+    <value>新增</value>
+  </data>
+  <data name="tbName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>146, 30</value>
+  </data>
+  <data name="lbFlange.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 123</value>
+  </data>
+  <data name="&gt;&gt;tbWeight.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="lbTarget.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;tbName.Name" xml:space="preserve">
+    <value>tbName</value>
+  </data>
+  <data name="&gt;&gt;tbNumber.ZOrder" xml:space="preserve">
+    <value>21</value>
+  </data>
+  <data name="lbNumber.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="tbFlange.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 25</value>
+  </data>
+  <data name="lbResoWidth.Text" xml:space="preserve">
+    <value>分辨率(宽)</value>
+  </data>
+  <data name="&gt;&gt;cbInter.Name" xml:space="preserve">
+    <value>cbInter</value>
+  </data>
+  <data name="&gt;&gt;lbHH.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lbRangeInter.Size" type="System.Drawing.Size, System.Drawing">
+    <value>15, 15</value>
+  </data>
+  <data name="&gt;&gt;tbFlange.Name" xml:space="preserve">
+    <value>tbFlange</value>
+  </data>
+  <data name="lbRatioRange.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;lbNumber.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tbFlange.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbResoLength.Name" xml:space="preserve">
+    <value>tbResoLength</value>
+  </data>
+  <data name="&gt;&gt;tbRatioMin.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tbName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 25</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>506, 389</value>
+  </data>
+  <data name="lbFocus.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;tbTarget.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbTarget.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;btnCancel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="lbNumber.Text" xml:space="preserve">
+    <value>货号 *</value>
+  </data>
+  <data name="&gt;&gt;lbName.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="tbWeight.Location" type="System.Drawing.Point, System.Drawing">
+    <value>146, 250</value>
+  </data>
+  <data name="&gt;&gt;tbFlange.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tbResoLength.ZOrder" xml:space="preserve">
+    <value>25</value>
+  </data>
+  <data name="lbWeight.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="tbResoLength.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;tbRatioMax.Name" xml:space="preserve">
+    <value>tbRatioMax</value>
+  </data>
+  <data name="lbTarget.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;lbFocus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>262, 348</value>
+  </data>
+  <data name="tbRatioMax.Location" type="System.Drawing.Point, System.Drawing">
+    <value>442, 118</value>
+  </data>
+  <data name="lbWeight.Location" type="System.Drawing.Point, System.Drawing">
+    <value>103, 255</value>
+  </data>
+  <data name="&gt;&gt;tbFreq.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbName.ZOrder" xml:space="preserve">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;lbRatioRange.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tbNumber.Location" type="System.Drawing.Point, System.Drawing">
+    <value>378, 30</value>
+  </data>
+  <data name="lbRangeInter.Text" xml:space="preserve">
+    <value>-</value>
+  </data>
+  <data name="&gt;&gt;lbFocus.Name" xml:space="preserve">
+    <value>lbFocus</value>
+  </data>
+  <data name="lbLength.Text" xml:space="preserve">
+    <value>镜头长度(mm) *</value>
+  </data>
+  <data name="lbFlange.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 15</value>
+  </data>
+  <data name="&gt;&gt;lbRangeInter.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;lbWeight.Name" xml:space="preserve">
+    <value>lbWeight</value>
+  </data>
+  <data name="&gt;&gt;tbFocus.ZOrder" xml:space="preserve">
+    <value>30</value>
+  </data>
+  <data name="lbRangeInter.Location" type="System.Drawing.Point, System.Drawing">
+    <value>421, 123</value>
+  </data>
+  <data name="tbHH.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="btnSave.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="lbTarget.Size" type="System.Drawing.Size, System.Drawing">
+    <value>115, 15</value>
+  </data>
+  <data name="&gt;&gt;tbDistort.Name" xml:space="preserve">
+    <value>tbDistort</value>
+  </data>
+  <data name="&gt;&gt;tbLength.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lbFlange.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="tbFocus.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;tbResoWidth.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnSave.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;lbTarget.Name" xml:space="preserve">
+    <value>lbTarget</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>

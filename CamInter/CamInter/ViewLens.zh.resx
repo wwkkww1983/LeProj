@@ -168,4 +168,50 @@
   <data name="ViewLens.Text" xml:space="preserve">
     <value>新增镜头</value>
   </data>
+
+  <data name="lbWeight.Location" type="System.Drawing.Point, System.Drawing">
+    <value>103, 255</value>
+  </data>
+  <data name="lbFreq.Location" type="System.Drawing.Point, System.Drawing">
+    <value>305, 255</value>
+  </data>
+  <data name="lbTarget.Location" type="System.Drawing.Point, System.Drawing">
+    <value>25, 167</value>
+  </data>
+  <data name="lbDistort.Location" type="System.Drawing.Point, System.Drawing">
+    <value>320, 211</value>
+  </data>
+  <data name="lbResoLength.Location" type="System.Drawing.Point, System.Drawing">
+    <value>57, 299</value>
+  </data>
+  <data name="lbResoWidth.Location" type="System.Drawing.Point, System.Drawing">
+    <value>289, 299</value>
+  </data>
+  <data name="lbName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 35</value>
+  </data>
+  <data name="lbNumber.Location" type="System.Drawing.Point, System.Drawing">
+    <value>319, 35</value>
+  </data>
+  <data name="lbFlange.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 123</value>
+  </data>
+  <data name="lbLength.Location" type="System.Drawing.Point, System.Drawing">
+    <value>25, 211</value>
+  </data>
+  <data name="lbRangeInter.Location" type="System.Drawing.Point, System.Drawing">
+    <value>421, 123</value>
+  </data>
+  <data name="lbRatioRange.Location" type="System.Drawing.Point, System.Drawing">
+    <value>259, 123</value>
+  </data>
+  <data name="lbHH.Location" type="System.Drawing.Point, System.Drawing">
+    <value>333, 167</value>
+  </data>
+  <data name="lbFocus.Location" type="System.Drawing.Point, System.Drawing">
+    <value>287, 79</value>
+  </data>
+  <data name="lbInter.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 79</value>
+  </data>
 </root>

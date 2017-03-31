@@ -125,7 +125,7 @@
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Idx.Width" type="System.Int32, mscorlib">
-    <value>60</value>
+    <value>70</value>
   </data>
   <metadata name="lens.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -157,11 +157,17 @@
   <data name="ratio.HeaderText" xml:space="preserve">
     <value>放大倍率</value>
   </data>
+  <data name="ratio.Width" type="System.Int32, mscorlib">
+    <value>90</value>
+  </data>
   <metadata name="workDistance.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <data name="workDistance.HeaderText" xml:space="preserve">
     <value>工作距离</value>
+  </data>
+  <data name="workDistance.Width" type="System.Int32, mscorlib">
+    <value>150</value>
   </data>
   <metadata name="fovLength.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -169,11 +175,17 @@
   <data name="fovLength.HeaderText" xml:space="preserve">
     <value>视野长</value>
   </data>
+  <data name="fovLength.Width" type="System.Int32, mscorlib">
+    <value>130</value>
+  </data>
   <metadata name="fovWidth.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <data name="fovWidth.HeaderText" xml:space="preserve">
     <value>视野宽</value>
+  </data>
+  <data name="fovWidth.Width" type="System.Int32, mscorlib">
+    <value>130</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="dgvProjList.Location" type="System.Drawing.Point, System.Drawing">
@@ -201,31 +213,31 @@
     <value>17, 17</value>
   </metadata>
   <data name="CamLensToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>123, 24</value>
+    <value>152, 24</value>
   </data>
   <data name="CamLensToolStripMenuItem.Text" xml:space="preserve">
     <value>镜头</value>
   </data>
   <data name="FocusToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>123, 24</value>
+    <value>152, 24</value>
   </data>
   <data name="FocusToolStripMenuItem.Text" xml:space="preserve">
     <value>调焦环</value>
   </data>
   <data name="AdapterToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>123, 24</value>
+    <value>152, 24</value>
   </data>
   <data name="AdapterToolStripMenuItem.Text" xml:space="preserve">
     <value>转接环</value>
   </data>
   <data name="ExtendToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>123, 24</value>
+    <value>152, 24</value>
   </data>
   <data name="ExtendToolStripMenuItem.Text" xml:space="preserve">
     <value>延长环</value>
   </data>
   <data name="connToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>123, 24</value>
+    <value>152, 24</value>
   </data>
   <data name="connToolStripMenuItem.Text" xml:space="preserve">
     <value>接口</value>
@@ -314,11 +326,17 @@
   <data name="interA.HeaderText" xml:space="preserve">
     <value>接口A</value>
   </data>
+  <data name="interA.Width" type="System.Int32, mscorlib">
+    <value>120</value>
+  </data>
   <metadata name="interB.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <data name="interB.HeaderText" xml:space="preserve">
     <value>接口B</value>
+  </data>
+  <data name="interB.Width" type="System.Int32, mscorlib">
+    <value>120</value>
   </data>
   <metadata name="length.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -1429,60 +1447,6 @@
   <data name="$this.Text" xml:space="preserve">
     <value>相机镜头配对</value>
   </data>
-  <data name="&gt;&gt;Idx.Name" xml:space="preserve">
-    <value>Idx</value>
-  </data>
-  <data name="&gt;&gt;Idx.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lens.Name" xml:space="preserve">
-    <value>lens</value>
-  </data>
-  <data name="&gt;&gt;lens.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;focus.Name" xml:space="preserve">
-    <value>focus</value>
-  </data>
-  <data name="&gt;&gt;focus.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;adapter.Name" xml:space="preserve">
-    <value>adapter</value>
-  </data>
-  <data name="&gt;&gt;adapter.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;extend.Name" xml:space="preserve">
-    <value>extend</value>
-  </data>
-  <data name="&gt;&gt;extend.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;ratio.Name" xml:space="preserve">
-    <value>ratio</value>
-  </data>
-  <data name="&gt;&gt;ratio.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;workDistance.Name" xml:space="preserve">
-    <value>workDistance</value>
-  </data>
-  <data name="&gt;&gt;workDistance.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;fovLength.Name" xml:space="preserve">
-    <value>fovLength</value>
-  </data>
-  <data name="&gt;&gt;fovLength.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;fovWidth.Name" xml:space="preserve">
-    <value>fovWidth</value>
-  </data>
-  <data name="&gt;&gt;fovWidth.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;addItemToolStripMenuItem.Name" xml:space="preserve">
     <value>addItemToolStripMenuItem</value>
   </data>
@@ -1577,6 +1541,60 @@
     <value>length</value>
   </data>
   <data name="&gt;&gt;length.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Idx.Name" xml:space="preserve">
+    <value>Idx</value>
+  </data>
+  <data name="&gt;&gt;Idx.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lens.Name" xml:space="preserve">
+    <value>lens</value>
+  </data>
+  <data name="&gt;&gt;lens.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;focus.Name" xml:space="preserve">
+    <value>focus</value>
+  </data>
+  <data name="&gt;&gt;focus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;adapter.Name" xml:space="preserve">
+    <value>adapter</value>
+  </data>
+  <data name="&gt;&gt;adapter.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;extend.Name" xml:space="preserve">
+    <value>extend</value>
+  </data>
+  <data name="&gt;&gt;extend.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ratio.Name" xml:space="preserve">
+    <value>ratio</value>
+  </data>
+  <data name="&gt;&gt;ratio.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;workDistance.Name" xml:space="preserve">
+    <value>workDistance</value>
+  </data>
+  <data name="&gt;&gt;workDistance.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;fovLength.Name" xml:space="preserve">
+    <value>fovLength</value>
+  </data>
+  <data name="&gt;&gt;fovLength.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;fovWidth.Name" xml:space="preserve">
+    <value>fovWidth</value>
+  </data>
+  <data name="&gt;&gt;fovWidth.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

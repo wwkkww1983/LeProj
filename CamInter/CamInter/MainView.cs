@@ -18,7 +18,8 @@ namespace CamInter
         private bool initialConditionFlag = false, areaBoardSelected = true;
         private int resolutionLength, resolutionWidth;
         private float fovLengthValue, fovWidthValue;
-        private const string PRE_PROJECT_NAME = "preProjectName", POST_RING_NUMBER = "postRingNumber", NAME_NONE = "nameNone";
+        private const string PRE_PROJECT_NAME = "preProjectName", POST_RING_NUMBER = "postRingNumber", NAME_NONE = "nameNone",
+                ADD_SUCCESS = "addSuccessInfo", ADD_FAIL = "addFailInfo";
         private DataTable dtInter = null;
         private DBUtility dbHandler = new DBUtility(true);
         private Algorithm alg = null;
@@ -60,12 +61,12 @@ namespace CamInter
         {
             if (isSuccess)
             {
-                MessageBox.Show("增加成功");
+                MessageBox.Show(this.GetConstantsString(ADD_SUCCESS));
                 window.Close();
             }
             else
             {
-                MessageBox.Show("操作失败");
+                MessageBox.Show(this.GetConstantsString(ADD_FAIL));
             }
             if (type == enumProductType.Interface)
             {
@@ -181,18 +182,12 @@ namespace CamInter
 
         private string GetRingName(enumProductType type)
         {
-            return this.GetResxStringByKey(typeof(MidRing),type.ToString());
+            return SetLanguage.GetStringByFormKey(typeof(MidRing), type.ToString());
         }
 
         private string GetConstantsString(string key)
         {
-            return this.GetResxStringByKey(typeof(MainView), key);
-        }
-
-        private string GetResxStringByKey(Type type, string key)
-        {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(type);
-            return resources.GetObject(key).ToString();
+            return SetLanguage.GetStringByFormKey(typeof(MainView), key);
         }
 
         private void dgvProjList_CellClick(object sender, DataGridViewCellEventArgs e)

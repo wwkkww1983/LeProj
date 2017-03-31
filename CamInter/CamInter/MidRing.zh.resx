@@ -162,4 +162,33 @@
   <data name="Focus" xml:space="preserve">
     <value>调焦环</value>
   </data>
+
+  
+  <data name="lbInterB.Location" type="System.Drawing.Point, System.Drawing">
+    <value>221, 71</value>
+  </data>
+  <data name="lbLenRange.Location" type="System.Drawing.Point, System.Drawing">
+    <value>223, 114</value>
+  </data>
+  <data name="lbLength.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 114</value>
+  </data>
+  <data name="lbInterA.Location" type="System.Drawing.Point, System.Drawing">
+    <value>29, 71</value>
+  </data>
+  <data name="lbWeight.Location" type="System.Drawing.Point, System.Drawing">
+    <value>61, 158</value>
+  </data>
+  <data name="lbName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>45, 28</value>
+  </data>
+  <data name="lbNumber.Location" type="System.Drawing.Point, System.Drawing">
+    <value>237, 28</value>
+  </data>
+  <data name="lbInner.Location" type="System.Drawing.Point, System.Drawing">
+    <value>253, 158</value>
+  </data>
+  <data name="lbRangeInter.Location" type="System.Drawing.Point, System.Drawing">
+    <value>339, 114</value>
+  </data>
 </root>

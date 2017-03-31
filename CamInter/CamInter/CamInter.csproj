@@ -80,21 +80,26 @@
     </Compile>
     <EmbeddedResource Include="MainView.en.resx">
       <DependentUpon>MainView.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainView.resx">
       <DependentUpon>MainView.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainView.zh.resx">
       <DependentUpon>MainView.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MidRing.en.resx">
       <DependentUpon>MidRing.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MidRing.resx">
       <DependentUpon>MidRing.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MidRing.zh.resx">
       <DependentUpon>MidRing.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -107,21 +112,27 @@
     </Compile>
     <EmbeddedResource Include="ViewConnctor.en.resx">
       <DependentUpon>ViewConnctor.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ViewConnctor.resx">
       <DependentUpon>ViewConnctor.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ViewConnctor.zh.resx">
       <DependentUpon>ViewConnctor.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ViewLens.en.resx">
       <DependentUpon>ViewLens.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ViewLens.resx">
       <DependentUpon>ViewLens.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ViewLens.zh.resx">
       <DependentUpon>ViewLens.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

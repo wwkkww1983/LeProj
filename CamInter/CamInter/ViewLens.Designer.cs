@@ -134,8 +134,8 @@
             // 
             // cbInter
             // 
-            this.cbInter.FormattingEnabled = true;
             resources.ApplyResources(this.cbInter, "cbInter");
+            this.cbInter.FormattingEnabled = true;
             this.cbInter.Name = "cbInter";
             // 
             // lbResoLength

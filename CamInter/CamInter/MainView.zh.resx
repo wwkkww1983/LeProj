@@ -249,4 +249,48 @@
   <data name="preProjectName" xml:space="preserve">
     <value>方案</value>
   </data>
+  <data name="addFailInfo" xml:space="preserve">
+    <value>操作失败</value>
+  </data>
+  <data name="addSuccessInfo" xml:space="preserve">
+    <value>增加成功</value>
+  </data>
+
+
+  <data name="lbValueWidth.Location" type="System.Drawing.Point, System.Drawing">
+    <value>255, 28</value>
+  </data>
+  <data name="lbValueLength.Location" type="System.Drawing.Point, System.Drawing">
+    <value>166, 28</value>
+  </data>
+  <data name="lbFov.Location" type="System.Drawing.Point, System.Drawing">
+    <value>31, 110</value>
+  </data>
+  <data name="lbResolution.Location" type="System.Drawing.Point, System.Drawing">
+    <value>26, 165</value>
+  </data>
+  <data name="lbSensor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 55</value>
+  </data>
+  <data name="lbLineFov.Location" type="System.Drawing.Point, System.Drawing">
+    <value>31, 124</value>
+  </data>
+  <data name="lbLineResolution.Location" type="System.Drawing.Point, System.Drawing">
+    <value>26, 165</value>
+  </data>
+  <data name="lbLineSensor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 84</value>
+  </data>
+  <data name="lbCamInter.Location" type="System.Drawing.Point, System.Drawing">
+    <value>59, 322</value>
+  </data>
+  <data name="lbFlange.Location" type="System.Drawing.Point, System.Drawing">
+    <value>39, 368</value>
+  </data>
+  <data name="lbSensorDiagonal.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 415</value>
+  </data>
+  <data name="lbWork.Location" type="System.Drawing.Point, System.Drawing">
+    <value>73, 462</value>
+  </data>
 </root>

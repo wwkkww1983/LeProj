@@ -117,496 +117,133 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="lbInterB.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="lbInterB.Location" type="System.Drawing.Point, System.Drawing">
-    <value>221, 71</value>
-  </data>
-  <data name="lbInterB.Size" type="System.Drawing.Size, System.Drawing">
-    <value>69, 15</value>
-  </data>
-  <data name="lbInterB.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="lbInterB.Text" xml:space="preserve">
-    <value>接口 B *</value>
-  </data>
-  <data name="&gt;&gt;lbInterB.Name" xml:space="preserve">
-    <value>lbInterB</value>
-  </data>
-  <data name="&gt;&gt;lbInterB.Type" xml:space="preserve">
+  <data name="&gt;&gt;lbNumber.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;lbInterB.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbInterB.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="tbInRadius.Location" type="System.Drawing.Point, System.Drawing">
-    <value>296, 153</value>
-  </data>
-  <data name="tbInRadius.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 25</value>
-  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="tbInRadius.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
   </data>
-  <data name="&gt;&gt;tbInRadius.Name" xml:space="preserve">
-    <value>tbInRadius</value>
+  <data name="lbInner.Text" xml:space="preserve">
+    <value>内径</value>
   </data>
-  <data name="&gt;&gt;tbInRadius.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbInRadius.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tbInRadius.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="lbLenRange.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbLenRange.Location" type="System.Drawing.Point, System.Drawing">
-    <value>223, 114</value>
-  </data>
-  <data name="lbLenRange.Size" type="System.Drawing.Size, System.Drawing">
-    <value>67, 15</value>
-  </data>
-  <data name="lbLenRange.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="lbLenRange.Text" xml:space="preserve">
-    <value>长度范围</value>
-  </data>
-  <data name="&gt;&gt;lbLenRange.Name" xml:space="preserve">
-    <value>lbLenRange</value>
-  </data>
-  <data name="&gt;&gt;lbLenRange.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbLenRange.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbLenRange.ZOrder" xml:space="preserve">
-    <value>12</value>
-  </data>
-  <data name="tbLength.Location" type="System.Drawing.Point, System.Drawing">
-    <value>104, 109</value>
-  </data>
-  <data name="tbLength.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 25</value>
-  </data>
-  <data name="tbLength.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;tbLength.Name" xml:space="preserve">
-    <value>tbLength</value>
-  </data>
-  <data name="&gt;&gt;tbLength.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbLength.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tbLength.ZOrder" xml:space="preserve">
-    <value>15</value>
-  </data>
-  <data name="lbLength.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbLength.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 114</value>
-  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="lbLength.Size" type="System.Drawing.Size, System.Drawing">
     <value>85, 15</value>
-  </data>
-  <data name="lbLength.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="lbLength.Text" xml:space="preserve">
-    <value>长度(mm) *</value>
-  </data>
-  <data name="&gt;&gt;lbLength.Name" xml:space="preserve">
-    <value>lbLength</value>
-  </data>
-  <data name="&gt;&gt;lbLength.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbLength.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbLength.ZOrder" xml:space="preserve">
-    <value>17</value>
-  </data>
-  <data name="lbInterA.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbInterA.Location" type="System.Drawing.Point, System.Drawing">
-    <value>29, 71</value>
-  </data>
-  <data name="lbInterA.Size" type="System.Drawing.Size, System.Drawing">
-    <value>69, 15</value>
   </data>
   <data name="lbInterA.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
   </data>
-  <data name="lbInterA.Text" xml:space="preserve">
-    <value>接口 A *</value>
-  </data>
-  <data name="&gt;&gt;lbInterA.Name" xml:space="preserve">
-    <value>lbInterA</value>
-  </data>
-  <data name="&gt;&gt;lbInterA.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbInterA.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbInterA.ZOrder" xml:space="preserve">
-    <value>19</value>
-  </data>
-  <data name="lbWeight.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbWeight.Location" type="System.Drawing.Point, System.Drawing">
-    <value>61, 158</value>
-  </data>
-  <data name="lbWeight.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 15</value>
-  </data>
-  <data name="lbWeight.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="lbWeight.Text" xml:space="preserve">
-    <value>重量</value>
-  </data>
-  <data name="&gt;&gt;lbWeight.Name" xml:space="preserve">
-    <value>lbWeight</value>
-  </data>
-  <data name="&gt;&gt;lbWeight.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbWeight.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbWeight.ZOrder" xml:space="preserve">
-    <value>14</value>
-  </data>
-  <data name="tbWeight.Location" type="System.Drawing.Point, System.Drawing">
-    <value>104, 153</value>
-  </data>
-  <data name="tbWeight.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 25</value>
-  </data>
-  <data name="tbWeight.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;tbWeight.Name" xml:space="preserve">
-    <value>tbWeight</value>
-  </data>
-  <data name="&gt;&gt;tbWeight.Type" xml:space="preserve">
+  <data name="&gt;&gt;tbLenMin.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;tbWeight.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lbRangeInter.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;btnSave.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;tbWeight.ZOrder" xml:space="preserve">
     <value>13</value>
   </data>
-  <data name="btnSave.Location" type="System.Drawing.Point, System.Drawing">
-    <value>146, 216</value>
+  <data name="&gt;&gt;lbInterA.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="btnSave.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
+  <data name="lbLenRange.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
   </data>
-  <data name="btnSave.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="btnSave.Text" xml:space="preserve">
-    <value>新增</value>
+  <data name="cbInterB.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 23</value>
   </data>
   <data name="&gt;&gt;btnSave.Name" xml:space="preserve">
     <value>btnSave</value>
   </data>
-  <data name="&gt;&gt;btnSave.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnSave.Parent" xml:space="preserve">
+  <data name="&gt;&gt;tbLenMax.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;btnSave.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>240, 216</value>
-  </data>
-  <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="btnCancel.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="btnCancel.Text" xml:space="preserve">
-    <value>取消</value>
-  </data>
-  <data name="&gt;&gt;btnCancel.Name" xml:space="preserve">
-    <value>btnCancel</value>
-  </data>
-  <data name="&gt;&gt;btnCancel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnCancel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btnCancel.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="lbName.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>45, 28</value>
-  </data>
-  <data name="lbName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 15</value>
-  </data>
-  <data name="lbName.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="lbName.Text" xml:space="preserve">
-    <value>名称 *</value>
-  </data>
-  <data name="&gt;&gt;lbName.Name" xml:space="preserve">
-    <value>lbName</value>
-  </data>
-  <data name="&gt;&gt;lbName.Type" xml:space="preserve">
+  <data name="&gt;&gt;lbLenRange.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbName.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbName.ZOrder" xml:space="preserve">
-    <value>18</value>
-  </data>
-  <data name="tbName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>104, 23</value>
-  </data>
-  <data name="tbName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 25</value>
-  </data>
-  <data name="tbName.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;tbName.Name" xml:space="preserve">
-    <value>tbName</value>
-  </data>
-  <data name="&gt;&gt;tbName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbName.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tbName.ZOrder" xml:space="preserve">
-    <value>16</value>
   </data>
   <data name="lbNumber.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="lbNumber.Location" type="System.Drawing.Point, System.Drawing">
-    <value>237, 28</value>
+  <data name="tbLenMin.Location" type="System.Drawing.Point, System.Drawing">
+    <value>296, 109</value>
   </data>
-  <data name="lbNumber.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 15</value>
+  <data name="lbLength.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 114</value>
   </data>
-  <data name="lbNumber.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+  <data name="tbNumber.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 25</value>
   </data>
-  <data name="lbNumber.Text" xml:space="preserve">
-    <value>货号 *</value>
+  <data name="&gt;&gt;lbInner.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;lbLenRange.Name" xml:space="preserve">
+    <value>lbLenRange</value>
+  </data>
+  <data name="&gt;&gt;lbInterA.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="lbInner.Location" type="System.Drawing.Point, System.Drawing">
+    <value>253, 158</value>
   </data>
   <data name="&gt;&gt;lbNumber.Name" xml:space="preserve">
     <value>lbNumber</value>
   </data>
-  <data name="&gt;&gt;lbNumber.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="lbWeight.Text" xml:space="preserve">
+    <value>重量</value>
   </data>
-  <data name="&gt;&gt;lbNumber.Parent" xml:space="preserve">
+  <data name="&gt;&gt;btnCancel.Name" xml:space="preserve">
+    <value>btnCancel</value>
+  </data>
+  <data name="&gt;&gt;cbInterA.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;lbNumber.ZOrder" xml:space="preserve">
-    <value>5</value>
+  <data name="tbInRadius.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 25</value>
   </data>
-  <data name="tbNumber.Location" type="System.Drawing.Point, System.Drawing">
-    <value>296, 23</value>
+  <data name="lbWeight.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="tbNumber.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="$this.Text" xml:space="preserve">
+    <value>MidRing</value>
+  </data>
+  <data name="tbWeight.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 25</value>
   </data>
   <data name="tbNumber.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="&gt;&gt;tbNumber.Name" xml:space="preserve">
-    <value>tbNumber</value>
-  </data>
-  <data name="&gt;&gt;tbNumber.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbNumber.Parent" xml:space="preserve">
+  <data name="&gt;&gt;tbName.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;tbNumber.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="lbInner.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbInner.Location" type="System.Drawing.Point, System.Drawing">
-    <value>253, 158</value>
-  </data>
-  <data name="lbInner.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 15</value>
-  </data>
-  <data name="lbInner.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="lbInner.Text" xml:space="preserve">
-    <value>内径</value>
-  </data>
-  <data name="&gt;&gt;lbInner.Name" xml:space="preserve">
-    <value>lbInner</value>
-  </data>
-  <data name="&gt;&gt;lbInner.Type" xml:space="preserve">
+  <data name="&gt;&gt;lbName.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;lbInner.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbInner.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="tbLenMin.Location" type="System.Drawing.Point, System.Drawing">
-    <value>296, 109</value>
-  </data>
-  <data name="tbLenMin.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 25</value>
-  </data>
-  <data name="tbLenMin.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;tbLenMin.Name" xml:space="preserve">
-    <value>tbLenMin</value>
-  </data>
-  <data name="&gt;&gt;tbLenMin.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbLenMin.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tbLenMin.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="tbLenMax.Location" type="System.Drawing.Point, System.Drawing">
-    <value>360, 109</value>
-  </data>
-  <data name="tbLenMax.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 25</value>
+  <data name="lbInterB.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbLenMax.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
-  <data name="&gt;&gt;tbLenMax.Name" xml:space="preserve">
-    <value>tbLenMax</value>
-  </data>
-  <data name="&gt;&gt;tbLenMax.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbLenMax.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tbLenMax.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="lbRangeInter.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbRangeInter.Location" type="System.Drawing.Point, System.Drawing">
-    <value>339, 114</value>
-  </data>
-  <data name="lbRangeInter.Size" type="System.Drawing.Size, System.Drawing">
-    <value>15, 15</value>
-  </data>
-  <data name="lbRangeInter.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="lbRangeInter.Text" xml:space="preserve">
-    <value>-</value>
-  </data>
-  <data name="&gt;&gt;lbRangeInter.Name" xml:space="preserve">
-    <value>lbRangeInter</value>
-  </data>
-  <data name="&gt;&gt;lbRangeInter.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;lbRangeInter.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;lbRangeInter.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="cbInterA.Location" type="System.Drawing.Point, System.Drawing">
-    <value>104, 67</value>
-  </data>
-  <data name="cbInterA.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 23</value>
-  </data>
-  <data name="cbInterA.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
-  </data>
-  <data name="&gt;&gt;cbInterA.Name" xml:space="preserve">
-    <value>cbInterA</value>
-  </data>
-  <data name="&gt;&gt;cbInterA.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cbInterA.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lbWeight.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;cbInterA.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="cbInterB.Location" type="System.Drawing.Point, System.Drawing">
-    <value>296, 67</value>
+  <data name="cbInterA.Location" type="System.Drawing.Point, System.Drawing">
+    <value>104, 67</value>
   </data>
-  <data name="cbInterB.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 23</value>
-  </data>
-  <data name="cbInterB.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
-  </data>
-  <data name="&gt;&gt;cbInterB.Name" xml:space="preserve">
-    <value>cbInterB</value>
-  </data>
-  <data name="&gt;&gt;cbInterB.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cbInterB.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;cbInterB.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <data name="lbInner.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
-  </metadata>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>8, 15</value>
   </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>428, 259</value>
+  <data name="&gt;&gt;cbInterA.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -774,19 +411,382 @@
         AAA=
 </value>
   </data>
+  <data name="lbLenRange.Size" type="System.Drawing.Size, System.Drawing">
+    <value>67, 15</value>
+  </data>
+  <data name="&gt;&gt;lbInterA.ZOrder" xml:space="preserve">
+    <value>19</value>
+  </data>
+  <data name="lbLength.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;lbWeight.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbInRadius.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tbLength.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;lbRangeInter.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbLenRange.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
   <data name="$this.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>446, 334</value>
   </data>
-  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>446, 304</value>
+  <data name="lbName.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>MidRing</value>
+  <data name="&gt;&gt;tbLenMax.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;tbInRadius.Name" xml:space="preserve">
+    <value>tbInRadius</value>
+  </data>
+  <data name="cbInterB.Location" type="System.Drawing.Point, System.Drawing">
+    <value>296, 67</value>
+  </data>
+  <data name="lbRangeInter.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbLength.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;btnCancel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbInner.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="lbInterB.Text" xml:space="preserve">
+    <value>接口 B *</value>
+  </data>
+  <data name="&gt;&gt;cbInterB.Name" xml:space="preserve">
+    <value>cbInterB</value>
+  </data>
+  <data name="lbInner.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;lbLength.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tbLength.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;lbLenRange.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="lbInterA.Text" xml:space="preserve">
+    <value>接口 A *</value>
+  </data>
+  <data name="lbLength.Text" xml:space="preserve">
+    <value>长度(mm) *</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MidRing</value>
   </data>
+  <data name="&gt;&gt;tbInRadius.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="lbNumber.Text" xml:space="preserve">
+    <value>货号 *</value>
+  </data>
+  <data name="&gt;&gt;tbName.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="lbLenRange.Text" xml:space="preserve">
+    <value>长度范围</value>
+  </data>
+  <data name="&gt;&gt;tbNumber.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lbWeight.Name" xml:space="preserve">
+    <value>lbWeight</value>
+  </data>
+  <data name="&gt;&gt;tbNumber.Name" xml:space="preserve">
+    <value>tbNumber</value>
+  </data>
+  <data name="btnSave.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;tbLenMax.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbInterA.Name" xml:space="preserve">
+    <value>lbInterA</value>
+  </data>
+  <data name="&gt;&gt;tbLenMin.Name" xml:space="preserve">
+    <value>tbLenMin</value>
+  </data>
+  <data name="lbNumber.Location" type="System.Drawing.Point, System.Drawing">
+    <value>237, 28</value>
+  </data>
+  <data name="lbName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>45, 28</value>
+  </data>
+  <data name="&gt;&gt;btnCancel.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;lbInner.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lbNumber.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 15</value>
+  </data>
+  <data name="&gt;&gt;lbLength.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbWeight.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnSave.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lbWeight.Location" type="System.Drawing.Point, System.Drawing">
+    <value>61, 158</value>
+  </data>
+  <data name="&gt;&gt;tbLength.Name" xml:space="preserve">
+    <value>tbLength</value>
+  </data>
+  <data name="&gt;&gt;tbLenMin.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="tbLenMax.Location" type="System.Drawing.Point, System.Drawing">
+    <value>360, 109</value>
+  </data>
+  <data name="lbInterA.Location" type="System.Drawing.Point, System.Drawing">
+    <value>29, 71</value>
+  </data>
+  <data name="tbName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 25</value>
+  </data>
+  <data name="lbLenRange.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbInterB.Size" type="System.Drawing.Size, System.Drawing">
+    <value>69, 15</value>
+  </data>
+  <data name="&gt;&gt;lbInterB.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbLenMax.Name" xml:space="preserve">
+    <value>tbLenMax</value>
+  </data>
+  <data name="lbName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 15</value>
+  </data>
+  <data name="&gt;&gt;lbName.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <data name="lbInterB.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="cbInterB.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="btnCancel.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;tbLength.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnSave.Text" xml:space="preserve">
+    <value>新增</value>
+  </data>
+  <data name="lbInterB.Location" type="System.Drawing.Point, System.Drawing">
+    <value>221, 71</value>
+  </data>
+  <data name="tbLength.Location" type="System.Drawing.Point, System.Drawing">
+    <value>104, 109</value>
+  </data>
+  <data name="&gt;&gt;cbInterB.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="btnCancel.Text" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="lbRangeInter.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="cbInterA.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 23</value>
+  </data>
+  <data name="tbWeight.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="lbWeight.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 15</value>
+  </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="&gt;&gt;lbRangeInter.Name" xml:space="preserve">
+    <value>lbRangeInter</value>
+  </data>
+  <data name="&gt;&gt;lbLength.Name" xml:space="preserve">
+    <value>lbLength</value>
+  </data>
+  <data name="lbWeight.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="lbInterA.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="tbName.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;cbInterB.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbLength.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="&gt;&gt;lbName.Name" xml:space="preserve">
+    <value>lbName</value>
+  </data>
+  <data name="&gt;&gt;tbNumber.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>8, 15</value>
+  </data>
+  <data name="&gt;&gt;tbInRadius.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="btnSave.Location" type="System.Drawing.Point, System.Drawing">
+    <value>146, 216</value>
+  </data>
+  <data name="&gt;&gt;lbInner.Name" xml:space="preserve">
+    <value>lbInner</value>
+  </data>
+  <data name="lbInterA.Size" type="System.Drawing.Size, System.Drawing">
+    <value>69, 15</value>
+  </data>
+  <data name="tbName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>104, 23</value>
+  </data>
+  <data name="&gt;&gt;tbWeight.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tbName.Name" xml:space="preserve">
+    <value>tbName</value>
+  </data>
+  <data name="&gt;&gt;tbNumber.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="lbNumber.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="lbRangeInter.Size" type="System.Drawing.Size, System.Drawing">
+    <value>15, 15</value>
+  </data>
+  <data name="tbLength.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 25</value>
+  </data>
+  <data name="tbLenMax.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 25</value>
+  </data>
+  <data name="lbInner.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 15</value>
+  </data>
+  <data name="&gt;&gt;lbNumber.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tbName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbWeight.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>428, 259</value>
+  </data>
+  <data name="&gt;&gt;lbInterB.Name" xml:space="preserve">
+    <value>lbInterB</value>
+  </data>
+  <data name="&gt;&gt;lbInterB.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btnCancel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;cbInterB.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lbName.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="tbWeight.Location" type="System.Drawing.Point, System.Drawing">
+    <value>104, 153</value>
+  </data>
+  <data name="&gt;&gt;lbNumber.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;lbInterB.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;tbWeight.Name" xml:space="preserve">
+    <value>tbWeight</value>
+  </data>
+  <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>240, 216</value>
+  </data>
+  <data name="&gt;&gt;tbLenMin.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="lbName.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="tbNumber.Location" type="System.Drawing.Point, System.Drawing">
+    <value>296, 23</value>
+  </data>
+  <data name="lbRangeInter.Text" xml:space="preserve">
+    <value>-</value>
+  </data>
+  <data name="lbName.Text" xml:space="preserve">
+    <value>名称 *</value>
+  </data>
+  <data name="&gt;&gt;cbInterA.Name" xml:space="preserve">
+    <value>cbInterA</value>
+  </data>
+  <data name="lbRangeInter.Location" type="System.Drawing.Point, System.Drawing">
+    <value>339, 114</value>
+  </data>
+  <data name="btnSave.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="tbInRadius.Location" type="System.Drawing.Point, System.Drawing">
+    <value>296, 153</value>
+  </data>
+  <data name="&gt;&gt;tbLength.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="cbInterA.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="tbLenMin.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="lbLenRange.Location" type="System.Drawing.Point, System.Drawing">
+    <value>223, 114</value>
+  </data>
+  <data name="tbLenMin.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 25</value>
+  </data>
+  <data name="&gt;&gt;btnSave.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>446, 304</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>

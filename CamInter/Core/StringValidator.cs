@@ -73,10 +73,22 @@ namespace Core
         /// <returns></returns>
         public static bool HasContent(Control ctrl, string tipTitle)
         {
+            return HasContent(ctrl, tipTitle, "不可为空");
+        }
+
+        /// <summary>
+        /// 字符串是否为空
+        /// </summary>
+        /// <param name="ctrl"></param>
+        /// <param name="tipTitle"></param>
+        /// <param name="tipContent"></param>
+        /// <returns></returns>
+        public static bool HasContent(Control ctrl, string tipTitle,string tipContent)
+        {
             string strCheck = ctrl.Text.Trim();
             if (strCheck.Equals(string.Empty))
             {
-                MessageBox.Show(tipTitle + "不可为空");
+                MessageBox.Show(tipTitle + tipContent);
                 ctrl.Focus();
                 return false;
             }
@@ -108,7 +120,18 @@ namespace Core
         /// <returns></returns>
         public static bool IsUnsignedRealNumber(Control ctrl)
         {
-            return RegexCheck(ctrl, "仅可输入正实数", RegexHelper.IsUnsignedRealNumber);
+            return IsUnsignedRealNumber(ctrl, "仅可输入正实数");
+        }
+
+        /// <summary>
+        /// 正实数校验
+        /// </summary>
+        /// <param name="ctrl"></param>
+        /// <param name="tipContent"></param>
+        /// <returns></returns>
+        public static bool IsUnsignedRealNumber(Control ctrl, string tipContent)
+        {
+            return RegexCheck(ctrl, tipContent, RegexHelper.IsUnsignedRealNumber);
         }
 
         /// <summary>
@@ -118,7 +141,17 @@ namespace Core
         /// <returns></returns>
         public static bool IsEmptyOrUnsignedRealNumber(Control ctrl)
         {
-            return RegexEmptyOrCheck(ctrl, "仅可输入正实数", RegexHelper.IsUnsignedRealNumber); ;
+            return IsEmptyOrUnsignedRealNumber(ctrl, "仅可输入正实数");
+        }
+
+        /// <summary>
+        /// 空或正实数
+        /// </summary>
+        /// <param name="ctrl"></param>
+        /// <returns></returns>
+        public static bool IsEmptyOrUnsignedRealNumber(Control ctrl, string tipContent)
+        {
+            return RegexEmptyOrCheck(ctrl, tipContent, RegexHelper.IsUnsignedRealNumber);
         }
 
         /// <summary>
@@ -128,7 +161,17 @@ namespace Core
         /// <returns></returns>
         public static bool IsEmptyOrUnsignedInteger(Control ctrl)
         {
-            return RegexEmptyOrCheck(ctrl, "仅可输入正整数", RegexHelper.IsNumberUnsignedInteger); ;
+            return IsEmptyOrUnsignedInteger(ctrl, "仅可输入正整数");
+        }
+
+        /// <summary>
+        /// 空或正整数
+        /// </summary>
+        /// <param name="ctrl"></param>
+        /// <returns></returns>
+        public static bool IsEmptyOrUnsignedInteger(Control ctrl, string tipContent)
+        {
+            return RegexEmptyOrCheck(ctrl, tipContent, RegexHelper.IsNumberUnsignedInteger);
         }
 
         /// <summary>

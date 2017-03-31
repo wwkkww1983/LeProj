@@ -148,16 +148,16 @@
             // 
             // cbInterA
             // 
+            resources.ApplyResources(this.cbInterA, "cbInterA");
             this.cbInterA.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbInterA.FormattingEnabled = true;
-            resources.ApplyResources(this.cbInterA, "cbInterA");
             this.cbInterA.Name = "cbInterA";
             // 
             // cbInterB
             // 
+            resources.ApplyResources(this.cbInterB, "cbInterB");
             this.cbInterB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbInterB.FormattingEnabled = true;
-            resources.ApplyResources(this.cbInterB, "cbInterB");
             this.cbInterB.Name = "cbInterB";
             // 
             // MidRing
