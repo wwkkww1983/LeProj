@@ -23,6 +23,7 @@ namespace SimuProteus
 
             info.ID = Convert.ToInt32(dr["itemId"]);
             info.Component = info.ID;
+            info.Number = dr["number"].ToString();
             info.Name = dr["name"].ToString();
             info.FootType = (enumComponentType)Enum.Parse(typeof(enumComponentType), dr["type"].ToString());
             info.Size = new Size(Convert.ToInt32(dr["width"]), Convert.ToInt32(dr["height"]));
@@ -59,6 +60,7 @@ namespace SimuProteus
             LineFoot info = new LineFoot();
 
             info.Idx = Convert.ToInt32(dr["lineIdx"]);
+            info.InnerIdx = Convert.ToInt32(dr["innerId"]);
             info.PinsType = (enumPinsType)Enum.Parse(typeof(enumPinsType), dr["pinsType"].ToString());
             info.Name = dr["name"].ToString();
             info.LocX = Convert.ToInt32(dr["locX"]);
@@ -216,6 +218,7 @@ namespace SimuProteus
                 infoList.Add(new LineFootView()
                 {
                     Idx = Convert.ToInt32(dr["id"]),
+                    InnerID = Convert.ToInt32(dr["innerId"]),
                     Component = Convert.ToInt32(dr["component"]),
                     Element = Convert.ToInt32(dr["innerIdx"]),
                     Foot = Convert.ToInt32(dr["footIdx"]),

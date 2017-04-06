@@ -68,6 +68,15 @@ namespace SimuProteus
         }
 
         /// <summary>
+        /// ID号码
+        /// </summary>
+        public string Number
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// 元器件名称
         /// </summary>
         public string Name
@@ -128,6 +137,7 @@ namespace SimuProteus
     public struct LineFoot
     {
         public int Idx;
+        public int InnerIdx;
         public enumPinsType PinsType;
         public int LocX;
         public int LocY;
@@ -143,8 +153,10 @@ namespace SimuProteus
     public struct LineFootView
     {
         public int Idx;
+        public int InnerID;
         public int Component;
         public int Element;
+        public int InnerIdx;
         public int Foot;
         public enumPinsType PinsType;
         public string PinsName;
@@ -237,5 +249,16 @@ namespace SimuProteus
         public int X;
         public int Y;
         public enumNetPointType Type;
+    }
+
+    /// <summary>
+    /// 跟下位机通信结构
+    /// </summary>
+    public struct CommunicateInfo
+    {
+        public int ID;
+        public string Number;
+        public byte X;
+        public byte Y;
     }
 }

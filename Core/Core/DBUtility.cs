@@ -55,7 +55,8 @@ namespace SimuProteus
             tableList.Add(@"create table components (
                                itemId INTEGER PRIMARY KEY AUTOINCREMENT,
                                type int,
-                               name nvarchar(20),
+                               number nvarchar(20),
+                               name nvarchar(50),
                                width int,
                                height int,
                                backColor int,
@@ -97,6 +98,7 @@ namespace SimuProteus
             //元器件上的引脚
             tableList.Add(@"create table lineFoot (
                                lineIdx INTEGER PRIMARY KEY AUTOINCREMENT,
+                               innerId int,
                                footType int,
                                pinsType int,
                                component int,
@@ -108,6 +110,7 @@ namespace SimuProteus
             //当前面板上引脚属性
             tableList.Add(@"create table lineFootView (
                                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                               innerId int,
                                projIdx int,
                                component int,
                                innerIdx int,
@@ -159,15 +162,15 @@ namespace SimuProteus
             info.Size = new Size(140, 140);
             info.BackColor = Color.Gray;
             info.LineFoots = new List<LineFoot>(8) { 
-                new LineFoot() { Color =colorFoot, Name = "1", LocX=15, LocY=0},
-                new LineFoot() { Color =colorFoot, Name = "2", LocX=50, LocY=0},
-                new LineFoot() { Color =colorFoot, Name = "3", LocX=85, LocY=0},
-                new LineFoot() { Color =colorFoot, Name = "4", LocX=120, LocY=0},
+                new LineFoot() { Color =colorFoot, Name = "1", LocX=15, LocY=0,InnerIdx=1},
+                new LineFoot() { Color =colorFoot, Name = "2", LocX=50, LocY=0,InnerIdx=2},
+                new LineFoot() { Color =colorFoot, Name = "3", LocX=85, LocY=0,InnerIdx=3},
+                new LineFoot() { Color =colorFoot, Name = "4", LocX=120, LocY=0,InnerIdx=4},
 
-                new LineFoot() { Color =colorFoot, Name = "5", LocX=15, LocY=140},
-                new LineFoot() { Color =colorFoot, Name = "6", LocX=50, LocY=140},
-                new LineFoot() { Color =colorFoot, Name = "7", LocX=85, LocY=140},
-                new LineFoot() { Color =colorFoot, Name = "8", LocX=120, LocY=140}
+                new LineFoot() { Color =colorFoot, Name = "5", LocX=15, LocY=140,InnerIdx=5},
+                new LineFoot() { Color =colorFoot, Name = "6", LocX=50, LocY=140,InnerIdx=6},
+                new LineFoot() { Color =colorFoot, Name = "7", LocX=85, LocY=140,InnerIdx=7},
+                new LineFoot() { Color =colorFoot, Name = "8", LocX=120, LocY=140,InnerIdx=8}
             };
             info.BackImage = "img\\amplifier.png";
             AddNewBaseComponent(info);
@@ -177,8 +180,8 @@ namespace SimuProteus
             info.Size = new Size(35,10);
             info.BackColor = Color.Gray;
             info.LineFoots = new List<LineFoot>(2){ 
-                new LineFoot() { Color = colorFoot, Name = "左", LocX=0, LocY=5 },
-                new LineFoot() { Color = colorFoot, Name = "右", LocX=35, LocY=5}};
+                new LineFoot() { Color = colorFoot, Name = "左", LocX=0, LocY=5,InnerIdx=1 },
+                new LineFoot() { Color = colorFoot, Name = "右", LocX=35, LocY=5,InnerIdx=2}};
             info.BackImage = "img\\resistance.png";
             AddNewBaseComponent(info);
             //二极管
@@ -187,8 +190,8 @@ namespace SimuProteus
             info.Size = new Size(35, 10);
             info.BackColor = Color.Gray;
             info.LineFoots = new List<LineFoot>(2){ 
-                new LineFoot() { Color = colorFoot, Name = "左", LocX=0, LocY=5 },
-                new LineFoot() { Color = colorFoot, Name = "右", LocX=35, LocY=5}};
+                new LineFoot() { Color = colorFoot, Name = "左", LocX=0, LocY=5,InnerIdx=1 },
+                new LineFoot() { Color = colorFoot, Name = "右", LocX=35, LocY=5,InnerIdx=2}};
             info.BackImage = "img\\diode.png";
             AddNewBaseComponent(info);
             //三极管
@@ -197,9 +200,9 @@ namespace SimuProteus
             info.Size = new Size(70, 140);
             info.BackColor = Color.Gray;
             info.LineFoots = new List<LineFoot>(2){ 
-                new LineFoot() { Color = colorFoot, Name = "左", LocX=0, LocY=70 },
-                new LineFoot() { Color = colorFoot, Name = "右", LocX=70, LocY=70},
-                new LineFoot() { Color = colorFoot, Name = "下", LocX=35, LocY=140}};
+                new LineFoot() { Color = colorFoot, Name = "左", LocX=0, LocY=70 ,InnerIdx=1},
+                new LineFoot() { Color = colorFoot, Name = "右", LocX=70, LocY=70,InnerIdx=2},
+                new LineFoot() { Color = colorFoot, Name = "下", LocX=35, LocY=140,InnerIdx=3}};
             info.BackImage = "img\\triode.png";
             AddNewBaseComponent(info);
             //电容
@@ -208,8 +211,8 @@ namespace SimuProteus
             info.Size = new Size(58, 90);
             info.BackColor = Color.Gray;
             info.LineFoots = new List<LineFoot>(2){ 
-                new LineFoot() { Color = colorFoot, Name = "左", LocX=11, LocY=90 },
-                new LineFoot() { Color = colorFoot, Name = "右", LocX=46, LocY=90}};
+                new LineFoot() { Color = colorFoot, Name = "左", LocX=11, LocY=90,InnerIdx=1 },
+                new LineFoot() { Color = colorFoot, Name = "右", LocX=46, LocY=90,InnerIdx=2}};
             info.BackImage = "img\\capacitor.png";
             AddNewBaseComponent(info);
             //74HC244
@@ -218,27 +221,27 @@ namespace SimuProteus
             info.Size = new Size(374,280);
             info.BackColor = Color.Gray;
             info.LineFoots = new List<LineFoot>(){
-                new LineFoot(){LocX=35,LocY=0},
-                new LineFoot(){LocX=70,LocY=0},
-                new LineFoot(){LocX=105,LocY=0},
-                new LineFoot(){LocX=140,LocY=0},
-                new LineFoot(){LocX=175,LocY=0},
-                new LineFoot(){LocX=210,LocY=0},
-                new LineFoot(){LocX=245,LocY=0},
-                new LineFoot(){LocX=280,LocY=0},
-                new LineFoot(){LocX=315,LocY=0},
-                new LineFoot(){LocX=350,LocY=0},
+                new LineFoot(){LocX=35,LocY=0,InnerIdx=1},
+                new LineFoot(){LocX=70,LocY=0,InnerIdx=2},
+                new LineFoot(){LocX=105,LocY=0,InnerIdx=3},
+                new LineFoot(){LocX=140,LocY=0,InnerIdx=4},
+                new LineFoot(){LocX=175,LocY=0,InnerIdx=5},
+                new LineFoot(){LocX=210,LocY=0,InnerIdx=6},
+                new LineFoot(){LocX=245,LocY=0,InnerIdx=7},
+                new LineFoot(){LocX=280,LocY=0,InnerIdx=8},
+                new LineFoot(){LocX=315,LocY=0,InnerIdx=9},
+                new LineFoot(){LocX=350,LocY=0,InnerIdx=10},
                 
-                new LineFoot(){LocX=35,LocY=280},
-                new LineFoot(){LocX=70,LocY=280},
-                new LineFoot(){LocX=105,LocY=280},
-                new LineFoot(){LocX=140,LocY=280},
-                new LineFoot(){LocX=175,LocY=280},
-                new LineFoot(){LocX=210,LocY=280},
-                new LineFoot(){LocX=245,LocY=280},
-                new LineFoot(){LocX=280,LocY=280},
-                new LineFoot(){LocX=315,LocY=280},
-                new LineFoot(){LocX=350,LocY=280}
+                new LineFoot(){LocX=35,LocY=280,InnerIdx=11},
+                new LineFoot(){LocX=70,LocY=280,InnerIdx=12},
+                new LineFoot(){LocX=105,LocY=280,InnerIdx=13},
+                new LineFoot(){LocX=140,LocY=280,InnerIdx=14},
+                new LineFoot(){LocX=175,LocY=280,InnerIdx=15},
+                new LineFoot(){LocX=210,LocY=280,InnerIdx=16},
+                new LineFoot(){LocX=245,LocY=280,InnerIdx=17},
+                new LineFoot(){LocX=280,LocY=280,InnerIdx=18},
+                new LineFoot(){LocX=315,LocY=280,InnerIdx=19},
+                new LineFoot(){LocX=350,LocY=280,InnerIdx=20}
             };
             info.BackImage = "img\\74HC244.jpg";
             AddNewBaseComponent(info);
@@ -248,21 +251,21 @@ namespace SimuProteus
             info.Size = new Size(246, 176);
             info.BackColor = Color.Gray;
             info.LineFoots = new List<LineFoot>(){
-                new LineFoot(){ Name="1", LocX=17,LocY=0},
-                new LineFoot(){ Name="2",LocX=52,LocY=0},
-                new LineFoot(){ Name="3",LocX=87,LocY=0},
-                new LineFoot(){ Name="4",LocX=122,LocY=0},
-                new LineFoot(){ Name="5",LocX=157,LocY=0},
-                new LineFoot(){ Name="6",LocX=192,LocY=0},
-                new LineFoot(){ Name="7",LocX=227,LocY=0},
+                new LineFoot(){ Name="1", LocX=17,LocY=0,InnerIdx=1},
+                new LineFoot(){ Name="2",LocX=52,LocY=0,InnerIdx=2},
+                new LineFoot(){ Name="3",LocX=87,LocY=0,InnerIdx=3},
+                new LineFoot(){ Name="4",LocX=122,LocY=0,InnerIdx=4},
+                new LineFoot(){ Name="5",LocX=157,LocY=0,InnerIdx=5},
+                new LineFoot(){ Name="6",LocX=192,LocY=0,InnerIdx=6},
+                new LineFoot(){ Name="7",LocX=227,LocY=0,InnerIdx=7},
                 
-                new LineFoot(){ Name="1", LocX=17,LocY=176},
-                new LineFoot(){ Name="2",LocX=52,LocY=176},
-                new LineFoot(){ Name="3",LocX=87,LocY=176},
-                new LineFoot(){ Name="4",LocX=122,LocY=176},
-                new LineFoot(){ Name="5",LocX=157,LocY=176},
-                new LineFoot(){ Name="6",LocX=192,LocY=176},
-                new LineFoot(){ Name="7",LocX=227,LocY=176}
+                new LineFoot(){ Name="1", LocX=17,LocY=176,InnerIdx=8},
+                new LineFoot(){ Name="2",LocX=52,LocY=176,InnerIdx=9},
+                new LineFoot(){ Name="3",LocX=87,LocY=176,InnerIdx=10},
+                new LineFoot(){ Name="4",LocX=122,LocY=176,InnerIdx=11},
+                new LineFoot(){ Name="5",LocX=157,LocY=176,InnerIdx=12},
+                new LineFoot(){ Name="6",LocX=192,LocY=176,InnerIdx=13},
+                new LineFoot(){ Name="7",LocX=227,LocY=176,InnerIdx=14}
             };
             info.BackImage = "img\\74Serial.png";
             AddNewBaseComponent(info);
@@ -305,6 +308,12 @@ namespace SimuProteus
             DataSet dsFoots = SQLiteHelper.ExecuteDataSet(STR_CONNECTION, strSql, null);
             
             return code.DecodeElementsByDb(dsComps, dsFoots,true);
+        }
+
+        public bool RemoveComponent(int idx)
+        { 
+            string strSql = "delete from components where itemId = " + idx.ToString ();
+            return SQLiteHelper.ExecuteNonQuery(STR_CONNECTION, strSql, null) == 1;
         }
 
         public List<ProjectInfo> GetAllProjects()
@@ -389,15 +398,37 @@ namespace SimuProteus
         /// </summary>
         /// <param name="info"></param>
         /// <returns></returns>
-        public bool AddNewBaseComponent(ElementInfo info)
+        public int AddNewBaseComponent(ElementInfo info)
         {
-            string strSql = string.Format(@"insert into components (name,width,height,backColor,backImage,type) 
-                                                values ('{0}',{1},{2},{3},'{4}',{5});select last_insert_rowid();",
-                                info.Name, info.Size.Width, info.Size.Height, info.BackColor.ToArgb(), info.BackImage,(int)info.FootType);
+            string strSql = string.Format(@"insert into components (name,width,height,backColor,backImage,type,number) 
+                                                values ('{0}',{1},{2},{3},'{4}',{5},'{6}');select last_insert_rowid();",
+                                info.Name, info.Size.Width, info.Size.Height, info.BackColor.ToArgb(), info.BackImage,(int)info.FootType,info.Number);
             object objIdx = SQLiteHelper.ExecuteScalar(STR_CONNECTION, strSql);
+            int intIdx = Convert.ToInt32(objIdx);
+            if (this.AddComponentFoots(intIdx, info.FootType, info.LineFoots))
+                return intIdx;
 
-            return this.AddComponentFoots(Convert.ToInt32(objIdx), info.FootType, info.LineFoots);
+            return -1;
         }
+
+
+        /// <summary>
+        /// 新增元器件
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        public bool UpdateBaseComponent(ElementInfo info)
+        {
+            string strSql = string.Format(@"update components set name='{0}',width={1},height={2},backColor={3},backImage='{4}',type={5},number='{6}'
+                                                where itemId={7}",
+                                info.Name, info.Size.Width, info.Size.Height, info.BackColor.ToArgb(), info.BackImage, (int)info.FootType, info.Number,info.ID);
+            if(SQLiteHelper.ExecuteNonQuery(STR_CONNECTION, strSql) != 1) return false;
+
+            if (this.RemoveComponentFoots(info.ID) != info.LineFoots.Count) return false;
+
+            return this.AddComponentFoots(Convert.ToInt32(info.ID), info.FootType, info.LineFoots);
+        }
+
         /// <summary>
         /// 新增芯片引脚
         /// </summary>
@@ -409,10 +440,18 @@ namespace SimuProteus
             string strSql = string.Empty;
             foreach (LineFoot item in footList)
             {
-                strSql += string.Format("insert into lineFoot (component,footType,pinsType,name,locX,locY,color) values ({0},{1},{2},'{3}',{4},{5},{6});",
-                    compIdx, (int)compType,(int)item.PinsType, item.Name == null ? string.Empty : item.Name, item.LocX, item.LocY, item.Color == null ? 0 : item.Color.ToArgb());
+                strSql += string.Format("insert into lineFoot (component,footType,pinsType,name,locX,locY,color,innerId) values ({0},{1},{2},'{3}',{4},{5},{6},{7});",
+                    compIdx, (int)compType,(int)item.PinsType, item.Name == null ? string.Empty : item.Name, item.LocX, item.LocY, item.Color == null ? 0 : item.Color.ToArgb(),item.InnerIdx);
             }
             return footList.Count == SQLiteHelper.ExecuteNonQuery(STR_CONNECTION, strSql);
+        }
+
+
+        private int RemoveComponentFoots(int compIdx)
+        {
+            string strSql = "delete from lineFoot where component=" + compIdx.ToString();
+
+            return SQLiteHelper.ExecuteNonQuery(STR_CONNECTION, strSql);
         }
 
 
@@ -486,8 +525,8 @@ namespace SimuProteus
                 strSql = string.Empty;
                 foreach (LineFootView lineItem in project.footsList)
                 {
-                    strSql += string.Format("insert into lineFootView (projIdx,component,innerIdx,name,pinsType,footIdx) values ({0},{1},{2},'{3}',{4},{5});",
-                        projIdx, lineItem.Component, lineItem.Element, lineItem.PinsName, (int)lineItem.PinsType, lineItem.Foot);
+                    strSql += string.Format("insert into lineFootView (projIdx,component,innerIdx,name,pinsType,footIdx,innerId) values ({0},{1},{2},'{3}',{4},{5},{6});",
+                        projIdx, lineItem.Component, lineItem.Element, lineItem.PinsName, (int)lineItem.PinsType, lineItem.Foot,lineItem.InnerID);
                 }
                 objIdx = SQLiteHelper.ExecuteNonQuery(STR_CONNECTION, strSql);
                 if (Convert.ToInt32(objIdx) != project.footsList.Count)

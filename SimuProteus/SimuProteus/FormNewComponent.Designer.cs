@@ -37,9 +37,15 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tbHeight = new System.Windows.Forms.TextBox();
             this.lbInfo = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lbNumber = new System.Windows.Forms.Label();
             this.tbName = new System.Windows.Forms.TextBox();
             this.dgvFoot = new System.Windows.Forms.DataGridView();
+            this.lbLoc = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.rbChips = new System.Windows.Forms.RadioButton();
+            this.rbComponent = new System.Windows.Forms.RadioButton();
+            this.lbName = new System.Windows.Forms.Label();
+            this.tbNumber = new System.Windows.Forms.TextBox();
             this.Number = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.type = new System.Windows.Forms.DataGridViewComboBoxColumn();
@@ -49,10 +55,6 @@
             this.nameLocY = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.numLocX = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.numLocY = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lbLoc = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.rbChips = new System.Windows.Forms.RadioButton();
-            this.rbComponent = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxImg)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFoot)).BeginInit();
             this.SuspendLayout();
@@ -74,7 +76,7 @@
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
             this.btnAdd.TabIndex = 10;
-            this.btnAdd.Text = "添加";
+            this.btnAdd.Text = "保存";
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
@@ -91,7 +93,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(280, 121);
+            this.label1.Location = new System.Drawing.Point(225, 125);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(37, 15);
             this.label1.TabIndex = 2;
@@ -99,7 +101,7 @@
             // 
             // tbWidth
             // 
-            this.tbWidth.Location = new System.Drawing.Point(323, 116);
+            this.tbWidth.Location = new System.Drawing.Point(268, 120);
             this.tbWidth.Name = "tbWidth";
             this.tbWidth.Size = new System.Drawing.Size(71, 25);
             this.tbWidth.TabIndex = 4;
@@ -109,7 +111,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(495, 121);
+            this.label2.Location = new System.Drawing.Point(373, 125);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(37, 15);
             this.label2.TabIndex = 2;
@@ -117,7 +119,7 @@
             // 
             // tbHeight
             // 
-            this.tbHeight.Location = new System.Drawing.Point(538, 116);
+            this.tbHeight.Location = new System.Drawing.Point(416, 120);
             this.tbHeight.Name = "tbHeight";
             this.tbHeight.Size = new System.Drawing.Size(71, 25);
             this.tbHeight.TabIndex = 5;
@@ -133,20 +135,20 @@
             this.lbInfo.TabIndex = 4;
             this.lbInfo.Text = "说明";
             // 
-            // label3
+            // lbNumber
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(465, 61);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(67, 15);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "类型名称";
+            this.lbNumber.AutoSize = true;
+            this.lbNumber.Location = new System.Drawing.Point(534, 61);
+            this.lbNumber.Name = "lbNumber";
+            this.lbNumber.Size = new System.Drawing.Size(68, 15);
+            this.lbNumber.TabIndex = 2;
+            this.lbNumber.Text = "器件ID号";
             // 
             // tbName
             // 
-            this.tbName.Location = new System.Drawing.Point(538, 56);
+            this.tbName.Location = new System.Drawing.Point(608, 120);
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(237, 25);
+            this.tbName.Size = new System.Drawing.Size(176, 25);
             this.tbName.TabIndex = 3;
             this.tbName.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tbName_MouseClick);
             // 
@@ -171,64 +173,7 @@
             this.dgvFoot.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFoot_CellEndEdit);
             this.dgvFoot.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvFoot_CellMouseClick);
             this.dgvFoot.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvFoot_RowsAdded);
-            // 
-            // Number
-            // 
-            this.Number.HeaderText = "编号";
-            this.Number.MinimumWidth = 20;
-            this.Number.Name = "Number";
-            this.Number.ReadOnly = true;
-            this.Number.Width = 60;
-            // 
-            // txtName
-            // 
-            this.txtName.HeaderText = "名称";
-            this.txtName.Name = "txtName";
-            // 
-            // type
-            // 
-            this.type.HeaderText = "类型";
-            this.type.Items.AddRange(new object[] {
-            "Input",
-            "Output",
-            "OC",
-            "OD",
-            "Power"});
-            this.type.Name = "type";
-            // 
-            // locX
-            // 
-            this.locX.HeaderText = "X坐标";
-            this.locX.MinimumWidth = 20;
-            this.locX.Name = "locX";
-            this.locX.Width = 70;
-            // 
-            // locY
-            // 
-            this.locY.HeaderText = "Y坐标";
-            this.locY.MinimumWidth = 20;
-            this.locY.Name = "locY";
-            this.locY.Width = 70;
-            // 
-            // nameLocX
-            // 
-            this.nameLocX.HeaderText = "名称X坐标";
-            this.nameLocX.Name = "nameLocX";
-            // 
-            // nameLocY
-            // 
-            this.nameLocY.HeaderText = "名称Y坐标";
-            this.nameLocY.Name = "nameLocY";
-            // 
-            // numLocX
-            // 
-            this.numLocX.HeaderText = "编号X坐标";
-            this.numLocX.Name = "numLocX";
-            // 
-            // numLocY
-            // 
-            this.numLocY.HeaderText = "编号Y坐标";
-            this.numLocY.Name = "numLocY";
+            this.dgvFoot.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dgvFoot_RowsRemoved);
             // 
             // lbLoc
             // 
@@ -251,7 +196,7 @@
             // rbChips
             // 
             this.rbChips.AutoSize = true;
-            this.rbChips.Location = new System.Drawing.Point(336, 59);
+            this.rbChips.Location = new System.Drawing.Point(376, 59);
             this.rbChips.Name = "rbChips";
             this.rbChips.Size = new System.Drawing.Size(58, 19);
             this.rbChips.TabIndex = 2;
@@ -262,13 +207,97 @@
             // 
             this.rbComponent.AutoSize = true;
             this.rbComponent.Checked = true;
-            this.rbComponent.Location = new System.Drawing.Point(228, 59);
+            this.rbComponent.Location = new System.Drawing.Point(266, 59);
             this.rbComponent.Name = "rbComponent";
             this.rbComponent.Size = new System.Drawing.Size(73, 19);
             this.rbComponent.TabIndex = 1;
             this.rbComponent.TabStop = true;
             this.rbComponent.Text = "元器件";
             this.rbComponent.UseVisualStyleBackColor = true;
+            // 
+            // lbName
+            // 
+            this.lbName.AutoSize = true;
+            this.lbName.Location = new System.Drawing.Point(535, 125);
+            this.lbName.Name = "lbName";
+            this.lbName.Size = new System.Drawing.Size(67, 15);
+            this.lbName.TabIndex = 2;
+            this.lbName.Text = "类型名称";
+            // 
+            // tbNumber
+            // 
+            this.tbNumber.Location = new System.Drawing.Point(608, 56);
+            this.tbNumber.Name = "tbNumber";
+            this.tbNumber.Size = new System.Drawing.Size(176, 25);
+            this.tbNumber.TabIndex = 3;
+            this.tbNumber.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tbNumber_MouseClick);
+            // 
+            // Number
+            // 
+            this.Number.DataPropertyName = "Number";
+            this.Number.HeaderText = "编号";
+            this.Number.MinimumWidth = 20;
+            this.Number.Name = "Number";
+            this.Number.ReadOnly = true;
+            this.Number.Width = 60;
+            // 
+            // txtName
+            // 
+            this.txtName.DataPropertyName = "txtName";
+            this.txtName.HeaderText = "名称";
+            this.txtName.Name = "txtName";
+            // 
+            // type
+            // 
+            this.type.DataPropertyName = "type";
+            this.type.HeaderText = "类型";
+            this.type.Items.AddRange(new object[] {
+            "Input",
+            "Output",
+            "OC",
+            "OD",
+            "Power"});
+            this.type.Name = "type";
+            // 
+            // locX
+            // 
+            this.locX.DataPropertyName = "locX";
+            this.locX.HeaderText = "X坐标";
+            this.locX.MinimumWidth = 20;
+            this.locX.Name = "locX";
+            this.locX.Width = 70;
+            // 
+            // locY
+            // 
+            this.locY.DataPropertyName = "locY";
+            this.locY.HeaderText = "Y坐标";
+            this.locY.MinimumWidth = 20;
+            this.locY.Name = "locY";
+            this.locY.Width = 70;
+            // 
+            // nameLocX
+            // 
+            this.nameLocX.DataPropertyName = "nameLocX";
+            this.nameLocX.HeaderText = "名称X坐标";
+            this.nameLocX.Name = "nameLocX";
+            // 
+            // nameLocY
+            // 
+            this.nameLocY.DataPropertyName = "nameLocY";
+            this.nameLocY.HeaderText = "名称Y坐标";
+            this.nameLocY.Name = "nameLocY";
+            // 
+            // numLocX
+            // 
+            this.numLocX.DataPropertyName = "numLocX";
+            this.numLocX.HeaderText = "编号X坐标";
+            this.numLocX.Name = "numLocX";
+            // 
+            // numLocY
+            // 
+            this.numLocY.DataPropertyName = "numLocY";
+            this.numLocY.HeaderText = "编号Y坐标";
+            this.numLocY.Name = "numLocY";
             // 
             // FormNewComponent
             // 
@@ -283,8 +312,10 @@
             this.Controls.Add(this.lbInfo);
             this.Controls.Add(this.tbHeight);
             this.Controls.Add(this.label2);
+            this.Controls.Add(this.tbNumber);
+            this.Controls.Add(this.lbName);
             this.Controls.Add(this.tbName);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.lbNumber);
             this.Controls.Add(this.tbWidth);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCancel);
@@ -313,13 +344,15 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tbHeight;
         private System.Windows.Forms.Label lbInfo;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lbNumber;
         private System.Windows.Forms.TextBox tbName;
         private System.Windows.Forms.DataGridView dgvFoot;
         private System.Windows.Forms.Label lbLoc;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.RadioButton rbChips;
         private System.Windows.Forms.RadioButton rbComponent;
+        private System.Windows.Forms.Label lbName;
+        private System.Windows.Forms.TextBox tbNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn Number;
         private System.Windows.Forms.DataGridViewTextBoxColumn txtName;
         private System.Windows.Forms.DataGridViewComboBoxColumn type;

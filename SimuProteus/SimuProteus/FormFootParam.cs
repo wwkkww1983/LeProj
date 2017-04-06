@@ -28,6 +28,8 @@ namespace SimuProteus
             InitializeComponent();
 
             this.tbName.Text = this.element.Name;
+            this.tbIdx.Text = this.element.ID.ToString ();
+            this.tbNumber.Text = this.element.Number;
             this.dgvFoots.DataSource = GetPinsInfo(this.element.LineFoots);
             this.dgvFoots.AutoGenerateColumns = false;
         }
@@ -39,6 +41,8 @@ namespace SimuProteus
             dt.Columns.Add(dc);
             dc = new DataColumn("footType");
             dt.Columns.Add(dc);
+            dc = new DataColumn("innerIdx");
+            dt.Columns.Add(dc);
             dc = new DataColumn("idx");
             dt.Columns.Add(dc);
 
@@ -47,6 +51,7 @@ namespace SimuProteus
                 LineFootView itemTmp = pinsList.Find(itmp => itmp.Element == this.element.InnerIdx && itmp.Foot == item.Idx);
                 DataRow dr = dt.NewRow();
                 dr["idx"] = item.Idx;
+                dr["innerIdx"] = item.InnerIdx;
                 dr["footName"] = itemTmp.Idx > 0 ? itemTmp.PinsName : item.Name;
                 dr["footType"] = ((enumPinsType)(itemTmp.Idx > 0 ? itemTmp.PinsType : item.PinsType)).ToString();
 

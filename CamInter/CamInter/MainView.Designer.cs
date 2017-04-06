@@ -30,6 +30,15 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainView));
             this.dgvProjList = new System.Windows.Forms.DataGridView();
+            this.Idx = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lens = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.focus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.adapter = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.extend = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ratio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.workDistance = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fovLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fovWidth = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.addItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CamLensToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -84,15 +93,6 @@
             this.tbDistanRange = new System.Windows.Forms.TextBox();
             this.label24 = new System.Windows.Forms.Label();
             this.btnSelect = new System.Windows.Forms.Button();
-            this.Idx = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lens = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.focus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.adapter = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.extend = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ratio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.workDistance = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fovLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fovWidth = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProjList)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProjDetail)).BeginInit();
@@ -105,6 +105,7 @@
             // 
             this.dgvProjList.AllowUserToAddRows = false;
             this.dgvProjList.AllowUserToDeleteRows = false;
+            resources.ApplyResources(this.dgvProjList, "dgvProjList");
             this.dgvProjList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvProjList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Idx,
@@ -116,11 +117,74 @@
             this.workDistance,
             this.fovLength,
             this.fovWidth});
-            resources.ApplyResources(this.dgvProjList, "dgvProjList");
             this.dgvProjList.Name = "dgvProjList";
             this.dgvProjList.ReadOnly = true;
             this.dgvProjList.RowTemplate.Height = 27;
             this.dgvProjList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProjList_CellClick);
+            // 
+            // Idx
+            // 
+            this.Idx.DataPropertyName = "Idx";
+            this.Idx.Frozen = true;
+            resources.ApplyResources(this.Idx, "Idx");
+            this.Idx.Name = "Idx";
+            this.Idx.ReadOnly = true;
+            // 
+            // lens
+            // 
+            this.lens.DataPropertyName = "lens";
+            resources.ApplyResources(this.lens, "lens");
+            this.lens.Name = "lens";
+            this.lens.ReadOnly = true;
+            // 
+            // focus
+            // 
+            this.focus.DataPropertyName = "focus";
+            resources.ApplyResources(this.focus, "focus");
+            this.focus.Name = "focus";
+            this.focus.ReadOnly = true;
+            // 
+            // adapter
+            // 
+            this.adapter.DataPropertyName = "adapter";
+            resources.ApplyResources(this.adapter, "adapter");
+            this.adapter.Name = "adapter";
+            this.adapter.ReadOnly = true;
+            // 
+            // extend
+            // 
+            this.extend.DataPropertyName = "extend";
+            resources.ApplyResources(this.extend, "extend");
+            this.extend.Name = "extend";
+            this.extend.ReadOnly = true;
+            // 
+            // ratio
+            // 
+            this.ratio.DataPropertyName = "ratio";
+            resources.ApplyResources(this.ratio, "ratio");
+            this.ratio.Name = "ratio";
+            this.ratio.ReadOnly = true;
+            // 
+            // workDistance
+            // 
+            this.workDistance.DataPropertyName = "workDistance";
+            resources.ApplyResources(this.workDistance, "workDistance");
+            this.workDistance.Name = "workDistance";
+            this.workDistance.ReadOnly = true;
+            // 
+            // fovLength
+            // 
+            this.fovLength.DataPropertyName = "fovLength";
+            resources.ApplyResources(this.fovLength, "fovLength");
+            this.fovLength.Name = "fovLength";
+            this.fovLength.ReadOnly = true;
+            // 
+            // fovWidth
+            // 
+            this.fovWidth.DataPropertyName = "fovWidth";
+            resources.ApplyResources(this.fovWidth, "fovWidth");
+            this.fovWidth.Name = "fovWidth";
+            this.fovWidth.ReadOnly = true;
             // 
             // menuStrip1
             // 
@@ -195,6 +259,7 @@
             // 
             this.dgvProjDetail.AllowUserToAddRows = false;
             this.dgvProjDetail.AllowUserToDeleteRows = false;
+            resources.ApplyResources(this.dgvProjDetail, "dgvProjDetail");
             this.dgvProjDetail.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvProjDetail.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.detailIdx,
@@ -204,7 +269,6 @@
             this.interA,
             this.interB,
             this.length});
-            resources.ApplyResources(this.dgvProjDetail, "dgvProjDetail");
             this.dgvProjDetail.Name = "dgvProjDetail";
             this.dgvProjDetail.ReadOnly = true;
             this.dgvProjDetail.RowTemplate.Height = 27;
@@ -474,70 +538,6 @@
             this.btnSelect.Name = "btnSelect";
             this.btnSelect.UseVisualStyleBackColor = true;
             this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
-            // 
-            // Idx
-            // 
-            this.Idx.DataPropertyName = "Idx";
-            this.Idx.Frozen = true;
-            resources.ApplyResources(this.Idx, "Idx");
-            this.Idx.Name = "Idx";
-            this.Idx.ReadOnly = true;
-            // 
-            // lens
-            // 
-            this.lens.DataPropertyName = "lens";
-            resources.ApplyResources(this.lens, "lens");
-            this.lens.Name = "lens";
-            this.lens.ReadOnly = true;
-            // 
-            // focus
-            // 
-            this.focus.DataPropertyName = "focus";
-            resources.ApplyResources(this.focus, "focus");
-            this.focus.Name = "focus";
-            this.focus.ReadOnly = true;
-            // 
-            // adapter
-            // 
-            this.adapter.DataPropertyName = "adapter";
-            resources.ApplyResources(this.adapter, "adapter");
-            this.adapter.Name = "adapter";
-            this.adapter.ReadOnly = true;
-            // 
-            // extend
-            // 
-            this.extend.DataPropertyName = "extend";
-            resources.ApplyResources(this.extend, "extend");
-            this.extend.Name = "extend";
-            this.extend.ReadOnly = true;
-            // 
-            // ratio
-            // 
-            this.ratio.DataPropertyName = "ratio";
-            resources.ApplyResources(this.ratio, "ratio");
-            this.ratio.Name = "ratio";
-            this.ratio.ReadOnly = true;
-            // 
-            // workDistance
-            // 
-            this.workDistance.DataPropertyName = "workDistance";
-            resources.ApplyResources(this.workDistance, "workDistance");
-            this.workDistance.Name = "workDistance";
-            this.workDistance.ReadOnly = true;
-            // 
-            // fovLength
-            // 
-            this.fovLength.DataPropertyName = "fovLength";
-            resources.ApplyResources(this.fovLength, "fovLength");
-            this.fovLength.Name = "fovLength";
-            this.fovLength.ReadOnly = true;
-            // 
-            // fovWidth
-            // 
-            this.fovWidth.DataPropertyName = "fovWidth";
-            resources.ApplyResources(this.fovWidth, "fovWidth");
-            this.fovWidth.Name = "fovWidth";
-            this.fovWidth.ReadOnly = true;
             // 
             // MainView
             // 

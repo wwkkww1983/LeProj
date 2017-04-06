@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
+using System.IO.Ports;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -17,7 +17,7 @@ namespace SimuProteus
         #region 初始化
         private bool serialReadFlag = false;
         private const char COORDINATE_SEPERATOR = '#';
-        private const int ORIGIN_ARROW_LEN = 10;
+        private const int ORIGIN_ARROW_LEN = 10,BUFFER_SIZE=1024;
         private Color ORIGIN_ARROW_COLOR = Color.Black;
         private int elementIdx = 1, pointRadius=0;
         private int boardMargin = int.Parse(Ini.GetItemValue("sizeInfo", "pixelBoardMargin"));
@@ -39,7 +39,6 @@ namespace SimuProteus
         private List<ElementInfo> elementList = null;
         private List<ElementLine> createLinePoint = new List<ElementLine>(2);
         private SkinEngine skin = null;
-        private FormNewComponent formComp = null;
 
         ProjectDetails currentBoardInfo = new ProjectDetails()
         {
@@ -57,7 +56,7 @@ namespace SimuProteus
             InitializeComponent();
 
             this.InitialControl();
-            //dbHandler.InitialTable();
+            dbHandler.InitialTable();
             this.elementList = dbHandler.GetBaseComponents();
             int idx = 0;
             foreach (ElementInfo item in this.elementList)
@@ -81,6 +80,7 @@ namespace SimuProteus
             this.pnBoard.Size = new Size(boardWidth, boardHeight);
             this.pnBoard.Location = new Point(0, 0);
             this.pnBoard.Parent = this.pnWorkPlace;
+            this.serial.DataReceived += new SerialDataReceivedEventHandler(ReceiveInfo);
             this.skin = new SkinEngine(this);
             this.skin.SkinFile = "Wave.ssk";
 
@@ -111,7 +111,7 @@ namespace SimuProteus
         {
             if (item.FootType == enumComponentType.NormalComponent)
             {
-                UcComponent compo = new UcComponent(idx++, item, ChangeCursor);
+                UcComponent compo = new UcComponent(idx++, item, this.ChangeCursor, this.RemoveComponent,this.UpdateComponent);
                 this.gbComponent.Controls.Add(compo);
             }
             else if (item.FootType == enumComponentType.Chips)
@@ -151,6 +151,31 @@ namespace SimuProteus
             this.currentSelectedComponent = clickedCompo;
         }
 
+        private void RemoveComponent(int idx)
+        {
+            bool removeFlag = false;
+            int ctrlCount = this.gbComponent.Controls.Count;
+            for (int i = 0; i < ctrlCount;i++)
+            {
+                UcComponent item = this.gbComponent.Controls[i] as UcComponent;
+                if (removeFlag)
+                {
+                    item.UpdateLocationY(i);
+                }
+                else if (item.ComponentInfo.ID == idx)
+                {
+                    this.gbComponent.Controls.RemoveAt(i);
+                    i--;
+                    ctrlCount--;
+                    removeFlag = true;
+                }
+            }
+            if (removeFlag)
+            {
+                this.dbHandler.RemoveComponent(idx);
+            }
+        }
+
         private void SaveProjectName(bool newFlag,int projIdx, string projName)
         {
             if (this.InvokeRequired)
@@ -180,19 +205,34 @@ namespace SimuProteus
             this.lbProjName.Text = projName;
         }
 
-        private void CreateNewComponent(ElementInfo info)
+        private void CreateNewComponent(FormNewComponent window, ElementInfo info)
         {
-            if (dbHandler.AddNewBaseComponent(info))
+            string strResult = "添加失败";
+            int comIdx = dbHandler.AddNewBaseComponent(info);
+            if (comIdx > 0)
             {
+                info.ID = comIdx;
                 int idx = this.gbComponent.Controls.Count;
                 this.AddComponentItem(info, ref idx);
-                MessageBox.Show("添加成功");
-                this.formComp.Close();
+                strResult = "添加成功";
+                this.elementList = null;
+                this.elementList = dbHandler.GetBaseComponents();
+                window.Close();
             }
-            else
+            MessageBox.Show(strResult);
+        }
+
+        private void UpdateComponent(FormNewComponent window, ElementInfo info)
+        {
+            string strResult = "更新失败";
+            if (dbHandler.UpdateBaseComponent(info))
             {
-                MessageBox.Show("添加失败");
+                strResult = "更新成功";
+                this.elementList = null;
+                this.elementList = dbHandler.GetBaseComponents();
+                window.Close();
             }
+            MessageBox.Show(strResult);
         }
 
         private void CreateLineForElement(int idx,int footIdx, int locX, int locY)
@@ -498,6 +538,10 @@ namespace SimuProteus
         #endregion
 
         #region 面板事件
+        private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            ExcelInterop.FinishExcel();
+        }
 
         private ElementInfo GetElementInfoOnBoardByName(string component)
         {
@@ -692,7 +736,7 @@ namespace SimuProteus
 
         private ElementInfo GetElementByName(string name)
         {
-            foreach (ElementInfo item in elementList)
+            foreach (ElementInfo item in this.elementList)
             {
                 if (item.Name == name)
                     return item;
@@ -966,7 +1010,7 @@ namespace SimuProteus
 
         private void newComponentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            formComp = new FormNewComponent(this.CreateNewComponent);
+            FormNewComponent formComp = new FormNewComponent(this.CreateNewComponent,null,null);
             formComp.ShowDialog();
         }
 
@@ -1024,7 +1068,6 @@ namespace SimuProteus
             return true;
         }
 
-
         private void readToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!this.CheckSerialStatus()) return;
@@ -1053,7 +1096,6 @@ namespace SimuProteus
             FormSetSerial formSerial = new FormSetSerial(serial);
             formSerial.ShowDialog();
         }
-
 
         private void freeSerialToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1246,10 +1288,38 @@ namespace SimuProteus
                 }
             }
         }
-
         #endregion
 
         #region 串口事件
+
+        private void ReceiveInfo(Object sender, SerialDataReceivedEventArgs e)
+        {
+            byte[] readBuffer = new byte[BUFFER_SIZE];
+            try
+            {
+                this.serial.ReadBuffer(readBuffer, 12);
+                ExcelInterop.InsertItemInfo(this.decodeMachineInfo(readBuffer));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("接收返回消息异常！具体原因：" + ex.Message);
+            }
+        }
+
+        private CommunicateInfo decodeMachineInfo(byte[] data)
+        {
+            CommunicateInfo info = new CommunicateInfo();
+            if(data.Length < 12) return info;
+            info.ID = data[0] << 4 | data[1];
+            byte[] numArray = new  byte[8];
+             Array.Copy(data, 2, numArray, 0, 8);
+             info.Number = System.Text.Encoding.ASCII.GetString(numArray);
+            info.X = data[10];
+            info.Y = data[11];
+
+            return info;
+        }
+
         private void ListenSerialPort()
         {
             byte[] byteRecvive = new byte[1024];
@@ -1259,7 +1329,7 @@ namespace SimuProteus
 
                 serial.DiscardInBuffer();
                 serial.DiscardOutBuffer();
-                if (!serial.ReadBufferCount(byteRecvive, 5))
+                if (!serial.ReadBufferCount(byteRecvive, 12))
                 {
                     Console.WriteLine("数据标志位失败");
                 }
@@ -1281,6 +1351,5 @@ namespace SimuProteus
             serial.Write(strSend);
         }
         #endregion
-
     }
 }
