@@ -63,11 +63,11 @@ namespace SimuProteus
             {
                 this.AddComponentItem(item, ref idx);
             }
-            List<ProjectInfo> projectList = dbHandler.GetAllProjects();
-            foreach (ProjectInfo item in projectList)
-            {
-                this.AddMenuToolStripItem(item.Name, item.Idx, projectNameToolStripMenuItem_Click, this.ProjToolStripMenuItem);
-            }
+            //List<ProjectInfo> projectList = dbHandler.GetAllProjects();
+            //foreach (ProjectInfo item in projectList)
+            //{
+            //    this.AddMenuToolStripItem(item.Name, item.Idx, projectNameToolStripMenuItem_Click, this.ProjToolStripMenuItem);
+            //}
         }
 
         private void InitialControl()
@@ -185,22 +185,22 @@ namespace SimuProteus
                 return;
             }
 
-            if (!newFlag)
-            {
-                this.AddMenuToolStripItem(projName,projIdx, projectNameToolStripMenuItem_Click, this.ProjToolStripMenuItem);
-            }
-            else
-            {
-                foreach (ToolStripItem item in this.ProjToolStripMenuItem.DropDownItems)
-                {
-                    if (Convert.ToInt32(item.Tag) == Convert.ToInt32(this.lbProjName.Tag))
-                    {
-                        item.Tag = projIdx;
-                        item.Text = projName;
-                        break;
-                    }
-                }
-            }
+            //if (!newFlag)
+            //{
+            //    this.AddMenuToolStripItem(projName,projIdx, projectNameToolStripMenuItem_Click, this.ProjToolStripMenuItem);
+            //}
+            //else
+            //{
+            //    foreach (ToolStripItem item in this.ProjToolStripMenuItem.DropDownItems)
+            //    {
+            //        if (Convert.ToInt32(item.Tag) == Convert.ToInt32(this.lbProjName.Tag))
+            //        {
+            //            item.Tag = projIdx;
+            //            item.Text = projName;
+            //            break;
+            //        }
+            //    }
+            //}
             this.lbProjName.Tag = projIdx;
             this.lbProjName.Text = projName;
         }
@@ -208,16 +208,23 @@ namespace SimuProteus
         private void CreateNewComponent(FormNewComponent window, ElementInfo info)
         {
             string strResult = "添加失败";
-            int comIdx = dbHandler.AddNewBaseComponent(info);
-            if (comIdx > 0)
+            if (dbHandler.HasComponentByNameID(info.Name, info.Number))
             {
-                info.ID = comIdx;
-                int idx = this.gbComponent.Controls.Count;
-                this.AddComponentItem(info, ref idx);
-                strResult = "添加成功";
-                this.elementList = null;
-                this.elementList = dbHandler.GetBaseComponents();
-                window.Close();
+                strResult = "类型名称或ID号重复";
+            }
+            else
+            {
+                int comIdx = dbHandler.AddNewBaseComponent(info);
+                if (comIdx > 0)
+                {
+                    info.ID = comIdx;
+                    int idx = this.gbComponent.Controls.Count;
+                    this.AddComponentItem(info, ref idx);
+                    strResult = "添加成功";
+                    this.elementList = null;
+                    this.elementList = dbHandler.GetBaseComponents();
+                    window.Close();
+                }
             }
             MessageBox.Show(strResult);
         }
@@ -346,8 +353,23 @@ namespace SimuProteus
             this.DeleteAllSeletedElementLines();
         }
 
+        private bool CheckSerialForHandler()
+        {
+            bool isOpened = this.serial.IsOpen;
+            if (isOpened)
+            {
+                MessageBox.Show("串口已打开，无法操作");
+            }
+            return !isOpened;
+        }
+
         private void DeleteElement(int idx)
         {
+            if (!CheckSerialForHandler())
+            {
+                return;
+            }
+
             for (int i = 0; i < this.currentBoardInfo.elementList.Count;i++ )
             {
                 ElementInfo tmpInfo = this.currentBoardInfo.elementList[i];
@@ -391,6 +413,10 @@ namespace SimuProteus
 
         private void MoveElement(int idx, int locX,int locY)
         {
+            if (!CheckSerialForHandler())
+            {
+                return;
+            }
             bool moveFlag = false;
             Point coorAdjust = new Point(locX,locY);
             for (int i = 0; i < this.currentBoardInfo.elementList.Count; i++)
@@ -983,6 +1009,12 @@ namespace SimuProteus
         #endregion
 
         #region 窗口菜单
+        private void CreateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormNewComponent formComp = new FormNewComponent(this.CreateNewComponent, null, null);
+            formComp.ShowDialog();
+        }
+
         private void chipItemToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (CheckLoadChip())
@@ -1351,5 +1383,6 @@ namespace SimuProteus
             serial.Write(strSend);
         }
         #endregion
+
     }
 }

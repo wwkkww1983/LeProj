@@ -55,7 +55,7 @@ namespace Core
             List<CameraLens> lensList = this.FindCamera(target, resolutionLength, resolutionWidth, ratio, workLength, workRange);
             foreach (CameraLens lens in lensList)
             {
-                float ringLength = lens.Focus * ratio - flange;
+                float ringLength = lens.Focus * ratio + lens.Flange - flange;
                 this.FindAllRing(lens, current, camera, lens.Connector, ringLength, ringLength);
                 //List<RingMedium> focus = this.findFocus(camera, ringLength);
                 //foreach (RingMedium item in focus)
@@ -130,7 +130,7 @@ namespace Core
                 Lens = lens,
                 ringList = ringsTmp
             };
-            if(DateTime.Now.Month <= 4) this.resultsFound.Add(oneResult);
+            if(DateTime.Now.Month <= 4 && this.resultsFound.Count < 100000) this.resultsFound.Add(oneResult);
         }
         #endregion
 

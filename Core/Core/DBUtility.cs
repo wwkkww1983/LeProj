@@ -156,6 +156,62 @@ namespace SimuProteus
             info.LineFoots = new List<LineFoot>();
             info.BackImage = "img\\arrow.png";
             AddNewBaseComponent(info);
+            //74HC244
+            info.Name = "74HC244";
+            //info.FootType = enumComponentType.Chips;
+            info.FootType = enumComponentType.NormalComponent;
+            info.Size = new Size(374, 280);
+            info.BackColor = Color.Gray;
+            info.LineFoots = new List<LineFoot>(){
+                new LineFoot(){LocX=35,LocY=0,InnerIdx=1},
+                new LineFoot(){LocX=70,LocY=0,InnerIdx=2},
+                new LineFoot(){LocX=105,LocY=0,InnerIdx=3},
+                new LineFoot(){LocX=140,LocY=0,InnerIdx=4},
+                new LineFoot(){LocX=175,LocY=0,InnerIdx=5},
+                new LineFoot(){LocX=210,LocY=0,InnerIdx=6},
+                new LineFoot(){LocX=245,LocY=0,InnerIdx=7},
+                new LineFoot(){LocX=280,LocY=0,InnerIdx=8},
+                new LineFoot(){LocX=315,LocY=0,InnerIdx=9},
+                new LineFoot(){LocX=350,LocY=0,InnerIdx=10},
+                
+                new LineFoot(){LocX=35,LocY=280,InnerIdx=11},
+                new LineFoot(){LocX=70,LocY=280,InnerIdx=12},
+                new LineFoot(){LocX=105,LocY=280,InnerIdx=13},
+                new LineFoot(){LocX=140,LocY=280,InnerIdx=14},
+                new LineFoot(){LocX=175,LocY=280,InnerIdx=15},
+                new LineFoot(){LocX=210,LocY=280,InnerIdx=16},
+                new LineFoot(){LocX=245,LocY=280,InnerIdx=17},
+                new LineFoot(){LocX=280,LocY=280,InnerIdx=18},
+                new LineFoot(){LocX=315,LocY=280,InnerIdx=19},
+                new LineFoot(){LocX=350,LocY=280,InnerIdx=20}
+            };
+            info.BackImage = "img\\74HC244.jpg";
+            AddNewBaseComponent(info);
+            //74Serial
+            info.Name = "74Serial";
+            //info.FootType = enumComponentType.Chips;
+            info.FootType = enumComponentType.NormalComponent;
+            info.Size = new Size(246, 176);
+            info.BackColor = Color.Gray;
+            info.LineFoots = new List<LineFoot>(){
+                new LineFoot(){ Name="1", LocX=17,LocY=0,InnerIdx=1},
+                new LineFoot(){ Name="2",LocX=52,LocY=0,InnerIdx=2},
+                new LineFoot(){ Name="3",LocX=87,LocY=0,InnerIdx=3},
+                new LineFoot(){ Name="4",LocX=122,LocY=0,InnerIdx=4},
+                new LineFoot(){ Name="5",LocX=157,LocY=0,InnerIdx=5},
+                new LineFoot(){ Name="6",LocX=192,LocY=0,InnerIdx=6},
+                new LineFoot(){ Name="7",LocX=227,LocY=0,InnerIdx=7},
+                
+                new LineFoot(){ Name="1", LocX=17,LocY=176,InnerIdx=8},
+                new LineFoot(){ Name="2",LocX=52,LocY=176,InnerIdx=9},
+                new LineFoot(){ Name="3",LocX=87,LocY=176,InnerIdx=10},
+                new LineFoot(){ Name="4",LocX=122,LocY=176,InnerIdx=11},
+                new LineFoot(){ Name="5",LocX=157,LocY=176,InnerIdx=12},
+                new LineFoot(){ Name="6",LocX=192,LocY=176,InnerIdx=13},
+                new LineFoot(){ Name="7",LocX=227,LocY=176,InnerIdx=14}
+            };
+            info.BackImage = "img\\74Serial.png";
+            AddNewBaseComponent(info);
             //运放
             info.Name = enumComponent.Amplifier.ToString ();
             info.FootType = enumComponentType.NormalComponent;
@@ -214,60 +270,6 @@ namespace SimuProteus
                 new LineFoot() { Color = colorFoot, Name = "左", LocX=11, LocY=90,InnerIdx=1 },
                 new LineFoot() { Color = colorFoot, Name = "右", LocX=46, LocY=90,InnerIdx=2}};
             info.BackImage = "img\\capacitor.png";
-            AddNewBaseComponent(info);
-            //74HC244
-            info.Name = "74HC244";
-            info.FootType = enumComponentType.Chips;
-            info.Size = new Size(374,280);
-            info.BackColor = Color.Gray;
-            info.LineFoots = new List<LineFoot>(){
-                new LineFoot(){LocX=35,LocY=0,InnerIdx=1},
-                new LineFoot(){LocX=70,LocY=0,InnerIdx=2},
-                new LineFoot(){LocX=105,LocY=0,InnerIdx=3},
-                new LineFoot(){LocX=140,LocY=0,InnerIdx=4},
-                new LineFoot(){LocX=175,LocY=0,InnerIdx=5},
-                new LineFoot(){LocX=210,LocY=0,InnerIdx=6},
-                new LineFoot(){LocX=245,LocY=0,InnerIdx=7},
-                new LineFoot(){LocX=280,LocY=0,InnerIdx=8},
-                new LineFoot(){LocX=315,LocY=0,InnerIdx=9},
-                new LineFoot(){LocX=350,LocY=0,InnerIdx=10},
-                
-                new LineFoot(){LocX=35,LocY=280,InnerIdx=11},
-                new LineFoot(){LocX=70,LocY=280,InnerIdx=12},
-                new LineFoot(){LocX=105,LocY=280,InnerIdx=13},
-                new LineFoot(){LocX=140,LocY=280,InnerIdx=14},
-                new LineFoot(){LocX=175,LocY=280,InnerIdx=15},
-                new LineFoot(){LocX=210,LocY=280,InnerIdx=16},
-                new LineFoot(){LocX=245,LocY=280,InnerIdx=17},
-                new LineFoot(){LocX=280,LocY=280,InnerIdx=18},
-                new LineFoot(){LocX=315,LocY=280,InnerIdx=19},
-                new LineFoot(){LocX=350,LocY=280,InnerIdx=20}
-            };
-            info.BackImage = "img\\74HC244.jpg";
-            AddNewBaseComponent(info);
-            //74Serial
-            info.Name = "74Serial";
-            info.FootType = enumComponentType.Chips;
-            info.Size = new Size(246, 176);
-            info.BackColor = Color.Gray;
-            info.LineFoots = new List<LineFoot>(){
-                new LineFoot(){ Name="1", LocX=17,LocY=0,InnerIdx=1},
-                new LineFoot(){ Name="2",LocX=52,LocY=0,InnerIdx=2},
-                new LineFoot(){ Name="3",LocX=87,LocY=0,InnerIdx=3},
-                new LineFoot(){ Name="4",LocX=122,LocY=0,InnerIdx=4},
-                new LineFoot(){ Name="5",LocX=157,LocY=0,InnerIdx=5},
-                new LineFoot(){ Name="6",LocX=192,LocY=0,InnerIdx=6},
-                new LineFoot(){ Name="7",LocX=227,LocY=0,InnerIdx=7},
-                
-                new LineFoot(){ Name="1", LocX=17,LocY=176,InnerIdx=8},
-                new LineFoot(){ Name="2",LocX=52,LocY=176,InnerIdx=9},
-                new LineFoot(){ Name="3",LocX=87,LocY=176,InnerIdx=10},
-                new LineFoot(){ Name="4",LocX=122,LocY=176,InnerIdx=11},
-                new LineFoot(){ Name="5",LocX=157,LocY=176,InnerIdx=12},
-                new LineFoot(){ Name="6",LocX=192,LocY=176,InnerIdx=13},
-                new LineFoot(){ Name="7",LocX=227,LocY=176,InnerIdx=14}
-            };
-            info.BackImage = "img\\74Serial.png";
             AddNewBaseComponent(info);
         }
 
@@ -402,13 +404,28 @@ namespace SimuProteus
         {
             string strSql = string.Format(@"insert into components (name,width,height,backColor,backImage,type,number) 
                                                 values ('{0}',{1},{2},{3},'{4}',{5},'{6}');select last_insert_rowid();",
-                                info.Name, info.Size.Width, info.Size.Height, info.BackColor.ToArgb(), info.BackImage,(int)info.FootType,info.Number);
+                                info.Name, info.Size.Width, info.Size.Height, info.BackColor.ToArgb(), info.BackImage, (int)info.FootType, info.Number);
             object objIdx = SQLiteHelper.ExecuteScalar(STR_CONNECTION, strSql);
             int intIdx = Convert.ToInt32(objIdx);
             if (this.AddComponentFoots(intIdx, info.FootType, info.LineFoots))
                 return intIdx;
 
             return -1;
+        }
+
+        /// <summary>
+        /// 检测元器件是否已经存在
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        public bool HasComponentByNameID(string name,string number)
+        {
+            string strSql = string.Format(@"select count(*) as itemCount from components where name='{0}' or number ='{1}';",name,number);
+            object objIdx = SQLiteHelper.ExecuteScalar(STR_CONNECTION, strSql);
+            int intIdx = Convert.ToInt32(objIdx);
+
+            return intIdx > 0;
         }
 
 

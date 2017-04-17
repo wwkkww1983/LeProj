@@ -40,12 +40,6 @@
             this.lbNumber = new System.Windows.Forms.Label();
             this.tbName = new System.Windows.Forms.TextBox();
             this.dgvFoot = new System.Windows.Forms.DataGridView();
-            this.lbLoc = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.rbChips = new System.Windows.Forms.RadioButton();
-            this.rbComponent = new System.Windows.Forms.RadioButton();
-            this.lbName = new System.Windows.Forms.Label();
-            this.tbNumber = new System.Windows.Forms.TextBox();
             this.Number = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.type = new System.Windows.Forms.DataGridViewComboBoxColumn();
@@ -55,6 +49,12 @@
             this.nameLocY = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.numLocX = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.numLocY = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lbLoc = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.rbChips = new System.Windows.Forms.RadioButton();
+            this.rbComponent = new System.Windows.Forms.RadioButton();
+            this.lbName = new System.Windows.Forms.Label();
+            this.tbNumber = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxImg)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFoot)).BeginInit();
             this.SuspendLayout();
@@ -175,63 +175,6 @@
             this.dgvFoot.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvFoot_RowsAdded);
             this.dgvFoot.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dgvFoot_RowsRemoved);
             // 
-            // lbLoc
-            // 
-            this.lbLoc.AutoSize = true;
-            this.lbLoc.Location = new System.Drawing.Point(136, 135);
-            this.lbLoc.Name = "lbLoc";
-            this.lbLoc.Size = new System.Drawing.Size(37, 15);
-            this.lbLoc.TabIndex = 6;
-            this.lbLoc.Text = "坐标";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(40, 38);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(47, 15);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "(0,0)";
-            // 
-            // rbChips
-            // 
-            this.rbChips.AutoSize = true;
-            this.rbChips.Location = new System.Drawing.Point(376, 59);
-            this.rbChips.Name = "rbChips";
-            this.rbChips.Size = new System.Drawing.Size(58, 19);
-            this.rbChips.TabIndex = 2;
-            this.rbChips.Text = "芯片";
-            this.rbChips.UseVisualStyleBackColor = true;
-            // 
-            // rbComponent
-            // 
-            this.rbComponent.AutoSize = true;
-            this.rbComponent.Checked = true;
-            this.rbComponent.Location = new System.Drawing.Point(266, 59);
-            this.rbComponent.Name = "rbComponent";
-            this.rbComponent.Size = new System.Drawing.Size(73, 19);
-            this.rbComponent.TabIndex = 1;
-            this.rbComponent.TabStop = true;
-            this.rbComponent.Text = "元器件";
-            this.rbComponent.UseVisualStyleBackColor = true;
-            // 
-            // lbName
-            // 
-            this.lbName.AutoSize = true;
-            this.lbName.Location = new System.Drawing.Point(535, 125);
-            this.lbName.Name = "lbName";
-            this.lbName.Size = new System.Drawing.Size(67, 15);
-            this.lbName.TabIndex = 2;
-            this.lbName.Text = "类型名称";
-            // 
-            // tbNumber
-            // 
-            this.tbNumber.Location = new System.Drawing.Point(608, 56);
-            this.tbNumber.Name = "tbNumber";
-            this.tbNumber.Size = new System.Drawing.Size(176, 25);
-            this.tbNumber.TabIndex = 3;
-            this.tbNumber.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tbNumber_MouseClick);
-            // 
             // Number
             // 
             this.Number.DataPropertyName = "Number";
@@ -299,6 +242,63 @@
             this.numLocY.HeaderText = "编号Y坐标";
             this.numLocY.Name = "numLocY";
             // 
+            // lbLoc
+            // 
+            this.lbLoc.AutoSize = true;
+            this.lbLoc.Location = new System.Drawing.Point(136, 135);
+            this.lbLoc.Name = "lbLoc";
+            this.lbLoc.Size = new System.Drawing.Size(37, 15);
+            this.lbLoc.TabIndex = 6;
+            this.lbLoc.Text = "坐标";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(40, 38);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(47, 15);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "(0,0)";
+            // 
+            // rbChips
+            // 
+            this.rbChips.AutoSize = true;
+            this.rbChips.Location = new System.Drawing.Point(376, 59);
+            this.rbChips.Name = "rbChips";
+            this.rbChips.Size = new System.Drawing.Size(58, 19);
+            this.rbChips.TabIndex = 2;
+            this.rbChips.Text = "芯片";
+            this.rbChips.UseVisualStyleBackColor = true;
+            // 
+            // rbComponent
+            // 
+            this.rbComponent.AutoSize = true;
+            this.rbComponent.Checked = true;
+            this.rbComponent.Location = new System.Drawing.Point(266, 59);
+            this.rbComponent.Name = "rbComponent";
+            this.rbComponent.Size = new System.Drawing.Size(73, 19);
+            this.rbComponent.TabIndex = 1;
+            this.rbComponent.TabStop = true;
+            this.rbComponent.Text = "元器件";
+            this.rbComponent.UseVisualStyleBackColor = true;
+            // 
+            // lbName
+            // 
+            this.lbName.AutoSize = true;
+            this.lbName.Location = new System.Drawing.Point(535, 125);
+            this.lbName.Name = "lbName";
+            this.lbName.Size = new System.Drawing.Size(67, 15);
+            this.lbName.TabIndex = 2;
+            this.lbName.Text = "类型名称";
+            // 
+            // tbNumber
+            // 
+            this.tbNumber.Location = new System.Drawing.Point(608, 56);
+            this.tbNumber.Name = "tbNumber";
+            this.tbNumber.Size = new System.Drawing.Size(176, 25);
+            this.tbNumber.TabIndex = 3;
+            this.tbNumber.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tbNumber_MouseClick);
+            // 
             // FormNewComponent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -322,7 +322,7 @@
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.picBoxImg);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(869, 571);
+            this.MaximumSize = new System.Drawing.Size(869, 600);
             this.MinimumSize = new System.Drawing.Size(869, 571);
             this.Name = "FormNewComponent";
             this.Text = "新增元器件";

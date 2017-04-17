@@ -30,7 +30,7 @@ namespace CamInter
         {
             InitializeComponent();
 
-            //dbHandler.InitialTable();
+            dbHandler.InitialTable();
             this.InitialCamInter();
         }
 
@@ -40,7 +40,7 @@ namespace CamInter
             this.cbCamInter.DataSource = this.dtInter;
             this.cbCamInter.DisplayMember = "Name";
             this.cbCamInter.ValueMember = "Idx";
-            this.cbCamInter.SelectedIndex = 4;
+            //this.cbCamInter.SelectedIndex = 2;
             this.tcCamera.SelectedIndex = 1;
 
             this.initialConditionFlag = true;
@@ -50,8 +50,8 @@ namespace CamInter
             this.dgvProjDetail.AutoGenerateColumns = false;
             this.dgvProjList.AutoGenerateColumns = false;
 
-            this.skin = new SkinEngine(this);
-            this.skin.SkinFile = "Wave.ssk";
+            //this.skin = new SkinEngine(this);
+            //this.skin.SkinFile = "Wave.ssk";
         }
 
         #endregion
@@ -127,7 +127,7 @@ namespace CamInter
             float ratio = areaBoardSelected ? this.PreFilterUserAreaData() : this.PreFilterUserLineData();
             int camInter = Convert.ToInt32(this.cbCamInter.SelectedValue);
             float flange = Convert.ToSingle(this.tbFlange.Text);
-            float target = this.tbTarget.Text.Trim().Equals(string.Empty) ? 0 : Convert.ToSingle(this.tbTarget.Text);
+            float target = areaBoardSelected ? (this.tbTarget.Text.Trim().Equals(string.Empty) ? 0 : Convert.ToSingle(this.tbTarget.Text)) : Convert.ToSingle(this.tbLineSensor.Text);
             float workDistance = this.tbDistance.Text.Trim().Equals(string.Empty)?0:Convert.ToSingle(this.tbDistance.Text);
             float workDistanceRange = this.tbDistanRange.Text.Trim().Equals(string.Empty) ? 0 : Convert.ToSingle(this.tbDistanRange.Text);
 
@@ -195,7 +195,7 @@ namespace CamInter
             string strNone = this.GetConstantsString(NAME_NONE);
             string strProj = this.GetConstantsString(PRE_PROJECT_NAME);
 
-            if(e.RowIndex <= 0) return;
+            if(e.RowIndex < 0) return;
             int projIdx = Convert.ToInt32((sender as DataGridView).Rows[e.RowIndex].Cells[0].Value.ToString().Substring(strProj.Length));
             DataTable dt = new DataTable();
             dt.Columns.Add(new DataColumn("detailIdx"));

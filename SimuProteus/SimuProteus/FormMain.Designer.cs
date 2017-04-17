@@ -34,17 +34,13 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.CreateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newComponentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorSetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sizeSetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SerialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serialStatusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.freeSerialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugSerialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.writeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ProjToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMsPoint = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.vCCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gNDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -75,9 +71,7 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.CreateToolStripMenuItem,
             this.setToolStripMenuItem,
-            this.saveSToolStripMenuItem,
-            this.SerialToolStripMenuItem,
-            this.ProjToolStripMenuItem});
+            this.SerialToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(880, 28);
@@ -87,46 +81,32 @@
             // CreateToolStripMenuItem
             // 
             this.CreateToolStripMenuItem.Name = "CreateToolStripMenuItem";
-            this.CreateToolStripMenuItem.Size = new System.Drawing.Size(51, 24);
-            this.CreateToolStripMenuItem.Text = "新建";
+            this.CreateToolStripMenuItem.Size = new System.Drawing.Size(96, 24);
+            this.CreateToolStripMenuItem.Text = "新增元器件";
+            this.CreateToolStripMenuItem.Click += new System.EventHandler(this.CreateToolStripMenuItem_Click);
             // 
             // setToolStripMenuItem
             // 
             this.setToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newComponentToolStripMenuItem,
             this.colorSetToolStripMenuItem,
             this.sizeSetToolStripMenuItem});
             this.setToolStripMenuItem.Name = "setToolStripMenuItem";
             this.setToolStripMenuItem.Size = new System.Drawing.Size(51, 24);
             this.setToolStripMenuItem.Text = "设置";
             // 
-            // newComponentToolStripMenuItem
-            // 
-            this.newComponentToolStripMenuItem.Name = "newComponentToolStripMenuItem";
-            this.newComponentToolStripMenuItem.Size = new System.Drawing.Size(153, 24);
-            this.newComponentToolStripMenuItem.Text = "新增元器件";
-            this.newComponentToolStripMenuItem.Click += new System.EventHandler(this.newComponentToolStripMenuItem_Click);
-            // 
             // colorSetToolStripMenuItem
             // 
             this.colorSetToolStripMenuItem.Name = "colorSetToolStripMenuItem";
-            this.colorSetToolStripMenuItem.Size = new System.Drawing.Size(153, 24);
+            this.colorSetToolStripMenuItem.Size = new System.Drawing.Size(108, 24);
             this.colorSetToolStripMenuItem.Text = "颜色";
             this.colorSetToolStripMenuItem.Click += new System.EventHandler(this.colorSetToolStripMenuItem_Click);
             // 
             // sizeSetToolStripMenuItem
             // 
             this.sizeSetToolStripMenuItem.Name = "sizeSetToolStripMenuItem";
-            this.sizeSetToolStripMenuItem.Size = new System.Drawing.Size(153, 24);
+            this.sizeSetToolStripMenuItem.Size = new System.Drawing.Size(108, 24);
             this.sizeSetToolStripMenuItem.Text = "尺寸";
             this.sizeSetToolStripMenuItem.Click += new System.EventHandler(this.sizeSetToolStripMenuItem_Click);
-            // 
-            // saveSToolStripMenuItem
-            // 
-            this.saveSToolStripMenuItem.Name = "saveSToolStripMenuItem";
-            this.saveSToolStripMenuItem.Size = new System.Drawing.Size(70, 24);
-            this.saveSToolStripMenuItem.Text = "保存(&S)";
-            this.saveSToolStripMenuItem.Click += new System.EventHandler(this.saveSToolStripMenuItem_Click);
             // 
             // SerialToolStripMenuItem
             // 
@@ -134,8 +114,7 @@
             this.serialStatusToolStripMenuItem,
             this.freeSerialToolStripMenuItem,
             this.debugSerialToolStripMenuItem,
-            this.readToolStripMenuItem,
-            this.writeToolStripMenuItem});
+            this.readToolStripMenuItem});
             this.SerialToolStripMenuItem.Name = "SerialToolStripMenuItem";
             this.SerialToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
             this.SerialToolStripMenuItem.Text = "串口数据";
@@ -143,43 +122,30 @@
             // serialStatusToolStripMenuItem
             // 
             this.serialStatusToolStripMenuItem.Name = "serialStatusToolStripMenuItem";
-            this.serialStatusToolStripMenuItem.Size = new System.Drawing.Size(138, 24);
+            this.serialStatusToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.serialStatusToolStripMenuItem.Text = "串口设置";
             this.serialStatusToolStripMenuItem.Click += new System.EventHandler(this.serialStatusToolStripMenuItem_Click);
             // 
             // freeSerialToolStripMenuItem
             // 
             this.freeSerialToolStripMenuItem.Name = "freeSerialToolStripMenuItem";
-            this.freeSerialToolStripMenuItem.Size = new System.Drawing.Size(138, 24);
+            this.freeSerialToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.freeSerialToolStripMenuItem.Text = "释放串口";
             this.freeSerialToolStripMenuItem.Click += new System.EventHandler(this.freeSerialToolStripMenuItem_Click);
             // 
             // debugSerialToolStripMenuItem
             // 
             this.debugSerialToolStripMenuItem.Name = "debugSerialToolStripMenuItem";
-            this.debugSerialToolStripMenuItem.Size = new System.Drawing.Size(138, 24);
+            this.debugSerialToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.debugSerialToolStripMenuItem.Text = "串口调试";
             this.debugSerialToolStripMenuItem.Click += new System.EventHandler(this.debugSerialToolStripMenuItem_Click);
             // 
             // readToolStripMenuItem
             // 
             this.readToolStripMenuItem.Name = "readToolStripMenuItem";
-            this.readToolStripMenuItem.Size = new System.Drawing.Size(138, 24);
+            this.readToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.readToolStripMenuItem.Text = "接收内容";
             this.readToolStripMenuItem.Click += new System.EventHandler(this.readToolStripMenuItem_Click);
-            // 
-            // writeToolStripMenuItem
-            // 
-            this.writeToolStripMenuItem.Name = "writeToolStripMenuItem";
-            this.writeToolStripMenuItem.Size = new System.Drawing.Size(138, 24);
-            this.writeToolStripMenuItem.Text = "写入";
-            this.writeToolStripMenuItem.Click += new System.EventHandler(this.writeToolStripMenuItem_Click);
-            // 
-            // ProjToolStripMenuItem
-            // 
-            this.ProjToolStripMenuItem.Name = "ProjToolStripMenuItem";
-            this.ProjToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
-            this.ProjToolStripMenuItem.Text = "历史项目";
             // 
             // contextMsPoint
             // 
@@ -303,11 +269,8 @@
         private System.Windows.Forms.GroupBox gbComponent;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem CreateToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveSToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem SerialToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem writeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ProjToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem serialStatusToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem setToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem colorSetToolStripMenuItem;
@@ -323,7 +286,6 @@
         private System.Windows.Forms.ContextMenuStrip contextMsLine;
         private System.Windows.Forms.ToolStripMenuItem colorLineToolStripMenuItem;
         private System.Windows.Forms.Panel pnWorkPlace;
-        private System.Windows.Forms.ToolStripMenuItem newComponentToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem delLineToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem debugSerialToolStripMenuItem;
     }

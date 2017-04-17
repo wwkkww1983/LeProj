@@ -454,7 +454,7 @@ namespace Core
                 Name = "Mk-APO-CPN 4.0/60",
                 Number = "14802",
                 Focus = 59.94f,
-                Target = 60f,
+                Target = 70f,
                 Flange = 53.29f,
                 Connector = 5,
                 HH = -1.85f,

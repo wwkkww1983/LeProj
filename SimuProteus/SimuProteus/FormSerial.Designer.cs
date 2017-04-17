@@ -324,6 +324,7 @@
             this.tbSendTimer.Size = new System.Drawing.Size(100, 25);
             this.tbSendTimer.TabIndex = 1;
             this.tbSendTimer.Text = "1000";
+            this.tbSendTimer.TextChanged += new System.EventHandler(this.tbSendTimer_TextChanged);
             // 
             // ckbSendTimer
             // 

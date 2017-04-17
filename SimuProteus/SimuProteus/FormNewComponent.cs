@@ -130,8 +130,7 @@ namespace SimuProteus
                 filePath = "img\\" + tbName.Text.Trim() + Path.GetExtension(sourcePath);
                 if (File.Exists(filePath))
                 {
-                    MessageBox.Show("类型名称重复");
-                    return;
+                    filePath = "img\\" + tbName.Text.Trim() + DateTime.Now.ToString("-yyMMddhhmmss") + Path.GetExtension(sourcePath);
                 }
                 Image newImg = Draw.ResizeImage(Image.FromFile(sourcePath), imgWidth, imgHeight);
                 newImg.Save(filePath);

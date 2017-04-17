@@ -216,6 +216,36 @@
   <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="menuStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1358, 28</value>
+  </data>
+  <data name="menuStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="menuStrip1.Text" xml:space="preserve">
+    <value>menuStrip1</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Name" xml:space="preserve">
+    <value>menuStrip1</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="addItemToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>51, 24</value>
+  </data>
+  <data name="addItemToolStripMenuItem.Text" xml:space="preserve">
+    <value>新增</value>
+  </data>
   <data name="CamLensToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>123, 24</value>
   </data>
@@ -246,11 +276,11 @@
   <data name="connToolStripMenuItem.Text" xml:space="preserve">
     <value>接口</value>
   </data>
-  <data name="addItemToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="lanToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>51, 24</value>
   </data>
-  <data name="addItemToolStripMenuItem.Text" xml:space="preserve">
-    <value>新增</value>
+  <data name="lanToolStripMenuItem.Text" xml:space="preserve">
+    <value>语言</value>
   </data>
   <data name="chineseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>119, 24</value>
@@ -264,38 +294,50 @@
   <data name="enlishToolStripMenuItem.Text" xml:space="preserve">
     <value>Enlish</value>
   </data>
-  <data name="lanToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>51, 24</value>
-  </data>
-  <data name="lanToolStripMenuItem.Text" xml:space="preserve">
-    <value>语言</value>
-  </data>
-  <data name="menuStrip1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1358, 28</value>
-  </data>
-  <data name="menuStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="menuStrip1.Text" xml:space="preserve">
-    <value>menuStrip1</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.Name" xml:space="preserve">
-    <value>menuStrip1</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
+  <metadata name="detailIdx.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="type.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="name.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="number.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="interA.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="interB.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="length.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <data name="dgvProjDetail.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left, Right</value>
+  </data>
+  <data name="dgvProjDetail.Location" type="System.Drawing.Point, System.Drawing">
+    <value>335, 315</value>
+  </data>
+  <data name="dgvProjDetail.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1015, 217</value>
+  </data>
+  <data name="dgvProjDetail.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;dgvProjDetail.Name" xml:space="preserve">
+    <value>dgvProjDetail</value>
+  </data>
+  <data name="&gt;&gt;dgvProjDetail.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dgvProjDetail.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;dgvProjDetail.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <metadata name="detailIdx.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -351,42 +393,6 @@
   <data name="length.HeaderText" xml:space="preserve">
     <value>长度(mm)</value>
   </data>
-  <data name="dgvProjDetail.Location" type="System.Drawing.Point, System.Drawing">
-    <value>335, 315</value>
-  </data>
-  <data name="dgvProjDetail.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1015, 217</value>
-  </data>
-  <data name="dgvProjDetail.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;dgvProjDetail.Name" xml:space="preserve">
-    <value>dgvProjDetail</value>
-  </data>
-  <data name="&gt;&gt;dgvProjDetail.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;dgvProjDetail.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;dgvProjDetail.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="label16.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label16.Location" type="System.Drawing.Point, System.Drawing">
-    <value>209, 110</value>
-  </data>
-  <data name="label16.Size" type="System.Drawing.Size, System.Drawing">
-    <value>22, 15</value>
-  </data>
-  <data name="label16.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="label16.Text" xml:space="preserve">
-    <value>×</value>
-  </data>
   <data name="&gt;&gt;label16.Name" xml:space="preserve">
     <value>label16</value>
   </data>
@@ -398,21 +404,6 @@
   </data>
   <data name="&gt;&gt;label16.ZOrder" xml:space="preserve">
     <value>0</value>
-  </data>
-  <data name="label14.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label14.Location" type="System.Drawing.Point, System.Drawing">
-    <value>209, 165</value>
-  </data>
-  <data name="label14.Size" type="System.Drawing.Size, System.Drawing">
-    <value>22, 15</value>
-  </data>
-  <data name="label14.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="label14.Text" xml:space="preserve">
-    <value>×</value>
   </data>
   <data name="&gt;&gt;label14.Name" xml:space="preserve">
     <value>label14</value>
@@ -426,21 +417,6 @@
   <data name="&gt;&gt;label14.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="lbValueWidth.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbValueWidth.Location" type="System.Drawing.Point, System.Drawing">
-    <value>255, 28</value>
-  </data>
-  <data name="lbValueWidth.Size" type="System.Drawing.Size, System.Drawing">
-    <value>22, 15</value>
-  </data>
-  <data name="lbValueWidth.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="lbValueWidth.Text" xml:space="preserve">
-    <value>宽</value>
-  </data>
   <data name="&gt;&gt;lbValueWidth.Name" xml:space="preserve">
     <value>lbValueWidth</value>
   </data>
@@ -452,21 +428,6 @@
   </data>
   <data name="&gt;&gt;lbValueWidth.ZOrder" xml:space="preserve">
     <value>2</value>
-  </data>
-  <data name="lbValueLength.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbValueLength.Location" type="System.Drawing.Point, System.Drawing">
-    <value>166, 28</value>
-  </data>
-  <data name="lbValueLength.Size" type="System.Drawing.Size, System.Drawing">
-    <value>22, 15</value>
-  </data>
-  <data name="lbValueLength.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="lbValueLength.Text" xml:space="preserve">
-    <value>长</value>
   </data>
   <data name="&gt;&gt;lbValueLength.Name" xml:space="preserve">
     <value>lbValueLength</value>
@@ -480,21 +441,6 @@
   <data name="&gt;&gt;lbValueLength.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="label11.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>209, 55</value>
-  </data>
-  <data name="label11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>22, 15</value>
-  </data>
-  <data name="label11.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="label11.Text" xml:space="preserve">
-    <value>×</value>
-  </data>
   <data name="&gt;&gt;label11.Name" xml:space="preserve">
     <value>label11</value>
   </data>
@@ -507,13 +453,16 @@
   <data name="&gt;&gt;label11.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
-  <data name="tbFovSide.Location" type="System.Drawing.Point, System.Drawing">
-    <value>147, 105</value>
+  <data name="&gt;&gt;tbTarget.Name" xml:space="preserve">
+    <value>tbTarget</value>
   </data>
-  <data name="tbFovSide.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 25</value>
+  <data name="&gt;&gt;tbTarget.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="tbFovSide.TabIndex" type="System.Int32, mscorlib">
+  <data name="&gt;&gt;tbTarget.Parent" xml:space="preserve">
+    <value>tpArea</value>
+  </data>
+  <data name="&gt;&gt;tbTarget.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
   <data name="&gt;&gt;tbFovSide.Name" xml:space="preserve">
@@ -526,15 +475,6 @@
     <value>tpArea</value>
   </data>
   <data name="&gt;&gt;tbFovSide.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="tbFovOther.Location" type="System.Drawing.Point, System.Drawing">
-    <value>236, 105</value>
-  </data>
-  <data name="tbFovOther.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 25</value>
-  </data>
-  <data name="tbFovOther.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
   <data name="&gt;&gt;tbFovOther.Name" xml:space="preserve">
@@ -547,16 +487,7 @@
     <value>tpArea</value>
   </data>
   <data name="&gt;&gt;tbFovOther.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="tbResolutionSide.Location" type="System.Drawing.Point, System.Drawing">
-    <value>147, 160</value>
-  </data>
-  <data name="tbResolutionSide.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 25</value>
-  </data>
-  <data name="tbResolutionSide.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>7</value>
   </data>
   <data name="&gt;&gt;tbResolutionSide.Name" xml:space="preserve">
     <value>tbResolutionSide</value>
@@ -568,16 +499,7 @@
     <value>tpArea</value>
   </data>
   <data name="&gt;&gt;tbResolutionSide.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="tbResolutionOther.Location" type="System.Drawing.Point, System.Drawing">
-    <value>236, 160</value>
-  </data>
-  <data name="tbResolutionOther.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 25</value>
-  </data>
-  <data name="tbResolutionOther.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+    <value>8</value>
   </data>
   <data name="&gt;&gt;tbResolutionOther.Name" xml:space="preserve">
     <value>tbResolutionOther</value>
@@ -589,22 +511,7 @@
     <value>tpArea</value>
   </data>
   <data name="&gt;&gt;tbResolutionOther.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="lbFov.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbFov.Location" type="System.Drawing.Point, System.Drawing">
-    <value>31, 110</value>
-  </data>
-  <data name="lbFov.Size" type="System.Drawing.Size, System.Drawing">
-    <value>109, 15</value>
-  </data>
-  <data name="lbFov.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
-  </data>
-  <data name="lbFov.Text" xml:space="preserve">
-    <value>视野Fov(mm) *</value>
+    <value>9</value>
   </data>
   <data name="&gt;&gt;lbFov.Name" xml:space="preserve">
     <value>lbFov</value>
@@ -616,16 +523,19 @@
     <value>tpArea</value>
   </data>
   <data name="&gt;&gt;lbFov.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
-  <data name="tbSensorSide.Location" type="System.Drawing.Point, System.Drawing">
-    <value>147, 50</value>
+  <data name="&gt;&gt;lbSensorDiagonal.Name" xml:space="preserve">
+    <value>lbSensorDiagonal</value>
   </data>
-  <data name="tbSensorSide.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 25</value>
+  <data name="&gt;&gt;lbSensorDiagonal.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="tbSensorSide.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+  <data name="&gt;&gt;lbSensorDiagonal.Parent" xml:space="preserve">
+    <value>tpArea</value>
+  </data>
+  <data name="&gt;&gt;lbSensorDiagonal.ZOrder" xml:space="preserve">
+    <value>11</value>
   </data>
   <data name="&gt;&gt;tbSensorSide.Name" xml:space="preserve">
     <value>tbSensorSide</value>
@@ -637,22 +547,7 @@
     <value>tpArea</value>
   </data>
   <data name="&gt;&gt;tbSensorSide.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="lbResolution.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbResolution.Location" type="System.Drawing.Point, System.Drawing">
-    <value>26, 165</value>
-  </data>
-  <data name="lbResolution.Size" type="System.Drawing.Size, System.Drawing">
-    <value>114, 15</value>
-  </data>
-  <data name="lbResolution.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
-  </data>
-  <data name="lbResolution.Text" xml:space="preserve">
-    <value>相机分辨率(mm)</value>
+    <value>12</value>
   </data>
   <data name="&gt;&gt;lbResolution.Name" xml:space="preserve">
     <value>lbResolution</value>
@@ -664,16 +559,7 @@
     <value>tpArea</value>
   </data>
   <data name="&gt;&gt;lbResolution.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="tbSensorOther.Location" type="System.Drawing.Point, System.Drawing">
-    <value>236, 50</value>
-  </data>
-  <data name="tbSensorOther.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 25</value>
-  </data>
-  <data name="tbSensorOther.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+    <value>13</value>
   </data>
   <data name="&gt;&gt;tbSensorOther.Name" xml:space="preserve">
     <value>tbSensorOther</value>
@@ -685,22 +571,7 @@
     <value>tpArea</value>
   </data>
   <data name="&gt;&gt;tbSensorOther.ZOrder" xml:space="preserve">
-    <value>12</value>
-  </data>
-  <data name="lbSensor.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbSensor.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 55</value>
-  </data>
-  <data name="lbSensor.Size" type="System.Drawing.Size, System.Drawing">
-    <value>133, 15</value>
-  </data>
-  <data name="lbSensor.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
-  </data>
-  <data name="lbSensor.Text" xml:space="preserve">
-    <value>Sensor尺寸(mm) *</value>
+    <value>14</value>
   </data>
   <data name="&gt;&gt;lbSensor.Name" xml:space="preserve">
     <value>lbSensor</value>
@@ -712,7 +583,7 @@
     <value>tpArea</value>
   </data>
   <data name="&gt;&gt;lbSensor.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>15</value>
   </data>
   <data name="tpArea.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 25</value>
@@ -802,10 +673,7 @@
     <value>149, 25</value>
   </data>
   <data name="tbLineFov.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="tbLineFov.Text" xml:space="preserve">
-    <value>60</value>
+    <value>4</value>
   </data>
   <data name="&gt;&gt;tbLineFov.Name" xml:space="preserve">
     <value>tbLineFov</value>
@@ -826,7 +694,7 @@
     <value>149, 25</value>
   </data>
   <data name="tbLineResolution.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="&gt;&gt;tbLineResolution.Name" xml:space="preserve">
     <value>tbLineResolution</value>
@@ -875,9 +743,6 @@
   </data>
   <data name="tbLineSensor.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
-  </data>
-  <data name="tbLineSensor.Text" xml:space="preserve">
-    <value>28</value>
   </data>
   <data name="&gt;&gt;tbLineSensor.Name" xml:space="preserve">
     <value>tbLineSensor</value>
@@ -993,6 +858,399 @@
   <data name="&gt;&gt;tcCamera.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="label16.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label16.Location" type="System.Drawing.Point, System.Drawing">
+    <value>209, 92</value>
+  </data>
+  <data name="label16.Size" type="System.Drawing.Size, System.Drawing">
+    <value>22, 15</value>
+  </data>
+  <data name="label16.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="label16.Text" xml:space="preserve">
+    <value>×</value>
+  </data>
+  <data name="&gt;&gt;label16.Name" xml:space="preserve">
+    <value>label16</value>
+  </data>
+  <data name="&gt;&gt;label16.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label16.Parent" xml:space="preserve">
+    <value>tpArea</value>
+  </data>
+  <data name="&gt;&gt;label16.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="label14.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label14.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label14.Location" type="System.Drawing.Point, System.Drawing">
+    <value>209, 129</value>
+  </data>
+  <data name="label14.Size" type="System.Drawing.Size, System.Drawing">
+    <value>22, 15</value>
+  </data>
+  <data name="label14.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="label14.Text" xml:space="preserve">
+    <value>×</value>
+  </data>
+  <data name="&gt;&gt;label14.Name" xml:space="preserve">
+    <value>label14</value>
+  </data>
+  <data name="&gt;&gt;label14.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label14.Parent" xml:space="preserve">
+    <value>tpArea</value>
+  </data>
+  <data name="&gt;&gt;label14.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="lbValueWidth.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbValueWidth.Location" type="System.Drawing.Point, System.Drawing">
+    <value>255, 28</value>
+  </data>
+  <data name="lbValueWidth.Size" type="System.Drawing.Size, System.Drawing">
+    <value>22, 15</value>
+  </data>
+  <data name="lbValueWidth.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="lbValueWidth.Text" xml:space="preserve">
+    <value>宽</value>
+  </data>
+  <data name="&gt;&gt;lbValueWidth.Name" xml:space="preserve">
+    <value>lbValueWidth</value>
+  </data>
+  <data name="&gt;&gt;lbValueWidth.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbValueWidth.Parent" xml:space="preserve">
+    <value>tpArea</value>
+  </data>
+  <data name="&gt;&gt;lbValueWidth.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="lbValueLength.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbValueLength.Location" type="System.Drawing.Point, System.Drawing">
+    <value>166, 28</value>
+  </data>
+  <data name="lbValueLength.Size" type="System.Drawing.Size, System.Drawing">
+    <value>22, 15</value>
+  </data>
+  <data name="lbValueLength.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="lbValueLength.Text" xml:space="preserve">
+    <value>长</value>
+  </data>
+  <data name="&gt;&gt;lbValueLength.Name" xml:space="preserve">
+    <value>lbValueLength</value>
+  </data>
+  <data name="&gt;&gt;lbValueLength.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbValueLength.Parent" xml:space="preserve">
+    <value>tpArea</value>
+  </data>
+  <data name="&gt;&gt;lbValueLength.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="label11.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label11.Location" type="System.Drawing.Point, System.Drawing">
+    <value>209, 55</value>
+  </data>
+  <data name="label11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>22, 15</value>
+  </data>
+  <data name="label11.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="label11.Text" xml:space="preserve">
+    <value>×</value>
+  </data>
+  <data name="&gt;&gt;label11.Name" xml:space="preserve">
+    <value>label11</value>
+  </data>
+  <data name="&gt;&gt;label11.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label11.Parent" xml:space="preserve">
+    <value>tpArea</value>
+  </data>
+  <data name="&gt;&gt;label11.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="tbTarget.Location" type="System.Drawing.Point, System.Drawing">
+    <value>169, 161</value>
+  </data>
+  <data name="tbTarget.Size" type="System.Drawing.Size, System.Drawing">
+    <value>127, 25</value>
+  </data>
+  <data name="tbTarget.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;tbTarget.Name" xml:space="preserve">
+    <value>tbTarget</value>
+  </data>
+  <data name="&gt;&gt;tbTarget.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbTarget.Parent" xml:space="preserve">
+    <value>tpArea</value>
+  </data>
+  <data name="&gt;&gt;tbTarget.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="tbFovSide.Location" type="System.Drawing.Point, System.Drawing">
+    <value>147, 87</value>
+  </data>
+  <data name="tbFovSide.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 25</value>
+  </data>
+  <data name="tbFovSide.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;tbFovSide.Name" xml:space="preserve">
+    <value>tbFovSide</value>
+  </data>
+  <data name="&gt;&gt;tbFovSide.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbFovSide.Parent" xml:space="preserve">
+    <value>tpArea</value>
+  </data>
+  <data name="&gt;&gt;tbFovSide.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="tbFovOther.Location" type="System.Drawing.Point, System.Drawing">
+    <value>236, 87</value>
+  </data>
+  <data name="tbFovOther.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 25</value>
+  </data>
+  <data name="tbFovOther.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;tbFovOther.Name" xml:space="preserve">
+    <value>tbFovOther</value>
+  </data>
+  <data name="&gt;&gt;tbFovOther.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbFovOther.Parent" xml:space="preserve">
+    <value>tpArea</value>
+  </data>
+  <data name="&gt;&gt;tbFovOther.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="tbResolutionSide.Location" type="System.Drawing.Point, System.Drawing">
+    <value>147, 124</value>
+  </data>
+  <data name="tbResolutionSide.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 25</value>
+  </data>
+  <data name="tbResolutionSide.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;tbResolutionSide.Name" xml:space="preserve">
+    <value>tbResolutionSide</value>
+  </data>
+  <data name="&gt;&gt;tbResolutionSide.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbResolutionSide.Parent" xml:space="preserve">
+    <value>tpArea</value>
+  </data>
+  <data name="&gt;&gt;tbResolutionSide.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="tbResolutionOther.Location" type="System.Drawing.Point, System.Drawing">
+    <value>236, 124</value>
+  </data>
+  <data name="tbResolutionOther.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 25</value>
+  </data>
+  <data name="tbResolutionOther.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;tbResolutionOther.Name" xml:space="preserve">
+    <value>tbResolutionOther</value>
+  </data>
+  <data name="&gt;&gt;tbResolutionOther.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbResolutionOther.Parent" xml:space="preserve">
+    <value>tpArea</value>
+  </data>
+  <data name="&gt;&gt;tbResolutionOther.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="lbFov.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbFov.Location" type="System.Drawing.Point, System.Drawing">
+    <value>31, 92</value>
+  </data>
+  <data name="lbFov.Size" type="System.Drawing.Size, System.Drawing">
+    <value>109, 15</value>
+  </data>
+  <data name="lbFov.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="lbFov.Text" xml:space="preserve">
+    <value>视野Fov(mm) *</value>
+  </data>
+  <data name="&gt;&gt;lbFov.Name" xml:space="preserve">
+    <value>lbFov</value>
+  </data>
+  <data name="&gt;&gt;lbFov.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbFov.Parent" xml:space="preserve">
+    <value>tpArea</value>
+  </data>
+  <data name="&gt;&gt;lbFov.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="lbSensorDiagonal.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbSensorDiagonal.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 166</value>
+  </data>
+  <data name="lbSensorDiagonal.Size" type="System.Drawing.Size, System.Drawing">
+    <value>162, 15</value>
+  </data>
+  <data name="lbSensorDiagonal.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="lbSensorDiagonal.Text" xml:space="preserve">
+    <value>Sensor对角线长度(mm)</value>
+  </data>
+  <data name="&gt;&gt;lbSensorDiagonal.Name" xml:space="preserve">
+    <value>lbSensorDiagonal</value>
+  </data>
+  <data name="&gt;&gt;lbSensorDiagonal.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbSensorDiagonal.Parent" xml:space="preserve">
+    <value>tpArea</value>
+  </data>
+  <data name="&gt;&gt;lbSensorDiagonal.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="tbSensorSide.Location" type="System.Drawing.Point, System.Drawing">
+    <value>147, 50</value>
+  </data>
+  <data name="tbSensorSide.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 25</value>
+  </data>
+  <data name="tbSensorSide.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;tbSensorSide.Name" xml:space="preserve">
+    <value>tbSensorSide</value>
+  </data>
+  <data name="&gt;&gt;tbSensorSide.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbSensorSide.Parent" xml:space="preserve">
+    <value>tpArea</value>
+  </data>
+  <data name="&gt;&gt;tbSensorSide.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="lbResolution.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbResolution.Location" type="System.Drawing.Point, System.Drawing">
+    <value>26, 129</value>
+  </data>
+  <data name="lbResolution.Size" type="System.Drawing.Size, System.Drawing">
+    <value>114, 15</value>
+  </data>
+  <data name="lbResolution.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="lbResolution.Text" xml:space="preserve">
+    <value>相机分辨率(mm)</value>
+  </data>
+  <data name="&gt;&gt;lbResolution.Name" xml:space="preserve">
+    <value>lbResolution</value>
+  </data>
+  <data name="&gt;&gt;lbResolution.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbResolution.Parent" xml:space="preserve">
+    <value>tpArea</value>
+  </data>
+  <data name="&gt;&gt;lbResolution.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="tbSensorOther.Location" type="System.Drawing.Point, System.Drawing">
+    <value>236, 50</value>
+  </data>
+  <data name="tbSensorOther.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 25</value>
+  </data>
+  <data name="tbSensorOther.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;tbSensorOther.Name" xml:space="preserve">
+    <value>tbSensorOther</value>
+  </data>
+  <data name="&gt;&gt;tbSensorOther.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbSensorOther.Parent" xml:space="preserve">
+    <value>tpArea</value>
+  </data>
+  <data name="&gt;&gt;tbSensorOther.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="lbSensor.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbSensor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 55</value>
+  </data>
+  <data name="lbSensor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>133, 15</value>
+  </data>
+  <data name="lbSensor.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="lbSensor.Text" xml:space="preserve">
+    <value>Sensor尺寸(mm) *</value>
+  </data>
+  <data name="&gt;&gt;lbSensor.Name" xml:space="preserve">
+    <value>lbSensor</value>
+  </data>
+  <data name="&gt;&gt;lbSensor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbSensor.Parent" xml:space="preserve">
+    <value>tpArea</value>
+  </data>
+  <data name="&gt;&gt;lbSensor.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
   <data name="cbCamInter.Location" type="System.Drawing.Point, System.Drawing">
     <value>178, 318</value>
   </data>
@@ -1012,7 +1270,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;cbCamInter.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>9</value>
   </data>
   <data name="lbCamInter.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1039,13 +1297,16 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lbCamInter.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>11</value>
   </data>
   <data name="lbFlange.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="lbFlange.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="lbFlange.Location" type="System.Drawing.Point, System.Drawing">
-    <value>39, 368</value>
+    <value>39, 392</value>
   </data>
   <data name="lbFlange.Size" type="System.Drawing.Size, System.Drawing">
     <value>133, 15</value>
@@ -1066,19 +1327,16 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lbFlange.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>12</value>
   </data>
   <data name="tbFlange.Location" type="System.Drawing.Point, System.Drawing">
-    <value>178, 363</value>
+    <value>178, 387</value>
   </data>
   <data name="tbFlange.Size" type="System.Drawing.Size, System.Drawing">
     <value>147, 25</value>
   </data>
   <data name="tbFlange.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
-  </data>
-  <data name="tbFlange.Text" xml:space="preserve">
-    <value>10</value>
   </data>
   <data name="&gt;&gt;tbFlange.Name" xml:space="preserve">
     <value>tbFlange</value>
@@ -1090,57 +1348,6 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;tbFlange.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="lbSensorDiagonal.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbSensorDiagonal.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 415</value>
-  </data>
-  <data name="lbSensorDiagonal.Size" type="System.Drawing.Size, System.Drawing">
-    <value>162, 15</value>
-  </data>
-  <data name="lbSensorDiagonal.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="lbSensorDiagonal.Text" xml:space="preserve">
-    <value>Sensor对角线长度(mm)</value>
-  </data>
-  <data name="&gt;&gt;lbSensorDiagonal.Name" xml:space="preserve">
-    <value>lbSensorDiagonal</value>
-  </data>
-  <data name="&gt;&gt;lbSensorDiagonal.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbSensorDiagonal.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbSensorDiagonal.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="tbTarget.Location" type="System.Drawing.Point, System.Drawing">
-    <value>178, 410</value>
-  </data>
-  <data name="tbTarget.Size" type="System.Drawing.Size, System.Drawing">
-    <value>147, 25</value>
-  </data>
-  <data name="tbTarget.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
-  </data>
-  <data name="tbTarget.Text" xml:space="preserve">
-    <value>85</value>
-  </data>
-  <data name="&gt;&gt;tbTarget.Name" xml:space="preserve">
-    <value>tbTarget</value>
-  </data>
-  <data name="&gt;&gt;tbTarget.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbTarget.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tbTarget.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
   <data name="lbWork.AutoSize" type="System.Boolean, mscorlib">
@@ -1168,7 +1375,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lbWork.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>10</value>
   </data>
   <data name="tbDistance.Location" type="System.Drawing.Point, System.Drawing">
     <value>178, 457</value>
@@ -1178,9 +1385,6 @@
   </data>
   <data name="tbDistance.TabIndex" type="System.Int32, mscorlib">
     <value>17</value>
-  </data>
-  <data name="tbDistance.Text" xml:space="preserve">
-    <value>370</value>
   </data>
   <data name="&gt;&gt;tbDistance.Name" xml:space="preserve">
     <value>tbDistance</value>
@@ -1192,7 +1396,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;tbDistance.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>7</value>
   </data>
   <data name="tbDistanRange.Location" type="System.Drawing.Point, System.Drawing">
     <value>264, 457</value>
@@ -1202,9 +1406,6 @@
   </data>
   <data name="tbDistanRange.TabIndex" type="System.Int32, mscorlib">
     <value>18</value>
-  </data>
-  <data name="tbDistanRange.Text" xml:space="preserve">
-    <value>20</value>
   </data>
   <data name="&gt;&gt;tbDistanRange.Name" xml:space="preserve">
     <value>tbDistanRange</value>
@@ -1216,7 +1417,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;tbDistanRange.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>6</value>
   </data>
   <data name="label24.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1443,6 +1644,9 @@
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAA=
 </value>
+  </data>
+  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>976, 582</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>相机镜头配对</value>

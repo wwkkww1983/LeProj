@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using System.IO.Ports;
+using Core;
 
 namespace SimuProteus
 {
@@ -64,6 +65,21 @@ namespace SimuProteus
         #endregion
 
         #region 窗口事件
+        private void tbSendTimer_TextChanged(object sender, EventArgs e)
+        {
+            TextBox tbTemp = sender as TextBox;
+            if (StringValidator.IsUnsignedNumber(tbTemp))
+            {
+                int timeTotal = int.Parse(tbTemp.Text);
+                if (timeTotal < 200)
+                {
+                    MessageBox.Show("间隔时间最小200ms");
+                    tbTemp.Text = "200";
+                    tbTemp.Focus();
+                }
+            }
+        }
+
         private void btnClearSend_Click(object sender, EventArgs e)
         {
             this.tbSend.Text = string.Empty;
@@ -309,5 +325,6 @@ namespace SimuProteus
             return sbTmp.ToString();
         }
         #endregion
+
     }
 }

@@ -64,11 +64,13 @@
             this.lbValueWidth = new System.Windows.Forms.Label();
             this.lbValueLength = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this.tbTarget = new System.Windows.Forms.TextBox();
             this.tbFovSide = new System.Windows.Forms.TextBox();
             this.tbFovOther = new System.Windows.Forms.TextBox();
             this.tbResolutionSide = new System.Windows.Forms.TextBox();
             this.tbResolutionOther = new System.Windows.Forms.TextBox();
             this.lbFov = new System.Windows.Forms.Label();
+            this.lbSensorDiagonal = new System.Windows.Forms.Label();
             this.tbSensorSide = new System.Windows.Forms.TextBox();
             this.lbResolution = new System.Windows.Forms.Label();
             this.tbSensorOther = new System.Windows.Forms.TextBox();
@@ -86,8 +88,6 @@
             this.lbCamInter = new System.Windows.Forms.Label();
             this.lbFlange = new System.Windows.Forms.Label();
             this.tbFlange = new System.Windows.Forms.TextBox();
-            this.lbSensorDiagonal = new System.Windows.Forms.Label();
-            this.tbTarget = new System.Windows.Forms.TextBox();
             this.lbWork = new System.Windows.Forms.Label();
             this.tbDistance = new System.Windows.Forms.TextBox();
             this.tbDistanRange = new System.Windows.Forms.TextBox();
@@ -338,11 +338,13 @@
             this.tpArea.Controls.Add(this.lbValueWidth);
             this.tpArea.Controls.Add(this.lbValueLength);
             this.tpArea.Controls.Add(this.label11);
+            this.tpArea.Controls.Add(this.tbTarget);
             this.tpArea.Controls.Add(this.tbFovSide);
             this.tpArea.Controls.Add(this.tbFovOther);
             this.tpArea.Controls.Add(this.tbResolutionSide);
             this.tpArea.Controls.Add(this.tbResolutionOther);
             this.tpArea.Controls.Add(this.lbFov);
+            this.tpArea.Controls.Add(this.lbSensorDiagonal);
             this.tpArea.Controls.Add(this.tbSensorSide);
             this.tpArea.Controls.Add(this.lbResolution);
             this.tpArea.Controls.Add(this.tbSensorOther);
@@ -376,6 +378,11 @@
             resources.ApplyResources(this.label11, "label11");
             this.label11.Name = "label11";
             // 
+            // tbTarget
+            // 
+            resources.ApplyResources(this.tbTarget, "tbTarget");
+            this.tbTarget.Name = "tbTarget";
+            // 
             // tbFovSide
             // 
             resources.ApplyResources(this.tbFovSide, "tbFovSide");
@@ -400,6 +407,11 @@
             // 
             resources.ApplyResources(this.lbFov, "lbFov");
             this.lbFov.Name = "lbFov";
+            // 
+            // lbSensorDiagonal
+            // 
+            resources.ApplyResources(this.lbSensorDiagonal, "lbSensorDiagonal");
+            this.lbSensorDiagonal.Name = "lbSensorDiagonal";
             // 
             // tbSensorSide
             // 
@@ -502,16 +514,6 @@
             resources.ApplyResources(this.tbFlange, "tbFlange");
             this.tbFlange.Name = "tbFlange";
             // 
-            // lbSensorDiagonal
-            // 
-            resources.ApplyResources(this.lbSensorDiagonal, "lbSensorDiagonal");
-            this.lbSensorDiagonal.Name = "lbSensorDiagonal";
-            // 
-            // tbTarget
-            // 
-            resources.ApplyResources(this.tbTarget, "tbTarget");
-            this.tbTarget.Name = "tbTarget";
-            // 
             // lbWork
             // 
             resources.ApplyResources(this.lbWork, "lbWork");
@@ -548,13 +550,11 @@
             this.Controls.Add(this.dgvProjDetail);
             this.Controls.Add(this.label24);
             this.Controls.Add(this.dgvProjList);
-            this.Controls.Add(this.tbTarget);
             this.Controls.Add(this.tbFlange);
             this.Controls.Add(this.tbDistanRange);
             this.Controls.Add(this.tbDistance);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.cbCamInter);
-            this.Controls.Add(this.lbSensorDiagonal);
             this.Controls.Add(this.lbWork);
             this.Controls.Add(this.lbCamInter);
             this.Controls.Add(this.lbFlange);
