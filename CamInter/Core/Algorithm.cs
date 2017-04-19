@@ -14,7 +14,8 @@ namespace Core
         private List<RingMedium> extendVisitedList = new List<RingMedium>();
         private List<RingResult> results = null;
         private List<RingResults> resultsFound = null;
-        public Algorithm(List<ValueType> interList,List<ValueType> camList)
+        private Dictionary<int, float> connectorIDLen = new Dictionary<int, float>();
+        public Algorithm(List<ValueType> interList,List<ValueType> camList,List<ValueType> connList)
         {
             foreach (ValueType item in interList)
             {
@@ -31,6 +32,11 @@ namespace Core
             foreach (ValueType item in camList)
             {
                 this.camList.Add((CameraLens)item);
+            }
+            foreach (ValueType item in connList)
+            {
+                Connectors connItem = (Connectors)item;
+                this.connectorIDLen.Add(connItem.Idx, connItem.Length);
             }
         }
 
@@ -50,13 +56,13 @@ namespace Core
         {
             results = new List<RingResult>();
             this.resultsFound = new List<RingResults>();
-            List<RingMedium> current = null;
+            List<RingMedium> current = new List<RingMedium>();
 
             List<CameraLens> lensList = this.FindCamera(target, resolutionLength, resolutionWidth, ratio, workLength, workRange);
             foreach (CameraLens lens in lensList)
             {
                 float ringLength = lens.Focus * ratio + lens.Flange - flange;
-                this.FindAllRing(lens, current, camera, lens.Connector, ringLength, ringLength);
+                this.FindAllRing(lens, current, camera, lens.Connector, ringLength, ringLength, target);
                 //List<RingMedium> focus = this.findFocus(camera, ringLength);
                 //foreach (RingMedium item in focus)
                 //{
@@ -101,23 +107,130 @@ namespace Core
         }
 
         #region 统一寻找
-        private void FindAllRing(CameraLens lens,List<RingMedium> current,int interUp, int interDown, float lengthMin, float lengthMax)
+        private void FindAllRing(CameraLens lens,List<RingMedium> current,int interUp, int interDown, float lengthMin, float lengthMax,float target)
         {
-            if (interUp == interDown && lengthMin <= 0 && lengthMax >= 0)
-            {//找到合适的
-                CombinationStruct(lens,current);
-            }
+            //if (interUp == interDown && lengthMin <= 0 && lengthMax >= 0)
+            //{//找到合适的
+            //    CombinationStruct(lens,current);
+            //}
             foreach (RingMedium item in this.ringList)
             {
-                if (item.RingType == enumProductType.Focus && current != null && current.Find(itmp => itmp.RingType == enumProductType.Focus).Idx > 0)
-                    continue;//仅可以有一个调焦环
+                if (//调焦环：仅可以有一个
+                    item.RingType == enumProductType.Focus && current != null && current.Find(itmp => itmp.RingType == enumProductType.Focus).Idx > 0 ||
+                    //调焦环：相机靶面 >= 56，仅用smart focus 23
+                    item.RingType == enumProductType.Focus && target >= 56 && item.Name != "Smart Focus 23" ||
+                    //转接环：同一规格仅出现一次
+                    item.RingType == enumProductType.Adapter && current != null && current.Find(itmp => itmp.RingType == enumProductType.Adapter && itmp.InterUp == item.InterUp && itmp.InterDown == item.InterDown).Idx > 0 ||
+                    //转接环：接口口径方向一致
+                    item.RingType == enumProductType.Adapter && current != null && current.Find(itmp => itmp.RingType == enumProductType.Adapter && ((this.connectorIDLen[itmp.InterUp] - this.connectorIDLen[itmp.InterDown]) * (this.connectorIDLen[item.InterUp] - this.connectorIDLen[item.InterDown])) < 0).Idx > 0 ||
+                    //延长环：独立查找，用于找最优
+                    item.RingType == enumProductType.Extend
+                    )
+                    continue;
                 if (item.InterUp == interUp && item.LengthMin < lengthMax)
                 {
-                    if (current == null) current = new List<RingMedium>();
                     current.Add(item);
-                    this.FindAllRing(lens, current, item.InterDown, interDown, lengthMin - item.LengthMax, lengthMax - item.LengthMin);
+                    if (item.InterDown == interDown)
+                    {
+                        this.FindAllRingExtend(lens,current, lengthMin - item.LengthMax, lengthMax - item.LengthMin);
+                    }
+                    else
+                    {
+                        this.FindAllRing(lens, current, item.InterDown, interDown, lengthMin - item.LengthMax, lengthMax - item.LengthMin, target);
+                    }
                     current.Remove(item);
                 }
+            }
+        }
+
+        /// <summary>
+        /// 找延长环
+        /// </summary>
+        /// <param name="lens"></param>
+        /// <param name="current"></param>
+        /// <param name="lengthMin"></param>
+        /// <param name="lengthMax"></param>
+        private void FindAllRingExtend(CameraLens lens, List<RingMedium> current, float lengthMin, float lengthMax)
+        {
+            float lengthMid = (lengthMin + lengthMax) / 2.0f; 
+            
+            List<List<RingMedium>> allList = new List<List<RingMedium>>();
+            this.FindAllExtend(allList, current, lengthMin, lengthMax);
+
+            List<List<RingMedium>> shortestList = this.SearchShortestExtend(allList);
+            if (this.CheckDataList(lens,shortestList)) return;
+
+            List<List<RingMedium>> mostWidthList = this.SearchMostWidthExtend(shortestList);
+            if (this.CheckDataList(lens,mostWidthList)) return;
+        }
+
+        private List<List<RingMedium>> SearchShortestExtend(List<List<RingMedium>> allList)
+        {
+            float minLength = float.MaxValue;
+            List<List<RingMedium>> shortestList = new List<List<RingMedium>>();
+            foreach (List<RingMedium> itemList in allList)
+            {
+                float extLength = 0;
+                foreach (RingMedium item in itemList)
+                {
+                    extLength += item.RingType == enumProductType.Extend ? item.Length : 0;
+                }
+                if (extLength < minLength)
+                {
+                    shortestList.Clear();
+                }
+                if (extLength <= minLength)
+                {
+                    shortestList.Add(itemList);
+                }
+            }
+            return shortestList;
+        }
+
+        private List<List<RingMedium>> SearchMostWidthExtend(List<List<RingMedium>> allList)
+        {
+            float maxWidth = 0;
+            List<List<RingMedium>> widthList = new List<List<RingMedium>>();
+            foreach (List<RingMedium> itemList in allList)
+            {
+                float extWidth = 0;
+                foreach (RingMedium item in itemList)
+                {
+                    extWidth += item.RingType == enumProductType.Extend ? this.connectorIDLen[item.InterUp] : 0;
+                }
+                if (extWidth > maxWidth)
+                {
+                    widthList.Clear();
+                }
+                if (extWidth >= maxWidth)
+                {
+                    widthList.Add(itemList);
+                }
+            }
+            return widthList;
+        }
+
+        private bool CheckDataList(CameraLens lens, List<List<RingMedium>> allList)
+        {
+            bool finish = false;
+            if (allList.Count == 1)
+            {
+                this.CombinationStruct(lens, allList[0]);
+                finish = true;
+            }
+            return finish;
+        }
+
+        private void FindAllExtend(List<List<RingMedium>> allList, List<RingMedium> current, float lengthMin, float lengthMax)
+        {
+            List<RingMedium> tempResults = new List<RingMedium>();
+            foreach (RingMedium item in current)
+            {
+                tempResults.Add(item);
+            }
+            foreach (RingMedium item in this.extendList)
+            {
+
             }
         }
         

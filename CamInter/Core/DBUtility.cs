@@ -57,16 +57,16 @@ namespace Core
         private void InitialTableData()
         {
             #region 接口
-            this.InsertItem(new Connectors() { Name = "M42", Idx=1 });
-            this.InsertItem(new Connectors() { Name = "M58", Idx = 2 });
-            this.InsertItem(new Connectors() { Name = "M72", Idx = 3 });
-            this.InsertItem(new Connectors() { Name = "M90", Idx = 4});
-            this.InsertItem(new Connectors() { Name = "V38", Idx = 5 });
-            this.InsertItem(new Connectors() { Name = "V70", Idx = 6 });
-            this.InsertItem(new Connectors() { Name = "C", Idx = 7 });
-            this.InsertItem(new Connectors() { Name = "F", Idx = 8 });
-            this.InsertItem(new Connectors() { Name = "Basler", Idx = 9 });
-            this.InsertItem(new Connectors() { Name = "M95", Idx = 10 });
+            this.InsertItem(new Connectors() { Name = "M42", Idx = 1, Length = 42 });
+            this.InsertItem(new Connectors() { Name = "M58", Idx = 2, Length = 58 });
+            this.InsertItem(new Connectors() { Name = "M72", Idx = 3, Length = 72 });
+            this.InsertItem(new Connectors() { Name = "M90", Idx = 4, Length = 90 });
+            this.InsertItem(new Connectors() { Name = "V38", Idx = 5, Length = 38 });
+            this.InsertItem(new Connectors() { Name = "V70", Idx = 6, Length = 70 });
+            this.InsertItem(new Connectors() { Name = "C", Idx = 7, Length = 25 });
+            this.InsertItem(new Connectors() { Name = "F", Idx = 8, Length = 41 });
+            this.InsertItem(new Connectors() { Name = "Basler", Idx = 9, Length = 33.8f });
+            this.InsertItem(new Connectors() { Name = "M95", Idx = 10, Length = 95 });
             #endregion
 
             #region 调焦环
@@ -125,16 +125,17 @@ namespace Core
                 InterUp = 5,
                 InterDown = 5
             });
-            this.InsertItem(new RingMedium() {
-                 RingType= enumProductType.Focus,
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Focus,
                 Name = "Smart Focus 23",
                 Number = "902001A",
                 Length = 32.1f,
                 LengthMin = 20.6f,
                 LengthMax = 43.6f,
-                 InterUp = 2,
-                 InterDown = 1
-            }); 
+                InterUp = 2,
+                InterDown = 1
+            });
             this.InsertItem(new RingMedium()
             {
                 RingType = enumProductType.Focus,

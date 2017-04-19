@@ -26,11 +26,14 @@ namespace CamInter
         private void btnAdd_Click(object sender, EventArgs e)
         {
             string strName = this.tbName.Text.Trim();
-            if (StringValidator.HasContent(strName, lbName.Text))
+            string strLen = this.tbLength.Text.Trim();
+            if (StringValidator.HasContent(strName, lbName.Text) &&
+                StringValidator.HasContent(strLen, lbLength.Text) && StringValidator.IsUnsignedInteger(strLen))
             {
                this.handlerAfterSave(this, enumProductType.Interface,new DBUtility().InsertItem(new Connectors()
                 {
                     Name = strName,
+                    Length = int.Parse(strLen),
                     Description = this.tbDesc.Text
                 }
                     ));

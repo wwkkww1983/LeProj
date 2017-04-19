@@ -41,7 +41,7 @@ namespace Core
         /// </summary>
         /// <param name="strCheck"></param>
         /// <returns></returns>
-        public static bool IsUnsignedNumber(string strCheck)
+        public static bool IsUnsignedInteger(string strCheck)
         {
             return RegexCheck(strCheck, "仅可输入正整数", RegexHelper.IsNumberUnsignedInteger);
         }

@@ -64,6 +64,8 @@ namespace SimuProteus
         /// </summary>
         private void InitialShow()
         {
+            this.timerDel.Interval = Constants.ElementStaySeconds;
+            this.timerDel.Tick += delToolStripMenuItem_Click;
             //this.picbElement.Location = new Point(Constants.FOOT_SIZE_PIXEL, Constants.FOOT_SIZE_PIXEL);
             this.picbElement.Size = this.ViewInfo.Size;
             this.picbElement.Image = Image.FromFile(this.ViewInfo.BackImage);
@@ -101,8 +103,20 @@ namespace SimuProteus
             dbHandler.MoveComponentShow(this.ViewInfo);
         }
 
+        private bool CheckSerialIsOpen()
+        {
+            if (Constants.SeiralPortStatusIsOpen)
+            {
+                MessageBox.Show("串口已打开，无法操作");
+            }
+            return Constants.SeiralPortStatusIsOpen;
+        }
+
         private void UcElement_MouseDown(object sender, MouseEventArgs e)
         {
+            Console.WriteLine("aaaaaaaa");
+            if (this.CheckSerialIsOpen()) return;
+
             mouseDownFlag = true;
             currentX = e.X;
             currentY = e.Y;
@@ -110,6 +124,9 @@ namespace SimuProteus
 
         private void UcElement_MouseUp(object sender, MouseEventArgs e)
         {
+            Console.WriteLine("bbbbb");
+            if (this.CheckSerialIsOpen()) return;
+
             mouseDownFlag = false;
             this.dragElement(this.ViewInfo.InnerIdx, this.Location.X, this.Location.Y);
         }
@@ -125,6 +142,9 @@ namespace SimuProteus
 
         private void picbElement_MouseDown(object sender, MouseEventArgs e)
         {
+            Console.WriteLine("cccccccc");
+            if (this.CheckSerialIsOpen()) return;
+
             if (this.ViewInfo.FootType == enumComponentType.NormalComponent)
             {
                 mouseDownFlag = true;
@@ -146,6 +166,7 @@ namespace SimuProteus
 
         private void delToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.timerDel.Enabled = false;
             this.RemoveElement(this.ViewInfo.InnerIdx);
         }
 

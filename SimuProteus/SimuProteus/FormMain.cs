@@ -38,6 +38,7 @@ namespace SimuProteus
         private List<Point> newLinePoints = new List<Point>();
         private List<ElementInfo> elementList = null;
         private List<ElementLine> createLinePoint = new List<ElementLine>(2);
+        private List<CommunicateInfo> communicateList = new List<CommunicateInfo>();
         private SkinEngine skin = null;
 
         ProjectDetails currentBoardInfo = new ProjectDetails()
@@ -81,6 +82,7 @@ namespace SimuProteus
             this.pnBoard.Location = new Point(0, 0);
             this.pnBoard.Parent = this.pnWorkPlace;
             this.serial.DataReceived += new SerialDataReceivedEventHandler(ReceiveInfo);
+            Constants.ElementStaySeconds = 1000 * int.Parse(Ini.GetItemValue("general", "elementStaySeconds"));
             this.skin = new SkinEngine(this);
             this.skin.SkinFile = "Wave.ssk";
 
@@ -353,23 +355,8 @@ namespace SimuProteus
             this.DeleteAllSeletedElementLines();
         }
 
-        private bool CheckSerialForHandler()
-        {
-            bool isOpened = this.serial.IsOpen;
-            if (isOpened)
-            {
-                MessageBox.Show("串口已打开，无法操作");
-            }
-            return !isOpened;
-        }
-
         private void DeleteElement(int idx)
         {
-            if (!CheckSerialForHandler())
-            {
-                return;
-            }
-
             for (int i = 0; i < this.currentBoardInfo.elementList.Count;i++ )
             {
                 ElementInfo tmpInfo = this.currentBoardInfo.elementList[i];
@@ -413,10 +400,6 @@ namespace SimuProteus
 
         private void MoveElement(int idx, int locX,int locY)
         {
-            if (!CheckSerialForHandler())
-            {
-                return;
-            }
             bool moveFlag = false;
             Point coorAdjust = new Point(locX,locY);
             for (int i = 0; i < this.currentBoardInfo.elementList.Count; i++)
@@ -1141,6 +1124,7 @@ namespace SimuProteus
             else
             {
                 MessageBox.Show("串口释放成功");
+                Constants.SeiralPortStatusIsOpen = false;
             }
         }
 
@@ -1348,6 +1332,8 @@ namespace SimuProteus
              info.Number = System.Text.Encoding.ASCII.GetString(numArray);
             info.X = data[10];
             info.Y = data[11];
+            info.Time = DateTime.Now;
+            info.DirectUp = true;
 
             return info;
         }

@@ -84,6 +84,7 @@ namespace SimuProteus
             }
 
             MessageBox.Show("成功打开串口，可以开始通信");
+            Constants.SeiralPortStatusIsOpen = true;
             this.Close();
         }
 

@@ -46,7 +46,8 @@ namespace CamInter
             this.initialConditionFlag = true;
             List<ValueType> ringList = dbHandler.GetAllDevices(enumProductType.Focus);
             List<ValueType> cameList = dbHandler.GetAllDevices(enumProductType.CamLens);
-            this.alg = new Algorithm(ringList, cameList);
+            List<ValueType> connList = dbHandler.GetAllDevices(enumProductType.Interface);
+            this.alg = new Algorithm(ringList, cameList, connList);
             this.dgvProjDetail.AutoGenerateColumns = false;
             this.dgvProjList.AutoGenerateColumns = false;
 

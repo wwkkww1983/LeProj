@@ -35,6 +35,8 @@
             this.tbDesc = new System.Windows.Forms.TextBox();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.lbLength = new System.Windows.Forms.Label();
+            this.tbLength = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // lbName
@@ -71,6 +73,16 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // lbLength
+            // 
+            resources.ApplyResources(this.lbLength, "lbLength");
+            this.lbLength.Name = "lbLength";
+            // 
+            // tbLength
+            // 
+            resources.ApplyResources(this.tbLength, "tbLength");
+            this.tbLength.Name = "tbLength";
+            // 
             // ViewConnctor
             // 
             resources.ApplyResources(this, "$this");
@@ -79,6 +91,8 @@
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.tbDesc);
             this.Controls.Add(this.lbDesc);
+            this.Controls.Add(this.tbLength);
+            this.Controls.Add(this.lbLength);
             this.Controls.Add(this.tbName);
             this.Controls.Add(this.lbName);
             this.Name = "ViewConnctor";
@@ -95,5 +109,7 @@
         private System.Windows.Forms.TextBox tbDesc;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Label lbLength;
+        private System.Windows.Forms.TextBox tbLength;
     }
 }

@@ -55,6 +55,16 @@ namespace SimuProteus
         /// 元器件选中标志的方块颜色
         /// </summary>
         public static System.Drawing.Color SELECT_BULK_COLOR = System.Drawing.Color.Blue;
+
+        /// <summary>
+        /// 串口状态
+        /// </summary>
+        public static bool SeiralPortStatusIsOpen = false;
+
+        /// <summary>
+        /// 元器件持续时间
+        /// </summary>
+        public static int ElementStaySeconds = 5;
     }
 
     public enum enumComponent

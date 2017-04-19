@@ -21,6 +21,7 @@ namespace Core
             Connectors info = new Connectors();
 
             info.Idx = Convert.ToInt32(dr["itemId"]);
+            info.Length = Convert.ToSingle(dr["length"]);
             info.Name = dr["name"].ToString();
             info.Description = dr["desc"].ToString();
 
@@ -31,6 +32,7 @@ namespace Core
         {
             return @"create table connectors (
                         itemId INTEGER PRIMARY KEY AUTOINCREMENT,
+                        length float,
                         name nvarchar(20),
                         desc varchar(100));";
         }
@@ -45,9 +47,10 @@ namespace Core
         public bool InsertOneItem(ValueType item)
         {
             Connectors info = (Connectors)item;
-            string strSql = "insert into connectors (name,desc) values (@name,@desc)";
-            List<SQLiteParameter> paraList = new List<SQLiteParameter> ();
+            string strSql = "insert into connectors (name,length,desc) values (@name,@length,@desc)";
+            List<SQLiteParameter> paraList = new List<SQLiteParameter>();
             paraList.Add(SQLiteHelper.CreateParameter("@name", DbType.String, info.Name));
+            paraList.Add(SQLiteHelper.CreateParameter("@length", DbType.Single, info.Length));
             paraList.Add(SQLiteHelper.CreateParameter("@desc", DbType.String, info.Description));
 
             SQLiteCommand command = SQLiteHelper.CreateCommand(this.STR_CONNECTION, strSql, paraList.ToArray());
@@ -65,6 +68,16 @@ namespace Core
             get;
             set;
         }
+
+        /// <summary>
+        /// 接口长度
+        /// </summary>
+        public float Length
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// 接口名称
         /// </summary>
