@@ -15,7 +15,6 @@ namespace SimuProteus
     public partial class FormMain : Form
     {
         #region 初始化
-        private bool serialReadFlag = false;
         private const char COORDINATE_SEPERATOR = '#';
         private const int ORIGIN_ARROW_LEN = 10,BUFFER_SIZE=1024;
         private Color ORIGIN_ARROW_COLOR = Color.Black;
@@ -992,8 +991,21 @@ namespace SimuProteus
         #endregion
 
         #region 窗口菜单
+
+
+        private void serialListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormCommList formList = new FormCommList(this.communicateList);
+            formList.ShowDialog();
+        }
+
         private void CreateToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (Constants.SeiralPortStatusIsOpen)
+            {
+                MessageBox.Show("新增元器件需要先释放串口");
+                return;
+            }
             FormNewComponent formComp = new FormNewComponent(this.CreateNewComponent, null, null);
             formComp.ShowDialog();
         }
@@ -1081,22 +1093,6 @@ namespace SimuProteus
                 return false;
             }
             return true;
-        }
-
-        private void readToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (!this.CheckSerialStatus()) return;
-
-            if (serialReadFlag)
-            {
-                MessageBox.Show("已经在监听串口数据");
-                return;
-            }
-
-            //Thread threadSerial = new Thread(ListenSerialPort);
-            //threadSerial.Start();
-            
-            serialReadFlag = true;
         }
 
         private void writeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1252,6 +1248,11 @@ namespace SimuProteus
 
         private void setOriginToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (Constants.SeiralPortStatusIsOpen)
+            {
+                MessageBox.Show("原点已设置");
+                return;
+            }
             string strXY = (sender as ToolStripItem).Owner.Text;
             Point locIdx = this.DecodeIndexByStr(strXY);
 

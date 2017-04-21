@@ -262,5 +262,6 @@ namespace SimuProteus
         public byte Y;
         public DateTime Time;
         public bool DirectUp;
+        public string Content;
     }
 }

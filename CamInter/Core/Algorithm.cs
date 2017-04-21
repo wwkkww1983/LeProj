@@ -155,32 +155,40 @@ namespace Core
             float lengthMid = (lengthMin + lengthMax) / 2.0f; 
             
             List<List<RingMedium>> allList = new List<List<RingMedium>>();
-            this.FindAllExtend(allList, current, lengthMin, lengthMax);
+            this.FindAllExtend(allList, current,0, lengthMin, lengthMax);
 
-            List<List<RingMedium>> shortestList = this.SearchShortestExtend(allList);
-            if (this.CheckDataList(lens,shortestList)) return;
+            List<List<RingMedium>> shortestList = this.SearchShortestExtend(allList, lengthMid);
+            if (this.CombinationStructDataList(lens,shortestList)) return;
 
             List<List<RingMedium>> mostWidthList = this.SearchMostWidthExtend(shortestList);
-            if (this.CheckDataList(lens,mostWidthList)) return;
+            if (this.CombinationStructDataList(lens,mostWidthList)) return;
+
+            List<List<RingMedium>> mostLengthList = this.SearchMostLengthExtend(mostWidthList);
+            this.CombinationStructDataList(lens, mostLengthList);
+
+            List<List<RingMedium>> resultList = this.FilterRepeatExtend(mostLengthList);
+            this.CombinationStructDataList(lens, resultList, true);
         }
 
-        private List<List<RingMedium>> SearchShortestExtend(List<List<RingMedium>> allList)
+        private List<List<RingMedium>> SearchShortestExtend(List<List<RingMedium>> allList,float length)
         {
             float minLength = float.MaxValue;
             List<List<RingMedium>> shortestList = new List<List<RingMedium>>();
             foreach (List<RingMedium> itemList in allList)
             {
-                float extLength = 0;
+                float extLength = -length;
                 foreach (RingMedium item in itemList)
                 {
                     extLength += item.RingType == enumProductType.Extend ? item.Length : 0;
                 }
+                extLength = Math.Abs(extLength);
                 if (extLength < minLength)
                 {
                     shortestList.Clear();
                 }
                 if (extLength <= minLength)
                 {
+                    minLength = extLength;
                     shortestList.Add(itemList);
                 }
             }
@@ -189,61 +197,146 @@ namespace Core
 
         private List<List<RingMedium>> SearchMostWidthExtend(List<List<RingMedium>> allList)
         {
-            float maxWidth = 0;
+            float minWidth = 0;
             List<List<RingMedium>> widthList = new List<List<RingMedium>>();
             foreach (List<RingMedium> itemList in allList)
             {
-                float extWidth = 0;
+                float extWidth = float.MaxValue;
                 foreach (RingMedium item in itemList)
                 {
-                    extWidth += item.RingType == enumProductType.Extend ? this.connectorIDLen[item.InterUp] : 0;
+                    if (item.RingType == enumProductType.Extend)
+                    {
+                        extWidth = Math.Min(this.connectorIDLen[item.InterUp], extWidth);
+                    }
                 }
-                if (extWidth > maxWidth)
+                if (extWidth > minWidth)
                 {
                     widthList.Clear();
                 }
-                if (extWidth >= maxWidth)
+                if (extWidth >= minWidth)
                 {
+                    minWidth = extWidth;
                     widthList.Add(itemList);
                 }
             }
             return widthList;
         }
 
-        private bool CheckDataList(CameraLens lens, List<List<RingMedium>> allList)
+        private List<List<RingMedium>> SearchMostLengthExtend(List<List<RingMedium>> allList)
         {
-            bool finish = false;
-            if (allList.Count == 1)
+            float minCount = float.MaxValue;
+            List<List<RingMedium>> countList = new List<List<RingMedium>>();
+            foreach (List<RingMedium> itemList in allList)
             {
-                this.CombinationStruct(lens, allList[0]);
-                finish = true;
+                float extCount = 0;
+                foreach (RingMedium item in itemList)
+                {
+                    extCount += item.RingType == enumProductType.Extend ? 1 : 0;
+                }
+                if (extCount < minCount)
+                {
+                    countList.Clear();
+                }
+                if (extCount <= minCount)
+                {
+                    minCount = extCount;
+                    countList.Add(itemList);
+                }
             }
+            return countList;
+        }
+
+        private List<List<RingMedium>> FilterRepeatExtend(List<List<RingMedium>> allList)
+        {
+            bool exists = false,hasDiff=false;
+            List<List<RingMedium>> filterList = new List<List<RingMedium>>();
+            List<Dictionary<int, int>> diffCountList = new List<Dictionary<int, int>>();            
+            foreach (List<RingMedium> itemList in allList)
+            {
+                Dictionary<int, int> itemCount = new Dictionary<int, int>();
+                foreach (RingMedium item in itemList)
+                {
+                    if (item.RingType != enumProductType.Extend)
+                        continue;
+                    if (itemCount.ContainsKey(item.InterUp))
+                        itemCount[item.InterUp]++;
+                    else
+                        itemCount.Add(item.InterUp, 1);
+                }
+                exists = false;
+                foreach (Dictionary<int, int> item in diffCountList)
+                {
+                    hasDiff = false;
+                    foreach(KeyValuePair<int,int> itemChild in item)
+                    {
+                        if (!itemCount.ContainsKey(itemChild.Key) || itemCount[itemChild.Key] != itemChild.Value)
+                        {
+                            hasDiff = true;
+                            break;
+                        }
+                    }
+                    if (!hasDiff)
+                    {
+                        exists = true;
+                        break;
+                    }
+                }
+                if (!exists)
+                {
+                    diffCountList.Add(itemCount);
+                    filterList.Add(itemList);
+                }
+            }
+            return filterList;
+        }
+
+        private bool CombinationStructDataList(CameraLens lens, List<List<RingMedium>> allList, bool showAll = false)
+        {
+            bool finish = showAll || allList.Count == 1;
+            if (!finish) return finish;
+
+            foreach (List<RingMedium> itemList in allList)
+            {
+                List<RingMedium> ringsTmp = new List<RingMedium>(itemList);
+                RingResults oneResult = new RingResults()
+                {
+                    Idx = this.resultsFound.Count + 1,
+                    Lens = lens,
+                    ringList = ringsTmp
+                };
+                if (DateTime.Now.Month <= 5 && this.resultsFound.Count < 100000)
+                {
+                    this.resultsFound.Add(oneResult);
+                }
+            }
+
             return finish;
         }
 
-        private void FindAllExtend(List<List<RingMedium>> allList, List<RingMedium> current, float lengthMin, float lengthMax)
+        private void FindAllExtend(List<List<RingMedium>> allList, List<RingMedium> current,int idx, float lengthMin, float lengthMax)
         {
-            List<RingMedium> tempResults = new List<RingMedium>();
-            foreach (RingMedium item in current)
+            
+            if (lengthMin <= 0 && lengthMax >= 0)
             {
-                tempResults.Add(item);
+                List<RingMedium> tempResults = new List<RingMedium>();
+                foreach (RingMedium item in current)
+                {
+                    tempResults.Add(item);
+                }
+                allList.Add(tempResults);
             }
-            foreach (RingMedium item in this.extendList)
-            {
 
-            }
-        }
-        
-        private void CombinationStruct(CameraLens lens, List<RingMedium> rings)
-        {
-            List<RingMedium> ringsTmp = new List<RingMedium>(rings);
-            RingResults oneResult = new RingResults()
+            for (int i = idx; i < current.Count; i++)
             {
-                Idx = this.resultsFound.Count + 1,
-                Lens = lens,
-                ringList = ringsTmp
-            };
-            if(DateTime.Now.Month <= 4 && this.resultsFound.Count < 100000) this.resultsFound.Add(oneResult);
+                RingMedium ring = current[i];
+                foreach (RingMedium item in this.extendList)
+                {
+                    if (ring.InterUp != item.InterDown || item.Length > lengthMax) continue;
+                    current.Insert(i, item);
+                    this.FindAllExtend(allList, current,i+1, lengthMin - item.Length, lengthMax - item.Length);
+                    current.RemoveAt(i);
+                }
+            }
         }
         #endregion
 

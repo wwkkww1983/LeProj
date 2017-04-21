@@ -114,7 +114,6 @@ namespace SimuProteus
 
         private void UcElement_MouseDown(object sender, MouseEventArgs e)
         {
-            Console.WriteLine("aaaaaaaa");
             if (this.CheckSerialIsOpen()) return;
 
             mouseDownFlag = true;
@@ -124,9 +123,6 @@ namespace SimuProteus
 
         private void UcElement_MouseUp(object sender, MouseEventArgs e)
         {
-            Console.WriteLine("bbbbb");
-            if (this.CheckSerialIsOpen()) return;
-
             mouseDownFlag = false;
             this.dragElement(this.ViewInfo.InnerIdx, this.Location.X, this.Location.Y);
         }
@@ -142,7 +138,6 @@ namespace SimuProteus
 
         private void picbElement_MouseDown(object sender, MouseEventArgs e)
         {
-            Console.WriteLine("cccccccc");
             if (this.CheckSerialIsOpen()) return;
 
             if (this.ViewInfo.FootType == enumComponentType.NormalComponent)

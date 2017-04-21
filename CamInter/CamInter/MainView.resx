@@ -393,6 +393,51 @@
   <data name="length.HeaderText" xml:space="preserve">
     <value>长度(mm)</value>
   </data>
+  <data name="&gt;&gt;tpArea.Name" xml:space="preserve">
+    <value>tpArea</value>
+  </data>
+  <data name="&gt;&gt;tpArea.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tpArea.Parent" xml:space="preserve">
+    <value>tcCamera</value>
+  </data>
+  <data name="&gt;&gt;tpArea.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tpLine.Name" xml:space="preserve">
+    <value>tpLine</value>
+  </data>
+  <data name="&gt;&gt;tpLine.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tpLine.Parent" xml:space="preserve">
+    <value>tcCamera</value>
+  </data>
+  <data name="&gt;&gt;tpLine.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tcCamera.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 46</value>
+  </data>
+  <data name="tcCamera.Size" type="System.Drawing.Size, System.Drawing">
+    <value>317, 252</value>
+  </data>
+  <data name="tcCamera.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;tcCamera.Name" xml:space="preserve">
+    <value>tcCamera</value>
+  </data>
+  <data name="&gt;&gt;tcCamera.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tcCamera.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tcCamera.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="&gt;&gt;label16.Name" xml:space="preserve">
     <value>label16</value>
   </data>
@@ -611,252 +656,6 @@
   </data>
   <data name="&gt;&gt;tpArea.ZOrder" xml:space="preserve">
     <value>0</value>
-  </data>
-  <data name="rbLineWidth.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="rbLineWidth.Location" type="System.Drawing.Point, System.Drawing">
-    <value>185, 33</value>
-  </data>
-  <data name="rbLineWidth.Size" type="System.Drawing.Size, System.Drawing">
-    <value>43, 19</value>
-  </data>
-  <data name="rbLineWidth.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="rbLineWidth.Text" xml:space="preserve">
-    <value>宽</value>
-  </data>
-  <data name="&gt;&gt;rbLineWidth.Name" xml:space="preserve">
-    <value>rbLineWidth</value>
-  </data>
-  <data name="&gt;&gt;rbLineWidth.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;rbLineWidth.Parent" xml:space="preserve">
-    <value>tpLine</value>
-  </data>
-  <data name="&gt;&gt;rbLineWidth.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="rbLineLength.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="rbLineLength.Location" type="System.Drawing.Point, System.Drawing">
-    <value>85, 33</value>
-  </data>
-  <data name="rbLineLength.Size" type="System.Drawing.Size, System.Drawing">
-    <value>43, 19</value>
-  </data>
-  <data name="rbLineLength.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="rbLineLength.Text" xml:space="preserve">
-    <value>长</value>
-  </data>
-  <data name="&gt;&gt;rbLineLength.Name" xml:space="preserve">
-    <value>rbLineLength</value>
-  </data>
-  <data name="&gt;&gt;rbLineLength.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;rbLineLength.Parent" xml:space="preserve">
-    <value>tpLine</value>
-  </data>
-  <data name="&gt;&gt;rbLineLength.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="tbLineFov.Location" type="System.Drawing.Point, System.Drawing">
-    <value>147, 119</value>
-  </data>
-  <data name="tbLineFov.Size" type="System.Drawing.Size, System.Drawing">
-    <value>149, 25</value>
-  </data>
-  <data name="tbLineFov.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;tbLineFov.Name" xml:space="preserve">
-    <value>tbLineFov</value>
-  </data>
-  <data name="&gt;&gt;tbLineFov.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbLineFov.Parent" xml:space="preserve">
-    <value>tpLine</value>
-  </data>
-  <data name="&gt;&gt;tbLineFov.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="tbLineResolution.Location" type="System.Drawing.Point, System.Drawing">
-    <value>147, 160</value>
-  </data>
-  <data name="tbLineResolution.Size" type="System.Drawing.Size, System.Drawing">
-    <value>149, 25</value>
-  </data>
-  <data name="tbLineResolution.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;tbLineResolution.Name" xml:space="preserve">
-    <value>tbLineResolution</value>
-  </data>
-  <data name="&gt;&gt;tbLineResolution.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbLineResolution.Parent" xml:space="preserve">
-    <value>tpLine</value>
-  </data>
-  <data name="&gt;&gt;tbLineResolution.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="lbLineFov.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbLineFov.Location" type="System.Drawing.Point, System.Drawing">
-    <value>31, 124</value>
-  </data>
-  <data name="lbLineFov.Size" type="System.Drawing.Size, System.Drawing">
-    <value>109, 15</value>
-  </data>
-  <data name="lbLineFov.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
-  </data>
-  <data name="lbLineFov.Text" xml:space="preserve">
-    <value>视野Fov(mm) *</value>
-  </data>
-  <data name="&gt;&gt;lbLineFov.Name" xml:space="preserve">
-    <value>lbLineFov</value>
-  </data>
-  <data name="&gt;&gt;lbLineFov.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbLineFov.Parent" xml:space="preserve">
-    <value>tpLine</value>
-  </data>
-  <data name="&gt;&gt;lbLineFov.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="tbLineSensor.Location" type="System.Drawing.Point, System.Drawing">
-    <value>147, 79</value>
-  </data>
-  <data name="tbLineSensor.Size" type="System.Drawing.Size, System.Drawing">
-    <value>149, 25</value>
-  </data>
-  <data name="tbLineSensor.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;tbLineSensor.Name" xml:space="preserve">
-    <value>tbLineSensor</value>
-  </data>
-  <data name="&gt;&gt;tbLineSensor.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbLineSensor.Parent" xml:space="preserve">
-    <value>tpLine</value>
-  </data>
-  <data name="&gt;&gt;tbLineSensor.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="lbLineResolution.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbLineResolution.Location" type="System.Drawing.Point, System.Drawing">
-    <value>26, 165</value>
-  </data>
-  <data name="lbLineResolution.Size" type="System.Drawing.Size, System.Drawing">
-    <value>114, 15</value>
-  </data>
-  <data name="lbLineResolution.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="lbLineResolution.Text" xml:space="preserve">
-    <value>相机分辨率(mm)</value>
-  </data>
-  <data name="&gt;&gt;lbLineResolution.Name" xml:space="preserve">
-    <value>lbLineResolution</value>
-  </data>
-  <data name="&gt;&gt;lbLineResolution.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbLineResolution.Parent" xml:space="preserve">
-    <value>tpLine</value>
-  </data>
-  <data name="&gt;&gt;lbLineResolution.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="lbLineSensor.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbLineSensor.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 84</value>
-  </data>
-  <data name="lbLineSensor.Size" type="System.Drawing.Size, System.Drawing">
-    <value>133, 15</value>
-  </data>
-  <data name="lbLineSensor.TabIndex" type="System.Int32, mscorlib">
-    <value>20</value>
-  </data>
-  <data name="lbLineSensor.Text" xml:space="preserve">
-    <value>Sensor尺寸(mm) *</value>
-  </data>
-  <data name="&gt;&gt;lbLineSensor.Name" xml:space="preserve">
-    <value>lbLineSensor</value>
-  </data>
-  <data name="&gt;&gt;lbLineSensor.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbLineSensor.Parent" xml:space="preserve">
-    <value>tpLine</value>
-  </data>
-  <data name="&gt;&gt;lbLineSensor.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="tpLine.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 25</value>
-  </data>
-  <data name="tpLine.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="tpLine.Size" type="System.Drawing.Size, System.Drawing">
-    <value>309, 223</value>
-  </data>
-  <data name="tpLine.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="tpLine.Text" xml:space="preserve">
-    <value>线阵</value>
-  </data>
-  <data name="&gt;&gt;tpLine.Name" xml:space="preserve">
-    <value>tpLine</value>
-  </data>
-  <data name="&gt;&gt;tpLine.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tpLine.Parent" xml:space="preserve">
-    <value>tcCamera</value>
-  </data>
-  <data name="&gt;&gt;tpLine.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="tcCamera.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 46</value>
-  </data>
-  <data name="tcCamera.Size" type="System.Drawing.Size, System.Drawing">
-    <value>317, 252</value>
-  </data>
-  <data name="tcCamera.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;tcCamera.Name" xml:space="preserve">
-    <value>tcCamera</value>
-  </data>
-  <data name="&gt;&gt;tcCamera.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tcCamera.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tcCamera.ZOrder" xml:space="preserve">
-    <value>1</value>
   </data>
   <data name="label16.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1251,6 +1050,333 @@
   <data name="&gt;&gt;lbSensor.ZOrder" xml:space="preserve">
     <value>15</value>
   </data>
+  <data name="&gt;&gt;rbLineWidth.Name" xml:space="preserve">
+    <value>rbLineWidth</value>
+  </data>
+  <data name="&gt;&gt;rbLineWidth.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rbLineWidth.Parent" xml:space="preserve">
+    <value>tpLine</value>
+  </data>
+  <data name="&gt;&gt;rbLineWidth.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;rbLineLength.Name" xml:space="preserve">
+    <value>rbLineLength</value>
+  </data>
+  <data name="&gt;&gt;rbLineLength.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rbLineLength.Parent" xml:space="preserve">
+    <value>tpLine</value>
+  </data>
+  <data name="&gt;&gt;rbLineLength.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;tbLineFov.Name" xml:space="preserve">
+    <value>tbLineFov</value>
+  </data>
+  <data name="&gt;&gt;tbLineFov.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbLineFov.Parent" xml:space="preserve">
+    <value>tpLine</value>
+  </data>
+  <data name="&gt;&gt;tbLineFov.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;tbLineResolution.Name" xml:space="preserve">
+    <value>tbLineResolution</value>
+  </data>
+  <data name="&gt;&gt;tbLineResolution.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbLineResolution.Parent" xml:space="preserve">
+    <value>tpLine</value>
+  </data>
+  <data name="&gt;&gt;tbLineResolution.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;lbLineFov.Name" xml:space="preserve">
+    <value>lbLineFov</value>
+  </data>
+  <data name="&gt;&gt;lbLineFov.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbLineFov.Parent" xml:space="preserve">
+    <value>tpLine</value>
+  </data>
+  <data name="&gt;&gt;lbLineFov.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;tbLineSensor.Name" xml:space="preserve">
+    <value>tbLineSensor</value>
+  </data>
+  <data name="&gt;&gt;tbLineSensor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbLineSensor.Parent" xml:space="preserve">
+    <value>tpLine</value>
+  </data>
+  <data name="&gt;&gt;tbLineSensor.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;lbLineResolution.Name" xml:space="preserve">
+    <value>lbLineResolution</value>
+  </data>
+  <data name="&gt;&gt;lbLineResolution.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbLineResolution.Parent" xml:space="preserve">
+    <value>tpLine</value>
+  </data>
+  <data name="&gt;&gt;lbLineResolution.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;lbLineSensor.Name" xml:space="preserve">
+    <value>lbLineSensor</value>
+  </data>
+  <data name="&gt;&gt;lbLineSensor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbLineSensor.Parent" xml:space="preserve">
+    <value>tpLine</value>
+  </data>
+  <data name="&gt;&gt;lbLineSensor.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="tpLine.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 25</value>
+  </data>
+  <data name="tpLine.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="tpLine.Size" type="System.Drawing.Size, System.Drawing">
+    <value>309, 223</value>
+  </data>
+  <data name="tpLine.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="tpLine.Text" xml:space="preserve">
+    <value>线阵</value>
+  </data>
+  <data name="&gt;&gt;tpLine.Name" xml:space="preserve">
+    <value>tpLine</value>
+  </data>
+  <data name="&gt;&gt;tpLine.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tpLine.Parent" xml:space="preserve">
+    <value>tcCamera</value>
+  </data>
+  <data name="&gt;&gt;tpLine.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="rbLineWidth.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="rbLineWidth.Location" type="System.Drawing.Point, System.Drawing">
+    <value>185, 33</value>
+  </data>
+  <data name="rbLineWidth.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 19</value>
+  </data>
+  <data name="rbLineWidth.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="rbLineWidth.Text" xml:space="preserve">
+    <value>宽</value>
+  </data>
+  <data name="&gt;&gt;rbLineWidth.Name" xml:space="preserve">
+    <value>rbLineWidth</value>
+  </data>
+  <data name="&gt;&gt;rbLineWidth.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rbLineWidth.Parent" xml:space="preserve">
+    <value>tpLine</value>
+  </data>
+  <data name="&gt;&gt;rbLineWidth.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="rbLineLength.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="rbLineLength.Location" type="System.Drawing.Point, System.Drawing">
+    <value>85, 33</value>
+  </data>
+  <data name="rbLineLength.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 19</value>
+  </data>
+  <data name="rbLineLength.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="rbLineLength.Text" xml:space="preserve">
+    <value>长</value>
+  </data>
+  <data name="&gt;&gt;rbLineLength.Name" xml:space="preserve">
+    <value>rbLineLength</value>
+  </data>
+  <data name="&gt;&gt;rbLineLength.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rbLineLength.Parent" xml:space="preserve">
+    <value>tpLine</value>
+  </data>
+  <data name="&gt;&gt;rbLineLength.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tbLineFov.Location" type="System.Drawing.Point, System.Drawing">
+    <value>147, 119</value>
+  </data>
+  <data name="tbLineFov.Size" type="System.Drawing.Size, System.Drawing">
+    <value>149, 25</value>
+  </data>
+  <data name="tbLineFov.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="tbLineFov.Text" xml:space="preserve">
+    <value>160</value>
+  </data>
+  <data name="&gt;&gt;tbLineFov.Name" xml:space="preserve">
+    <value>tbLineFov</value>
+  </data>
+  <data name="&gt;&gt;tbLineFov.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbLineFov.Parent" xml:space="preserve">
+    <value>tpLine</value>
+  </data>
+  <data name="&gt;&gt;tbLineFov.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="tbLineResolution.Location" type="System.Drawing.Point, System.Drawing">
+    <value>147, 160</value>
+  </data>
+  <data name="tbLineResolution.Size" type="System.Drawing.Size, System.Drawing">
+    <value>149, 25</value>
+  </data>
+  <data name="tbLineResolution.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;tbLineResolution.Name" xml:space="preserve">
+    <value>tbLineResolution</value>
+  </data>
+  <data name="&gt;&gt;tbLineResolution.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbLineResolution.Parent" xml:space="preserve">
+    <value>tpLine</value>
+  </data>
+  <data name="&gt;&gt;tbLineResolution.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="lbLineFov.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbLineFov.Location" type="System.Drawing.Point, System.Drawing">
+    <value>31, 124</value>
+  </data>
+  <data name="lbLineFov.Size" type="System.Drawing.Size, System.Drawing">
+    <value>109, 15</value>
+  </data>
+  <data name="lbLineFov.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="lbLineFov.Text" xml:space="preserve">
+    <value>视野Fov(mm) *</value>
+  </data>
+  <data name="&gt;&gt;lbLineFov.Name" xml:space="preserve">
+    <value>lbLineFov</value>
+  </data>
+  <data name="&gt;&gt;lbLineFov.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbLineFov.Parent" xml:space="preserve">
+    <value>tpLine</value>
+  </data>
+  <data name="&gt;&gt;lbLineFov.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="tbLineSensor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>147, 79</value>
+  </data>
+  <data name="tbLineSensor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>149, 25</value>
+  </data>
+  <data name="tbLineSensor.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="tbLineSensor.Text" xml:space="preserve">
+    <value>61.44</value>
+  </data>
+  <data name="&gt;&gt;tbLineSensor.Name" xml:space="preserve">
+    <value>tbLineSensor</value>
+  </data>
+  <data name="&gt;&gt;tbLineSensor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbLineSensor.Parent" xml:space="preserve">
+    <value>tpLine</value>
+  </data>
+  <data name="&gt;&gt;tbLineSensor.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="lbLineResolution.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbLineResolution.Location" type="System.Drawing.Point, System.Drawing">
+    <value>26, 165</value>
+  </data>
+  <data name="lbLineResolution.Size" type="System.Drawing.Size, System.Drawing">
+    <value>114, 15</value>
+  </data>
+  <data name="lbLineResolution.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="lbLineResolution.Text" xml:space="preserve">
+    <value>相机分辨率(mm)</value>
+  </data>
+  <data name="&gt;&gt;lbLineResolution.Name" xml:space="preserve">
+    <value>lbLineResolution</value>
+  </data>
+  <data name="&gt;&gt;lbLineResolution.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbLineResolution.Parent" xml:space="preserve">
+    <value>tpLine</value>
+  </data>
+  <data name="&gt;&gt;lbLineResolution.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="lbLineSensor.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbLineSensor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 84</value>
+  </data>
+  <data name="lbLineSensor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>133, 15</value>
+  </data>
+  <data name="lbLineSensor.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="lbLineSensor.Text" xml:space="preserve">
+    <value>Sensor尺寸(mm) *</value>
+  </data>
+  <data name="&gt;&gt;lbLineSensor.Name" xml:space="preserve">
+    <value>lbLineSensor</value>
+  </data>
+  <data name="&gt;&gt;lbLineSensor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbLineSensor.Parent" xml:space="preserve">
+    <value>tpLine</value>
+  </data>
+  <data name="&gt;&gt;lbLineSensor.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
   <data name="cbCamInter.Location" type="System.Drawing.Point, System.Drawing">
     <value>178, 318</value>
   </data>
@@ -1338,6 +1464,9 @@
   <data name="tbFlange.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
   </data>
+  <data name="tbFlange.Text" xml:space="preserve">
+    <value>6.56</value>
+  </data>
   <data name="&gt;&gt;tbFlange.Name" xml:space="preserve">
     <value>tbFlange</value>
   </data>
@@ -1386,6 +1515,9 @@
   <data name="tbDistance.TabIndex" type="System.Int32, mscorlib">
     <value>17</value>
   </data>
+  <data name="tbDistance.Text" xml:space="preserve">
+    <value>400</value>
+  </data>
   <data name="&gt;&gt;tbDistance.Name" xml:space="preserve">
     <value>tbDistance</value>
   </data>
@@ -1406,6 +1538,9 @@
   </data>
   <data name="tbDistanRange.TabIndex" type="System.Int32, mscorlib">
     <value>18</value>
+  </data>
+  <data name="tbDistanRange.Text" xml:space="preserve">
+    <value>100</value>
   </data>
   <data name="&gt;&gt;tbDistanRange.Name" xml:space="preserve">
     <value>tbDistanRange</value>

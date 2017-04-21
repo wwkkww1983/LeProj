@@ -58,6 +58,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormCommList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCommList.Designer.cs">
+      <DependentUpon>FormCommList.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormFootParam.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,6 +147,9 @@
     <Compile Include="UcPoint.Designer.cs">
       <DependentUpon>UcPoint.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="FormCommList.resx">
+      <DependentUpon>FormCommList.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormFootParam.resx">
       <DependentUpon>FormFootParam.cs</DependentUpon>
     </EmbeddedResource>

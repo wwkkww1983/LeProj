@@ -32,6 +32,7 @@ namespace CamInter
 
             dbHandler.InitialTable();
             this.InitialCamInter();
+            //this.btnSelect_Click(null, null);
         }
 
         private void InitialCamInter()
@@ -40,7 +41,7 @@ namespace CamInter
             this.cbCamInter.DataSource = this.dtInter;
             this.cbCamInter.DisplayMember = "Name";
             this.cbCamInter.ValueMember = "Idx";
-            //this.cbCamInter.SelectedIndex = 2;
+            this.cbCamInter.SelectedIndex = 2;
             this.tcCamera.SelectedIndex = 1;
 
             this.initialConditionFlag = true;
@@ -51,8 +52,8 @@ namespace CamInter
             this.dgvProjDetail.AutoGenerateColumns = false;
             this.dgvProjList.AutoGenerateColumns = false;
 
-            //this.skin = new SkinEngine(this);
-            //this.skin.SkinFile = "Wave.ssk";
+            this.skin = new SkinEngine(this);
+            this.skin.SkinFile = "Wave.ssk";
         }
 
         #endregion
