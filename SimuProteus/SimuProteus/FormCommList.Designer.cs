@@ -58,6 +58,7 @@
             this.number.HeaderText = "序号";
             this.number.Name = "number";
             this.number.ReadOnly = true;
+            this.number.Width = 60;
             // 
             // direct
             // 
@@ -65,6 +66,7 @@
             this.direct.HeaderText = "方向";
             this.direct.Name = "direct";
             this.direct.ReadOnly = true;
+            this.direct.Width = 60;
             // 
             // Content
             // 
@@ -72,7 +74,7 @@
             this.Content.HeaderText = "内容";
             this.Content.Name = "Content";
             this.Content.ReadOnly = true;
-            this.Content.Width = 500;
+            this.Content.Width = 600;
             // 
             // time
             // 

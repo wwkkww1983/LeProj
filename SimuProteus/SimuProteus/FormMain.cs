@@ -35,6 +35,7 @@ namespace SimuProteus
         private SerialCom serial = new SerialCom();
         private DBUtility dbHandler = new DBUtility(true);
         private List<Point> newLinePoints = new List<Point>();
+        private List<int> deleteLineIdxList = new List<int>();
         private List<ElementInfo> elementList = null;
         private List<ElementLine> createLinePoint = new List<ElementLine>(2);
         private List<CommunicateInfo> communicateList = new List<CommunicateInfo>();
@@ -82,8 +83,8 @@ namespace SimuProteus
             this.pnBoard.Parent = this.pnWorkPlace;
             this.serial.DataReceived += new SerialDataReceivedEventHandler(ReceiveInfo);
             Constants.ElementStaySeconds = 1000 * int.Parse(Ini.GetItemValue("general", "elementStaySeconds"));
-            this.skin = new SkinEngine(this);
-            this.skin.SkinFile = "Wave.ssk";
+            //this.skin = new SkinEngine(this);
+            //this.skin.SkinFile = "Wave.ssk";
 
             //this.ucPnLine.Size = this.pnBoard.Size;
             //this.ucPnLine.BackColor = this.pnBoard.BackColor;
@@ -97,6 +98,19 @@ namespace SimuProteus
             //this.pnLineTmp.SendToBack();
 
             //this.pnBoard.BringToFront();
+            this.communicateList.Add(new CommunicateInfo() {
+                 Number="aaa",
+                  DirectUp=true,
+                   Content="4reaer3radf",
+                    Time = DateTime.Now
+            }); 
+            this.communicateList.Add(new CommunicateInfo()
+            {
+                Number = "bbb",
+                DirectUp = true,
+                Content = "4reaer3radf",
+                Time = DateTime.Now
+            });
         }
 
 
@@ -350,8 +364,13 @@ namespace SimuProteus
                     i--;
                 }
             }
-
+            this.deleteLineIdxList.Add(idx);
             this.DeleteAllSeletedElementLines();
+            foreach (int lineIdx in this.deleteLineIdxList)
+            {
+                this.ConstructDataByLine(lineIdx, false);
+            }
+            this.deleteLineIdxList.Clear();
         }
 
         private void DeleteElement(int idx)
@@ -381,7 +400,7 @@ namespace SimuProteus
 
         private void DeleteAllSeletedElementLines()
         {
-            for (int i = this.pnBoard.Controls.Count-1; i >=0 ; i--)
+            for (int i = this.pnBoard.Controls.Count - 1; i >= 0; i--)
             {
                 Control item = this.pnBoard.Controls[i];
                 if (item.GetType() == typeof(UcElement) && (item as UcElement).Selected)
@@ -391,7 +410,10 @@ namespace SimuProteus
                 }
                 else if (item.GetType() == typeof(UcLine) && (item as UcLine).Selected)
                 {
-                    this.currentBoardInfo.linesList.Remove(this.currentBoardInfo.linesList.Find(ele => ele.InnerIdx == (item as UcLine).ElementIdx));
+                    int innerIdx = (item as UcLine).ElementIdx;
+                    if (!this.deleteLineIdxList.Contains(innerIdx))
+                        this.deleteLineIdxList.Add(innerIdx);
+                    this.currentBoardInfo.linesList.Remove(this.currentBoardInfo.linesList.Find(ele => ele.InnerIdx == innerIdx));
                     this.pnBoard.Controls.RemoveAt(i);
                 }
             }
@@ -706,6 +728,7 @@ namespace SimuProteus
                 this.currentBoardInfo.linesList.Add(oneLine);
                 onePoint = otherPoint;
             }
+            this.ConstructDataByLine(elementIdx, true);
             elementIdx++;
         }
 
@@ -1309,13 +1332,156 @@ namespace SimuProteus
 
         #region 串口事件
 
+        private string ConstructDataByLine(int lineIdx, bool isCreate)
+        {
+            StringBuilder strSend = new StringBuilder("DD0");
+            List<Point> pointList = new List<Point>();
+            foreach (ElementLine line in this.currentBoardInfo.linesList)
+            {
+                if (line.InnerIdx != lineIdx) continue;
+                this.findPointsOnLine(pointList, line.LocX, line.LocY, line.LocOtherX, line.LocOtherY);
+            }
+
+            if (!isCreate)
+            {
+                strSend.Append("5");
+            }
+            else
+            {
+                enumNetPointType pointType = enumNetPointType.NONE;
+                int pointTypeResult = this.CheckPointsOnLine(pointList, ref pointType);
+                switch (pointTypeResult)
+                {
+                    case -1: MessageBox.Show("连线上有多个非悬空节点"); break;
+                    case 0: strSend.Append(pointType == enumNetPointType.VCC ? "1" : "2"); break;
+                    case 1: strSend.Append(this.CheckPointsOnElementSide(pointList) ? "4" : "3"); break;
+                    default: break;
+                }
+            }
+
+            if (strSend.Length < 4) return string.Empty;
+
+            foreach (Point point in pointList)
+            {
+                strSend.Append(point.X.ToString().PadLeft(2,'0'));
+                strSend.Append(point.Y.ToString().PadLeft(2, '0'));
+            }
+            return strSend.ToString();
+        }
+
+        private void findPointsOnLine(List<Point> pointList, int oneX,int oneY, int otherX,int otherY)
+        {
+            if (oneX == otherX && oneY == otherY || oneX != otherX && oneY != otherY)
+                return;
+
+            int delt, distance,curValue;
+            if (oneX == otherX)
+            {
+                distance = otherY - oneY;
+                delt = distance > 0 ? 1 : -1;
+                for (int i = 0; delt * i <= delt * distance; i += delt)
+                {
+                    curValue = oneY + i;
+                    Point tempPoint = pointList.Find(point => point.X == oneX && point.Y == curValue);
+                    if (tempPoint.X != oneX || tempPoint.Y != curValue)
+                        pointList.Add(new Point(oneX, curValue));
+                }
+            }
+            else
+            {
+                distance = otherX - oneX;
+                delt = distance > 0 ? 1 : -1;
+                for (int i = 0; delt * i <= delt * distance; i += delt)
+                {
+                    curValue = oneX + i;
+                    Point tempPoint = pointList.Find(point => point.Y == oneY && point.X == curValue);
+                    if (tempPoint.Y != oneY || tempPoint.X != curValue)
+                        pointList.Add(new Point(curValue, oneY));
+                }
+            }
+        }
+
+        private int CheckPointsOnLine(List<Point> pointList, ref enumNetPointType pointType)
+        {
+            bool hasFoundPoint = false;
+            foreach (NetPoint point in this.currentBoardInfo.pointsList)
+            {
+                foreach (Point lineItem in pointList)
+                {
+                    if (point.X != lineItem.X || point.Y != lineItem.Y) continue;
+                    if (hasFoundPoint) return -1;
+
+                    hasFoundPoint = true;
+                    pointType = point.Type;
+                }
+            }
+
+                return hasFoundPoint?0:1;
+        }
+
+        private List<Point> findPointsOnElementSide(ElementInfo element)
+        {
+            List<Point> pointList = new List<Point>();
+            Point lu = this.CalcNearestLocIdxByCoordinate(element.Location.X, element.Location.Y);
+            Point rd = this.CalcNearestLocIdxByCoordinate(element.Location.X + element.Size.Width, element.Location.Y + element.Size.Height);
+            for (int i = lu.X; i <= rd.X; i++)//上横
+                pointList.Add(new Point(i, lu.Y));
+            for (int i = lu.X; i <= rd.X; i++)//下横
+                pointList.Add(new Point(i, rd.Y));
+            for (int i = lu.Y + 1; i < rd.Y; i++)//左竖
+                pointList.Add(new Point(lu.X, i));
+            for (int i = lu.Y + 1; i < rd.Y; i++)//右竖
+                pointList.Add(new Point(rd.X, i));
+
+            return pointList;
+        }
+
+        private bool CheckPointsOnElementSide(List<Point> linePoints)
+        {
+            bool hasFound = false;
+            foreach (ElementInfo item in this.currentBoardInfo.elementList)
+            {
+                List<Point> elementSidePoints = this.findPointsOnElementSide(item);
+                int crossTemp = this.findSameLocationPoint(elementSidePoints, linePoints);
+                if (crossTemp > 0)
+                {
+                    hasFound = true;
+                    break;
+                }
+            }
+            return hasFound;
+        }
+
+        private int findSameLocationPoint(List<Point> oneList, List<Point> otherList)
+        {
+            int sameCount = 0;
+            foreach (Point point in oneList)
+            {
+                foreach (Point lineItem in otherList)
+                {
+                    if (point.X == lineItem.X && point.Y == lineItem.Y)
+                    {
+                        sameCount++;
+                    }
+                }
+            }
+            return sameCount;
+        }
+
+        private void SendInfo()
+        {
+
+        }
+
         private void ReceiveInfo(Object sender, SerialDataReceivedEventArgs e)
         {
             byte[] readBuffer = new byte[BUFFER_SIZE];
             try
             {
                 this.serial.ReadBuffer(readBuffer, 12);
-                ExcelInterop.InsertItemInfo(this.decodeMachineInfo(readBuffer));
+                CommunicateInfo info = this.decodeMachineInfo(readBuffer);
+                ExcelInterop.InsertItemInfo(info);
+                this.communicateList.Add(info);
             }
             catch (Exception ex)
             {

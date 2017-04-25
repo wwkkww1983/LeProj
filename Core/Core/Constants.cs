@@ -139,6 +139,8 @@ namespace SimuProteus
     {
         VCC = 0x01,
         GND,
-        NONE
+        NONE,
+        Element,
+        DeleteLine
     }
 }
