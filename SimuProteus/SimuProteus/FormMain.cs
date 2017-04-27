@@ -16,9 +16,9 @@ namespace SimuProteus
     {
         #region 初始化
         private const char COORDINATE_SEPERATOR = '#';
-        private const int ORIGIN_ARROW_LEN = 10,BUFFER_SIZE=1024;
+        private const int ORIGIN_ARROW_LEN = 10, BUFFER_SIZE = 1024;
         private Color ORIGIN_ARROW_COLOR = Color.Black;
-        private int elementIdx = 1, pointRadius=0;
+        private int elementIdx = 1, pointRadius = 0;
         private int boardMargin = int.Parse(Ini.GetItemValue("sizeInfo", "pixelBoardMargin"));
         private int DragDistance = int.Parse(Ini.GetItemValue("sizeInfo", "pixelDragDistance"));
         private int netPointGap = int.Parse(Ini.GetItemValue("sizeInfo", "pixelPointGap"));
@@ -28,8 +28,8 @@ namespace SimuProteus
         private int defaultWidth = int.Parse(Ini.GetItemValue("sizeInfo", "pixelInitialWidth"));
         private int defaultHeight = int.Parse(Ini.GetItemValue("sizeInfo", "pixelInitialHeight"));
         private Color defaultLineColor = Color.FromArgb(int.Parse(Ini.GetItemValue("colorInfo", "colorLine")));
-        private int defaultLeftMenuHeight = 655, defaultProjNameCoordX = 586,oneNetPointLength = -1;
-        private string currentSelectedComponent = enumComponent.NONE.ToString ();
+        private int defaultLeftMenuHeight = 655, oneNetPointLength = -1;//, defaultProjNameCoordX = 586;
+        private string currentSelectedComponent = enumComponent.NONE.ToString();
         private Point clickPositionForLine;
         private Size defaultWorkPlaceSize = new Size(798, 645);
         private SerialCom serial = new SerialCom();
@@ -43,8 +43,10 @@ namespace SimuProteus
 
         ProjectDetails currentBoardInfo = new ProjectDetails()
         {
-            Project = new ProjectInfo() { 
-             OriginX = 1, OriginY=1//默认原点为起点
+            Project = new ProjectInfo()
+            {
+                OriginX = 1,
+                OriginY = 1//默认原点为起点
             },
             elementList = new List<ElementInfo>(),
             linesList = new List<ElementLine>(),
@@ -83,14 +85,14 @@ namespace SimuProteus
             this.pnBoard.Parent = this.pnWorkPlace;
             this.serial.DataReceived += new SerialDataReceivedEventHandler(ReceiveInfo);
             Constants.ElementStaySeconds = 1000 * int.Parse(Ini.GetItemValue("general", "elementStaySeconds"));
-            //this.skin = new SkinEngine(this);
-            //this.skin.SkinFile = "Wave.ssk";
+            this.skin = new SkinEngine(this);
+            this.skin.SkinFile = "Wave.ssk";
 
             //this.ucPnLine.Size = this.pnBoard.Size;
             //this.ucPnLine.BackColor = this.pnBoard.BackColor;
             //this.ucPnLine.Location = this.pnBoard.Location;
             //this.ucPnLine.SendToBack();
-            
+
             //this.pnLineTmp.Size = new Size(190,1200) ;
             ////this.pnLineTmp.BackColor = Color.Transparent;
             //this.pnLineTmp.Location = this.pnBoard.Location;
@@ -98,23 +100,10 @@ namespace SimuProteus
             //this.pnLineTmp.SendToBack();
 
             //this.pnBoard.BringToFront();
-            this.communicateList.Add(new CommunicateInfo() {
-                 Number="aaa",
-                  DirectUp=true,
-                   Content="4reaer3radf",
-                    Time = DateTime.Now
-            }); 
-            this.communicateList.Add(new CommunicateInfo()
-            {
-                Number = "bbb",
-                DirectUp = true,
-                Content = "4reaer3radf",
-                Time = DateTime.Now
-            });
         }
 
 
-        private void AddMenuToolStripItem(string name, int idx,EventHandler clickEvent, ToolStripMenuItem father)
+        private void AddMenuToolStripItem(string name, int idx, EventHandler clickEvent, ToolStripMenuItem father)
         {
             ToolStripItem item = new ToolStripMenuItem(name);
             item.Tag = idx;
@@ -122,11 +111,11 @@ namespace SimuProteus
             father.DropDownItems.Insert(0, item);
         }
 
-        private void AddComponentItem(ElementInfo item,ref int idx)
+        private void AddComponentItem(ElementInfo item, ref int idx)
         {
             if (item.FootType == enumComponentType.NormalComponent)
             {
-                UcComponent compo = new UcComponent(idx++, item, this.ChangeCursor, this.RemoveComponent,this.UpdateComponent);
+                UcComponent compo = new UcComponent(idx++, item, this.ChangeCursor, this.RemoveComponent, this.UpdateComponent);
                 this.gbComponent.Controls.Add(compo);
             }
             else if (item.FootType == enumComponentType.Chips)
@@ -160,8 +149,8 @@ namespace SimuProteus
                 Action<Cursor, string> delegateChangeCursor = new Action<Cursor, string>(ChangeCursor);
                 this.Invoke(delegateChangeCursor, new object[] { newCursor });
                 return;
-            } 
-            
+            }
+
             this.Cursor = newCursor;
             this.currentSelectedComponent = clickedCompo;
         }
@@ -170,7 +159,7 @@ namespace SimuProteus
         {
             bool removeFlag = false;
             int ctrlCount = this.gbComponent.Controls.Count;
-            for (int i = 0; i < ctrlCount;i++)
+            for (int i = 0; i < ctrlCount; i++)
             {
                 UcComponent item = this.gbComponent.Controls[i] as UcComponent;
                 if (removeFlag)
@@ -191,7 +180,7 @@ namespace SimuProteus
             }
         }
 
-        private void SaveProjectName(bool newFlag,int projIdx, string projName)
+        private void SaveProjectName(bool newFlag, int projIdx, string projName)
         {
             if (this.InvokeRequired)
             {
@@ -216,8 +205,8 @@ namespace SimuProteus
             //        }
             //    }
             //}
-            this.lbProjName.Tag = projIdx;
-            this.lbProjName.Text = projName;
+            //this.lbProjName.Tag = projIdx;
+            //this.lbProjName.Text = projName;
         }
 
         private void CreateNewComponent(FormNewComponent window, ElementInfo info)
@@ -257,7 +246,7 @@ namespace SimuProteus
             MessageBox.Show(strResult);
         }
 
-        private void CreateLineForElement(int idx,int footIdx, int locX, int locY)
+        private void CreateLineForElement(int idx, int footIdx, int locX, int locY)
         {
             if (createLinePoint.Count == 0)
             {
@@ -290,7 +279,7 @@ namespace SimuProteus
             };
             eleOne.otherFoot = footIdx;
             eleOther.otherFoot = eleOne.oneFoot;
-            int midX,midY;
+            int midX, midY;
             this.CalcTurnLocation(eleOne.LocX, eleOne.LocY, locX, locY, out midX, out midY);
             eleOne.LocOtherX = midX;
             eleOne.LocOtherY = midY;
@@ -343,9 +332,10 @@ namespace SimuProteus
                 }
             }
         }
-        
+
         private void DeleteLineLink(int idx)
         {
+            this.ConstructDataByLine(idx, false);
             for (int i = 0; i < this.currentBoardInfo.linesList.Count; i++)
             {
                 ElementLine tmpInfo = this.currentBoardInfo.linesList[i];
@@ -366,16 +356,12 @@ namespace SimuProteus
             }
             this.deleteLineIdxList.Add(idx);
             this.DeleteAllSeletedElementLines();
-            foreach (int lineIdx in this.deleteLineIdxList)
-            {
-                this.ConstructDataByLine(lineIdx, false);
-            }
             this.deleteLineIdxList.Clear();
         }
 
         private void DeleteElement(int idx)
         {
-            for (int i = 0; i < this.currentBoardInfo.elementList.Count;i++ )
+            for (int i = 0; i < this.currentBoardInfo.elementList.Count; i++)
             {
                 ElementInfo tmpInfo = this.currentBoardInfo.elementList[i];
                 if (tmpInfo.InnerIdx == idx)
@@ -412,23 +398,23 @@ namespace SimuProteus
                 {
                     int innerIdx = (item as UcLine).ElementIdx;
                     if (!this.deleteLineIdxList.Contains(innerIdx))
-                        this.deleteLineIdxList.Add(innerIdx);
+                        this.ConstructDataByLine(innerIdx, false);
                     this.currentBoardInfo.linesList.Remove(this.currentBoardInfo.linesList.Find(ele => ele.InnerIdx == innerIdx));
                     this.pnBoard.Controls.RemoveAt(i);
                 }
             }
         }
 
-        private void MoveElement(int idx, int locX,int locY)
+        private void MoveElement(int idx, int locX, int locY)
         {
             bool moveFlag = false;
-            Point coorAdjust = new Point(locX,locY);
+            Point coorAdjust = new Point(locX, locY);
             for (int i = 0; i < this.currentBoardInfo.elementList.Count; i++)
             {
                 ElementInfo tmpInfo = this.currentBoardInfo.elementList[i];
                 if (tmpInfo.InnerIdx == idx)
                 {
-                    coorAdjust = this.CalcElementCoord(tmpInfo,new Point(locX,locY));
+                    coorAdjust = this.CalcElementCoord(tmpInfo, new Point(locX, locY));
                     if (tmpInfo.Location.X != coorAdjust.X || tmpInfo.Location.Y != coorAdjust.Y)
                     {
                         moveFlag = true;
@@ -462,7 +448,7 @@ namespace SimuProteus
                 if (item.GetType() == typeof(UcLine) && ((item as UcLine).LineInfo.oneElement == idx || (item as UcLine).LineInfo.otherElement == idx))
                 {
                     this.pnBoard.Controls.Remove(item);
-                    i--; 
+                    i--;
                 }
             }
         }
@@ -537,7 +523,7 @@ namespace SimuProteus
                         elementTmp.LineFoots.Remove(footItem);
                         footItem.Name = foot.PinsName;
                         footItem.PinsType = foot.PinsType;
-                        elementTmp.LineFoots.Insert(j,footItem);
+                        elementTmp.LineFoots.Insert(j, footItem);
                     }
                     if (!foundFlag)
                     {
@@ -557,20 +543,20 @@ namespace SimuProteus
 
         private void UpdateShowSize()
         {
-           this.boardWidth = int.Parse(Ini.GetItemValue("sizeInfo", "pixelBoardWidth"));
-           this.boardHeight = int.Parse(Ini.GetItemValue("sizeInfo", "pixelBoardHeight"));
-           this.defaultWidth = int.Parse(Ini.GetItemValue("sizeInfo", "pixelInitialWidth"));
-           this.defaultHeight = int.Parse(Ini.GetItemValue("sizeInfo", "pixelInitialHeight"));
+            this.boardWidth = int.Parse(Ini.GetItemValue("sizeInfo", "pixelBoardWidth"));
+            this.boardHeight = int.Parse(Ini.GetItemValue("sizeInfo", "pixelBoardHeight"));
+            this.defaultWidth = int.Parse(Ini.GetItemValue("sizeInfo", "pixelInitialWidth"));
+            this.defaultHeight = int.Parse(Ini.GetItemValue("sizeInfo", "pixelInitialHeight"));
 
-           this.pnBoard.Size = new Size(boardWidth, boardHeight);
-           this.Size = new Size(defaultWidth, defaultHeight);
+            this.pnBoard.Size = new Size(boardWidth, boardHeight);
+            this.Size = new Size(defaultWidth, defaultHeight);
         }
         #endregion
 
         #region 面板事件
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
-            ExcelInterop.FinishExcel();
+            //ExcelInterop.FinishExcel();
         }
 
         private ElementInfo GetElementInfoOnBoardByName(string component)
@@ -587,7 +573,7 @@ namespace SimuProteus
             {//绘线状态
                 if (clickArgs.Button == MouseButtons.Right)
                 {//删除已绘线条
-                    this.RemoveTempNewLine();                 
+                    this.RemoveTempNewLine();
                 }
                 else
                 {
@@ -597,7 +583,7 @@ namespace SimuProteus
             else if (clickArgs.Button == MouseButtons.Right)
             {
                 this.Cursor = Cursors.Arrow;
-                this.currentSelectedComponent = enumComponent.NONE.ToString ();
+                this.currentSelectedComponent = enumComponent.NONE.ToString();
             }
             else
             {
@@ -669,7 +655,7 @@ namespace SimuProteus
             //pnLineTmp.Invalidate();
             //pnLineTmp.Update();
             //pnLineTmp.Refresh();   
-            for (int i = this.pnBoard.Controls.Count-1; i >=0 ; i--)
+            for (int i = this.pnBoard.Controls.Count - 1; i >= 0; i--)
             {
                 Control item = this.pnBoard.Controls[i];
                 if (item.GetType() == typeof(UcLine) && !(item as UcLine).Status)
@@ -679,12 +665,19 @@ namespace SimuProteus
             }
         }
 
-        private void AddOneElementOnBoard(string strComp,int coorX,int coorY)
+        private void AddOneElementOnBoard(string strComp, int coorX, int coorY)
         {   //添加元器件
+            if (this.InvokeRequired)
+            {
+                Action<string, int, int> delegateAddOneElementOnBoard = new Action<string, int, int>(AddOneElementOnBoard);
+                this.Invoke(delegateAddOneElementOnBoard, new object[] { strComp, coorX, coorY });
+                return;
+            } 
+
             ElementInfo info = GetElementInfoOnBoardByName(strComp);
             info.InnerIdx = elementIdx++;
             UcElement elementItem = this.getElementView(info);
-            elementItem.Location = this.CalcElementCoord(info, new Point(coorX - info.Size.Width/2, coorY - info.Size.Height/2));
+            elementItem.Location = this.CalcElementCoord(info, new Point(coorX - info.Size.Width / 2, coorY - info.Size.Height / 2));
             info.Location = elementItem.Location;
 
             this.pnBoard.Controls.Add(elementItem);
@@ -697,7 +690,7 @@ namespace SimuProteus
             for (int i = 0; i < this.pnBoard.Controls.Count; i++)
             {
                 Control item = this.pnBoard.Controls[i];
-                if (item.GetType() == typeof(UcLine)  && (item as UcLine).Selected)
+                if (item.GetType() == typeof(UcLine) && (item as UcLine).Selected)
                 {
                     (item as UcLine).RemoveSelectedBulk();
                 }
@@ -795,7 +788,7 @@ namespace SimuProteus
             {
                 Point coordiOne = this.CalcCoordinateByLocIdx(line.LocX, line.LocY);
                 Point coordiOther = this.CalcCoordinateByLocIdx(line.LocOtherX, line.LocOtherY);
-                Draw.DrawSolidLine(this.pnBoard, coordiOne, coordiOther,line.Color);
+                Draw.DrawSolidLine(this.pnBoard, coordiOne, coordiOther, line.Color);
             }
         }
 
@@ -806,7 +799,7 @@ namespace SimuProteus
             this.gbComponent.Height = defaultLeftMenuHeight + diffHeight;
             this.pnWorkPlace.Width = this.defaultWorkPlaceSize.Width + diffWidth;
             this.pnWorkPlace.Height = this.defaultWorkPlaceSize.Height + diffHeight;
-            this.lbProjName.Location = new Point(defaultProjNameCoordX + diffWidth, this.lbProjName.Location.Y);
+            //this.lbProjName.Location = new Point(defaultProjNameCoordX + diffWidth, this.lbProjName.Location.Y);
         }
 
         private void pnBoard_MouseMove(object sender, MouseEventArgs e)
@@ -929,7 +922,8 @@ namespace SimuProteus
             pointIdx.X = xReal / oneNetPointLength + 1;
             pointIdx.Y = yReal / oneNetPointLength + 1;
 
-            if(xReal % oneNetPointLength > netPointSize + netPointGap / 2){
+            if (xReal % oneNetPointLength > netPointSize + netPointGap / 2)
+            {
                 pointIdx.X += 1;
             }
             if (yReal % oneNetPointLength > netPointSize + netPointGap / 2)
@@ -997,7 +991,7 @@ namespace SimuProteus
                 Label lbTmp = new Label();
                 lbTmp.Tag = labelTag;
                 lbTmp.Text = status.ToString();
-                lbTmp.Size = new Size(31,13);
+                lbTmp.Size = new Size(31, 13);
                 Point coordi = this.CalcCoordinateByLocIdx(locIdx.X, locIdx.Y);
                 lbTmp.Location = new Point(coordi.X - 15, coordi.Y + 5);
                 this.pnBoard.Controls.Add(lbTmp);
@@ -1049,8 +1043,8 @@ namespace SimuProteus
 
         private UcElement InitialChipOnBoard(int chipIdx)
         {
-            ElementInfo chipInfo= this.elementList.Find(item => item.ID == chipIdx);
-            int locX= this.pnWorkPlace.Width - chipInfo.Size.Width,
+            ElementInfo chipInfo = this.elementList.Find(item => item.ID == chipIdx);
+            int locX = this.pnWorkPlace.Width - chipInfo.Size.Width,
             locY = this.pnWorkPlace.Height - chipInfo.Size.Height;
 
             chipInfo.Location = this.CalcElementCoord(chipInfo, new Point(locX / 2, locY / 2));
@@ -1060,29 +1054,29 @@ namespace SimuProteus
 
         private void newComponentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormNewComponent formComp = new FormNewComponent(this.CreateNewComponent,null,null);
+            FormNewComponent formComp = new FormNewComponent(this.CreateNewComponent, null, null);
             formComp.ShowDialog();
         }
 
         private UcElement getElementView(ElementInfo info)
         {
-            return new UcElement(info, CreateLineForElement, DeleteElement, MoveElement, UpdateElementName, updateElementFoots,this.currentBoardInfo.footsList);
+            return new UcElement(info, CreateLineForElement, DeleteElement, MoveElement, UpdateElementName, updateElementFoots, this.currentBoardInfo.footsList);
         }
 
         private bool CheckLoadChip()
         {
             bool result = true;
-            if (this.pnBoard.Controls.Count > 1 )
+            if (this.pnBoard.Controls.Count > 1)
             {
                 DialogResult dResult = MessageBox.Show("画板上有内容，确定清空？", "清空当前画布", MessageBoxButtons.OKCancel);
                 if (dResult == DialogResult.OK)
                 {
                     this.pnBoard.Controls.Clear();
-                    this.lbProjName.Tag = null;
-                    this.lbProjName.Text = "未命名";
-                    this.pnBoard.Controls.Add(this.lbProjName);
+                    //this.lbProjName.Tag = null;
+                    //this.lbProjName.Text = "未命名";
+                    //this.pnBoard.Controls.Add(this.lbProjName);
                     this.currentBoardInfo.Project.OriginX = 1;
-                    this.currentBoardInfo.Project.OriginY= 1;
+                    this.currentBoardInfo.Project.OriginY = 1;
                     this.currentBoardInfo.Project.Name = string.Empty;
                     this.currentBoardInfo.Project.Description = string.Empty;
                     this.currentBoardInfo.Project.Idx = 0;
@@ -1104,7 +1098,7 @@ namespace SimuProteus
             FormSave saveWindow = new FormSave();
             saveWindow.Project = this.currentBoardInfo;
             saveWindow.HandlerAfterSave = this.SaveProjectName;
-            saveWindow.NewFlag = Convert.ToInt32(this.lbProjName.Tag) > 0;
+            //saveWindow.NewFlag = Convert.ToInt32(this.lbProjName.Tag) > 0;
             saveWindow.ShowDialog();
         }
 
@@ -1159,8 +1153,8 @@ namespace SimuProteus
 
         private void LoadElementByHistoryItem(ProjectDetails projInfo)
         {
-            this.lbProjName.Text = projInfo.Project.Name;
-            this.lbProjName.Tag = projInfo.Project.Idx;
+            //this.lbProjName.Text = projInfo.Project.Name;
+            //this.lbProjName.Tag = projInfo.Project.Idx;
             this.pnBoard.Refresh();
 
             if (projInfo.Project.Chips > 0)
@@ -1171,14 +1165,14 @@ namespace SimuProteus
             }
             foreach (ElementInfo info in projInfo.elementList)
             {
-                UcElement ucTmp =this.getElementView(info);
+                UcElement ucTmp = this.getElementView(info);
                 this.pnBoard.Controls.Add(ucTmp);
                 ucTmp.BringToFront();
             }
             foreach (ElementLine line in projInfo.linesList)
             {
                 ElementLine eleOne = new ElementLine()
-                {   
+                {
                     Color = line.Color,
                     LocX = line.LocX,
                     LocY = line.LocY,
@@ -1226,7 +1220,7 @@ namespace SimuProteus
             FormSerial formSeiral = new FormSerial();
             formSeiral.ShowDialog();
         }
-        #endregion 
+        #endregion
 
         #region 右键菜单
         private void delLineToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1258,7 +1252,7 @@ namespace SimuProteus
         {
             this.setNetPointValue(sender as ToolStripItem, enumNetPointType.NONE);
         }
-        
+
         private void setNetPointValue(ToolStripItem stripItem, enumNetPointType pointType)
         {
             string strXY = stripItem.Owner.Text;
@@ -1288,8 +1282,8 @@ namespace SimuProteus
         private Point DecodeIndexByStr(string strXY)
         {
             Point locIdx = new Point();
-            int sepIdx = strXY.IndexOf(COORDINATE_SEPERATOR); 
-            locIdx.X = int.Parse(strXY.Substring(0,sepIdx));
+            int sepIdx = strXY.IndexOf(COORDINATE_SEPERATOR);
+            locIdx.X = int.Parse(strXY.Substring(0, sepIdx));
             locIdx.Y = int.Parse(strXY.Substring(sepIdx + 1, strXY.Length - sepIdx - 1));
 
             return locIdx;
@@ -1311,7 +1305,7 @@ namespace SimuProteus
             dialog.Color = beforeColor;
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                for( int i=this.currentBoardInfo.linesList.Count - 1;i>=0 ;i--)
+                for (int i = this.currentBoardInfo.linesList.Count - 1; i >= 0; i--)
                 {
                     ElementLine line = this.currentBoardInfo.linesList[i];
                     if (line.InnerIdx == lineIdx)
@@ -1320,8 +1314,8 @@ namespace SimuProteus
                         this.currentBoardInfo.linesList.RemoveAt(i);
                         this.currentBoardInfo.linesList.Add(line);
 
-                        Point coorOne = this.CalcCoordinateByLocIdx(line.LocX,line.LocY),
-                            coorOther = this.CalcCoordinateByLocIdx(line.LocOtherX,line.LocOtherY);
+                        Point coorOne = this.CalcCoordinateByLocIdx(line.LocX, line.LocY),
+                            coorOther = this.CalcCoordinateByLocIdx(line.LocOtherX, line.LocOtherY);
 
                         Draw.DrawSolidLine(this.pnBoard, coorOne, coorOther, line.Color);
                     }
@@ -1332,8 +1326,10 @@ namespace SimuProteus
 
         #region 串口事件
 
-        private string ConstructDataByLine(int lineIdx, bool isCreate)
+        private void ConstructDataByLine(int lineIdx, bool isCreate)
         {
+            if (!Constants.SeiralPortStatusIsOpen) return;
+
             StringBuilder strSend = new StringBuilder("DD0");
             List<Point> pointList = new List<Point>();
             foreach (ElementLine line in this.currentBoardInfo.linesList)
@@ -1359,22 +1355,35 @@ namespace SimuProteus
                 }
             }
 
-            if (strSend.Length < 4) return string.Empty;
+            if (strSend.Length < 4) return;
 
             foreach (Point point in pointList)
             {
-                strSend.Append(point.X.ToString().PadLeft(2,'0'));
+                strSend.Append(point.X.ToString().PadLeft(2, '0'));
                 strSend.Append(point.Y.ToString().PadLeft(2, '0'));
             }
-            return strSend.ToString();
+
+            this.SendMessageToMechine(strSend.ToString());            
         }
 
-        private void findPointsOnLine(List<Point> pointList, int oneX,int oneY, int otherX,int otherY)
+        private void SendMessageToMechine(string strSend)
+        {
+            this.serial.Write(strSend);
+            CommunicateInfo info = new CommunicateInfo();
+            info.Content = strSend;
+            info.DirectUp = false;
+            info.ID = this.communicateList.Count;
+            info.Time = DateTime.Now;
+
+            this.communicateList.Add(info);
+        }
+
+        private void findPointsOnLine(List<Point> pointList, int oneX, int oneY, int otherX, int otherY)
         {
             if (oneX == otherX && oneY == otherY || oneX != otherX && oneY != otherY)
                 return;
 
-            int delt, distance,curValue;
+            int delt, distance, curValue;
             if (oneX == otherX)
             {
                 distance = otherY - oneY;
@@ -1416,7 +1425,7 @@ namespace SimuProteus
                 }
             }
 
-                return hasFoundPoint?0:1;
+            return hasFoundPoint ? 0 : 1;
         }
 
         private List<Point> findPointsOnElementSide(ElementInfo element)
@@ -1467,10 +1476,14 @@ namespace SimuProteus
             }
             return sameCount;
         }
-
-        private void SendInfo()
+        
+        private void AddElementByMachine(CommunicateInfo info)
         {
+            string strElement = this.dbHandler.GetElementIdx(info.Number);
+            if (strElement == string.Empty) return;
 
+            Point locElement = this.CalcCoordinateByLocIdx(info.X, info.Y);
+            this.AddOneElementOnBoard(strElement, locElement.X, locElement.Y);
         }
 
         private void ReceiveInfo(Object sender, SerialDataReceivedEventArgs e)
@@ -1478,9 +1491,10 @@ namespace SimuProteus
             byte[] readBuffer = new byte[BUFFER_SIZE];
             try
             {
-                this.serial.ReadBuffer(readBuffer, 12);
+                this.serial.ReadBuffer(readBuffer, 200);
                 CommunicateInfo info = this.decodeMachineInfo(readBuffer);
-                ExcelInterop.InsertItemInfo(info);
+                this.AddElementByMachine(info);
+                //ExcelInterop.InsertItemInfo(info);
                 this.communicateList.Add(info);
             }
             catch (Exception ex)
@@ -1492,14 +1506,15 @@ namespace SimuProteus
         private CommunicateInfo decodeMachineInfo(byte[] data)
         {
             CommunicateInfo info = new CommunicateInfo();
-            if(data.Length < 12) return info;
+            if (data.Length < 12) return info;
             info.ID = data[0] << 4 | data[1];
-            byte[] numArray = new  byte[8];
-             Array.Copy(data, 2, numArray, 0, 8);
-             info.Number = System.Text.Encoding.ASCII.GetString(numArray);
+            byte[] numArray = new byte[8];
+            Array.Copy(data, 2, numArray, 0, 8);
+            info.Number = System.Text.Encoding.ASCII.GetString(numArray);
             info.X = data[10];
             info.Y = data[11];
             info.Time = DateTime.Now;
+            info.Content = System.Text.Encoding.ASCII.GetString(data);
             info.DirectUp = true;
 
             return info;
@@ -1508,7 +1523,7 @@ namespace SimuProteus
         private void ListenSerialPort()
         {
             byte[] byteRecvive = new byte[1024];
-            while(true)
+            while (true)
             {
                 string strMsg = string.Empty;
 

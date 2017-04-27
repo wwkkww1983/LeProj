@@ -42,7 +42,11 @@ namespace SimuProteus
             this.cbParity.SelectedIndex = this.serialInfo.Parity; ;
             this.cbStopbits.SelectedIndex = this.serialInfo.StopBits;
             this.tbTimeout.Text = this.serialInfo.TimeOut.ToString();
-            this.cbBaudrate.SelectedIndex = this.serialInfo.BaudRate;
+            for (int i = 0; i < this.cbBaudrate.Items.Count; i++)
+            {
+                if (this.serialInfo.BaudRate != Convert.ToInt32(this.cbBaudrate.Items[i])) continue;
+                this.cbBaudrate.SelectedIndex = i; break;
+            }
 
             this.serial = new SerialCom();
             this.DisableSendComponent(true);
@@ -146,7 +150,7 @@ namespace SimuProteus
             this.serialInfo.Parity = this.cbParity.SelectedIndex;
             this.serialInfo.StopBits = this.cbStopbits.SelectedIndex;
             this.serialInfo.TimeOut = Convert.ToInt32(this.tbTimeout.Text);
-            this.serialInfo.BaudRate = this.cbBaudrate.SelectedIndex;
+            this.serialInfo.BaudRate = Convert.ToInt32(this.cbBaudrate.SelectedItem);
         }
 
         private void btnConnect_Click(object sender, EventArgs e)
@@ -261,7 +265,7 @@ namespace SimuProteus
             }
             catch (TimeoutException timeEx)
             {
-                Console.WriteLine("超时");
+                Console.WriteLine("接受超时：" + timeEx.Message);
             }
             catch (Exception ex)
             {

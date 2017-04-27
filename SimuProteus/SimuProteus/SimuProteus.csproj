@@ -219,7 +219,7 @@
     <Content Include="logo.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Core\Core.csproj">
+    <ProjectReference Include="..\Core\Core.csproj">
       <Project>{9bb65674-028b-4a03-b2df-ef7127156e2a}</Project>
       <Name>Core</Name>
     </ProjectReference>

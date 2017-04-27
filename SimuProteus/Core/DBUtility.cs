@@ -140,9 +140,9 @@ namespace SimuProteus
             this.InsertSerialInfo(new SerialInfo()
             {
                 PortName = "COM1",
-                BaudRate = 1,
+                BaudRate = 9600,
                 DataBits = 8,
-                Parity = 1,
+                Parity = 0,
                 StopBits = 1,
                 TimeOut = 200
             });
@@ -158,6 +158,7 @@ namespace SimuProteus
             AddNewBaseComponent(info);
             //74HC244
             info.Name = "74HC244";
+            info.Number = "aaaaaaaa";
             //info.FootType = enumComponentType.Chips;
             info.FootType = enumComponentType.NormalComponent;
             info.Size = new Size(374, 280);
@@ -232,6 +233,7 @@ namespace SimuProteus
             AddNewBaseComponent(info);
             //电阻
             info.Name = enumComponent.Resistance.ToString ();
+            info.Number = "resistan";
             info.FootType = enumComponentType.NormalComponent;
             info.Size = new Size(35,10);
             info.BackColor = Color.Gray;
@@ -289,6 +291,13 @@ namespace SimuProteus
             string strSql = "select * from serialInfo";
             DataSet dsInfo = SQLiteHelper.ExecuteDataSet(STR_CONNECTION, strSql, null);
             return code.DecodeSerialInfo(dsInfo);
+        }
+
+        public string GetElementIdx(string number)
+        {
+            string strSql = string.Format("select * from components where number = '{0}'",number);
+            DataSet ds= SQLiteHelper.ExecuteDataSet(STR_CONNECTION, strSql,null);
+            return ds.Tables.Count > 0 ? ds.Tables[0].Rows.Count > 0 ? ds.Tables[0].Rows[0]["name"].ToString() : string.Empty : string.Empty;
         }
 
         public bool UpdateSerialInfo(SerialInfo info)

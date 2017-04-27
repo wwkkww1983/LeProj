@@ -29,7 +29,11 @@ namespace SimuProteus
             this.cbParity.SelectedIndex = this.serialInfo.Parity; ;
             this.cbStopbits.SelectedIndex = this.serialInfo.StopBits;
             this.tbTimeout.Text = this.serialInfo.TimeOut.ToString();
-            this.cbBaudrate.SelectedIndex = this.serialInfo.BaudRate;
+            for(int i=0;i<this.cbBaudrate.Items.Count;i++)
+            {
+                if(this.serialInfo.BaudRate != Convert.ToInt32(this.cbBaudrate.Items[i])) continue;
+                this.cbBaudrate.SelectedIndex = i;break;
+            }
             this.btnFresh_Click(null, null);
         }
 
@@ -40,7 +44,7 @@ namespace SimuProteus
             this.serialInfo.Parity = this.cbParity.SelectedIndex;
             this.serialInfo.StopBits = this.cbStopbits.SelectedIndex;
             this.serialInfo.TimeOut = Convert.ToInt32(this.tbTimeout.Text);
-            this.serialInfo.BaudRate = this.cbBaudrate.SelectedIndex;
+            this.serialInfo.BaudRate = Convert.ToInt32(this.cbBaudrate.SelectedItem);
         }
 
         private void btnFresh_Click(object sender, EventArgs e)
@@ -59,7 +63,7 @@ namespace SimuProteus
         {
             if (this.serial.IsOpen)
             {
-                MessageBox.Show("串口已经打开");
+                MessageBox.Show("串口已打开，请先释放！","错误提示", MessageBoxButtons.OK ,MessageBoxIcon.Warning);
                 this.Close();
                 return;
             }

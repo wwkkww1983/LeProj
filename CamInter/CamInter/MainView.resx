@@ -216,36 +216,6 @@
   <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <data name="menuStrip1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1358, 28</value>
-  </data>
-  <data name="menuStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="menuStrip1.Text" xml:space="preserve">
-    <value>menuStrip1</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.Name" xml:space="preserve">
-    <value>menuStrip1</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="addItemToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>51, 24</value>
-  </data>
-  <data name="addItemToolStripMenuItem.Text" xml:space="preserve">
-    <value>新增</value>
-  </data>
   <data name="CamLensToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>123, 24</value>
   </data>
@@ -276,11 +246,11 @@
   <data name="connToolStripMenuItem.Text" xml:space="preserve">
     <value>接口</value>
   </data>
-  <data name="lanToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="addItemToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>51, 24</value>
   </data>
-  <data name="lanToolStripMenuItem.Text" xml:space="preserve">
-    <value>语言</value>
+  <data name="addItemToolStripMenuItem.Text" xml:space="preserve">
+    <value>新增</value>
   </data>
   <data name="chineseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>119, 24</value>
@@ -294,50 +264,38 @@
   <data name="enlishToolStripMenuItem.Text" xml:space="preserve">
     <value>Enlish</value>
   </data>
-  <metadata name="detailIdx.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="type.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="name.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="number.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="interA.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="interB.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="length.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="dgvProjDetail.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left, Right</value>
+  <data name="lanToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>51, 24</value>
   </data>
-  <data name="dgvProjDetail.Location" type="System.Drawing.Point, System.Drawing">
-    <value>335, 315</value>
+  <data name="lanToolStripMenuItem.Text" xml:space="preserve">
+    <value>语言</value>
   </data>
-  <data name="dgvProjDetail.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1015, 217</value>
+  <data name="menuStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
   </data>
-  <data name="dgvProjDetail.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+  <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1358, 28</value>
   </data>
-  <data name="&gt;&gt;dgvProjDetail.Name" xml:space="preserve">
-    <value>dgvProjDetail</value>
+  <data name="menuStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
-  <data name="&gt;&gt;dgvProjDetail.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="menuStrip1.Text" xml:space="preserve">
+    <value>menuStrip1</value>
   </data>
-  <data name="&gt;&gt;dgvProjDetail.Parent" xml:space="preserve">
+  <data name="&gt;&gt;menuStrip1.Name" xml:space="preserve">
+    <value>menuStrip1</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;dgvProjDetail.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="&gt;&gt;menuStrip1.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="dgvProjDetail.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left, Right</value>
   </data>
   <metadata name="detailIdx.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -393,269 +351,26 @@
   <data name="length.HeaderText" xml:space="preserve">
     <value>长度(mm)</value>
   </data>
-  <data name="&gt;&gt;tpArea.Name" xml:space="preserve">
-    <value>tpArea</value>
+  <data name="dgvProjDetail.Location" type="System.Drawing.Point, System.Drawing">
+    <value>335, 315</value>
   </data>
-  <data name="&gt;&gt;tpArea.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="dgvProjDetail.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1015, 217</value>
   </data>
-  <data name="&gt;&gt;tpArea.Parent" xml:space="preserve">
-    <value>tcCamera</value>
-  </data>
-  <data name="&gt;&gt;tpArea.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;tpLine.Name" xml:space="preserve">
-    <value>tpLine</value>
-  </data>
-  <data name="&gt;&gt;tpLine.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tpLine.Parent" xml:space="preserve">
-    <value>tcCamera</value>
-  </data>
-  <data name="&gt;&gt;tpLine.ZOrder" xml:space="preserve">
+  <data name="dgvProjDetail.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="tcCamera.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 46</value>
+  <data name="&gt;&gt;dgvProjDetail.Name" xml:space="preserve">
+    <value>dgvProjDetail</value>
   </data>
-  <data name="tcCamera.Size" type="System.Drawing.Size, System.Drawing">
-    <value>317, 252</value>
+  <data name="&gt;&gt;dgvProjDetail.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="tcCamera.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;tcCamera.Name" xml:space="preserve">
-    <value>tcCamera</value>
-  </data>
-  <data name="&gt;&gt;tcCamera.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tcCamera.Parent" xml:space="preserve">
+  <data name="&gt;&gt;dgvProjDetail.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;tcCamera.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;label16.Name" xml:space="preserve">
-    <value>label16</value>
-  </data>
-  <data name="&gt;&gt;label16.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label16.Parent" xml:space="preserve">
-    <value>tpArea</value>
-  </data>
-  <data name="&gt;&gt;label16.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;label14.Name" xml:space="preserve">
-    <value>label14</value>
-  </data>
-  <data name="&gt;&gt;label14.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label14.Parent" xml:space="preserve">
-    <value>tpArea</value>
-  </data>
-  <data name="&gt;&gt;label14.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;lbValueWidth.Name" xml:space="preserve">
-    <value>lbValueWidth</value>
-  </data>
-  <data name="&gt;&gt;lbValueWidth.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbValueWidth.Parent" xml:space="preserve">
-    <value>tpArea</value>
-  </data>
-  <data name="&gt;&gt;lbValueWidth.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;dgvProjDetail.ZOrder" xml:space="preserve">
     <value>2</value>
-  </data>
-  <data name="&gt;&gt;lbValueLength.Name" xml:space="preserve">
-    <value>lbValueLength</value>
-  </data>
-  <data name="&gt;&gt;lbValueLength.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbValueLength.Parent" xml:space="preserve">
-    <value>tpArea</value>
-  </data>
-  <data name="&gt;&gt;lbValueLength.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;label11.Name" xml:space="preserve">
-    <value>label11</value>
-  </data>
-  <data name="&gt;&gt;label11.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label11.Parent" xml:space="preserve">
-    <value>tpArea</value>
-  </data>
-  <data name="&gt;&gt;label11.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;tbTarget.Name" xml:space="preserve">
-    <value>tbTarget</value>
-  </data>
-  <data name="&gt;&gt;tbTarget.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbTarget.Parent" xml:space="preserve">
-    <value>tpArea</value>
-  </data>
-  <data name="&gt;&gt;tbTarget.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;tbFovSide.Name" xml:space="preserve">
-    <value>tbFovSide</value>
-  </data>
-  <data name="&gt;&gt;tbFovSide.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbFovSide.Parent" xml:space="preserve">
-    <value>tpArea</value>
-  </data>
-  <data name="&gt;&gt;tbFovSide.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;tbFovOther.Name" xml:space="preserve">
-    <value>tbFovOther</value>
-  </data>
-  <data name="&gt;&gt;tbFovOther.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbFovOther.Parent" xml:space="preserve">
-    <value>tpArea</value>
-  </data>
-  <data name="&gt;&gt;tbFovOther.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;tbResolutionSide.Name" xml:space="preserve">
-    <value>tbResolutionSide</value>
-  </data>
-  <data name="&gt;&gt;tbResolutionSide.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbResolutionSide.Parent" xml:space="preserve">
-    <value>tpArea</value>
-  </data>
-  <data name="&gt;&gt;tbResolutionSide.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;tbResolutionOther.Name" xml:space="preserve">
-    <value>tbResolutionOther</value>
-  </data>
-  <data name="&gt;&gt;tbResolutionOther.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbResolutionOther.Parent" xml:space="preserve">
-    <value>tpArea</value>
-  </data>
-  <data name="&gt;&gt;tbResolutionOther.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="&gt;&gt;lbFov.Name" xml:space="preserve">
-    <value>lbFov</value>
-  </data>
-  <data name="&gt;&gt;lbFov.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbFov.Parent" xml:space="preserve">
-    <value>tpArea</value>
-  </data>
-  <data name="&gt;&gt;lbFov.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;lbSensorDiagonal.Name" xml:space="preserve">
-    <value>lbSensorDiagonal</value>
-  </data>
-  <data name="&gt;&gt;lbSensorDiagonal.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbSensorDiagonal.Parent" xml:space="preserve">
-    <value>tpArea</value>
-  </data>
-  <data name="&gt;&gt;lbSensorDiagonal.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="&gt;&gt;tbSensorSide.Name" xml:space="preserve">
-    <value>tbSensorSide</value>
-  </data>
-  <data name="&gt;&gt;tbSensorSide.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbSensorSide.Parent" xml:space="preserve">
-    <value>tpArea</value>
-  </data>
-  <data name="&gt;&gt;tbSensorSide.ZOrder" xml:space="preserve">
-    <value>12</value>
-  </data>
-  <data name="&gt;&gt;lbResolution.Name" xml:space="preserve">
-    <value>lbResolution</value>
-  </data>
-  <data name="&gt;&gt;lbResolution.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbResolution.Parent" xml:space="preserve">
-    <value>tpArea</value>
-  </data>
-  <data name="&gt;&gt;lbResolution.ZOrder" xml:space="preserve">
-    <value>13</value>
-  </data>
-  <data name="&gt;&gt;tbSensorOther.Name" xml:space="preserve">
-    <value>tbSensorOther</value>
-  </data>
-  <data name="&gt;&gt;tbSensorOther.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbSensorOther.Parent" xml:space="preserve">
-    <value>tpArea</value>
-  </data>
-  <data name="&gt;&gt;tbSensorOther.ZOrder" xml:space="preserve">
-    <value>14</value>
-  </data>
-  <data name="&gt;&gt;lbSensor.Name" xml:space="preserve">
-    <value>lbSensor</value>
-  </data>
-  <data name="&gt;&gt;lbSensor.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbSensor.Parent" xml:space="preserve">
-    <value>tpArea</value>
-  </data>
-  <data name="&gt;&gt;lbSensor.ZOrder" xml:space="preserve">
-    <value>15</value>
-  </data>
-  <data name="tpArea.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 25</value>
-  </data>
-  <data name="tpArea.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="tpArea.Size" type="System.Drawing.Size, System.Drawing">
-    <value>309, 223</value>
-  </data>
-  <data name="tpArea.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="tpArea.Text" xml:space="preserve">
-    <value>面阵</value>
-  </data>
-  <data name="&gt;&gt;tpArea.Name" xml:space="preserve">
-    <value>tpArea</value>
-  </data>
-  <data name="&gt;&gt;tpArea.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tpArea.Parent" xml:space="preserve">
-    <value>tcCamera</value>
-  </data>
-  <data name="&gt;&gt;tpArea.ZOrder" xml:space="preserve">
-    <value>0</value>
   </data>
   <data name="label16.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1050,128 +765,32 @@
   <data name="&gt;&gt;lbSensor.ZOrder" xml:space="preserve">
     <value>15</value>
   </data>
-  <data name="&gt;&gt;rbLineWidth.Name" xml:space="preserve">
-    <value>rbLineWidth</value>
-  </data>
-  <data name="&gt;&gt;rbLineWidth.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;rbLineWidth.Parent" xml:space="preserve">
-    <value>tpLine</value>
-  </data>
-  <data name="&gt;&gt;rbLineWidth.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;rbLineLength.Name" xml:space="preserve">
-    <value>rbLineLength</value>
-  </data>
-  <data name="&gt;&gt;rbLineLength.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;rbLineLength.Parent" xml:space="preserve">
-    <value>tpLine</value>
-  </data>
-  <data name="&gt;&gt;rbLineLength.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;tbLineFov.Name" xml:space="preserve">
-    <value>tbLineFov</value>
-  </data>
-  <data name="&gt;&gt;tbLineFov.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbLineFov.Parent" xml:space="preserve">
-    <value>tpLine</value>
-  </data>
-  <data name="&gt;&gt;tbLineFov.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;tbLineResolution.Name" xml:space="preserve">
-    <value>tbLineResolution</value>
-  </data>
-  <data name="&gt;&gt;tbLineResolution.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbLineResolution.Parent" xml:space="preserve">
-    <value>tpLine</value>
-  </data>
-  <data name="&gt;&gt;tbLineResolution.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;lbLineFov.Name" xml:space="preserve">
-    <value>lbLineFov</value>
-  </data>
-  <data name="&gt;&gt;lbLineFov.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbLineFov.Parent" xml:space="preserve">
-    <value>tpLine</value>
-  </data>
-  <data name="&gt;&gt;lbLineFov.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;tbLineSensor.Name" xml:space="preserve">
-    <value>tbLineSensor</value>
-  </data>
-  <data name="&gt;&gt;tbLineSensor.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbLineSensor.Parent" xml:space="preserve">
-    <value>tpLine</value>
-  </data>
-  <data name="&gt;&gt;tbLineSensor.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;lbLineResolution.Name" xml:space="preserve">
-    <value>lbLineResolution</value>
-  </data>
-  <data name="&gt;&gt;lbLineResolution.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbLineResolution.Parent" xml:space="preserve">
-    <value>tpLine</value>
-  </data>
-  <data name="&gt;&gt;lbLineResolution.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;lbLineSensor.Name" xml:space="preserve">
-    <value>lbLineSensor</value>
-  </data>
-  <data name="&gt;&gt;lbLineSensor.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbLineSensor.Parent" xml:space="preserve">
-    <value>tpLine</value>
-  </data>
-  <data name="&gt;&gt;lbLineSensor.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="tpLine.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="tpArea.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 25</value>
   </data>
-  <data name="tpLine.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="tpArea.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
   </data>
-  <data name="tpLine.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="tpArea.Size" type="System.Drawing.Size, System.Drawing">
     <value>309, 223</value>
   </data>
-  <data name="tpLine.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+  <data name="tpArea.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
-  <data name="tpLine.Text" xml:space="preserve">
-    <value>线阵</value>
+  <data name="tpArea.Text" xml:space="preserve">
+    <value>面阵</value>
   </data>
-  <data name="&gt;&gt;tpLine.Name" xml:space="preserve">
-    <value>tpLine</value>
+  <data name="&gt;&gt;tpArea.Name" xml:space="preserve">
+    <value>tpArea</value>
   </data>
-  <data name="&gt;&gt;tpLine.Type" xml:space="preserve">
+  <data name="&gt;&gt;tpArea.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;tpLine.Parent" xml:space="preserve">
+  <data name="&gt;&gt;tpArea.Parent" xml:space="preserve">
     <value>tcCamera</value>
   </data>
-  <data name="&gt;&gt;tpLine.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="&gt;&gt;tpArea.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="rbLineWidth.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1309,7 +928,7 @@
     <value>3</value>
   </data>
   <data name="tbLineSensor.Text" xml:space="preserve">
-    <value>61.44</value>
+    <value>23</value>
   </data>
   <data name="&gt;&gt;tbLineSensor.Name" xml:space="preserve">
     <value>tbLineSensor</value>
@@ -1376,6 +995,54 @@
   </data>
   <data name="&gt;&gt;lbLineSensor.ZOrder" xml:space="preserve">
     <value>7</value>
+  </data>
+  <data name="tpLine.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 25</value>
+  </data>
+  <data name="tpLine.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="tpLine.Size" type="System.Drawing.Size, System.Drawing">
+    <value>309, 223</value>
+  </data>
+  <data name="tpLine.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="tpLine.Text" xml:space="preserve">
+    <value>线阵</value>
+  </data>
+  <data name="&gt;&gt;tpLine.Name" xml:space="preserve">
+    <value>tpLine</value>
+  </data>
+  <data name="&gt;&gt;tpLine.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tpLine.Parent" xml:space="preserve">
+    <value>tcCamera</value>
+  </data>
+  <data name="&gt;&gt;tpLine.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tcCamera.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 46</value>
+  </data>
+  <data name="tcCamera.Size" type="System.Drawing.Size, System.Drawing">
+    <value>317, 252</value>
+  </data>
+  <data name="tcCamera.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;tcCamera.Name" xml:space="preserve">
+    <value>tcCamera</value>
+  </data>
+  <data name="&gt;&gt;tcCamera.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tcCamera.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tcCamera.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="cbCamInter.Location" type="System.Drawing.Point, System.Drawing">
     <value>178, 318</value>
@@ -1465,7 +1132,7 @@
     <value>13</value>
   </data>
   <data name="tbFlange.Text" xml:space="preserve">
-    <value>6.56</value>
+    <value>12</value>
   </data>
   <data name="&gt;&gt;tbFlange.Name" xml:space="preserve">
     <value>tbFlange</value>
@@ -1516,7 +1183,7 @@
     <value>17</value>
   </data>
   <data name="tbDistance.Text" xml:space="preserve">
-    <value>400</value>
+    <value>500</value>
   </data>
   <data name="&gt;&gt;tbDistance.Name" xml:space="preserve">
     <value>tbDistance</value>
@@ -1540,7 +1207,7 @@
     <value>18</value>
   </data>
   <data name="tbDistanRange.Text" xml:space="preserve">
-    <value>100</value>
+    <value>200</value>
   </data>
   <data name="&gt;&gt;tbDistanRange.Name" xml:space="preserve">
     <value>tbDistanRange</value>

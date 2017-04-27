@@ -500,4 +500,19 @@
         AAA=
 </value>
   </data>
+  <data name="addFailInfo" xml:space="preserve">
+    <value>Handler Fail</value>
+  </data>
+  <data name="addSuccessInfo" xml:space="preserve">
+    <value>Insert Successful</value>
+  </data>
+  <data name="nameNone" xml:space="preserve">
+    <value>none</value>
+  </data>
+  <data name="postRingNumber" xml:space="preserve">
+    <value>  total</value>
+  </data>
+  <data name="preProjectName" xml:space="preserve">
+    <value>No. </value>
+  </data>
 </root>

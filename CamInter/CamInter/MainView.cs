@@ -32,7 +32,7 @@ namespace CamInter
 
             dbHandler.InitialTable();
             this.InitialCamInter();
-            //this.btnSelect_Click(null, null);
+            this.btnSelect_Click(null, null);
         }
 
         private void InitialCamInter()
@@ -41,7 +41,7 @@ namespace CamInter
             this.cbCamInter.DataSource = this.dtInter;
             this.cbCamInter.DisplayMember = "Name";
             this.cbCamInter.ValueMember = "Idx";
-            this.cbCamInter.SelectedIndex = 2;
+            this.cbCamInter.SelectedIndex = 1;
             this.tcCamera.SelectedIndex = 1;
 
             this.initialConditionFlag = true;
