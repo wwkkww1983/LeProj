@@ -225,7 +225,7 @@ namespace Core
         /// <returns></returns>
         public static bool IsUnsignedRealNumber(string input)
         {
-            string strPattern = @"^\d+(\.\d{1,2})?$";
+            string strPattern = @"^\d+(\.\d{1,4})?$";
             return IsMatch(input, strPattern);
         }
 

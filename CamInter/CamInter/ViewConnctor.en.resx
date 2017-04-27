@@ -128,7 +128,10 @@
     <value>76, 37</value>
   </data>
   <data name="tbName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>194, 25</value>
+    <value>131, 25</value>
+  </data>
+  <data name="lbDesc.Location" type="System.Drawing.Point, System.Drawing">
+    <value>18, 78</value>
   </data>
   <data name="lbDesc.Size" type="System.Drawing.Size, System.Drawing">
     <value>151, 15</value>
@@ -141,6 +144,18 @@
   </data>
   <data name="btnCancel.Text" xml:space="preserve">
     <value>Cancel</value>
+  </data>
+  <data name="lbLength.Location" type="System.Drawing.Point, System.Drawing">
+    <value>217, 42</value>
+  </data>
+  <data name="lbLength.Size" type="System.Drawing.Size, System.Drawing">
+    <value>71, 15</value>
+  </data>
+  <data name="lbLength.Text" xml:space="preserve">
+    <value>Length *</value>
+  </data>
+  <data name="tbLength.Location" type="System.Drawing.Point, System.Drawing">
+    <value>290, 37</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

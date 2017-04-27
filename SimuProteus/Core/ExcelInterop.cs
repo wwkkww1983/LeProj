@@ -21,7 +21,7 @@ namespace SimuProteus
             app = new Excel.Application();
             app.Visible = false;
             Excel.Worksheet worksheet = null;
-            string fileName = Constants.CurrentDirectory + '\\' + DateTime.Now.ToString("yyyy-MM-dd") + ".xlsx";
+            string fileName = Constants.CurrentDirectory + '\\' + DateTime.Now.ToString("yyyyMMdd_hhmmss") + ".xlsx";
             if (System.IO.File.Exists(fileName))
             {
                 workBook = app.Workbooks.Open(fileName);

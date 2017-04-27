@@ -123,6 +123,12 @@ namespace SimuProteus
                 return;
             }
 
+            if (this.tbNumber.Text.Trim().Length != 8)
+            {
+                MessageBox.Show("ID号要求为8位");
+                return;
+            }
+
             int imgWidth = int.Parse(tbWidth.Text),
                 imgHeight = int.Parse(tbHeight.Text);
             if (sourcePath != string.Empty)
@@ -202,14 +208,18 @@ namespace SimuProteus
                 maxY = Math.Max(foot.LocY, maxY);
             }
 
-            result = result && !(maxX - minX > 0 && (maxX - minX - this.netSize) % this.netInterval != 0 ||
-                               maxY - minY > 0 && (maxY - minY - this.netSize) % this.netInterval != 0);
+            result = result && !(maxX - minX > 0 && (maxX - minX) % this.netInterval != 0 ||
+                               maxY - minY > 0 && (maxY - minY) % this.netInterval != 0);
+            if (!result)
+            {
+                MessageBox.Show("管脚不在节点上");
+            }
 
             for (int i = 0; result && i < lineList.Count; i++)
             {
                 LineFoot foot = lineList[i];
-                if (foot.LocX == imgWidth && (foot.LocX - this.netSize) % this.netInterval != 0 ||
-                    foot.LocY == imgHeight && (foot.LocY - this.netSize) % this.netInterval != 0)
+                if (foot.LocX == imgWidth && (foot.LocX) % this.netInterval != 0 ||
+                    foot.LocY == imgHeight && (foot.LocY) % this.netInterval != 0)
                 {
                     MessageBox.Show("管脚坐标不能都在节点上");
                     result = false;

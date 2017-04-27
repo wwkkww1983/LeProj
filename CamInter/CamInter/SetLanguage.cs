@@ -30,7 +30,7 @@ namespace CamInter
             if (form != null)
             {
                 ComponentResourceManager resources = new ComponentResourceManager(frmtype);
-                resources.ApplyResources(form, form.Name);
+                resources.ApplyResources(form, "$this");
                 AppLang(form, resources);
             }
         }

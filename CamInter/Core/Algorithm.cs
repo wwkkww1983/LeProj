@@ -163,13 +163,13 @@ namespace Core
             List<List<RingMedium>> shortestList = this.SearchShortestExtend(allList, lengthMid);
             if (this.CombinationStructDataList(lens, shortestList)) return;
 
-            List<List<RingMedium>> mostWidthList = this.SearchMostWidthExtend(shortestList);
+            List<List<RingMedium>> mostLengthList = this.SearchMostLengthExtend(shortestList);
+            if (this.CombinationStructDataList(lens, mostLengthList)) return;
+
+            List<List<RingMedium>> mostWidthList = this.SearchMostWidthExtendSimple(mostLengthList);
             if (this.CombinationStructDataList(lens, mostWidthList)) return;
 
-            List<List<RingMedium>> mostLengthList = this.SearchMostLengthExtend(mostWidthList);
-            this.CombinationStructDataList(lens, mostLengthList);
-
-            List<List<RingMedium>> resultList = this.FilterRepeatExtend(mostLengthList);
+            List<List<RingMedium>> resultList = this.FilterRepeatExtend(mostWidthList);
             this.CombinationStructDataList(lens, resultList, true);
         }
 
@@ -196,6 +196,31 @@ namespace Core
                 }
             }
             return shortestList;
+        }
+
+        private List<List<RingMedium>> SearchMostWidthExtendSimple(List<List<RingMedium>> allList)
+        {
+            float maxWidth = 0;
+            List<List<RingMedium>> mostWidthList = new List<List<RingMedium>>();
+            foreach (List<RingMedium> itemList in allList)
+            {
+                float extLength = 0;
+                foreach (RingMedium item in itemList)
+                {
+                    extLength += item.RingType == enumProductType.Extend ? this.connectorIDLen[item.InterUp] : 0;
+                }
+                extLength = Math.Abs(extLength);
+                if (extLength > maxWidth)
+                {
+                    mostWidthList.Clear();
+                }
+                if (extLength >= maxWidth)
+                {
+                    maxWidth = extLength;
+                    mostWidthList.Add(itemList);
+                }
+            }
+            return mostWidthList;
         }
 
         private List<List<RingMedium>> SearchMostWidthExtend(List<List<RingMedium>> allList)

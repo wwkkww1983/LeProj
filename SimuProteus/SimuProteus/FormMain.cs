@@ -59,7 +59,7 @@ namespace SimuProteus
             InitializeComponent();
 
             this.InitialControl();
-            dbHandler.InitialTable();
+            //dbHandler.InitialTable();
             this.elementList = dbHandler.GetBaseComponents();
             int idx = 0;
             foreach (ElementInfo item in this.elementList)
@@ -236,7 +236,12 @@ namespace SimuProteus
         private void UpdateComponent(FormNewComponent window, ElementInfo info)
         {
             string strResult = "更新失败";
-            if (dbHandler.UpdateBaseComponent(info))
+
+            if (dbHandler.HasComponentByNameID(info.Name, info.Number,info.ID))
+            {
+                strResult = "类型名称或ID号重复";
+            }
+            else if (dbHandler.UpdateBaseComponent(info))
             {
                 strResult = "更新成功";
                 this.elementList = null;
@@ -1050,12 +1055,6 @@ namespace SimuProteus
             chipInfo.Location = this.CalcElementCoord(chipInfo, new Point(locX / 2, locY / 2));
 
             return this.getElementView(chipInfo);
-        }
-
-        private void newComponentToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            FormNewComponent formComp = new FormNewComponent(this.CreateNewComponent, null, null);
-            formComp.ShowDialog();
         }
 
         private UcElement getElementView(ElementInfo info)

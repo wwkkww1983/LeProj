@@ -377,4 +377,19 @@
         AAA=
 </value>
   </data>
+  <data name="Adapter" xml:space="preserve">
+    <value>adapter</value>
+  </data>
+  <data name="Camera" xml:space="preserve">
+    <value>camera</value>
+  </data>
+  <data name="CamLens" xml:space="preserve">
+    <value>lens</value>
+  </data>
+  <data name="Extend" xml:space="preserve">
+    <value>extend</value>
+  </data>
+  <data name="Focus" xml:space="preserve">
+    <value>focus</value>
+  </data>
 </root>

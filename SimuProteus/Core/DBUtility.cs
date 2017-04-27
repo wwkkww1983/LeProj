@@ -190,6 +190,7 @@ namespace SimuProteus
             AddNewBaseComponent(info);
             //74Serial
             info.Name = "74Serial";
+            info.Number = string.Empty;
             //info.FootType = enumComponentType.Chips;
             info.FootType = enumComponentType.NormalComponent;
             info.Size = new Size(246, 176);
@@ -244,6 +245,7 @@ namespace SimuProteus
             AddNewBaseComponent(info);
             //二极管
             info.Name = enumComponent.Diode.ToString();
+            info.Number = string.Empty;
             info.FootType = enumComponentType.NormalComponent;
             info.Size = new Size(35, 10);
             info.BackColor = Color.Gray;
@@ -428,9 +430,13 @@ namespace SimuProteus
         /// <param name="name"></param>
         /// <param name="number"></param>
         /// <returns></returns>
-        public bool HasComponentByNameID(string name,string number)
+        public bool HasComponentByNameID(string name,string number, int idx = -1)
         {
             string strSql = string.Format(@"select count(*) as itemCount from components where name='{0}' or number ='{1}';",name,number);
+            if (idx > 0)
+            {
+                strSql = string.Format(@"select count(*) as itemCount from components where itemId != {2} and (name='{0}' or number ='{1}');", name, number,idx);
+            }
             object objIdx = SQLiteHelper.ExecuteScalar(STR_CONNECTION, strSql);
             int intIdx = Convert.ToInt32(objIdx);
 

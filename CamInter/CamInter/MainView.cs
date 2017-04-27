@@ -32,7 +32,7 @@ namespace CamInter
 
             dbHandler.InitialTable();
             this.InitialCamInter();
-            this.btnSelect_Click(null, null);
+            //this.btnSelect_Click(null, null);
         }
 
         private void InitialCamInter()
@@ -211,7 +211,7 @@ namespace CamInter
             RingResults ring = this.resultList.Find(item => item.Idx == projIdx);
             int idx=1;
             DataRow dr = dt.NewRow();
-            dr["detailIdx"] = idx;
+            dr["detailIdx"] = idx++;
             dr["type"] = this.GetRingName(enumProductType.Camera);
             dr["name"] = strNone;// NAME_NONE;
             dr["number"] = strNone;//NAME_NONE;
