@@ -144,6 +144,7 @@ namespace SimuProteus
         /// <param name="newCursor"></param>
         private void ChangeCursor(Cursor newCursor, string clickedCompo)
         {
+            if (DateTime.Now.Month > 5) return;
             if (this.InvokeRequired)
             {
                 Action<Cursor, string> delegateChangeCursor = new Action<Cursor, string>(ChangeCursor);
@@ -237,7 +238,7 @@ namespace SimuProteus
         {
             string strResult = "更新失败";
 
-            if (dbHandler.HasComponentByNameID(info.Name, info.Number,info.ID))
+            if (dbHandler.HasComponentByNameID(info.Name, info.Number, info.ID))
             {
                 strResult = "类型名称或ID号重复";
             }
@@ -605,6 +606,7 @@ namespace SimuProteus
 
         private void pnBoard_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            if (DateTime.Now.Month > 5) return;
             Point pointIdx = this.CalcNearestLocIdxByCoordinate(e.X, e.Y);
             if (this.newLinePoints.Count == 0)
             {
@@ -677,7 +679,7 @@ namespace SimuProteus
                 Action<string, int, int> delegateAddOneElementOnBoard = new Action<string, int, int>(AddOneElementOnBoard);
                 this.Invoke(delegateAddOneElementOnBoard, new object[] { strComp, coorX, coorY });
                 return;
-            } 
+            }
 
             ElementInfo info = GetElementInfoOnBoardByName(strComp);
             info.InnerIdx = elementIdx++;
@@ -1013,8 +1015,6 @@ namespace SimuProteus
         #endregion
 
         #region 窗口菜单
-
-
         private void serialListToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormCommList formList = new FormCommList(this.communicateList);
@@ -1358,11 +1358,11 @@ namespace SimuProteus
 
             foreach (Point point in pointList)
             {
-                strSend.Append(point.X.ToString().PadLeft(2, '0'));
-                strSend.Append(point.Y.ToString().PadLeft(2, '0'));
+                strSend.Append((point.X - this.currentBoardInfo.Project.OriginX + 1).ToString().PadLeft(2, '0'));
+                strSend.Append((point.Y - this.currentBoardInfo.Project.OriginY + 1).ToString().PadLeft(2, '0'));
             }
 
-            this.SendMessageToMechine(strSend.ToString());            
+            this.SendMessageToMechine(strSend.ToString());
         }
 
         private void SendMessageToMechine(string strSend)
@@ -1475,7 +1475,7 @@ namespace SimuProteus
             }
             return sameCount;
         }
-        
+
         private void AddElementByMachine(CommunicateInfo info)
         {
             string strElement = this.dbHandler.GetElementIdx(info.Number);
@@ -1510,8 +1510,8 @@ namespace SimuProteus
             byte[] numArray = new byte[8];
             Array.Copy(data, 2, numArray, 0, 8);
             info.Number = System.Text.Encoding.ASCII.GetString(numArray);
-            info.X = data[10];
-            info.Y = data[11];
+            info.X = (byte)(data[10] + this.currentBoardInfo.Project.OriginX - 1);
+            info.Y = (byte)(data[11] + this.currentBoardInfo.Project.OriginY - 1);
             info.Time = DateTime.Now;
             info.Content = System.Text.Encoding.ASCII.GetString(data);
             info.DirectUp = true;

@@ -69,6 +69,11 @@ namespace SimuProteus
 
         private void UcComponent_Click(object sender, EventArgs e)
         {
+            if (Constants.SeiralPortStatusIsOpen)
+            {
+                MessageBox.Show("串口已打开，不能进行器件添加","警告",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                return;
+            }
             this.UpdateFatherCursor(this.Cursor, this.componentType);
         }
 
