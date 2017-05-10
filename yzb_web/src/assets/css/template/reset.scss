@@ -1,0 +1,75 @@
+@import "colors.scss";
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+    -webkit: {
+        tap-highlight-color: transparent;
+    }
+}
+input, button, textarea, img {
+    outline: none;
+}
+textarea {
+    resize: none;
+}
+a {
+    text-decoration: none;
+}
+.el-form-item {
+    .el-form-item__label {
+        @include TC1;
+    }
+    .el-form-item__content {
+        .el-input,.el-select {
+            .el-input__inner {
+                @include TC1;
+                border-color: $C3;
+                &:focus {
+                    border-color: $C3;
+                }
+                &:hover {
+                    border-color: $C3;
+                }
+            }
+        }
+        .el-input-group--append {
+            .el-input__inner {
+                border-right: 0;
+            }
+        }
+    }
+    &.is-error {
+        .el-form-item__content {
+            .el-input,.el-select {
+                .el-input__inner {
+                    border-color: #ff4949;
+                }
+            }
+        }
+    }
+}
+.el-color-dropdown {
+    .el-color-dropdown__btns {
+        .el-color-dropdown__link-btn {
+            display: none;
+        }
+    }
+}
+.el-select-dropdown {
+    min-width: 110px;
+    transform-origin: center top 0px;
+    .el-select-dropdown__wrap {
+        .el-select-dropdown__list {
+            .el-select-dropdown__item {
+                background-color: $C2;
+                &.hover {
+                    background-color: $C2;
+                }
+                &.selected {
+                    background-color: $C2;
+                }
+            }
+        }
+    }
+}

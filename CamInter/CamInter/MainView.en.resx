@@ -132,28 +132,10 @@
   <data name="extend.HeaderText" xml:space="preserve">
     <value>Extend</value>
   </data>
-  <data name="ratio.HeaderText" xml:space="preserve">
-    <value>Ratio</value>
-  </data>
   <data name="workDistance.HeaderText" xml:space="preserve">
     <value>Work Distance</value>
   </data>
-  <data name="fovLength.HeaderText" xml:space="preserve">
-    <value>Fov Length</value>
-  </data>
-  <data name="fovWidth.HeaderText" xml:space="preserve">
-    <value>Fov Width</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="dgvProjList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1015, 281</value>
-  </data>
-  <data name="addItemToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>91, 24</value>
-  </data>
-  <data name="addItemToolStripMenuItem.Text" xml:space="preserve">
-    <value>New Item</value>
-  </data>
   <data name="CamLensToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>142, 24</value>
   </data>
@@ -184,14 +166,17 @@
   <data name="connToolStripMenuItem.Text" xml:space="preserve">
     <value>Interface</value>
   </data>
+  <data name="addItemToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>91, 24</value>
+  </data>
+  <data name="addItemToolStripMenuItem.Text" xml:space="preserve">
+    <value>New Item</value>
+  </data>
   <data name="lanToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>92, 24</value>
   </data>
   <data name="lanToolStripMenuItem.Text" xml:space="preserve">
     <value>Language</value>
-  </data>
-  <data name="dgvProjDetail.Location" type="System.Drawing.Point, System.Drawing">
-    <value>335, 340</value>
   </data>
   <data name="detailIdx.HeaderText" xml:space="preserve">
     <value>Number</value>
@@ -213,9 +198,6 @@
   </data>
   <data name="length.HeaderText" xml:space="preserve">
     <value>Length(mm)</value>
-  </data>
-  <data name="tpArea.Text" xml:space="preserve">
-    <value>Length &amp; Width</value>
   </data>
   <data name="lbValueWidth.Location" type="System.Drawing.Point, System.Drawing">
     <value>243, 28</value>
@@ -268,8 +250,8 @@
   <data name="lbSensor.Text" xml:space="preserve">
     <value>Sensor Size(mm) *</value>
   </data>
-  <data name="tpLine.Text" xml:space="preserve">
-    <value>One Side</value>
+  <data name="tpArea.Text" xml:space="preserve">
+    <value>Length &amp; Width</value>
   </data>
   <data name="rbLineWidth.Size" type="System.Drawing.Size, System.Drawing">
     <value>68, 19</value>
@@ -283,9 +265,6 @@
   <data name="rbLineLength.Text" xml:space="preserve">
     <value>Length</value>
   </data>
-  <data name="tbLineFov.Text" xml:space="preserve">
-    <value>100</value>
-  </data>
   <data name="lbLineFov.Location" type="System.Drawing.Point, System.Drawing">
     <value>67, 124</value>
   </data>
@@ -294,9 +273,6 @@
   </data>
   <data name="lbLineFov.Text" xml:space="preserve">
     <value>Fov(mm) *</value>
-  </data>
-  <data name="tbLineSensor.Text" xml:space="preserve">
-    <value>28</value>
   </data>
   <data name="lbLineResolution.Location" type="System.Drawing.Point, System.Drawing">
     <value>27, 165</value>
@@ -315,6 +291,9 @@
   </data>
   <data name="lbLineSensor.Text" xml:space="preserve">
     <value>Sensor Size(mm) *</value>
+  </data>
+  <data name="tpLine.Text" xml:space="preserve">
+    <value>One Side</value>
   </data>
   <data name="lbCamInter.Location" type="System.Drawing.Point, System.Drawing">
     <value>29, 321</value>
@@ -343,14 +322,11 @@
   <data name="lbWork.Text" xml:space="preserve">
     <value>Work Distance(mm)</value>
   </data>
-  <data name="tbDistanRange.Text" xml:space="preserve">
-    <value>100</value>
-  </data>
   <data name="btnSelect.Text" xml:space="preserve">
     <value>Click Search</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1358, 562</value>
+    <value>1119, 562</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -520,20 +496,5 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Find Rings For Camera </value>
-  </data>
-  <data name="addFailInfo" xml:space="preserve">
-    <value>handle FAIL !</value>
-  </data>
-  <data name="addSuccessInfo" xml:space="preserve">
-    <value>create SUCESS !</value>
-  </data>
-  <data name="nameNone" xml:space="preserve">
-    <value>none</value>
-  </data>
-  <data name="postRingNumber" xml:space="preserve">
-    <value> total</value>
-  </data>
-  <data name="preProjectName" xml:space="preserve">
-    <value>NO.</value>
   </data>
 </root>

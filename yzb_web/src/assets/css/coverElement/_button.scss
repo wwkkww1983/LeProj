@@ -1,0 +1,59 @@
+// 按钮
+@mixin btn ($width:100px, $height:30px, $lh:30px, $color:#fff, $bgc: $oa,$mr:30px) {
+    vertical-align: top;
+    text-align: center;
+    font-size: 14px;
+    border-radius: 4px;
+    display: inline-block;
+    width: $width;
+    height: $height;
+    line-height: $lh;
+    color: $color;
+    background-color: $bgc;
+    margin-right: $mr;
+    outline: none;
+}
+.cancel-btn-lg{ // 大白色按钮
+    border: 1px solid $d6;
+    @include btn($width:240px, $height:36px, $lh:36px, $color:$c9, $bgc:#fff, $mr:88px);
+}
+.confirm-btn-lg{ // 大主色按钮
+    @include btn($width:240px, $height:36px, $lh:36px, $mr:0);
+}
+.cancel-btn-w120{
+    border: 1px solid $d6;
+    @include btn($width:120px, $height:34px,$lh:34px,$color:$c9,$bgc:#fff);
+}
+.confirm-btn-w120{
+    @include btn($width:120px, $height:34px,$lh:34px);
+}
+.btn-w100{
+    @include btn($width:100px, $height:30px);
+}
+.cancel-btn-small{ // 正常主色按钮
+    border: 1px solid $d6;
+    @include btn($width:100px, $height:30px, $lh:30px, $color:$c9, $bgc:#fff, $mr:88px);
+}
+.confirm-btn-small{ // 正常主色按钮
+    @include btn($width:100px, $height:30px);
+}
+.audit-succeed-btn{ // 通过审核
+    @include btn($width:60px, $height:24px, $bgc:$d6);
+}
+.audit-no-btn{ // 未通过审核
+    @include btn($width:60px, $height:24px, $lh:24px);
+}
+.btn-w100{ // 按钮
+    .el-button{
+        display: inline-block;
+        padding: 0;
+        width: 100px;
+        height: 30px;
+        background-color: red;
+    }
+}
+
+// 按钮只是单纯的按钮，把背景色和字体色抽出来
+.btn-w90-h30{
+     @include btn($width:30px, $height:90px);
+}

@@ -1,0 +1,31 @@
+// 分页
+.paga-30{
+    text-align: center;
+    margin-left: -10px;
+    .el-pagination{
+        .el-pagination__total{
+            height: 30px;
+            line-height: 30px;
+        }
+        .el-pagination__sizes{
+            height: 30px;
+            line-height: 30px;
+        }
+        .el-pager{
+            .number{
+                height: 30px;
+                line-height: 30px;
+            }
+        }
+        .el-pager{
+            li{
+                height: 30px;
+                line-height: 30px;
+            }
+        }
+        span,button{
+            height: 30px;
+            line-height: 30px;
+        }
+    }
+}

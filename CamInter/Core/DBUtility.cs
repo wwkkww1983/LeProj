@@ -67,6 +67,8 @@ namespace Core
             this.InsertItem(new Connectors() { Name = "F", Idx = 8, Length = 41 });
             this.InsertItem(new Connectors() { Name = "Basler", Idx = 9, Length = 33.8f });
             this.InsertItem(new Connectors() { Name = "M95", Idx = 10, Length = 95 });
+            this.InsertItem(new Connectors() { Name = "V90", Idx = 11, Length = 70 });
+            this.InsertItem(new Connectors() { Name = "V48", Idx = 12, Length = 90 });
             #endregion
 
             #region 调焦环
@@ -146,6 +148,17 @@ namespace Core
                 LengthMax = 24.2f,
                 InterUp = 7,
                 InterDown = 5
+            });
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Focus,
+                Name = "V48 to V70",
+                Number = "1075304A",
+                Length = 0f,
+                LengthMin = 0f,
+                LengthMax = 0f,
+                InterUp = 6,
+                InterDown = 12
             });
             #endregion
 
@@ -527,6 +540,447 @@ namespace Core
                 Length = 28.6f,
                 RatioMin = 0,
                 RatioMax = 1
+            });
+
+
+            this.InsertItem(new CameraLens
+            {
+                Name = "Makro-Symmar 5.6/120-0058",
+                Number = "1002647",
+                Focus = 120.7f,
+                Connector = 5,
+                Target = 82f,
+                Flange = 115.3f,
+                HH = -1.8f,
+                Length = 28.6f,
+                RatioMin = 0.78f,
+                RatioMax = 1.23f
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Makro-Symmar 5.6/120-0059",
+                Number = "1002648",
+                Focus = 120.2f,
+                Connector = 5,
+                Target = 82f,
+                Flange = 114.9f,
+                HH = -1.2f,
+                Length = 28.6f,
+                RatioMin = 0.53f,
+                RatioMax = 0.98f
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Makro-Symmar 5.6/120-0060",
+                Number = "1002650",
+                Focus = 119.8f,
+                Connector = 5,
+                Target = 82f,
+                Flange = 114.1f,
+                HH = -0.5f,
+                Length = 28.6f,
+                RatioMin = 0.28f,
+                RatioMax = 0.73f
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Makro-Symmar 5.6/120-0061",
+                Number = "1004611",
+                Focus = 118.9f,
+                Connector = 5,
+                Target = 82f,
+                Flange = 113.8f,
+                HH = 0.6f,
+                Length = 28.6f,
+                RatioMin = 0.16f,
+                RatioMax = 0.48f
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Makro-APO-CPN 4.5/90-0018",
+                Number = "1004531",
+                Focus = 90.8f,
+                Connector = 5,
+                Target = 82f,
+                Flange = 86.55f,
+                HH = -3.56f,
+                Length = 28.6f,
+                RatioMin = 0.1f,
+                RatioMax = 0.5f
+            });
+
+
+
+//==============================================
+            this.InsertItem(new CameraLens
+            {
+                Name = "Micro-Symmar 2.8/50mm",
+                Number = "1012492",
+                Focus = 50.811f,
+                Connector = 5,
+                Target = 58f,
+                Flange =6.78f,
+                HH = -32.518f,
+                Length = 28.6f,
+                RatioMin = 3.4f,
+                RatioMax = 3.6f
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "MacroVaron 4.5/85",
+                Number = "1072517",
+                Focus = 85.1f,
+                Connector = 5,
+                Target = 63f,
+                Flange = 64.05f,
+                HH = -5.1f,
+                Length = 28.6f,
+                RatioMin = 0.4f,
+                RatioMax = 3.6f
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "MacroVaron 4.5/85 with BS",
+                Number = "1069837",
+                Focus = 85.2f,
+                Connector = 5,
+                Target = 63f,
+                Flange = 60.9f,
+                HH = 2.9f,
+                Length = 28.6f,
+                RatioMin = 3.4f,
+                RatioMax = 3.6f
+            });
+
+
+            this.InsertItem(new CameraLens
+            {
+                Name = "Xenon Sapphire 4.5/95mm",
+                Number = "1068013",
+                Focus = 95f,
+                Connector = 6,
+                Target = 62.5f,
+                Flange =60.87f,
+                HH = -2.22f,
+                Length = 28.6f,
+                RatioMin = 0.02f,
+                RatioMax = 0.18f
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Xenon Sapphire 3.9/95mm",
+                Number = "1071819",
+                Focus = 95.1f,
+                Connector = 6,
+                Target = 62.5f,
+                Flange = 62.33f,
+                HH = -8.8f,
+                Length = 28.6f,
+                RatioMin = 0.19f,
+                RatioMax = 0.29f
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Xenon Sapphire 3.7/96mm",
+                Number = "1071818",
+                Focus = 95.5f,
+                Connector = 6,
+                Target = 62.5f,
+                Flange = 60.85f,
+                HH = -9.28f,
+                Length = 28.6f,
+                RatioMin = 0.245f,
+                RatioMax = 0.34f
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Xenon Sapphire 3.5/96mm",
+                Number = "1068012",
+                Focus = 95.5f,
+                Connector = 6,
+                Target = 62.5f,
+                Flange = 60.15f,
+                HH = -9.1f,
+                Length = 28.6f,
+                RatioMin = 0.29f,
+                RatioMax = 0.40f
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Xenon Sapphire 3.2/96mm",
+                Number = "1071189",
+                Focus = 96.2f,
+                Connector = 6,
+                Target = 62.5f,
+                Flange =60.82f,
+                HH = -9.79f,
+                Length = 28.6f,
+                RatioMin = 0.44f,
+                RatioMax = 0.56f
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Xenon Sapphire 3.2/97mm",
+                Number = "1071190",
+                Focus = 97f,
+                Connector = 6,
+                Target = 62.5f,
+                Flange = 60.24f,
+                HH = -12.3f,
+                Length = 28.6f,
+                RatioMin = 0.64f,
+                RatioMax = 0.77f
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Xenon Sapphire 3.2/88mm",
+                Number = "1068014",
+                Focus = 87.5f,
+                Connector = 6,
+                Target = 62.5f,
+                Flange = 59.8f,
+                HH = -7.2f,
+                Length = 28.6f,
+                RatioMin = 1.64f,
+                RatioMax = 1.86f
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Xenon Sapphire 3.2/97mm",
+                Number = "1076096",
+                Focus = 97f,
+                Connector = 6,
+                Target = 82f,
+                Flange =10.8f,
+                HH = -12.3f,
+                Length = 28.6f,
+                RatioMin = 1.34f,
+                RatioMax = 1.55f
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Xenon Sapphire 3.2/88mm with BS",
+                Number = "1073347",
+                Focus = 88.2f,
+                Connector = 6,
+                Target = 62.5f,
+                Flange = 60.8f,
+                HH = -0.9f,
+                Length = 28.6f,
+                RatioMin = 1.64f,
+                RatioMax = 1.86f
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Xenon Sapphire 2.8/98mm",
+                Number = "1076452",
+                Focus = 97.5f,
+                Connector = 6,
+                Target = 62.5f,
+                Flange = 61.46f,
+                HH = -12.89f,
+                Length = 28.6f,
+                RatioMin = 0.82f,
+                RatioMax = 0.93f
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Xenon Sapphire 2.8/98mm",
+                Number = "1076453",
+                Focus = 97.5f,
+                Connector = 6,
+                Target = 82f,
+                Flange = 9.7f,
+                HH = -12.9f,
+                Length = 28.6f,
+                RatioMin = 1.07f,
+                RatioMax = 1.21f
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Xenon Sapphire 3.2/96mm",
+                Number = "1076351",
+                Focus = 96.21f,
+                Connector = 6,
+                Target = 82f,
+                Flange = 17.28f,
+                HH = -9.62f,
+                Length = 28.6f,
+                RatioMin = 1.84f,
+                RatioMax = 2.16f
+            });
+
+
+            this.InsertItem(new CameraLens
+            {
+                Name = "Xenon-Diamond 2.7/111mm",
+                Number = "1078039",
+                Focus = 111.2f,
+                Connector = 6,
+                Target = 82f,
+                Flange = 66.17f,
+                HH = -6.8f,
+                Length = 28.6f,
+                RatioMin = 2.44f,
+                RatioMax = 2.76f
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Xenon-Diamond 2.9/106mm with BS",
+                Number = "1076949",
+                Focus = 105.3f,
+                Connector = 6,
+                Target = 82f,
+                Flange = 68.44f,
+                HH = 13.1f,
+                Length = 28.6f,
+                RatioMin = 2.44f,
+                RatioMax = 2.76f
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Xenon-Diamond 2.2/117mm",
+                Number = "1076963",
+                Focus = 116.9f,
+                Connector = 11,
+                Target = 82f,
+                Flange = 36.9f,
+                HH = -8.3f,
+                Length = 28.6f,
+                RatioMin = 3.34f,
+                RatioMax = 3.66f
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Xenon-Diamond 2.3/116mm with BS",
+                Number = "1079718",
+                Focus = 116f,
+                Connector = 11,
+                Target = 82f,
+                Flange = 32.9f,
+                HH = 0.83f,
+                Length = 28.6f,
+                RatioMin = 3.34f,
+                RatioMax = 3.66f
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Xenon-Diamond 1.5/82mm",
+                Number = "1079320",
+                Focus = 82.4f,
+                Connector = 6,
+                Target = 82f,
+                Flange = 0.59f,
+                HH = -27.3f,
+                Length = 28.6f,
+                RatioMin = 5.04f,
+                RatioMax = 5.31f
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Xenon-Diamond 1.6/80mm with BS",
+                Number = "1081873",
+                Focus = 80f,
+                Connector = 6,
+                Target = 82f,
+                Flange = 3.1f,
+                HH = -14.65f,
+                Length = 28.6f,
+                RatioMin = 5.04f,
+                RatioMax = 5.31f
+            });
+
+
+            this.InsertItem(new CameraLens
+            {
+                Name = "Xenon Zirconia 3.3/92mm",
+                Number = "1073622",
+                Focus = 91.9f,
+                Connector = 12,
+                Target = 82f,
+                Flange = 52.32f,
+                HH = -17.3f,
+                Length = 28.6f,
+                RatioMin = 0.15f,
+                RatioMax = 0.25f
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Xenon Zirconia XL 4.0/104mm",
+                Number = "1079651",
+                Focus = 103.8f,
+                Connector = 12,
+                Target = 82f,
+                Flange = 58.72f,
+                HH = -18.6f,
+                Length = 28.6f,
+                RatioMin = 0.27f,
+                RatioMax = 0.39f
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Xenon Zirconia 3.2/91mm",
+                Number = "1076966",
+                Focus = 91.5f,
+                Connector = 12,
+                Target = 82f,
+                Flange = 48.07f,
+                HH = -18f,
+                Length = 28.6f,
+                RatioMin = 0.42f,
+                RatioMax = 0.58f
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Xenon Zirconia 3.1/91mm",
+                Number = "1078947",
+                Focus = 91.2f,
+                Connector = 12,
+                Target = 82f,
+                Flange = 43.8f,
+                HH = -21.2f,
+                Length = 28.6f,
+                RatioMin = 0.62f,
+                RatioMax = 0.78f
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Xenon Zirconia 2.8/89mm",
+                Number = "1078948",
+                Focus = 88.8f,
+                Connector = 12,
+                Target = 82f,
+                Flange = 41.28f,
+                HH = -20.1f,
+                Length = 28.6f,
+                RatioMin = 0.89f,
+                RatioMax = 1.11f
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Xenon Zirconia 3.2/92mm",
+                Number = "1078872",
+                Focus = 91.6f,
+                Connector = 12,
+                Target = 82f,
+                Flange = 41f,
+                HH = -18.4f,
+                Length = 28.6f,
+                RatioMin = 1.79f,
+                RatioMax = 2.21f
+            });
+            this.InsertItem(new CameraLens
+            {
+                Name = "Xenon Zirconia 3.2/92mm with BS",
+                Number = "1078988",
+                Focus = 93.3f,
+                Connector = 12,
+                Target = 82f,
+                Flange = 45.1f,
+                HH = -11.9f,
+                Length = 28.6f,
+                RatioMin = 1.79f,
+                RatioMax = 2.21f
             });
             #endregion
         }

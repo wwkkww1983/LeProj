@@ -116,7 +116,7 @@ namespace SimuProteus
             if (item.FootType == enumComponentType.NormalComponent)
             {
                 UcComponent compo = new UcComponent(idx++, item, this.ChangeCursor, this.RemoveComponent, this.UpdateComponent);
-                this.gbComponent.Controls.Add(compo);
+                this.pnComponent.Controls.Add(compo);
             }
             else if (item.FootType == enumComponentType.Chips)
             {
@@ -159,17 +159,17 @@ namespace SimuProteus
         private void RemoveComponent(int idx)
         {
             bool removeFlag = false;
-            int ctrlCount = this.gbComponent.Controls.Count;
+            int ctrlCount = this.pnComponent.Controls.Count;
             for (int i = 0; i < ctrlCount; i++)
             {
-                UcComponent item = this.gbComponent.Controls[i] as UcComponent;
+                UcComponent item = this.pnComponent.Controls[i] as UcComponent;
                 if (removeFlag)
                 {
                     item.UpdateLocationY(i);
                 }
                 else if (item.ComponentInfo.ID == idx)
                 {
-                    this.gbComponent.Controls.RemoveAt(i);
+                    this.pnComponent.Controls.RemoveAt(i);
                     i--;
                     ctrlCount--;
                     removeFlag = true;
@@ -223,7 +223,7 @@ namespace SimuProteus
                 if (comIdx > 0)
                 {
                     info.ID = comIdx;
-                    int idx = this.gbComponent.Controls.Count;
+                    int idx = this.pnComponent.Controls.Count;
                     this.AddComponentItem(info, ref idx);
                     strResult = "添加成功";
                     this.elementList = null;
@@ -599,6 +599,11 @@ namespace SimuProteus
                 }
                 else
                 {
+                    if (Constants.SeiralPortStatusIsOpen)
+                    {
+                        MessageBox.Show("串口已打开，不能进行器件添加", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                     this.AddOneElementOnBoard(this.currentSelectedComponent, clickArgs.X, clickArgs.Y);
                 }
             }
@@ -803,7 +808,7 @@ namespace SimuProteus
         {
             int diffWidth = this.Size.Width - defaultWidth, diffHeight = this.Size.Height - defaultHeight;
 
-            this.gbComponent.Height = defaultLeftMenuHeight + diffHeight;
+            this.pnComponent.Height = defaultLeftMenuHeight + diffHeight;
             this.pnWorkPlace.Width = this.defaultWorkPlaceSize.Width + diffWidth;
             this.pnWorkPlace.Height = this.defaultWorkPlaceSize.Height + diffHeight;
             //this.lbProjName.Location = new Point(defaultProjNameCoordX + diffWidth, this.lbProjName.Location.Y);
@@ -1137,6 +1142,13 @@ namespace SimuProteus
             {
                 MessageBox.Show("串口释放成功");
                 Constants.SeiralPortStatusIsOpen = false;
+
+                this.pnBoard.Controls.Clear();
+                this.currentBoardInfo.elementList.Clear();
+                this.currentBoardInfo.footsList.Clear();
+                this.currentBoardInfo.linesList.Clear();
+                this.currentBoardInfo.pointsList.Clear();
+                this.Refresh();
             }
         }
 

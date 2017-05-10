@@ -155,15 +155,6 @@
   <data name="extend.HeaderText" xml:space="preserve">
     <value>延长环</value>
   </data>
-  <metadata name="ratio.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="ratio.HeaderText" xml:space="preserve">
-    <value>放大倍率</value>
-  </data>
-  <data name="ratio.Width" type="System.Int32, mscorlib">
-    <value>90</value>
-  </data>
   <metadata name="workDistance.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -173,30 +164,12 @@
   <data name="workDistance.Width" type="System.Int32, mscorlib">
     <value>150</value>
   </data>
-  <metadata name="fovLength.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="fovLength.HeaderText" xml:space="preserve">
-    <value>视野长</value>
-  </data>
-  <data name="fovLength.Width" type="System.Int32, mscorlib">
-    <value>130</value>
-  </data>
-  <metadata name="fovWidth.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="fovWidth.HeaderText" xml:space="preserve">
-    <value>视野宽</value>
-  </data>
-  <data name="fovWidth.Width" type="System.Int32, mscorlib">
-    <value>130</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="dgvProjList.Location" type="System.Drawing.Point, System.Drawing">
     <value>335, 53</value>
   </data>
   <data name="dgvProjList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1015, 256</value>
+    <value>776, 204</value>
   </data>
   <data name="dgvProjList.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -220,7 +193,7 @@
     <value>0, 0</value>
   </data>
   <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1358, 28</value>
+    <value>1119, 28</value>
   </data>
   <data name="menuStrip1.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -319,10 +292,10 @@
     <value>Bottom, Left, Right</value>
   </data>
   <data name="dgvProjDetail.Location" type="System.Drawing.Point, System.Drawing">
-    <value>335, 315</value>
+    <value>335, 263</value>
   </data>
   <data name="dgvProjDetail.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1015, 217</value>
+    <value>776, 269</value>
   </data>
   <data name="dgvProjDetail.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -676,7 +649,7 @@
     <value>4</value>
   </data>
   <data name="tbLineFov.Text" xml:space="preserve">
-    <value>30</value>
+    <value>160</value>
   </data>
   <data name="&gt;&gt;tbLineFov.Name" xml:space="preserve">
     <value>tbLineFov</value>
@@ -748,7 +721,7 @@
     <value>3</value>
   </data>
   <data name="tbLineSensor.Text" xml:space="preserve">
-    <value>21.65</value>
+    <value>23</value>
   </data>
   <data name="&gt;&gt;tbLineSensor.Name" xml:space="preserve">
     <value>tbLineSensor</value>
@@ -1396,7 +1369,7 @@
     <value>17</value>
   </data>
   <data name="tbDistance.Text" xml:space="preserve">
-    <value>400</value>
+    <value>500</value>
   </data>
   <data name="&gt;&gt;tbDistance.Name" xml:space="preserve">
     <value>tbDistance</value>
@@ -1420,7 +1393,7 @@
     <value>18</value>
   </data>
   <data name="tbDistanRange.Text" xml:space="preserve">
-    <value>100</value>
+    <value>200</value>
   </data>
   <data name="&gt;&gt;tbDistanRange.Name" xml:space="preserve">
     <value>tbDistanRange</value>
@@ -1492,7 +1465,7 @@
     <value>8, 15</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1358, 537</value>
+    <value>1119, 537</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1696,28 +1669,10 @@
   <data name="&gt;&gt;extend.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;ratio.Name" xml:space="preserve">
-    <value>ratio</value>
-  </data>
-  <data name="&gt;&gt;ratio.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;workDistance.Name" xml:space="preserve">
     <value>workDistance</value>
   </data>
   <data name="&gt;&gt;workDistance.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;fovLength.Name" xml:space="preserve">
-    <value>fovLength</value>
-  </data>
-  <data name="&gt;&gt;fovLength.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;fovWidth.Name" xml:space="preserve">
-    <value>fovWidth</value>
-  </data>
-  <data name="&gt;&gt;fovWidth.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;addItemToolStripMenuItem.Name" xml:space="preserve">

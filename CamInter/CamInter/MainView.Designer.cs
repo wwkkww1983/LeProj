@@ -35,10 +35,7 @@
             this.focus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.adapter = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.extend = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ratio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.workDistance = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fovLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fovWidth = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.addItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CamLensToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -113,10 +110,7 @@
             this.focus,
             this.adapter,
             this.extend,
-            this.ratio,
-            this.workDistance,
-            this.fovLength,
-            this.fovWidth});
+            this.workDistance});
             this.dgvProjList.Name = "dgvProjList";
             this.dgvProjList.ReadOnly = true;
             this.dgvProjList.RowTemplate.Height = 27;
@@ -158,33 +152,12 @@
             this.extend.Name = "extend";
             this.extend.ReadOnly = true;
             // 
-            // ratio
-            // 
-            this.ratio.DataPropertyName = "ratio";
-            resources.ApplyResources(this.ratio, "ratio");
-            this.ratio.Name = "ratio";
-            this.ratio.ReadOnly = true;
-            // 
             // workDistance
             // 
             this.workDistance.DataPropertyName = "workDistance";
             resources.ApplyResources(this.workDistance, "workDistance");
             this.workDistance.Name = "workDistance";
             this.workDistance.ReadOnly = true;
-            // 
-            // fovLength
-            // 
-            this.fovLength.DataPropertyName = "fovLength";
-            resources.ApplyResources(this.fovLength, "fovLength");
-            this.fovLength.Name = "fovLength";
-            this.fovLength.ReadOnly = true;
-            // 
-            // fovWidth
-            // 
-            this.fovWidth.DataPropertyName = "fovWidth";
-            resources.ApplyResources(this.fovWidth, "fovWidth");
-            this.fovWidth.Name = "fovWidth";
-            this.fovWidth.ReadOnly = true;
             // 
             // menuStrip1
             // 
@@ -636,10 +609,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn focus;
         private System.Windows.Forms.DataGridViewTextBoxColumn adapter;
         private System.Windows.Forms.DataGridViewTextBoxColumn extend;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ratio;
         private System.Windows.Forms.DataGridViewTextBoxColumn workDistance;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fovLength;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fovWidth;
     }
 }
 

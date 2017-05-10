@@ -97,8 +97,8 @@ namespace Core
                 }
                 if (workLength > 0)
                 {//验证工作距离（工作距离，在用户输入的范围内）
-                    //工作距离 = 镜头焦距 * （2 + 放大倍率 + 1 / 放大倍率）+ HH – Length
-                    double camWork = item.Focus * (2 + ratio + 1.0 / ratio) + item.HH - item.Length;
+                    //工作距离 = 镜头焦距 * （2 + 放大倍率 + 1 / 放大倍率）+ HH – Length - 镜头焦距 * 放大倍率 - 镜头法兰到sensor 的距离
+                    double camWork = item.Focus * (2 + ratio + 1.0 / ratio) + item.HH - item.Length - item.Focus * ratio - item.Flange;
                     if (camWork < workLength - workRange || camWork > workLength + workRange) continue;
                 }
                 result.Add(item);
@@ -109,16 +109,16 @@ namespace Core
         #region 统一寻找
         private void FindAllRing(CameraLens lens, List<RingMedium> current, int interUp, int interDown, float lengthMin, float lengthMax, float target)
         {
-            //if (interUp == interDown && lengthMin <= 0 && lengthMax >= 0)
-            //{//找到合适的
-            //    CombinationStruct(lens,current);
-            //}
             foreach (RingMedium item in this.ringList)
             {
                 if (//调焦环：最多有一个
                     item.RingType == enumProductType.Focus && current != null && current.Find(itmp => itmp.RingType == enumProductType.Focus).Idx > 0 ||
                     //调焦环：相机靶面 >= 56，仅用smart focus 23
                     item.RingType == enumProductType.Focus && target >= 56 && item.Name != "Smart Focus 23" ||
+                    //调焦环：名字以Xenon-Zirconia开头的镜头，用V48 to V70
+                    item.RingType == enumProductType.Focus && lens.Name.StartsWith("Xenon-Zirconia") && !item.Name.Equals("V48 to V70") ||
+                    //调焦环：Xenon-sapphire，xenon-Diamond系列不需要聚焦环
+                    item.RingType == enumProductType.Focus && (lens.Name.StartsWith("Xenon-Diamond") || lens.Name.StartsWith("Xenon Sapphire")) ||
                     //转接环：同一规格仅出现一次
                     item.RingType == enumProductType.Adapter && current != null && current.Find(itmp => itmp.RingType == enumProductType.Adapter && itmp.InterUp == item.InterUp && itmp.InterDown == item.InterDown).Idx > 0 ||
                     //转接环：接口口径方向一致
@@ -130,11 +130,17 @@ namespace Core
                 if (item.InterUp == interUp && item.LengthMin < lengthMax)
                 {
                     current.Add(item);
-                    if (item.InterDown == interDown 
-                        //调焦环：至少有一个
-                        && current.Find(itmp => itmp.RingType == enumProductType.Focus).Idx > 0)
+                    if (item.InterDown == interDown && 
+                        //调焦环：Xenon-sapphire，xenon-Diamond系列不需要聚焦环，其它至少有一个
+                            (current.Find(itmp => itmp.RingType == enumProductType.Focus).Idx > 0 ||
+                            lens.Name.StartsWith("Xenon-Diamond")||
+                            lens.Name.StartsWith("Xenon Zirconia"))
+                        )
                     {
+                        int idxTmp = current.Count;
+                        current.Insert(idxTmp, new RingMedium() { InterUp = interDown, Length = 0, LengthMin = 0, LengthMax = 0 });
                         this.FindAllRingExtend(lens, current, lengthMin - item.LengthMax, lengthMax - item.LengthMin);
+                        current.RemoveAt(idxTmp);
                     }
                     else
                     {
@@ -157,10 +163,14 @@ namespace Core
             float lengthMid = (lengthMin + lengthMax) / 2.0f;
 
             List<List<RingMedium>> allList = new List<List<RingMedium>>();
-            this.FindAllExtend(allList, current, 0, lengthMin, lengthMax);
-            this.FindAllExtendLast(allList, lengthMin, lengthMax);
+            List<Dictionary<int, int>> diffCountList = new List<Dictionary<int, int>>();
+            this.FindAllExtend(allList, diffCountList,current, 0, lengthMin, lengthMax);
+            //this.FindAllExtendLast(allList, lengthMin, lengthMax);
 
-            List<List<RingMedium>> shortestList = this.SearchShortestExtend(allList, lengthMid);
+            List<List<RingMedium>> validList = this.FilterBySpecialCondition(allList,lens);
+            if (this.CombinationStructDataList(lens, validList)) return;
+
+            List<List<RingMedium>> shortestList = this.SearchShortestExtend(validList, lengthMid);
             if (this.CombinationStructDataList(lens, shortestList)) return;
 
             List<List<RingMedium>> mostLengthList = this.SearchMostLengthExtend(shortestList);
@@ -171,6 +181,52 @@ namespace Core
 
             List<List<RingMedium>> resultList = this.FilterRepeatExtend(mostWidthList);
             this.CombinationStructDataList(lens, resultList, true);
+        }
+
+        private List<List<RingMedium>> FilterBySpecialCondition(List<List<RingMedium>> allList,CameraLens lens)
+        {
+            bool focus23Flag = false,focus7Flag = false, extend25Flag = false, extend10Flag = false,lens120Flag = false;
+            
+            if (lens.Name.Contains("5.6/120"))
+            {
+                lens120Flag = true;
+            }
+            List<List<RingMedium>> validList = new List<List<RingMedium>>();
+            foreach (List<RingMedium> itemList in allList)
+            {
+                focus23Flag = false;
+                focus7Flag = false;
+                extend25Flag = false;
+                extend10Flag = false;
+                foreach (RingMedium item in itemList)
+                {
+                    if (item.RingType == enumProductType.Focus && item.Name == "Smart Focus 23")
+                    {
+                        focus23Flag = true;
+                    }
+                    else if(item.RingType == enumProductType.Focus && item.Name == "Smart Focus 7" )
+                    {
+                        focus7Flag = true;
+                    }
+                    else if (item.RingType == enumProductType.Extend && item.Number == "20179A")
+                    {
+                        extend25Flag = true;
+                    }
+                    else if (item.RingType == enumProductType.Extend && item.Number == "20178A")
+                    {
+                        extend10Flag = true;
+                    }
+                }
+                if (focus23Flag && lens120Flag && extend25Flag ||
+                   focus23Flag && !lens120Flag && extend10Flag ||
+                    focus7Flag && lens120Flag && extend25Flag ||
+                    focus7Flag && !lens120Flag ||
+                    !focus23Flag && !focus7Flag)
+                {
+                    validList.Add(itemList);
+                }
+            }
+            return validList;
         }
 
         private List<List<RingMedium>> SearchShortestExtend(List<List<RingMedium>> allList, float length)
@@ -313,44 +369,51 @@ namespace Core
             return countList;
         }
 
-        private List<List<RingMedium>> FilterRepeatExtend(List<List<RingMedium>> allList)
+        private bool CheckExistsItemsWithinList(List<Dictionary<int, int>> diffCountList, List<RingMedium> ring)
         {
             bool exists = false, hasDiff = false;
+            Dictionary<int, int> itemCount = new Dictionary<int, int>();
+            foreach (RingMedium item in ring)
+            {
+                if (item.RingType != enumProductType.Extend)
+                    continue;
+                if (itemCount.ContainsKey(item.InterUp))
+                    itemCount[item.InterUp]++;
+                else
+                    itemCount.Add(item.InterUp, 1);
+            }
+            exists = false;
+            foreach (Dictionary<int, int> item in diffCountList)
+            {
+                hasDiff = false;
+                foreach (KeyValuePair<int, int> itemChild in item)
+                {
+                    if (!itemCount.ContainsKey(itemChild.Key) || itemCount[itemChild.Key] != itemChild.Value)
+                    {
+                        hasDiff = true;
+                        break;
+                    }
+                }
+                hasDiff = hasDiff ? hasDiff : itemCount.Count != item.Count;
+                if (!hasDiff)
+                {
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists)
+                diffCountList.Add(itemCount);
+            return exists;
+        }
+
+        private List<List<RingMedium>> FilterRepeatExtend(List<List<RingMedium>> allList)
+        {
             List<List<RingMedium>> filterList = new List<List<RingMedium>>();
             List<Dictionary<int, int>> diffCountList = new List<Dictionary<int, int>>();
             foreach (List<RingMedium> itemList in allList)
             {
-                Dictionary<int, int> itemCount = new Dictionary<int, int>();
-                foreach (RingMedium item in itemList)
+                if (!this.CheckExistsItemsWithinList(diffCountList, itemList)) 
                 {
-                    if (item.RingType != enumProductType.Extend)
-                        continue;
-                    if (itemCount.ContainsKey(item.InterUp))
-                        itemCount[item.InterUp]++;
-                    else
-                        itemCount.Add(item.InterUp, 1);
-                }
-                exists = false;
-                foreach (Dictionary<int, int> item in diffCountList)
-                {
-                    hasDiff = false;
-                    foreach (KeyValuePair<int, int> itemChild in item)
-                    {
-                        if (!itemCount.ContainsKey(itemChild.Key) || itemCount[itemChild.Key] != itemChild.Value)
-                        {
-                            hasDiff = true;
-                            break;
-                        }
-                    }
-                    if (!hasDiff)
-                    {
-                        exists = true;
-                        break;
-                    }
-                }
-                if (!exists)
-                {
-                    diffCountList.Add(itemCount);
                     filterList.Add(itemList);
                 }
             }
@@ -380,17 +443,20 @@ namespace Core
             return finish;
         }
 
-        private void FindAllExtend(List<List<RingMedium>> allList, List<RingMedium> current, int idx, float lengthMin, float lengthMax)
+        private void FindAllExtend(List<List<RingMedium>> allList, List<Dictionary<int, int>> diffCountList, List<RingMedium> current, int idx, float lengthMin, float lengthMax)
         {
-
             if (lengthMin <= 0 && lengthMax >= 0)
             {
-                List<RingMedium> tempResults = new List<RingMedium>();
-                foreach (RingMedium item in current)
+                if (!this.CheckExistsItemsWithinList(diffCountList, current))
                 {
-                    tempResults.Add(item);
+                    List<RingMedium> tempResults = new List<RingMedium>();
+                    foreach (RingMedium item in current)
+                    {
+                        tempResults.Add(item);
+                    }
+                    tempResults.RemoveAt(tempResults.Count-1);
+                    allList.Add(tempResults);
                 }
-                allList.Add(tempResults);
             }
 
             for (int i = idx; i < current.Count; i++)
@@ -400,7 +466,7 @@ namespace Core
                 {
                     if (ring.InterUp != item.InterDown || item.Length > lengthMax) continue;
                     current.Insert(i, item);
-                    this.FindAllExtend(allList, current, i + 1, lengthMin - item.Length, lengthMax - item.Length);
+                    this.FindAllExtend(allList,diffCountList, current, i + 1, lengthMin - item.Length, lengthMax - item.Length);
                     current.RemoveAt(i);
                 }
             }

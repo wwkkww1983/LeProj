@@ -1,0 +1,12 @@
+.demo-ruleForm{
+    .is-error{
+        .el-form-item__content{
+            .el-form-item__error{
+                line-height: 36px;
+                padding-top: 0;
+                top: 0;
+                left: 240px;
+            }
+        }
+    }
+}

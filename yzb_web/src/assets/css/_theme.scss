@@ -1,0 +1,258 @@
+$green: #46c4b4; /*浅绿色 主题色*/
+$lightGray: #edf1f6; /*浅灰色*/
+$gray: #999999; /*输入框里的字体颜色*/
+$darkGray: #666666; /*所有选中标题字体色*/
+$f1: #f1f4f8; /*底色*/
+$black: #333; /*深色字体*/
+$d6: #d6d6d6; /*输入框颜色 所有线条都暂时用这个色*/
+$fa: #fafafa; /*标签栏底色*/
+
+$oa: #46c4b4; // 主色
+$f1: #f1f4f8; // 界面的底色
+$d6: #d6d6d6; // 分割线颜色
+$c3: #333333; // 导航栏文字颜色
+$c2: #333742; // 标签栏底色
+$es: #e5f5fd; // 标签设置编辑文本 出现旋转框
+$f7: #f74c31; // 消息红点颜色
+$a8: #a8a8a8; // 搜索页面icon 为选中的底色
+$fb: #fb6155; // 删除按钮未选中的底色
+$c9: #c9e5e2; // 按钮没选中状态
+$f0: #f0f0f0; // 细线颜色
+$c9: #999; // 列表内容文字色值
+$c6: #666; // 写在标签栏块上的文字图标选中加深颜色
+$e6: #e6f8f6; // 选中列表时的状态色
+$fd: #fd9526; // 按钮图标颜色
+$bf: #49bbf3; // 标签设置编辑文本 出现旋转框描边
+$e8: #e8e9eb; // 表格头部的颜色
+
+// 公共布局/////////
+// .main-box{ // 外壳
+//     display: flex;
+//     flex-direction: column;
+//     padding-top: 20px;
+//     width: 100%;
+//     height: 100%;
+// }
+.header-box{
+    min-height: 70px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    .header-operation{
+        position: relative;
+        height: 30px;
+        margin: 20px;
+        .header-operation-btn{
+            vertical-align: top;
+            display: inline-block;
+            font-size: 0;
+            li{
+                margin-right: 30px;
+                font-size: 14px;
+                text-align: center;
+                border-radius: 4px;
+                display: inline-block;
+                height: 30px;
+                line-height: 30px;
+                width: 100px;
+                border: 1px solid $oa;
+                color: $oa;
+                cursor: pointer;
+                &:hover{
+                    color: #fff;
+                    background-color: $oa;
+                }
+            }
+            .header-delect{
+                color: #fff;
+                background-color: $oa;
+            }
+        }
+        .select_operation{
+            vertical-align: top;
+            height: 30px;
+            line-height: 30px;
+            display: inline-block;
+            li{
+                vertical-align: top;
+                display: inline-block;
+            }
+        }
+    }
+    .header-seek{
+        min-height: 30px;
+        margin-left: 20px;
+        overflow-y:hidden;
+        overflow-x: auto;
+        ul{
+            display:table-row;
+            white-space:nowrap;
+            height: 30px;
+            line-height: 30px;
+            overflow-x: auto;
+            font-size: 0;
+            li{
+                display: inline-block;
+                vertical-align: top;
+                height: 30px;
+                line-height: 30px;
+                margin-right: 30px;
+                font-size: 14px;
+                font-size: 0px;
+                span{
+                    color: $c6;
+                    font-size: 14px;
+                }
+                .middle-title{
+                    margin: 0 10px;
+                }
+            }
+            li:first-child{
+                margin-left: 0;
+            }
+            li:last-child{ // 处理最后一个右边距
+                a:last-child{
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+    // 滚动条
+    ::-webkit-scrollbar {
+        overflow: visible;
+        width: 5px;
+        height: 5px;
+    }
+    ::-webkit-scrollbar-button {
+        width: 0;
+        height: 0;
+    }
+    ::-webkit-scrollbar-corner {
+        background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+        min-height: 28px;
+        padding: 100px 0 0;
+        border: solid transparent;
+        border-width: 1px;
+        background-color: #0abfab;
+        background-clip: padding-box;
+        border-radius: 2px;
+    }
+}
+// .body-box{
+//     position: relative;
+//     flex: 1;
+//     display: flex;
+//     flex-direction: column;
+//     background-color: #fff;
+//     .body-table{
+//         flex: 1;
+//         width: 100%;
+//         overflow: auto;
+//     }
+//     .body-page{
+//         width: 580px;
+//         height: 50px;
+//         padding-bottom: 20px;
+//         left: 0;
+//         right: 0;
+//         margin: auto;
+//     }
+// }
+.footer-box{
+    position: relative;
+    margin-top: 10px;
+    min-height: 76px;
+    background-color: #ccc;
+    overflow: hidden;
+    background-color: #fff;
+    .footer-operation{
+        margin-top: 20px;
+        font-size: 0px;
+        text-align: center;
+        position: relative;
+        min-height: 30px;
+        li {
+            &:hover{
+                cursor: pointer;
+            }
+        }
+    }
+    .footer-affirm{ // 确认操作
+        margin-top: 20px;
+        font-size: 0px;
+        text-align: center;
+        position: relative;
+        min-height: 30px;
+    }
+}
+// 小长方形
+.rectangle-icon{
+    margin-top: 30px;
+    height: 16px;
+    i{
+        vertical-align: middle;
+        display: inline-block;
+        width: 5px;
+        height: 16px;
+        background-color: $oa;
+        margin-right: 10px;
+    }
+    span{
+        vertical-align: middle;
+        font-size: 14px;
+    }
+}
+// 方形
+@mixin square($w:24px, $h:12px){
+    vertical-align: bottom;
+    display: inline-block;
+    height: $h;
+    width: $w;
+}
+.square-w24-h12{
+    @include square($w:24px, $h:12px);
+}
+.square-w6-h12{
+    @include square($w:6px);
+}
+// 红星提示
+.must-star{
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    margin-right: 6px;
+    background-image: url('/static/img/must-star.png');
+}
+// 自定义全选按钮
+.all-checkbox{
+    background-color: $oa;
+    border-color: $oa;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    border: 1px solid #bfcbd9;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 18px;
+    height: 18px;
+    background-color: #fff;
+    z-index: 1;
+    transition: border-color .25s cubic-bezier(.71,-.46,.29,1.46),background-color .25s cubic-bezier(.71,-.46,.29,1.46);
+}
+.form-input{ // 表格里的自定义输入框
+    padding: 10px;
+    // width: 100%;
+    width: 100%;
+    min-width: 90px;
+    max-width: 100px;
+    height: 40px;
+    text-align: right;
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+.v-modal{
+    opacity: 0.3;
+    background: #333;
+}

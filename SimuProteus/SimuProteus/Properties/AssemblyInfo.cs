@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // 特性集控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("SimuProteus")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Proteus仿真软件")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Vejoe")]
 [assembly: AssemblyProduct("SimuProteus")]
-[assembly: AssemblyCopyright("深圳维周机器人科技有限公司")]
+[assembly: AssemblyCopyright("深圳市易星标技术有限公司")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

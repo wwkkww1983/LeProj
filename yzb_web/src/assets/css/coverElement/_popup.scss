@@ -1,0 +1,245 @@
+// 对话框
+@mixin dialog ($w: 601px,$h:500px,$t:15%,$bt:20px,$mt:20px,$bdc:#ccc,$hn:block) {
+    .el-dialog--small{
+        top: $t!important;
+        // padding: 0 30px;
+        width: $w;
+        height: $h;
+        // background-color: #f1f4f8;
+        background-color: #fff;
+        border-radius: 4px;
+        box-shadow: 0 0 7px 3px rgba(51,51,51,0.3);
+        .el-dialog__header{
+            // background-color: #fff;
+            position: relative;
+            display: $hn;
+            padding: 0;
+            height: 44px;
+            border-bottom: solid 1px $bdc;
+            span{ // 标题文字
+                position: absolute;
+                left: 0;
+                right: 0;
+                margin: auto;
+                color: $c3;
+                height: 44px;
+                line-height: 44px;
+                text-align: center;
+            }
+            .el-dialog__headerbtn{ // 关闭小图标
+                position: absolute;
+                top: 0;
+                right: 0;
+                height: 44px;
+                width: 44px;
+                .el-dialog__close{
+                    margin-top: 14px;
+                }
+            }
+        }
+        .el-dialog__title{
+            font-weight: normal;
+        }
+        .el-dialog__body{
+            // background-color: #fff;
+            padding: 0;
+            // padding: 0 30px;
+            height: auto;
+            // padding: 30px 0 0 0;
+        }
+        .el-dialog__footer{
+            // background-color: #fff;
+            bottom: $bt;
+            // padding-bottom: $bt;
+            left: 0;
+            right: 0;
+            margin: auto;
+            position: absolute;
+            padding: 0;
+            vertical-align: top;
+            // height: 30px;
+            text-align: center;
+            margin-top: $mt;
+            font-size: 0;
+        }
+    }
+}
+.dialog-w601{
+    @include dialog;
+}
+.dialog-w380{
+    @include dialog($w:380px,$h:260px,$t:32%);
+}
+.dialog-w380-h260{
+    @include dialog($w:380px,$h:260px);
+}
+.dialog-w380-h420{
+    @include dialog($w:380px,$h:420px,$t:32%);
+}
+.dialog-w420{
+    @include dialog($w:420px,$h:520px);
+}
+.dialog-w420-h600{
+    @include dialog($w:420px,$h:600px);
+}
+.dialog-w320-success{
+    @include dialog($w:320px,$h:380px,$bdc:#fff);
+}
+.dialog-w320-h220{
+    @include dialog($w:320px,$h:220px);
+}
+.dialog-w420-h520{
+    @include dialog($w:420px,$h:520px);
+}
+.dialog-w380-h520{
+    @include dialog($w:380px,$h:520px);
+}
+ // 隐藏头部
+.dialog-w320-h220-hn{
+    @include dialog($w:320px,$h:220px,$hn:none);
+}
+.dialog-w700-h740-hn{
+    @include dialog($w:700px,$h:740px,$hn:none);
+}
+.dialog-w540-h740-hn{
+    @include dialog($w:540px,$h:740px,$hn:none);
+}
+.dialog-w300-h300-hn{
+    @include dialog($w:300px,$h:300px,$hn:none);
+}
+.dialog-w450-h250-hn{
+    @include dialog($w:450px,$h:250px,$t:25%,$hn:none);
+}
+.dialog-w565-h430-hn{
+    @include dialog($w:565px,$h:430px,$t:25%,$hn:none);
+}
+.dialog-w455-h255-hn{
+    @include dialog($w:455px,$h:255px,$t:25%,$hn:none);
+}
+.dialog-w540-h320-hn{
+    @include dialog($w:540px,$h:320px,$t:25%,$hn:none);
+}
+// 保存成功弹窗
+.success-body{
+    margin-top: -4px;
+    text-align: center;
+    font-size: 0;
+    img{
+        width: 90px;
+        height: 90px;
+        overflow: hidden;
+    }
+    p{
+        margin: 30px 0 30px 0;
+        font-size: 18px;
+        color: $c3;
+    }
+    ul{
+        padding: 0 30px;
+        li:nth-child(odd){
+            color: $c6;
+            width: 60px;
+            margin-right: 20px;
+        }
+        li:nth-child(even){
+            color: $c9;
+            text-align: left;
+            width: 130px;
+        }
+        li{
+            font-size: 12px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+    }
+}
+// 新建弹窗
+.new-header{
+    font-size: 0;
+    height: 310px;
+    overflow: auto;
+    background-color: #fff;
+    .new-body{
+        padding: 0 30px;
+        ul{
+            margin-top: 10px;
+            vertical-align: top;
+            font-size: 0;
+            overflow: auto;
+            li{
+                height: 50px;
+                line-height: 50px;
+                font-size: 12px;
+                border-bottom: 1px solid $d6;
+                span{
+                    padding-left: 0;
+                }
+            }
+        }
+    }
+}
+// 弹框
+.el-message-box__wrapper{
+    .el-message-box{
+        width: 380px;
+        height: 260px;
+        .el-message-box__header{
+            height: 44px;
+            border-bottom: 1px solid #d6d6d6;
+            padding: 0;
+            text-align: center;
+            .el-message-box__title{
+                font-size: 16px;
+                color: red;
+                line-height: 44px;
+                font-weight: normal;
+            }
+            .el-message-box__close{
+                top: 14px;
+                right: 30px;
+            }
+        }
+        .el-message-box__content{
+            padding: 0;
+            height: 152px;
+            text-align: center;
+            p{
+                line-height: 152px;
+                font-size: 14px; 
+            }
+        }
+        .el-message-box__btns{
+            padding: 0 0 30px 0; 
+            text-align: center;
+            .el-button--default{
+                outline: none;
+                width: 120px;
+                height: 34px;
+            }
+            .el-button+.el-button{
+                margin-left: 0;
+            }
+            button:nth-child(1){
+                color: #999;
+            }
+            button:nth-child(2){
+                background-color: $oa;
+                margin-left: 40px!important;
+            }
+        }
+    }
+}
+
+// @mixin MessageBox($w: 601px,$h:500px) {
+//     .el-message-box{
+//         width: $w;
+//         height: $h;
+//         .el-message-box__header{
+//             padding: 0;
+//             text-align: center;
+//         }
+//     }
+// }
+// .message-w380-h260{
+//     @include MessageBox($w:380px,$h:260px);
+// }

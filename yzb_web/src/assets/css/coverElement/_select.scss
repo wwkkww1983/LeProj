@@ -1,0 +1,118 @@
+@mixin selects($w:200px,$h:30px){
+    .el-select{
+        width: $w;
+        .el-input{
+            .el-input__inner{
+                height: $h;
+            }
+            .el-input__icon{
+                color: #333;
+            }
+        }
+    }
+}
+@mixin selects_border($w:200px,$h:30px){ // 没有边框
+    .el-select{
+        width: $w;
+        .el-input{
+            .el-input__inner{
+                height: $h;
+                border: 0;
+                padding: 0 0 0 10px;
+            }
+            .el-input__icon{
+                width: 18px;
+                color: #333;
+                background-color: yellow;
+            }
+        }
+    }
+}
+// 无边框的
+.select-w80-h34-no{
+    @include init_block;
+    @include selects_border($w:80px,$h:34px);
+}
+// 有边框的
+.select-w120-h36{
+    @include init_block;
+    @include selects($w:120px,$h:36px);
+}
+.select-w190-h36{
+    @include init_block;
+    @include selects($w:190px,$h:36px);
+}
+.select-w120{ // 130
+    @include init_block;
+    @include selects($w:120px);
+}
+.select-w130{ // 130
+    @include init_block;
+    @include selects($w:130px);
+}
+.select-w190{ // 130
+    @include init_block;
+    @include selects($w:190px);
+}
+.select-w200{
+    @include init_block;
+    @include selects;
+}
+.select-w280{
+    @include init_block;
+    @include selects($w:280px);
+}
+.select-w290{
+    @include init_block;
+    @include selects($w:290px);
+}
+.select-w300{
+    @include init_block;
+    @include selects($w:300px);
+}
+.select-w100{
+    @include init_block;
+    .el-select{
+        width: 100px;
+        .el-input{
+            .el-input__inner{
+                height: 30px;
+            }
+        }
+    }
+}
+.select-w80{
+    .el-select{
+        width: 80px;
+        .el-input{
+            .el-input__inner{
+                font-size: 12px;
+                padding-right: 17px;
+                text-align: center;
+                height: 30px;
+                border: none;
+                background-color: transparent;
+            }
+            .el-input__icon{
+                width: 18px;
+                right: 4px;
+            }
+        }
+    }
+
+}
+.el-scrollbar{
+    .el-select-dropdown__wrap{
+        .el-select-dropdown__item{
+            span{ // 自定义下拉的样式
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                line-height: 36px!important;
+                left: 8px;
+                top: 0;
+                font-size: 12px;
+            }
+        }
+    }
+}

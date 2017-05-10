@@ -1,0 +1,80 @@
+.step{
+    width: 100%;
+    height: 100%;
+    .popTitle{ // 弹窗标题
+        height: 70px;
+        line-height: 70px;
+        text-align: center;
+        background: #f6f7f8;
+        border-radius: 4px 4px 0 0;
+        .prePage{ // 上一页
+            position: absolute;
+            left: 10px;
+        }
+        .skip{ // 跳过
+            position: absolute;
+            right: 10px;
+        }
+    }
+    .dialog-info{ // 弹窗内容  
+        position: relative;
+        height: 215px;
+        overflow-y: auto;
+        ul.bigType{           
+            display: inline-block;
+            position: absolute;
+            top: 90px;
+            left: 105px;
+            opacity: 1;
+            li{
+                display: inline-block;
+                width: 100px;
+                height: 36px;
+                line-height: 36px;               
+                background: #83bbf7;
+                border: 1px solid #83bbf7;
+                color: #fff;
+                cursor: pointer;
+                text-align: center;
+                border-radius: 3px;
+                margin:0 20px 20px 0;                
+            }
+            li:last-child{
+                margin-right:0;
+            }
+            li:nth-child(4n){
+                margin-right: 0;
+            }
+            li:hover{
+                background: #4580bf;
+                border: 1px solid #4580bf;
+                color: #fff;
+            }
+        }
+        ul.smallType{
+            position: absolute;
+            top: 150px;
+            text-align: left;
+            left: 40px;
+            opacity: 0;
+            li{
+                display: inline-block;
+                width: 100px;
+                height: 36px;
+                line-height: 36px;               
+                background: #effffd;
+                border: 1px solid #4fdcca;
+                color: #4fdcca;
+                cursor: pointer;
+                text-align: center;
+                border-radius: 3px;
+                margin: 0 20px 10px 0;
+                &:hover{
+                    background: #4fdcca;
+                    border: 1px solid #4fdcca;
+                    color: #fff;  
+                }
+            }
+        }
+    }
+}

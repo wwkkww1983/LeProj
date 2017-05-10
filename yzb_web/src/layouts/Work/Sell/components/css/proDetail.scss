@@ -1,0 +1,106 @@
+.sell-product-details{ // 产品详情
+    background: #fff;
+    margin-top: 10px;
+    .sell-detail-title{
+        height: 50px;
+        line-height: 50px;
+        background:#d3d3d3;
+        position: relative;
+        .sell-detail-buttons{
+            position: absolute;
+            left: 10px;
+            a{
+                display: inline-block;
+                width: 75px;
+                height: 26px;
+                line-height: 26px;
+                border:1px solid #0ABFAB;
+                background: #fff;
+                border-radius: 3px;
+                text-align: center;
+            }
+        }
+        .sell-detail-pages{
+            position: absolute;
+            right: 10px;
+            span{
+                padding: 25px;  
+            }            
+        }
+    }
+    .sell-detail-info {
+        padding: 10px;
+        ul{
+            li{
+                height: 38px;
+                line-height: 38px;
+                span{
+                    color:#0ABFAB;
+                    display: inline-block;
+                    width: 70px;
+                }
+                .w320{
+                    width: 320px;
+                    display: inline-block;
+                }
+            }
+        }
+        p{
+            height: 42px;
+            line-height: 42px;
+        }
+        dl{
+            vertical-align: top;
+            color: #999;
+            dd{
+                height: 26px;
+                line-height: 26px;
+                display: inline-block;
+                width: 30%;
+            }
+        }
+    }
+}
+.dialog-w470-h300-hn{ // 弹框
+    ul{
+        padding: 90px 40px;
+        li{
+            width: 115px;
+            height: 54px;
+            line-height: 54px;
+            display: inline-block;
+            text-align: center;
+            background: #199ED8;
+            border: 1px solid #199ED8;
+            border-radius: 3px;
+            color: #fff;
+            margin-right: 18px;
+            cursor: pointer;
+            &:hover{
+                background: #fff;
+                border: 1px solid #000;
+                color: #f00;
+            }
+            &:last-child{                
+                margin-right: 0;
+            }
+        }
+    }
+    .cancelBtn{ // 取消按钮
+        width: 175px;
+        height: 40px;
+        line-height: 40px;
+        border-radius: 3px;
+        display: block;
+        background:#00c0ab;
+        text-align: center;
+        color:#fff;
+        border: 1px solid #333;
+        cursor: pointer;
+        margin: 0 auto;
+    }
+    .cancelBtn:hover{
+        background:#fff;
+        color: #000;
+    }
+}

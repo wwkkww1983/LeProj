@@ -30,9 +30,9 @@ namespace CamInter
         {
             InitializeComponent();
 
-            dbHandler.InitialTable();
+            //dbHandler.InitialTable();
             this.InitialCamInter();
-            //this.btnSelect_Click(null, null);
+            this.btnSelect_Click(null, null);
         }
 
         private void InitialCamInter()

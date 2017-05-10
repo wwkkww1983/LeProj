@@ -1,0 +1,40 @@
+// 输入框
+// @mixin init_block{ // 初始化块级元素
+//     vertical-align: top;
+//     display: inline-block;
+//     font-size: 0;
+// }
+@mixin ipt ($w:100px,$h:30px) {
+    @include init_block;
+    .el-input{
+        width: $w;
+        .el-input__inner{
+            height: $h;
+            line-height: $h;
+        }
+    }
+}
+.input-w100{
+    @include ipt($w:100px,$h:30px)
+}
+.input-w130{
+    @include ipt($w:130px,$h:30px)
+}
+.input-w200{
+    @include ipt($w:200px,$h:30px);
+}
+.input-w270{
+    @include ipt($w:270px,$h:30px);
+}
+.input-w290{
+    @include ipt($w:290px,$h:30px);
+}
+.input-w300{
+    @include ipt($w:300px,$h:30px);
+}
+.input-w320{
+    @include ipt($w:320px,$h:30px);
+}
+.input-w370{
+    @include ipt($w:370px,$h:50px);
+}

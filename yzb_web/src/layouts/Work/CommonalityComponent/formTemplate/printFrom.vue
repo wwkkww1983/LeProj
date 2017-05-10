@@ -1,0 +1,18 @@
+<template>
+    <tbody>
+        <tr>
+            <td>00000</td>
+            <td>00000</td>
+            <td>00000</td>
+            <td>00000</td>
+            <td>00000</td>
+        </tr>
+        <tr>
+            <td>99999</td>
+            <td>99999</td>
+            <td>99999</td>
+            <td>99999</td>
+            <td>99999</td>
+        </tr>
+    </tbody>
+</template>

@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            this.gbComponent = new System.Windows.Forms.GroupBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.CreateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,18 +50,11 @@
             this.delLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnWorkPlace = new System.Windows.Forms.Panel();
             this.pnBoard = new System.Windows.Forms.Panel();
+            this.pnComponent = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.contextMsPoint.SuspendLayout();
             this.contextMsLine.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // gbComponent
-            // 
-            this.gbComponent.Location = new System.Drawing.Point(12, 35);
-            this.gbComponent.Name = "gbComponent";
-            this.gbComponent.Size = new System.Drawing.Size(60, 655);
-            this.gbComponent.TabIndex = 0;
-            this.gbComponent.TabStop = false;
             // 
             // menuStrip1
             // 
@@ -224,14 +216,22 @@
             this.pnBoard.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.pnBoard_MouseDoubleClick);
             this.pnBoard.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnBoard_MouseMove);
             // 
+            // pnComponent
+            // 
+            this.pnComponent.AutoScroll = true;
+            this.pnComponent.Location = new System.Drawing.Point(12, 35);
+            this.pnComponent.Name = "pnComponent";
+            this.pnComponent.Size = new System.Drawing.Size(80, 655);
+            this.pnComponent.TabIndex = 4;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(880, 720);
+            this.Controls.Add(this.pnComponent);
             this.Controls.Add(this.pnWorkPlace);
             this.Controls.Add(this.pnBoard);
-            this.Controls.Add(this.gbComponent);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
@@ -252,7 +252,6 @@
 
         #endregion
 
-        private System.Windows.Forms.GroupBox gbComponent;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem CreateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem SerialToolStripMenuItem;
@@ -273,6 +272,7 @@
         private System.Windows.Forms.ToolStripMenuItem delLineToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem debugSerialToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem serialListToolStripMenuItem;
+        private System.Windows.Forms.Panel pnComponent;
     }
 }
 
