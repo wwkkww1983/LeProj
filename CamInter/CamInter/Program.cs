@@ -16,7 +16,7 @@ namespace CamInter
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainView());
+            Application.Run(new FormMain());
         }
     }
 }

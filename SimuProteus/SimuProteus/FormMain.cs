@@ -816,14 +816,15 @@ namespace SimuProteus
 
         private void pnBoard_MouseMove(object sender, MouseEventArgs e)
         {
-            int lineIdx = this.CalcLineIdxByCoordinate(e.X, e.Y);
+            //int lineIdx = this.CalcLineIdxByCoordinate(e.X, e.Y);
             Point pointIdx = this.CalcLocIdxByCoordinate(e.X, e.Y);
-            if (lineIdx >= 0)
-            {
-                this.contextMsLine.Text = lineIdx.ToString();
-                this.ContextMenuStrip = this.contextMsLine;
-            }
-            else if (pointIdx.X > 0 && pointIdx.Y > 0)
+            //if (lineIdx >= 0)
+            //{
+            //    this.contextMsLine.Text = lineIdx.ToString();
+            //    this.ContextMenuStrip = this.contextMsLine;
+            //}
+            //else 
+            if (pointIdx.X > 0 && pointIdx.Y > 0)
             {
                 this.contextMsPoint.Text = string.Format("{0}{1}{2}", pointIdx.X, COORDINATE_SEPERATOR, pointIdx.Y);
                 this.ContextMenuStrip = this.contextMsPoint;

@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using System.Runtime.InteropServices;
 
-namespace Core
+namespace NetControl
 {
     /// <summary>
     /// ¶ÁĞ´IniÅäÖÃÎÄ¼ş

@@ -62,7 +62,11 @@ namespace Core
             foreach (CameraLens lens in lensList)
             {
                 float ringLength = lens.Focus * ratio + lens.Flange - flange;
-                this.FindAllRing(lens, current, camera, lens.Connector, ringLength, ringLength, target);
+                float ringRange = 0;
+                if (lens.Name.Contains("Sapphire")) ringRange = 10;
+                else if (lens.Name.Contains("Diamond")) ringRange = 16;
+                else if (lens.Name.Contains("Zirconia")) ringRange = 9;
+                this.FindAllRing(lens, current, camera, lens.Connector, ringLength - ringRange, ringLength + ringRange, target);
                 //List<RingMedium> focus = this.findFocus(camera, ringLength);
                 //foreach (RingMedium item in focus)
                 //{
@@ -428,6 +432,7 @@ namespace Core
             foreach (List<RingMedium> itemList in allList)
             {
                 List<RingMedium> ringsTmp = new List<RingMedium>(itemList);
+                ringsTmp.RemoveAt(ringsTmp.Count - 1);
                 RingResults oneResult = new RingResults()
                 {
                     Idx = this.resultsFound.Count + 1,
