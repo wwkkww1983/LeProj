@@ -97,6 +97,7 @@
             this.btnSearch = new System.Windows.Forms.Button();
             this.btnMin = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
+            this.lbRemind = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProj)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetail)).BeginInit();
             this.SuspendLayout();
@@ -205,6 +206,8 @@
             this.tbResolutionH.Name = "tbResolutionH";
             this.tbResolutionH.Size = new System.Drawing.Size(80, 21);
             this.tbResolutionH.TabIndex = 12;
+            this.tbResolutionH.MouseEnter += new System.EventHandler(this.tbResolution_MouseEnter);
+            this.tbResolutionH.MouseLeave += new System.EventHandler(this.tbResolution_MouseLeave);
             // 
             // tbSize
             // 
@@ -338,6 +341,8 @@
             this.tbResolutionV.Name = "tbResolutionV";
             this.tbResolutionV.Size = new System.Drawing.Size(80, 21);
             this.tbResolutionV.TabIndex = 12;
+            this.tbResolutionV.MouseEnter += new System.EventHandler(this.tbResolution_MouseEnter);
+            this.tbResolutionV.MouseLeave += new System.EventHandler(this.tbResolution_MouseLeave);
             // 
             // label13
             // 
@@ -750,12 +755,24 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // lbRemind
+            // 
+            this.lbRemind.AutoSize = true;
+            this.lbRemind.BackColor = System.Drawing.Color.White;
+            this.lbRemind.ForeColor = System.Drawing.Color.Black;
+            this.lbRemind.Location = new System.Drawing.Point(330, 59);
+            this.lbRemind.Name = "lbRemind";
+            this.lbRemind.Size = new System.Drawing.Size(63, 15);
+            this.lbRemind.TabIndex = 24;
+            this.lbRemind.Text = "label24";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Silver;
             this.ClientSize = new System.Drawing.Size(1200, 800);
+            this.Controls.Add(this.lbRemind);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnMin);
             this.Controls.Add(this.btnSearch);
@@ -888,6 +905,7 @@
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.Button btnMin;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Label lbRemind;
 
     }
 }

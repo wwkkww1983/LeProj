@@ -66,6 +66,7 @@ namespace CamInter
         private void Initial()
         {
             this.CheckFinishedApplication();
+            this.TextBoxRemind();
 
             this.BackColor = this.colorBackground;            
             this.dgvProj.ColumnHeadersDefaultCellStyle.BackColor = this.colorBackground;
@@ -107,7 +108,9 @@ namespace CamInter
             this.tbWD.Height = 15;
             this.tbWDrange.AutoSize = false;
             this.tbWDrange.Height = 15;
-           
+
+            this.tbResolutionH.GotFocus += this.tbResolutionH_MouseEnter;
+            this.tbResolutionH.LostFocus += this.tbResolutionH_MouseLeave;
         }
 
         private void FormMain_Paint(object sender, PaintEventArgs e)
@@ -170,5 +173,49 @@ namespace CamInter
             }
         }
 
+        private void TextBoxRemind()
+        {
+            AutoCompleteStringCollection strRemind = new AutoCompleteStringCollection();
+            strRemind.Add("");
+            this.tbResolutionH.AutoCompleteCustomSource = strRemind;
+            this.tbResolutionH.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            this.tbResolutionH.AutoCompleteMode = AutoCompleteMode.Suggest;
+        }
+
+        private void tbResolutionH_MouseEnter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tbResolutionH_MouseLeave(object sender, EventArgs e)
+        {
+            this.lbRemind.Visible = false;
+        }
+
+        private void tbResolution_MouseEnter(object sender, EventArgs e)
+        {
+            TextBox item = sender as TextBox;
+            Point loc = item.Location;
+            loc.Y += item.Height;
+            this.lbRemind.Text = "if it is a line scan camera, Please input  number 1";
+            this.lbRemind.Location = loc;
+            this.lbRemind.Visible = true;
+        }
+
+        private void tbResolution_MouseLeave(object sender, EventArgs e)
+        {
+            this.lbRemind.Visible = false;
+        }
+
     }
 }
+
+
+//1.在“Camera Information ”模块，当鼠标滑到“Resolution”的输入框时，弹出提示“if it is a line scan camera, Please input  number 1”。
+//2.在“Camera Information ”模块，“Interface”时，用户选择C\CS\F时，“Flange distance”输入框自动显示相应数值，并变成灰色不可填；用户选择非C\CS\F时，“Flange distance”输入框留白，可填；
+//3.在”Requirement”模块，FOV(H*V)时，H和V输入框只能选填一个，当为面阵相机时，另一个输入框根据已输入的数据自动算出并变成灰色；当为线阵相机时，直接为1并变成灰色。
+//4.在”Requirement”模块，当用户在“FOV”输入框输入数据后，”Magnification”输入框自动计算出数值并变成灰色；当用户在”Magnification”输入框输入数据后，“FOV”输入框自动计算出数值并变成灰色；
+//5.在”Requirement”模块，当查找按钮按下后，“search”变成“searching...”，后面的三个点会闪现，让使用者知道软件正在运行。
+//6.点击“search”后，若没有结果，或结果很少，给出提示“If you want more solutions, please extend the working range.”
+//7.目前发现软件可以同时运行（打开一个，还可以继续打开），请修正为：只能单任务运行，当用户尝试多任务运行时，给出提示：”The application is already running”.
+
