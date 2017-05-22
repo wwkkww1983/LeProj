@@ -9,7 +9,8 @@ int main()
 {
 	//////////////////////变量定义
 	const int CAMERA_WIDTH = 640, CAMERA_HIGHT = 480, COMPRESS_WIDTH = 400;
-	int objXValue = -1, compressHight, angleMin,angleMax, distance;
+	int objXValue = -1, compressHight;
+	bool distance;
 	ImageHandler imageTool;	
 	Mat sourceFrame, compressFrame;	
 	//////////////////////变量初始化
@@ -31,7 +32,7 @@ int main()
 		moveWindow("Source Image",0,0);
 		//////////////////////核心算法
 		distance = imageTool.RecognitionHumanFace(compressFrame);
-		
+		// distance = True 时，触发警报		
 
 		//程序结束开关
 		if (waitKey(10) == 27)

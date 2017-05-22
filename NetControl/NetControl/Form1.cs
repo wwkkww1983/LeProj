@@ -163,10 +163,11 @@ namespace NetControl
                 //int count = this.com.ReadBuffer(readBuffer, BUFFER_SIZE);
                 int count = this.com.Read(readBuffer, 0, BUFFER_SIZE);
                 string strFeedback = System.Text.ASCIIEncoding.ASCII.GetString(readBuffer);
-                if (count >2 && readBuffer[count-1] == 0x0A && readBuffer[count-2] == 0x0D)
-                {                    
-                    this.HandlerByFeedback(strFeedback.Substring(0,count-2));
-                }
+                this.HandlerByFeedback(strFeedback);
+                //if (count >2 && readBuffer[count-1] == 0x0A && readBuffer[count-2] == 0x0D)
+                //{
+                //    this.HandlerByFeedback(strFeedback.Substring(0, count - 2));
+                //}
             }
             catch (TimeoutException timeEx)
             {
@@ -180,44 +181,54 @@ namespace NetControl
 
         private void HandlerByFeedback(string strInfo)
         {
-            Console.WriteLine(strInfo);
-            string code = strInfo.Substring(strInfo.LastIndexOf("AT"));
-            switch (code)
+            string[] codeArray = strInfo.Split('\r');
+            foreach (string code in codeArray)
             {
-                case "ATZOK": //摘机成功后，开始拨号
-                    this.SendCommand(PHONE_CMD, this.tbPhone.Text.Trim());
-                    break;
-                case "ATBOK": //拨号成功 
-                    System.Threading.Thread.Sleep(1000);
-                    break;
-                case "ATS2":// 线路繁忙时，挂断电话
-                //case "ATS4":// 线路信号为60秒静音时（电话连线但没人讲话）
-                    this.SendCommand(HANGUP_CMD);
-                    break;
-                case "ATHOK"://挂机成功后，关闭串口
-                    this.SetStatusLabel("电话挂断成功");
-                    break;
-                case "ATCMDERROR"://上位机命令出错
-                    this.SetStatusLabel("命令出错");
-                    break;
-                case "ATN1"://对方摘机，开始发命令
-                    this.SendCommand(PHONE_CMD, this.currentCommand);
-                    this.SetStatusLabel("通讯成功");
-                    break;
-                case "ATN4"://命令操作成功，开始录播
-                case "ATN8"://结束录播
-                    this.SendCommand(PHONE_CMD, FINISH_CMD);
-                    System.Threading.Thread.Sleep(1000);
-                    this.SendCommand(HANGUP_CMD);
-                    this.SetStatusLabel("操作执行成功");
-                    break;
-                default: break;
+                if (!code.Contains("AT")) continue;
+                int nrIdx = code.IndexOf('\n');
+                string tempCode = code;
+                if (nrIdx >= 0)
+                    tempCode = code.Remove(nrIdx, 1);
+                Record.WriteLogFile("接受：" + tempCode);
+                switch (tempCode)
+                {
+                    case "ATZOK": //摘机成功后，开始拨号
+                        this.SendCommand(PHONE_CMD, this.tbPhone.Text.Trim());
+                        break;
+                    case "ATBOK": //拨号成功 
+                        System.Threading.Thread.Sleep(1000);
+                        break;
+                    case "ATS2":// 线路繁忙时，挂断电话
+                                //case "ATS4":// 线路信号为60秒静音时（电话连线但没人讲话）
+                        this.SendCommand(HANGUP_CMD);
+                        break;
+                    case "ATHOK"://挂机成功后，关闭串口
+                        this.SetStatusLabel("电话挂断成功");
+                        break;
+                    case "ATCMDERROR"://上位机命令出错
+                        this.SetStatusLabel("命令出错");
+                        break;
+                    case "ATN1"://对方摘机，开始发命令
+                        System.Threading.Thread.Sleep(1000);
+                        this.SendCommand(PHONE_CMD, this.currentCommand);
+                        this.SetStatusLabel("通讯成功");
+                        break;
+                    case "ATN4"://命令操作成功，开始录播
+                    case "ATN8"://结束录播
+                        this.SendCommand(PHONE_CMD, FINISH_CMD);
+                        System.Threading.Thread.Sleep(1000);
+                        this.SendCommand(HANGUP_CMD);
+                        this.SetStatusLabel("操作执行成功");
+                        break;
+                    default: break;
+                }
             }
         }
 
         private void SendCommand(string cmd, string info = "")
         {
             string strCode = cmd + info;
+            Record.WriteLogFile("发：" + strCode);
             byte[] byteCode = System.Text.ASCIIEncoding.ASCII.GetBytes(strCode);
             byte[] buff = new byte[byteCode.Length + 2];
             Array.Copy(byteCode, buff, byteCode.Length);

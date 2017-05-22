@@ -39,13 +39,6 @@ ImageHandler::ImageHandler(void)
 	}
 }
 
-int64 GetTimeInSec()
-{
-    time_t timet(0);
-    localtime(&timet);
-    return timet;
-}
-
 //过滤无效瞳孔
 bool FilterInvalidEyes(vector<Rect> faces,vector<Rect> &result)
 {
@@ -99,7 +92,7 @@ ImageHandler::~ImageHandler(void)
 }
 
 //人脸识别
-int ImageHandler::RecognitionHumanFace(Mat sourceFrame){
+bool ImageHandler::RecognitionHumanFace(Mat sourceFrame){
 	vector<Rect> faces;
 	Mat faceGray;
 	//灰度处理（彩色图像变为黑白）
@@ -121,6 +114,7 @@ int ImageHandler::RecognitionHumanFace(Mat sourceFrame){
 				int length = lengthSum/lengthCount;
 				bool validFlag = length > minDistance && length < maxDistance;
 				RecordLog::Inst()->Log(validFlag,to_string(length) + "（厘米）,持续时间：" + to_string(timeDetect) + "（秒）");
+				freeTimeDetect = (double)getTickCount();
 			}
 			isExists = false;
 			existCount = 0;
@@ -138,6 +132,7 @@ int ImageHandler::RecognitionHumanFace(Mat sourceFrame){
 				lengthSum=0;
 				lengthCount=0;
 				timeDetect = (double)getTickCount();
+				RecordLog::Inst()->Log(false, "未检测到人,持续时间：" + to_string(double((timeDetect-freeTimeDetect)/getTickFrequency())) + "（秒）");
 			}
 			isExists = true;
 			freeCount=0;
@@ -153,10 +148,13 @@ int ImageHandler::RecognitionHumanFace(Mat sourceFrame){
 
 	int distance = CalculateDistance(eyes);
 
-	imshow("瞳孔",sourceFrame);
-	moveWindow("瞳孔",700,0);
 
-	return distance;
+	//imshow("瞳孔",sourceFrame);
+	//moveWindow("瞳孔",700,0);
+	bool needWarning = false;
+	if(isExists && double((timeDetect-freeTimeDetect)/getTickFrequency()) > 5)
+		needWarning = true;
+	return needWarning;
 }
 
 

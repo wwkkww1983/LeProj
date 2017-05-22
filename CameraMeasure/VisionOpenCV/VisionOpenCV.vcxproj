@@ -19,12 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ImageHandler.h" />
     <ClInclude Include="RecordLog.h" />
+    <ClInclude Include="ImageHandler.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ImageHandler.cpp" />
     <ClCompile Include="MainOpenCV.cpp" />
+    <ClCompile Include="ImageHandler.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{71A26623-B4D4-4BDA-967D-58951CA328E8}</ProjectGuid>

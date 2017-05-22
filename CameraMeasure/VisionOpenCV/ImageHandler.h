@@ -16,7 +16,7 @@ class ImageHandler
 public:
 	ImageHandler(void);
 	~ImageHandler(void);
-	int RecognitionHumanFace(Mat);
+	bool RecognitionHumanFace(Mat);
 
 private:
 
@@ -24,7 +24,7 @@ private:
 	int existCount,freeCount;
 	int lengthSum, lengthCount;
 	int minDistance, maxDistance;
-	double timeDetect;
+	double timeDetect,freeTimeDetect;
 	CascadeClassifier faceCascade;
 	int CalculateDistance(vector<Rect>);
 	void UpdateParams(string keyValue);
