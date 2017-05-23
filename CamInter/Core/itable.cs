@@ -34,5 +34,6 @@ namespace Core
     {
         int Idx { get; }
         string Name { get; }
+        bool IsShowInList { get; }
     }
 }

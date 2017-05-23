@@ -73,7 +73,7 @@ namespace Core
         /// <returns></returns>
         public static bool HasContent(Control ctrl, string tipTitle)
         {
-            return HasContent(ctrl, tipTitle, "不可为空");
+            return HasContent(ctrl, tipTitle, " can NOT be empty");
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Core
         /// <returns></returns>
         public static bool IsUnsignedRealNumber(Control ctrl)
         {
-            return IsUnsignedRealNumber(ctrl, "仅可输入正实数");
+            return IsUnsignedRealNumber(ctrl, "Only real number allow");
         }
 
         /// <summary>

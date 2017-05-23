@@ -57,18 +57,19 @@ namespace Core
         private void InitialTableData()
         {
             #region 接口
-            this.InsertItem(new Connectors() { Name = "M42", Idx = 1, Length = 42 });
-            this.InsertItem(new Connectors() { Name = "M58", Idx = 2, Length = 58 });
-            this.InsertItem(new Connectors() { Name = "M72", Idx = 3, Length = 72 });
-            this.InsertItem(new Connectors() { Name = "M90", Idx = 4, Length = 90 });
-            this.InsertItem(new Connectors() { Name = "V38", Idx = 5, Length = 38 });
-            this.InsertItem(new Connectors() { Name = "V70", Idx = 6, Length = 70 });
-            this.InsertItem(new Connectors() { Name = "C", Idx = 7, Length = 25 });
-            this.InsertItem(new Connectors() { Name = "F", Idx = 8, Length = 41 });
-            this.InsertItem(new Connectors() { Name = "Basler", Idx = 9, Length = 33.8f });
-            this.InsertItem(new Connectors() { Name = "M95", Idx = 10, Length = 95 });
-            this.InsertItem(new Connectors() { Name = "V90", Idx = 11, Length = 70 });
-            this.InsertItem(new Connectors() { Name = "V48", Idx = 12, Length = 90 });
+            this.InsertItem(new Connectors() { Name = "M42", Idx = 1, Length = 42,IsShowInList = true });
+            this.InsertItem(new Connectors() { Name = "M58", Idx = 2, Length = 58, IsShowInList = true });
+            this.InsertItem(new Connectors() { Name = "M72", Idx = 3, Length = 72, IsShowInList = true });
+            this.InsertItem(new Connectors() { Name = "M90", Idx = 4, Length = 90, IsShowInList = true });
+            this.InsertItem(new Connectors() { Name = "V38", Idx = 5, Length = 38, IsShowInList = false });
+            this.InsertItem(new Connectors() { Name = "V70", Idx = 6, Length = 70, IsShowInList = false });
+            this.InsertItem(new Connectors() { Name = "C", Idx = 7, Length = 25, IsShowInList = true });
+            this.InsertItem(new Connectors() { Name = "F", Idx = 8, Length = 41, IsShowInList = true });
+            this.InsertItem(new Connectors() { Name = "Basler beat/racer", Idx = 9, Length = 33.8f, IsShowInList = true });
+            this.InsertItem(new Connectors() { Name = "M95", Idx = 10, Length = 95, IsShowInList = true });
+            this.InsertItem(new Connectors() { Name = "V90", Idx = 11, Length = 70, IsShowInList = false });
+            this.InsertItem(new Connectors() { Name = "V48", Idx = 12, Length = 90, IsShowInList = false });
+            this.InsertItem(new Connectors() { Name = "CS", Idx = 13, Length = 12, IsShowInList = true });
             #endregion
 
             #region 调焦环
@@ -999,9 +1000,12 @@ namespace Core
             List<ValueType> list = this.GetAllDevices(type);
             foreach (ValueType item in list)
             {
+                iGetIDName tmpIDName = (iGetIDName)item;
+                if (!tmpIDName.IsShowInList) continue;
+
                 DataRow dr = dt.NewRow();
-                dr["Idx"] = ((iGetIDName)item).Idx;
-                dr["Name"] = ((iGetIDName)item).Name;
+                dr["Idx"] = tmpIDName.Idx;
+                dr["Name"] = tmpIDName.Name;
                 dt.Rows.Add(dr);
             }
             return dt;

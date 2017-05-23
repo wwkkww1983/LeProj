@@ -116,6 +116,11 @@ namespace Core
             get;
             set;
         }
+        public bool IsShowInList
+        {
+            get { return true; }
+        }
+
         /// <summary>
         /// 镜头长度
         /// </summary>
