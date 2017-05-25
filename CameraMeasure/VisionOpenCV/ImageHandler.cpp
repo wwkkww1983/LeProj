@@ -1,7 +1,10 @@
+#include <Windows.h>
 #include "ImageHandler.h"
 #include "RecordLog.h"
 #include <numeric>
 #include <fstream>
+#include <mmsystem.h>
+#pragma comment(lib,"winmm.lib")
 
 using namespace std;
 
@@ -13,6 +16,7 @@ using namespace std;
 
 ImageHandler::ImageHandler(void)
 {
+	hasAlarmFlag = false;
 	isExists = false;
 	existCount=0;
 	freeCount=0;	
@@ -115,6 +119,7 @@ bool ImageHandler::RecognitionHumanFace(Mat sourceFrame){
 				bool validFlag = length > minDistance && length < maxDistance;
 				RecordLog::Inst()->Log(validFlag,to_string(length) + "（厘米）,持续时间：" + to_string(timeDetect) + "（秒）");
 				freeTimeDetect = (double)getTickCount();
+				hasAlarmFlag = false;
 			}
 			isExists = false;
 			existCount = 0;
@@ -123,22 +128,31 @@ bool ImageHandler::RecognitionHumanFace(Mat sourceFrame){
 		if(freeCount >= 35500) freeCount = FREE_VALID_COUNT;
 		return -1;
 	}
-	else
+	
+	if(existCount >= EXISTS_VALID_COUNT)
 	{
-		if(existCount >= EXISTS_VALID_COUNT)
-		{
-			if(!isExists)
-			{				
-				lengthSum=0;
-				lengthCount=0;
-				timeDetect = (double)getTickCount();
-				RecordLog::Inst()->Log(false, "未检测到人,持续时间：" + to_string(double((timeDetect-freeTimeDetect)/getTickFrequency())) + "（秒）");
-			}
-			isExists = true;
-			freeCount=0;
+		if(!isExists)
+		{ 
+			lengthSum=0;
+			lengthCount=0;
+			timeDetect = (double)getTickCount();
+			RecordLog::Inst()->Log(false, "未检测到人,持续时间：" + to_string(double((timeDetect-freeTimeDetect)/getTickFrequency())) + "（秒）");
 		}
-		existCount++;
+		isExists = true;
+		freeCount=0;
+		if(lengthCount > 0)
+		{
+			int length = lengthSum/lengthCount;
+			bool validFlag = length > minDistance && length < maxDistance;
+			if(validFlag && !hasAlarmFlag)
+			{
+				PlaySound("warning.wav",NULL, SND_FILENAME|SND_ASYNC );
+				hasAlarmFlag = true;
+			}
+		}
 	}
+	existCount++;
+	
 
 	for(vector<Rect>::const_iterator r=eyes.begin();r!=eyes.end();r++)
 	{
@@ -149,8 +163,8 @@ bool ImageHandler::RecognitionHumanFace(Mat sourceFrame){
 	int distance = CalculateDistance(eyes);
 
 
-	//imshow("瞳孔",sourceFrame);
-	//moveWindow("瞳孔",700,0);
+	imshow("瞳孔",sourceFrame);
+	moveWindow("瞳孔",700,0);
 	bool needWarning = false;
 	if(isExists && double((timeDetect-freeTimeDetect)/getTickFrequency()) > 5)
 		needWarning = true;

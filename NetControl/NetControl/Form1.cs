@@ -20,7 +20,8 @@ namespace NetControl
         private const int BUFFER_SIZE = 1024;
         private const string PICKUP_CMD = "ATZ", HANGUP_CMD = "ATH", PHONE_CMD = "ATB",START_CMD="5",END_CMD="9",FINISH_CMD="2";
         private bool commandSended = false;
-        private int workTime = 0, countTime = 0;
+        private int workTime = 0, countTime = 0, webFailCount = 0;
+        private float mink1, maxk1, mink2, maxk2, minl1, maxl1, minl2, maxl2, mind1, maxd1, mind2, maxd2;
         private string currentCommand = string.Empty;
         private SkinEngine skin = null;
         private SerialPort com = new SerialPort();
@@ -78,16 +79,73 @@ namespace NetControl
                 cbPorts.Items.Add(portName);
             }
         }
+
         private void btnBreak_Click(object sender, EventArgs e)
         {
             this.SendCommand(HANGUP_CMD);
         }
+
+        private void btnOpen_Click(object sender, EventArgs e)
+        {
+            if (!this.com.IsOpen)
+            {
+                this.com.PortName = this.cbPorts.Text;
+                this.com.Open();
+                this.com.DiscardInBuffer();
+                this.com.DiscardOutBuffer();
+            }
+        }
+
         private void timerCount_Tick(object sender, EventArgs e)
         {
             this.countTime--;
             this.tbTime.Text = this.countTime.ToString();
             if (this.countTime <= 0)
                 this.btnStop_Click(null, null);
+        }
+
+
+        private void timerWeb_Tick(object sender, EventArgs e)
+        {
+            string strJson = string.Empty;
+            try
+            {
+                strJson = WebInfo.GetPageInfo("http://pcis/projects/power/correct_power.asp?callback=?");
+            }
+            catch
+            {
+            }
+            if (!strJson.Contains("POWER"))
+            {
+                this.webFailCount++;
+                if (this.webFailCount >= 5)
+                {
+                    this.timerWeb.Enabled = false;
+                    MessageBox.Show("网络读取数据失败");
+                }
+                return;
+            }
+            
+            List<MachineInfo> infoList = JSON.parse<List<MachineInfo>>(strJson);
+            this.webFailCount = 0;
+            DataTable dt = new DataTable ();
+            DataColumn dc = new DataColumn("k");
+            dt.Columns.Add(dc);
+            dc = new DataColumn("l");
+            dt.Columns.Add(dc);
+            dc = new DataColumn("d");
+            dt.Columns.Add(dc);
+            DataRow dr1 = dt.NewRow();
+            DataRow dr2 = dt.NewRow();
+            for(int i=0;i< infoList.Count;i++)
+            {
+                MachineInfo item = infoList[i];
+                dr1[i] = item.GONGLI1;
+                dr2[i] = item.GONGLI2;
+            }
+            dt.Rows.Add(dr1);
+            dt.Rows.Add(dr2);
+            this.dgvMachine.DataSource = dt;
         }
         #endregion
 
@@ -104,13 +162,6 @@ namespace NetControl
             Ini.SetItemValue("general", "serialport", this.cbPorts.Text);
             Ini.SetItemValue("general", "number", this.tbPhone.Text);
             Ini.SetItemValue("general", "time", this.tbTime.Text);
-            int idx = this.rbOne.Checked ? 1 : 0;
-            idx = this.rbTwo.Checked ? 2 : idx;
-            idx = this.rbThree.Checked ? 3 : idx;
-            idx = this.rbFour.Checked ? 4 : idx;
-            idx = this.rbFive.Checked ? 5 : idx;
-            idx = this.rbSix.Checked ? 6 : idx;
-            Ini.SetItemValue("general", "device", idx.ToString());
         }
 
         private void InitialInfo()
@@ -119,18 +170,8 @@ namespace NetControl
             this.tbPhone.Text = Ini.GetItemValue("general", "number");
             this.tbTime.Text = Ini.GetItemValue("general", "time");
             int idx = int.Parse(Ini.GetItemValue("general", "device"));
-            RadioButton rbTmp = null;
-            switch (idx)
-            {
-                case 2: rbTmp = this.rbTwo; break;
-                case 3: rbTmp = this.rbThree; break;
-                case 4: rbTmp = this.rbFour; break;
-                case 5: rbTmp = this.rbFive; break;
-                case 6: rbTmp = this.rbSix; break;
-                default: rbTmp = this.rbOne; break;
-            }
-            rbTmp.Checked = true;
-
+            this.mink1 = float.Parse(Ini.GetItemValue("boundary","mink1"));
+            
             this.com.BaudRate = 1200;
             this.com.DataBits = 8;
             this.com.StopBits = StopBits.One;
@@ -283,6 +324,7 @@ namespace NetControl
             this.gbDevices.Enabled = status;
         }
         #endregion
+
 
     }
 }

@@ -24,6 +24,7 @@ namespace CamInter
         private DBUtility dbHandler = new DBUtility(true);
         private Algorithm alg = null;
         private List<RingResults> resultList = null;
+        private List<ValueType> connList;
 
         public FormMain()
         {
@@ -40,8 +41,8 @@ namespace CamInter
             this.dtInter = dbHandler.GetDropDownListInfo(enumProductType.Interface);
             List<ValueType> ringList = dbHandler.GetAllDevices(enumProductType.Focus);
             List<ValueType> cameList = dbHandler.GetAllDevices(enumProductType.CamLens);
-            List<ValueType> connList = dbHandler.GetAllDevices(enumProductType.Interface);
-            this.alg = new Algorithm(ringList, cameList, connList);
+            this.connList = dbHandler.GetAllDevices(enumProductType.Interface);
+            this.alg = new Algorithm(ringList, cameList, this.connList);
             this.cbInterface.DataSource = this.dtInter;
             this.cbInterface.DisplayMember = "Name";
             this.cbInterface.ValueMember = "Idx";
@@ -130,10 +131,11 @@ namespace CamInter
             this.tbFormat.AutoSize = false;
             this.tbFormat.Location = new Point(200, 160);
             this.tbFormat.Size = new Size(80, 15);
-            this.cbInterface.Location = new Point(200, 178);
+            this.cbInterface.Location = new Point(200, 180);
             this.cbInterface.Size = new Size(80, 15);
+            
             this.tbFlange.AutoSize = false;
-            this.tbFlange.Location = new Point(200, 203);
+            this.tbFlange.Location = new Point(200, 202);
             this.tbFlange.Size = new Size(80, 15);
 
             this.tbFovH.AutoSize = false;
@@ -205,12 +207,11 @@ namespace CamInter
             float ratio = float.Parse(this.tbMagnifi.Text);
             int camInter = Convert.ToInt32(this.cbInterface.SelectedValue);
             float flange = Convert.ToSingle(this.tbFlange.Text);
-            int sizeH = int.Parse(this.tbResolutionH.Text), sizeV = int.Parse(this.tbResolutionV.Text);
             float target = float.Parse(this.tbFormat.Text);
             float workDistance = this.tbWD.Text.Trim().Equals(string.Empty)?0f:float.Parse(this.tbWD.Text);
             float workDistanceRange = this.tbWDrange.Text.Trim().Equals(string.Empty) ? 0f : float.Parse(this.tbWDrange.Text);
 
-            this.resultList = this.alg.GetDevicesByBaseInfo(camInter, flange, target, sizeH, sizeV, ratio, workDistance, workDistanceRange);
+            this.resultList = this.alg.GetDevicesByBaseInfo(camInter, flange, target, ratio, workDistance, workDistanceRange);
             this.showResults(this.resultList, ratio);
 
             if (this.resultList.Count <= 2)
@@ -278,6 +279,19 @@ namespace CamInter
             }
         }
 
+        private void cbInterface_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            Font myFont = new Font("Arial", 12, GraphicsUnit.Pixel);
+            string strContent = this.dtInter.Rows[e.Index]["Name"].ToString();
+
+            e.Graphics.DrawString(strContent, myFont, Brushes.Black, new RectangleF(0, e.Bounds.Y, e.Bounds.Width, e.Bounds.Height));
+        }
+
+        private void cbInterface_MeasureItem(object sender, MeasureItemEventArgs e)
+        {
+            e.ItemHeight = 15;
+        }
+
         private void FormMain_MouseMove(object sender, MouseEventArgs e)
         {
             if (!leftButtonPress) return;
@@ -340,6 +354,24 @@ namespace CamInter
                 this.tbFlange.Enabled = true;
                 this.tbFlange.Text = string.Empty;
             }
+
+            if (this.tbFormat.Text.Trim().Equals(string.Empty)) return;
+            float camTarget = float.Parse(this.tbFormat.Text);
+            float interSize = 0;
+            int connIdx = Convert.ToInt32( this.dtInter.Rows[cbTemp.SelectedIndex]["Idx"]);
+            foreach (ValueType item in this.connList)
+            {
+                Connectors connItem = (Connectors)item;
+                if (connItem.Idx == connIdx)
+                {
+                    interSize = connItem.Length;
+                    break;
+                }
+            }
+            if (interSize <= camTarget)
+            {
+                MessageBox.Show("interface size is larger than camera format");
+            }
         }
 
         private void tbResolutionV_Leave(object sender, EventArgs e)
@@ -357,7 +389,13 @@ namespace CamInter
 
             TextBox other = tbTemp == this.tbFovH ? this.tbFovV : this.tbFovH;
             other.Enabled = tbTemp.Text.Trim().Equals(string.Empty);
-            if (other.Enabled) return;
+            if (other.Enabled)
+            {
+                other.Text = string.Empty;
+                this.tbMagnifi.Enabled = true;
+                this.tbMagnifi.Text = string.Empty;
+                return;
+            }
 
             double sizeH, sizeV, fovH, fovV;
             sizeH = double.Parse(this.tbResolutionH.Text);
@@ -448,8 +486,12 @@ namespace CamInter
                 int v = int.Parse(this.tbResolutionV.Text);
                 this.tbFormat.Text = String.Format("{0:F}", Math.Sqrt(h * h + v * v) * pixel / 1000f);
             }
+
+            this.tbFov_TextChanged(this.tbFovH, null);
+            this.tbMagnifi_TextChanged(this.tbMagnifi, null);
         }
         #endregion
+
 
     }
 }

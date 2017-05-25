@@ -46,19 +46,17 @@ namespace Core
         /// <param name="camera">相机接口</param>
         /// <param name="flange">相机法兰距</param>
         /// <param name="target">靶面</param>
-        /// <param name="resolutionLength">分辨率（长）</param>
-        /// <param name="resolutionWidth">分辨率（宽）</param>
         /// <param name="ratio">放大倍率</param>
         /// <param name="workLength">工作距离</param>
         /// <param name="workRange">工作范围</param>
         /// <returns></returns>
-        public List<RingResults> GetDevicesByBaseInfo(int camera, float flange, float target, int resolutionLength, int resolutionWidth, float ratio, float workLength, float workRange)
+        public List<RingResults> GetDevicesByBaseInfo(int camera, float flange, float target,  float ratio, float workLength, float workRange)
         {
             results = new List<RingResult>();
             this.resultsFound = new List<RingResults>();
             List<RingMedium> current = new List<RingMedium>();
 
-            List<CameraLens> lensList = this.FindCamera(target, resolutionLength, resolutionWidth, ratio, workLength, workRange);
+            List<CameraLens> lensList = this.FindCamera(target,  ratio, workLength, workRange);
             foreach (CameraLens lens in lensList)
             {
                 float ringLength = lens.Focus * ratio + lens.Flange - flange;
@@ -81,20 +79,18 @@ namespace Core
         /// 找镜头
         /// </summary>
         /// <param name="target">靶面</param>
-        /// <param name="resolutionLength">相机分辨率（长）</param>
-        /// <param name="resolutionWidth">相机分辨率（宽）</param>
         /// <param name="ratio">放大倍数</param>
         /// <param name="workLength">工作距离</param>
         /// <param name="workRange">工作距离范围</param>
         /// <returns>有效镜头列表</returns>
-        private List<CameraLens> FindCamera(float target, int resolutionLength, int resolutionWidth, float ratio, float workLength, float workRange)
+        private List<CameraLens> FindCamera(float target,  float ratio, float workLength, float workRange)
         {
             List<CameraLens> result = new List<CameraLens>();
             foreach (CameraLens item in this.camList)
             {
                 if (ratio < item.RatioMin || ratio > item.RatioMax || //放大倍率（在镜头支持的范围内）
-                    resolutionLength > 0 && resolutionLength > item.ResolutionLength ||//验证分辨率（镜头分辨率 >= 相机分辨率）
-                    resolutionWidth > 0 && resolutionWidth > item.ResolutionWidth ||
+                    //resolutionLength > 0 && resolutionLength > item.ResolutionLength ||//验证分辨率（镜头分辨率 >= 相机分辨率）
+                    //resolutionWidth > 0 && resolutionWidth > item.ResolutionWidth ||
                     target > 0 && target > item.Target)//靶面（镜头最大靶面（直径） >= 相机靶面（对角线））                    
                 {
                     continue;

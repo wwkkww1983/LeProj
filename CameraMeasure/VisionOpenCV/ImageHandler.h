@@ -20,7 +20,7 @@ public:
 
 private:
 
-	bool isExists, tempExistsFlag;
+	bool isExists, tempExistsFlag, hasAlarmFlag;
 	int existCount,freeCount;
 	int lengthSum, lengthCount;
 	int minDistance, maxDistance;

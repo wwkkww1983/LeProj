@@ -104,60 +104,59 @@
             // 
             // pnSplit1
             // 
-            this.pnSplit1.Location = new System.Drawing.Point(38, 64);
-            this.pnSplit1.Margin = new System.Windows.Forms.Padding(2);
+            this.pnSplit1.Location = new System.Drawing.Point(51, 80);
+            this.pnSplit1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnSplit1.Name = "pnSplit1";
-            this.pnSplit1.Size = new System.Drawing.Size(825, 2);
+            this.pnSplit1.Size = new System.Drawing.Size(1100, 2);
             this.pnSplit1.TabIndex = 1;
             // 
             // pnSplit2
             // 
-            this.pnSplit2.Location = new System.Drawing.Point(38, 184);
-            this.pnSplit2.Margin = new System.Windows.Forms.Padding(2);
+            this.pnSplit2.Location = new System.Drawing.Point(51, 230);
+            this.pnSplit2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnSplit2.Name = "pnSplit2";
-            this.pnSplit2.Size = new System.Drawing.Size(638, 2);
+            this.pnSplit2.Size = new System.Drawing.Size(851, 2);
             this.pnSplit2.TabIndex = 2;
             // 
             // pnSplit3
             // 
-            this.pnSplit3.Location = new System.Drawing.Point(38, 360);
-            this.pnSplit3.Margin = new System.Windows.Forms.Padding(2);
+            this.pnSplit3.Location = new System.Drawing.Point(51, 450);
+            this.pnSplit3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnSplit3.Name = "pnSplit3";
-            this.pnSplit3.Size = new System.Drawing.Size(638, 2);
+            this.pnSplit3.Size = new System.Drawing.Size(851, 2);
             this.pnSplit3.TabIndex = 3;
             // 
             // pnSplit4
             // 
-            this.pnSplit4.Location = new System.Drawing.Point(38, 576);
-            this.pnSplit4.Margin = new System.Windows.Forms.Padding(2);
+            this.pnSplit4.Location = new System.Drawing.Point(51, 720);
+            this.pnSplit4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnSplit4.Name = "pnSplit4";
-            this.pnSplit4.Size = new System.Drawing.Size(825, 2);
+            this.pnSplit4.Size = new System.Drawing.Size(1100, 2);
             this.pnSplit4.TabIndex = 4;
             // 
             // pnSplit5
             // 
-            this.pnSplit5.Location = new System.Drawing.Point(675, 64);
-            this.pnSplit5.Margin = new System.Windows.Forms.Padding(2);
+            this.pnSplit5.Location = new System.Drawing.Point(900, 80);
+            this.pnSplit5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnSplit5.Name = "pnSplit5";
-            this.pnSplit5.Size = new System.Drawing.Size(2, 512);
+            this.pnSplit5.Size = new System.Drawing.Size(3, 640);
             this.pnSplit5.TabIndex = 5;
             // 
             // pnSplit6
             // 
-            this.pnSplit6.Location = new System.Drawing.Point(356, 64);
-            this.pnSplit6.Margin = new System.Windows.Forms.Padding(2);
+            this.pnSplit6.Location = new System.Drawing.Point(475, 80);
+            this.pnSplit6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnSplit6.Name = "pnSplit6";
-            this.pnSplit6.Size = new System.Drawing.Size(2, 120);
+            this.pnSplit6.Size = new System.Drawing.Size(3, 150);
             this.pnSplit6.TabIndex = 6;
             // 
             // lbHead
             // 
             this.lbHead.Font = new System.Drawing.Font("Arial", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.lbHead.ForeColor = System.Drawing.Color.White;
-            this.lbHead.Location = new System.Drawing.Point(331, 18);
-            this.lbHead.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbHead.Location = new System.Drawing.Point(441, 22);
             this.lbHead.Name = "lbHead";
-            this.lbHead.Size = new System.Drawing.Size(237, 29);
+            this.lbHead.Size = new System.Drawing.Size(316, 36);
             this.lbHead.TabIndex = 7;
             this.lbHead.Text = "Lens Accessories Selector";
             this.lbHead.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -166,10 +165,9 @@
             // 
             this.lbFoot.AutoSize = true;
             this.lbFoot.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lbFoot.Location = new System.Drawing.Point(38, 600);
-            this.lbFoot.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbFoot.Location = new System.Drawing.Point(51, 750);
             this.lbFoot.Name = "lbFoot";
-            this.lbFoot.Size = new System.Drawing.Size(604, 15);
+            this.lbFoot.Size = new System.Drawing.Size(692, 16);
             this.lbFoot.TabIndex = 8;
             this.lbFoot.Text = "深圳市中辉智景科技有限公司   Web: http://www.phzlmv.com/    Tel: 0755-26408379   Email: sales@" +
     "phzlmv.com";
@@ -179,10 +177,9 @@
             this.lbCamInfo.AutoSize = true;
             this.lbCamInfo.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.lbCamInfo.ForeColor = System.Drawing.Color.White;
-            this.lbCamInfo.Location = new System.Drawing.Point(38, 72);
-            this.lbCamInfo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbCamInfo.Location = new System.Drawing.Point(51, 90);
             this.lbCamInfo.Name = "lbCamInfo";
-            this.lbCamInfo.Size = new System.Drawing.Size(145, 18);
+            this.lbCamInfo.Size = new System.Drawing.Size(154, 19);
             this.lbCamInfo.TabIndex = 9;
             this.lbCamInfo.Text = "Camera Information";
             // 
@@ -191,10 +188,9 @@
             this.lbCamInfoChild.AutoSize = true;
             this.lbCamInfoChild.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.lbCamInfoChild.ForeColor = System.Drawing.Color.White;
-            this.lbCamInfoChild.Location = new System.Drawing.Point(152, 74);
-            this.lbCamInfoChild.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbCamInfoChild.Location = new System.Drawing.Point(203, 92);
             this.lbCamInfoChild.Name = "lbCamInfoChild";
-            this.lbCamInfoChild.Size = new System.Drawing.Size(127, 15);
+            this.lbCamInfoChild.Size = new System.Drawing.Size(135, 16);
             this.lbCamInfoChild.TabIndex = 10;
             this.lbCamInfoChild.Text = "(Line scan/Area scan)";
             // 
@@ -203,32 +199,29 @@
             this.lbResolution.AutoSize = true;
             this.lbResolution.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.lbResolution.ForeColor = System.Drawing.Color.White;
-            this.lbResolution.Location = new System.Drawing.Point(70, 94);
-            this.lbResolution.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbResolution.Location = new System.Drawing.Point(93, 118);
             this.lbResolution.Name = "lbResolution";
-            this.lbResolution.Size = new System.Drawing.Size(99, 15);
+            this.lbResolution.Size = new System.Drawing.Size(104, 16);
             this.lbResolution.TabIndex = 11;
             this.lbResolution.Text = "Resolution(H*V):";
             // 
             // tbResolutionH
             // 
             this.tbResolutionH.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbResolutionH.Location = new System.Drawing.Point(158, 96);
-            this.tbResolutionH.Margin = new System.Windows.Forms.Padding(2);
+            this.tbResolutionH.Location = new System.Drawing.Point(211, 120);
+            this.tbResolutionH.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbResolutionH.Name = "tbResolutionH";
-            this.tbResolutionH.Size = new System.Drawing.Size(61, 21);
+            this.tbResolutionH.Size = new System.Drawing.Size(80, 21);
             this.tbResolutionH.TabIndex = 2;
             this.tbResolutionH.TextChanged += new System.EventHandler(this.tbResolutionH_TextChanged);
-            this.tbResolutionH.MouseEnter += new System.EventHandler(this.tbResolution_MouseEnter);
-            this.tbResolutionH.MouseLeave += new System.EventHandler(this.tbResolution_MouseLeave);
             // 
             // tbSize
             // 
             this.tbSize.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbSize.Location = new System.Drawing.Point(158, 112);
-            this.tbSize.Margin = new System.Windows.Forms.Padding(2);
+            this.tbSize.Location = new System.Drawing.Point(211, 140);
+            this.tbSize.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbSize.Name = "tbSize";
-            this.tbSize.Size = new System.Drawing.Size(61, 21);
+            this.tbSize.Size = new System.Drawing.Size(80, 21);
             this.tbSize.TabIndex = 6;
             this.tbSize.TextChanged += new System.EventHandler(this.tbSize_TextChanged);
             // 
@@ -236,19 +229,19 @@
             // 
             this.tbFormat.Enabled = false;
             this.tbFormat.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbFormat.Location = new System.Drawing.Point(158, 128);
-            this.tbFormat.Margin = new System.Windows.Forms.Padding(2);
+            this.tbFormat.Location = new System.Drawing.Point(211, 160);
+            this.tbFormat.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbFormat.Name = "tbFormat";
-            this.tbFormat.Size = new System.Drawing.Size(61, 21);
+            this.tbFormat.Size = new System.Drawing.Size(80, 21);
             this.tbFormat.TabIndex = 8;
             // 
             // tbFlange
             // 
             this.tbFlange.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbFlange.Location = new System.Drawing.Point(158, 162);
-            this.tbFlange.Margin = new System.Windows.Forms.Padding(2);
+            this.tbFlange.Location = new System.Drawing.Point(211, 202);
+            this.tbFlange.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbFlange.Name = "tbFlange";
-            this.tbFlange.Size = new System.Drawing.Size(61, 21);
+            this.tbFlange.Size = new System.Drawing.Size(80, 21);
             this.tbFlange.TabIndex = 12;
             // 
             // lbSize
@@ -256,10 +249,9 @@
             this.lbSize.AutoSize = true;
             this.lbSize.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.lbSize.ForeColor = System.Drawing.Color.White;
-            this.lbSize.Location = new System.Drawing.Point(97, 110);
-            this.lbSize.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbSize.Location = new System.Drawing.Point(129, 138);
             this.lbSize.Name = "lbSize";
-            this.lbSize.Size = new System.Drawing.Size(61, 15);
+            this.lbSize.Size = new System.Drawing.Size(69, 16);
             this.lbSize.TabIndex = 11;
             this.lbSize.Text = "Pixel size:";
             // 
@@ -268,10 +260,9 @@
             this.lbFormat.AutoSize = true;
             this.lbFormat.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.lbFormat.ForeColor = System.Drawing.Color.White;
-            this.lbFormat.Location = new System.Drawing.Point(109, 126);
-            this.lbFormat.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbFormat.Location = new System.Drawing.Point(145, 158);
             this.lbFormat.Name = "lbFormat";
-            this.lbFormat.Size = new System.Drawing.Size(49, 15);
+            this.lbFormat.Size = new System.Drawing.Size(53, 16);
             this.lbFormat.TabIndex = 11;
             this.lbFormat.Text = "Format:";
             // 
@@ -280,10 +271,9 @@
             this.lbInterface.AutoSize = true;
             this.lbInterface.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.lbInterface.ForeColor = System.Drawing.Color.White;
-            this.lbInterface.Location = new System.Drawing.Point(103, 143);
-            this.lbInterface.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbInterface.Location = new System.Drawing.Point(137, 179);
             this.lbInterface.Name = "lbInterface";
-            this.lbInterface.Size = new System.Drawing.Size(57, 15);
+            this.lbInterface.Size = new System.Drawing.Size(61, 16);
             this.lbInterface.TabIndex = 11;
             this.lbInterface.Text = "Interface:";
             // 
@@ -292,10 +282,9 @@
             this.lbFlange.AutoSize = true;
             this.lbFlange.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.lbFlange.ForeColor = System.Drawing.Color.White;
-            this.lbFlange.Location = new System.Drawing.Point(70, 161);
-            this.lbFlange.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbFlange.Location = new System.Drawing.Point(93, 201);
             this.lbFlange.Name = "lbFlange";
-            this.lbFlange.Size = new System.Drawing.Size(98, 15);
+            this.lbFlange.Size = new System.Drawing.Size(104, 16);
             this.lbFlange.TabIndex = 11;
             this.lbFlange.Text = "Flange distance:";
             // 
@@ -303,10 +292,9 @@
             // 
             this.lbSizeUnit.AutoSize = true;
             this.lbSizeUnit.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lbSizeUnit.Location = new System.Drawing.Point(219, 110);
-            this.lbSizeUnit.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbSizeUnit.Location = new System.Drawing.Point(292, 138);
             this.lbSizeUnit.Name = "lbSizeUnit";
-            this.lbSizeUnit.Size = new System.Drawing.Size(25, 15);
+            this.lbSizeUnit.Size = new System.Drawing.Size(26, 16);
             this.lbSizeUnit.TabIndex = 13;
             this.lbSizeUnit.Text = "um";
             // 
@@ -314,10 +302,9 @@
             // 
             this.lbFormatUnit.AutoSize = true;
             this.lbFormatUnit.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lbFormatUnit.Location = new System.Drawing.Point(219, 126);
-            this.lbFormatUnit.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbFormatUnit.Location = new System.Drawing.Point(292, 158);
             this.lbFormatUnit.Name = "lbFormatUnit";
-            this.lbFormatUnit.Size = new System.Drawing.Size(29, 15);
+            this.lbFormatUnit.Size = new System.Drawing.Size(30, 16);
             this.lbFormatUnit.TabIndex = 13;
             this.lbFormatUnit.Text = "mm";
             // 
@@ -325,10 +312,9 @@
             // 
             this.lbInterfaceUnit.AutoSize = true;
             this.lbInterfaceUnit.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lbInterfaceUnit.Location = new System.Drawing.Point(219, 143);
-            this.lbInterfaceUnit.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbInterfaceUnit.Location = new System.Drawing.Point(292, 179);
             this.lbInterfaceUnit.Name = "lbInterfaceUnit";
-            this.lbInterfaceUnit.Size = new System.Drawing.Size(42, 15);
+            this.lbInterfaceUnit.Size = new System.Drawing.Size(44, 16);
             this.lbInterfaceUnit.TabIndex = 13;
             this.lbInterfaceUnit.Text = "mount";
             // 
@@ -336,30 +322,28 @@
             // 
             this.lbFlangeUnit.AutoSize = true;
             this.lbFlangeUnit.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lbFlangeUnit.Location = new System.Drawing.Point(219, 161);
-            this.lbFlangeUnit.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbFlangeUnit.Location = new System.Drawing.Point(292, 201);
             this.lbFlangeUnit.Name = "lbFlangeUnit";
-            this.lbFlangeUnit.Size = new System.Drawing.Size(29, 15);
+            this.lbFlangeUnit.Size = new System.Drawing.Size(30, 16);
             this.lbFlangeUnit.TabIndex = 13;
             this.lbFlangeUnit.Text = "mm";
             // 
             // lbResolutionHV
             // 
             this.lbResolutionHV.AutoSize = true;
-            this.lbResolutionHV.Location = new System.Drawing.Point(234, 95);
-            this.lbResolutionHV.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbResolutionHV.Location = new System.Drawing.Point(312, 119);
             this.lbResolutionHV.Name = "lbResolutionHV";
-            this.lbResolutionHV.Size = new System.Drawing.Size(17, 12);
+            this.lbResolutionHV.Size = new System.Drawing.Size(22, 15);
             this.lbResolutionHV.TabIndex = 14;
             this.lbResolutionHV.Text = "×";
             // 
             // tbResolutionV
             // 
             this.tbResolutionV.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbResolutionV.Location = new System.Drawing.Point(262, 96);
-            this.tbResolutionV.Margin = new System.Windows.Forms.Padding(2);
+            this.tbResolutionV.Location = new System.Drawing.Point(349, 120);
+            this.tbResolutionV.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbResolutionV.Name = "tbResolutionV";
-            this.tbResolutionV.Size = new System.Drawing.Size(61, 21);
+            this.tbResolutionV.Size = new System.Drawing.Size(80, 21);
             this.tbResolutionV.TabIndex = 4;
             this.tbResolutionV.Leave += new System.EventHandler(this.tbResolutionV_Leave);
             this.tbResolutionV.MouseEnter += new System.EventHandler(this.tbResolution_MouseEnter);
@@ -368,30 +352,29 @@
             // lbFovHV
             // 
             this.lbFovHV.AutoSize = true;
-            this.lbFovHV.Location = new System.Drawing.Point(559, 95);
-            this.lbFovHV.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbFovHV.Location = new System.Drawing.Point(745, 119);
             this.lbFovHV.Name = "lbFovHV";
-            this.lbFovHV.Size = new System.Drawing.Size(17, 12);
+            this.lbFovHV.Size = new System.Drawing.Size(22, 15);
             this.lbFovHV.TabIndex = 19;
             this.lbFovHV.Text = "×";
             // 
             // tbFovV
             // 
             this.tbFovV.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbFovV.Location = new System.Drawing.Point(578, 96);
-            this.tbFovV.Margin = new System.Windows.Forms.Padding(2);
+            this.tbFovV.Location = new System.Drawing.Point(771, 120);
+            this.tbFovV.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbFovV.Name = "tbFovV";
-            this.tbFovV.Size = new System.Drawing.Size(61, 21);
+            this.tbFovV.Size = new System.Drawing.Size(80, 21);
             this.tbFovV.TabIndex = 16;
             this.tbFovV.TextChanged += new System.EventHandler(this.tbFov_TextChanged);
             // 
             // tbFovH
             // 
             this.tbFovH.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbFovH.Location = new System.Drawing.Point(472, 96);
-            this.tbFovH.Margin = new System.Windows.Forms.Padding(2);
+            this.tbFovH.Location = new System.Drawing.Point(629, 120);
+            this.tbFovH.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbFovH.Name = "tbFovH";
-            this.tbFovH.Size = new System.Drawing.Size(61, 21);
+            this.tbFovH.Size = new System.Drawing.Size(80, 21);
             this.tbFovH.TabIndex = 14;
             this.tbFovH.TextChanged += new System.EventHandler(this.tbFov_TextChanged);
             // 
@@ -400,10 +383,9 @@
             this.lbFov.AutoSize = true;
             this.lbFov.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.lbFov.ForeColor = System.Drawing.Color.White;
-            this.lbFov.Location = new System.Drawing.Point(410, 96);
-            this.lbFov.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbFov.Location = new System.Drawing.Point(547, 120);
             this.lbFov.Name = "lbFov";
-            this.lbFov.Size = new System.Drawing.Size(59, 12);
+            this.lbFov.Size = new System.Drawing.Size(70, 13);
             this.lbFov.TabIndex = 16;
             this.lbFov.Text = "Fov(H*V):";
             // 
@@ -412,10 +394,9 @@
             this.lbRequirement.AutoSize = true;
             this.lbRequirement.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.lbRequirement.ForeColor = System.Drawing.Color.White;
-            this.lbRequirement.Location = new System.Drawing.Point(364, 72);
-            this.lbRequirement.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbRequirement.Location = new System.Drawing.Point(485, 90);
             this.lbRequirement.Name = "lbRequirement";
-            this.lbRequirement.Size = new System.Drawing.Size(97, 18);
+            this.lbRequirement.Size = new System.Drawing.Size(101, 19);
             this.lbRequirement.TabIndex = 15;
             this.lbRequirement.Text = "Requirement";
             // 
@@ -423,10 +404,9 @@
             // 
             this.lbFovHUnit.AutoSize = true;
             this.lbFovHUnit.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lbFovHUnit.Location = new System.Drawing.Point(536, 94);
-            this.lbFovHUnit.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbFovHUnit.Location = new System.Drawing.Point(715, 118);
             this.lbFovHUnit.Name = "lbFovHUnit";
-            this.lbFovHUnit.Size = new System.Drawing.Size(17, 12);
+            this.lbFovHUnit.Size = new System.Drawing.Size(21, 13);
             this.lbFovHUnit.TabIndex = 13;
             this.lbFovHUnit.Text = "mm";
             // 
@@ -434,10 +414,9 @@
             // 
             this.lbFovVUnit.AutoSize = true;
             this.lbFovVUnit.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lbFovVUnit.Location = new System.Drawing.Point(640, 94);
-            this.lbFovVUnit.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbFovVUnit.Location = new System.Drawing.Point(853, 118);
             this.lbFovVUnit.Name = "lbFovVUnit";
-            this.lbFovVUnit.Size = new System.Drawing.Size(17, 12);
+            this.lbFovVUnit.Size = new System.Drawing.Size(21, 13);
             this.lbFovVUnit.TabIndex = 13;
             this.lbFovVUnit.Text = "mm";
             // 
@@ -446,20 +425,19 @@
             this.lbMagni.AutoSize = true;
             this.lbMagni.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.lbMagni.ForeColor = System.Drawing.Color.White;
-            this.lbMagni.Location = new System.Drawing.Point(364, 112);
-            this.lbMagni.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbMagni.Location = new System.Drawing.Point(485, 140);
             this.lbMagni.Name = "lbMagni";
-            this.lbMagni.Size = new System.Drawing.Size(113, 12);
+            this.lbMagni.Size = new System.Drawing.Size(132, 13);
             this.lbMagni.TabIndex = 16;
             this.lbMagni.Text = "Magnification(β):";
             // 
             // tbMagnifi
             // 
             this.tbMagnifi.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbMagnifi.Location = new System.Drawing.Point(472, 112);
-            this.tbMagnifi.Margin = new System.Windows.Forms.Padding(2);
+            this.tbMagnifi.Location = new System.Drawing.Point(629, 140);
+            this.tbMagnifi.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbMagnifi.Name = "tbMagnifi";
-            this.tbMagnifi.Size = new System.Drawing.Size(61, 21);
+            this.tbMagnifi.Size = new System.Drawing.Size(80, 21);
             this.tbMagnifi.TabIndex = 18;
             this.tbMagnifi.TextChanged += new System.EventHandler(this.tbMagnifi_TextChanged);
             // 
@@ -467,10 +445,9 @@
             // 
             this.lbWDUnit.AutoSize = true;
             this.lbWDUnit.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lbWDUnit.Location = new System.Drawing.Point(536, 126);
-            this.lbWDUnit.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbWDUnit.Location = new System.Drawing.Point(715, 158);
             this.lbWDUnit.Name = "lbWDUnit";
-            this.lbWDUnit.Size = new System.Drawing.Size(17, 12);
+            this.lbWDUnit.Size = new System.Drawing.Size(21, 13);
             this.lbWDUnit.TabIndex = 13;
             this.lbWDUnit.Text = "mm";
             // 
@@ -478,10 +455,9 @@
             // 
             this.lbWDRangeUnit.AutoSize = true;
             this.lbWDRangeUnit.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lbWDRangeUnit.Location = new System.Drawing.Point(640, 126);
-            this.lbWDRangeUnit.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbWDRangeUnit.Location = new System.Drawing.Point(853, 158);
             this.lbWDRangeUnit.Name = "lbWDRangeUnit";
-            this.lbWDRangeUnit.Size = new System.Drawing.Size(17, 12);
+            this.lbWDRangeUnit.Size = new System.Drawing.Size(21, 13);
             this.lbWDRangeUnit.TabIndex = 13;
             this.lbWDRangeUnit.Text = "mm";
             // 
@@ -490,39 +466,37 @@
             this.lbWD.AutoSize = true;
             this.lbWD.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.lbWD.ForeColor = System.Drawing.Color.White;
-            this.lbWD.Location = new System.Drawing.Point(410, 128);
-            this.lbWD.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbWD.Location = new System.Drawing.Point(547, 160);
             this.lbWD.Name = "lbWD";
-            this.lbWD.Size = new System.Drawing.Size(59, 12);
+            this.lbWD.Size = new System.Drawing.Size(70, 13);
             this.lbWD.TabIndex = 16;
             this.lbWD.Text = "WD range:";
             // 
             // tbWD
             // 
             this.tbWD.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbWD.Location = new System.Drawing.Point(472, 128);
-            this.tbWD.Margin = new System.Windows.Forms.Padding(2);
+            this.tbWD.Location = new System.Drawing.Point(629, 160);
+            this.tbWD.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbWD.Name = "tbWD";
-            this.tbWD.Size = new System.Drawing.Size(61, 21);
+            this.tbWD.Size = new System.Drawing.Size(80, 21);
             this.tbWD.TabIndex = 20;
             // 
             // tbWDrange
             // 
             this.tbWDrange.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbWDrange.Location = new System.Drawing.Point(578, 128);
-            this.tbWDrange.Margin = new System.Windows.Forms.Padding(2);
+            this.tbWDrange.Location = new System.Drawing.Point(771, 160);
+            this.tbWDrange.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbWDrange.Name = "tbWDrange";
-            this.tbWDrange.Size = new System.Drawing.Size(61, 21);
+            this.tbWDrange.Size = new System.Drawing.Size(80, 21);
             this.tbWDrange.TabIndex = 22;
             this.tbWDrange.Text = "100";
             // 
             // lbWDRange
             // 
             this.lbWDRange.AutoSize = true;
-            this.lbWDRange.Location = new System.Drawing.Point(559, 127);
-            this.lbWDRange.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbWDRange.Location = new System.Drawing.Point(745, 159);
             this.lbWDRange.Name = "lbWDRange";
-            this.lbWDRange.Size = new System.Drawing.Size(17, 12);
+            this.lbWDRange.Size = new System.Drawing.Size(22, 15);
             this.lbWDRange.TabIndex = 19;
             this.lbWDRange.Text = "±";
             // 
@@ -531,10 +505,9 @@
             this.lbSuggestion.AutoSize = true;
             this.lbSuggestion.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.lbSuggestion.ForeColor = System.Drawing.Color.White;
-            this.lbSuggestion.Location = new System.Drawing.Point(38, 192);
-            this.lbSuggestion.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbSuggestion.Location = new System.Drawing.Point(51, 240);
             this.lbSuggestion.Name = "lbSuggestion";
-            this.lbSuggestion.Size = new System.Drawing.Size(87, 18);
+            this.lbSuggestion.Size = new System.Drawing.Size(90, 19);
             this.lbSuggestion.TabIndex = 15;
             this.lbSuggestion.Text = "Suggestion";
             // 
@@ -570,13 +543,13 @@
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvProj.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvProj.EnableHeadersVisualStyles = false;
-            this.dgvProj.Location = new System.Drawing.Point(56, 218);
-            this.dgvProj.Margin = new System.Windows.Forms.Padding(2);
+            this.dgvProj.Location = new System.Drawing.Point(75, 272);
+            this.dgvProj.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dgvProj.Name = "dgvProj";
             this.dgvProj.ReadOnly = true;
             this.dgvProj.RowHeadersVisible = false;
             this.dgvProj.RowTemplate.Height = 27;
-            this.dgvProj.Size = new System.Drawing.Size(600, 126);
+            this.dgvProj.Size = new System.Drawing.Size(800, 158);
             this.dgvProj.TabIndex = 20;
             // 
             // dgvSugItem
@@ -641,10 +614,9 @@
             this.lbDetail.AutoSize = true;
             this.lbDetail.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.lbDetail.ForeColor = System.Drawing.Color.White;
-            this.lbDetail.Location = new System.Drawing.Point(38, 368);
-            this.lbDetail.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbDetail.Location = new System.Drawing.Point(51, 460);
             this.lbDetail.Name = "lbDetail";
-            this.lbDetail.Size = new System.Drawing.Size(49, 18);
+            this.lbDetail.Size = new System.Drawing.Size(50, 19);
             this.lbDetail.TabIndex = 15;
             this.lbDetail.Text = "Detail";
             // 
@@ -680,13 +652,13 @@
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvDetail.DefaultCellStyle = dataGridViewCellStyle4;
             this.dgvDetail.EnableHeadersVisualStyles = false;
-            this.dgvDetail.Location = new System.Drawing.Point(56, 394);
-            this.dgvDetail.Margin = new System.Windows.Forms.Padding(2);
+            this.dgvDetail.Location = new System.Drawing.Point(75, 492);
+            this.dgvDetail.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dgvDetail.Name = "dgvDetail";
             this.dgvDetail.ReadOnly = true;
             this.dgvDetail.RowHeadersVisible = false;
             this.dgvDetail.RowTemplate.Height = 27;
-            this.dgvDetail.Size = new System.Drawing.Size(600, 166);
+            this.dgvDetail.Size = new System.Drawing.Size(800, 208);
             this.dgvDetail.TabIndex = 20;
             // 
             // dgvDetailItem
@@ -751,19 +723,18 @@
             this.lbDimensional.AutoSize = true;
             this.lbDimensional.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.lbDimensional.ForeColor = System.Drawing.Color.White;
-            this.lbDimensional.Location = new System.Drawing.Point(686, 72);
-            this.lbDimensional.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbDimensional.Location = new System.Drawing.Point(915, 90);
             this.lbDimensional.Name = "lbDimensional";
-            this.lbDimensional.Size = new System.Drawing.Size(157, 18);
+            this.lbDimensional.Size = new System.Drawing.Size(163, 19);
             this.lbDimensional.TabIndex = 15;
             this.lbDimensional.Text = "Dimensional Drawing";
             // 
             // pnDraw
             // 
-            this.pnDraw.Location = new System.Drawing.Point(694, 96);
-            this.pnDraw.Margin = new System.Windows.Forms.Padding(2);
+            this.pnDraw.Location = new System.Drawing.Point(925, 120);
+            this.pnDraw.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnDraw.Name = "pnDraw";
-            this.pnDraw.Size = new System.Drawing.Size(150, 464);
+            this.pnDraw.Size = new System.Drawing.Size(200, 580);
             this.pnDraw.TabIndex = 21;
             // 
             // btnSearch
@@ -772,10 +743,10 @@
             this.btnSearch.FlatAppearance.BorderSize = 0;
             this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSearch.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.btnSearch.Location = new System.Drawing.Point(478, 152);
-            this.btnSearch.Margin = new System.Windows.Forms.Padding(2);
+            this.btnSearch.Location = new System.Drawing.Point(637, 190);
+            this.btnSearch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(75, 20);
+            this.btnSearch.Size = new System.Drawing.Size(100, 25);
             this.btnSearch.TabIndex = 30;
             this.btnSearch.Text = "search";
             this.btnSearch.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -785,10 +756,10 @@
             // btnMin
             // 
             this.btnMin.BackgroundImage = global::CamInter.Properties.Resources.min;
-            this.btnMin.Location = new System.Drawing.Point(861, 10);
-            this.btnMin.Margin = new System.Windows.Forms.Padding(2);
+            this.btnMin.Location = new System.Drawing.Point(1148, 12);
+            this.btnMin.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnMin.Name = "btnMin";
-            this.btnMin.Size = new System.Drawing.Size(12, 13);
+            this.btnMin.Size = new System.Drawing.Size(16, 16);
             this.btnMin.TabIndex = 23;
             this.btnMin.UseVisualStyleBackColor = true;
             this.btnMin.Click += new System.EventHandler(this.btnMin_Click);
@@ -796,10 +767,10 @@
             // btnClose
             // 
             this.btnClose.BackgroundImage = global::CamInter.Properties.Resources.close;
-            this.btnClose.Location = new System.Drawing.Point(878, 10);
-            this.btnClose.Margin = new System.Windows.Forms.Padding(2);
+            this.btnClose.Location = new System.Drawing.Point(1171, 12);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(12, 13);
+            this.btnClose.Size = new System.Drawing.Size(16, 16);
             this.btnClose.TabIndex = 23;
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -809,31 +780,33 @@
             this.lbRemind.AutoSize = true;
             this.lbRemind.BackColor = System.Drawing.Color.White;
             this.lbRemind.ForeColor = System.Drawing.Color.Black;
-            this.lbRemind.Location = new System.Drawing.Point(248, 47);
-            this.lbRemind.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbRemind.Location = new System.Drawing.Point(331, 59);
             this.lbRemind.Name = "lbRemind";
-            this.lbRemind.Size = new System.Drawing.Size(0, 12);
+            this.lbRemind.Size = new System.Drawing.Size(0, 15);
             this.lbRemind.TabIndex = 24;
             // 
             // cbInterface
             // 
+            this.cbInterface.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.cbInterface.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbInterface.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.cbInterface.FormattingEnabled = true;
-            this.cbInterface.ItemHeight = 15;
-            this.cbInterface.Location = new System.Drawing.Point(158, 142);
-            this.cbInterface.Margin = new System.Windows.Forms.Padding(2);
+            this.cbInterface.ItemHeight = 12;
+            this.cbInterface.Location = new System.Drawing.Point(211, 178);
+            this.cbInterface.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cbInterface.Name = "cbInterface";
-            this.cbInterface.Size = new System.Drawing.Size(61, 23);
+            this.cbInterface.Size = new System.Drawing.Size(80, 18);
             this.cbInterface.TabIndex = 10;
+            this.cbInterface.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbInterface_DrawItem);
+            this.cbInterface.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.cbInterface_MeasureItem);
             this.cbInterface.SelectedIndexChanged += new System.EventHandler(this.cbInterface_SelectedIndexChanged);
             // 
             // FormMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Silver;
-            this.ClientSize = new System.Drawing.Size(900, 640);
+            this.ClientSize = new System.Drawing.Size(1200, 800);
             this.Controls.Add(this.cbInterface);
             this.Controls.Add(this.lbRemind);
             this.Controls.Add(this.btnClose);
@@ -888,7 +861,7 @@
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "FormMain";
             this.Text = "Lens Accessories Selector";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.FormMain_Paint);

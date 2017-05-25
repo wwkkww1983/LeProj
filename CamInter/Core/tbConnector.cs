@@ -41,7 +41,7 @@ namespace Core
 
         public List<ValueType> GetAllData()
         {
-            string strSql = "select * from connectors";
+            string strSql = "select * from connectors order by length asc";
             DataSet dsConnector = SQLiteHelper.ExecuteDataSet(STR_CONNECTION, strSql, null);
             return new Coder().DecodeListByDb(dsConnector.Tables[0], this);
         }

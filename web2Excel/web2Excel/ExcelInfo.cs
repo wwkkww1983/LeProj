@@ -205,7 +205,7 @@ namespace web2Excel
                     //    FileOperate.FileAdd(string.Format("{0}:{1}:\r\n", i, todayExcelData[i, 11]));
                     //}
                     strHouseStatus = todayExcelData[i, 11];
-                    if (strHouseStatus != "签订中" && strHouseStatus != "已备案" && strHouseStatus != "已预告")
+                    if (strHouseStatus != "已备案" && strHouseStatus != "已预告")
                         continue;//还是可售或不可售（状态没变）
                     bool itemFindFlag = false;
                     int findFlag = 0;//0:未找到项目，1：已找到项目，2已找过项目
@@ -228,7 +228,7 @@ namespace web2Excel
                             && yestdayExcelData[j, 4] == todayExcelData[i, 4]
                             && yestdayExcelData[j, 5] == todayExcelData[i, 5])
                         {
-                            if (yestdayExcelData[j, 11] == "可售")
+                            if (yestdayExcelData[j, 11] == "可售" || yestdayExcelData[j, 11] == "签订中")
                             {
                                 if (!projComparedList.Contains(todayExcelData[i, 0]))
                                     projComparedList.Add(todayExcelData[i, 0]);
