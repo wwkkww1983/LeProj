@@ -163,7 +163,6 @@
             this.ckbNet.TabIndex = 9;
             this.ckbNet.Text = "网格";
             this.ckbNet.UseVisualStyleBackColor = true;
-            this.ckbNet.CheckedChanged += new System.EventHandler(this.ckbNet_CheckedChanged);
             // 
             // imgBox
             // 
@@ -177,7 +176,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(997, 935);
+            this.ClientSize = new System.Drawing.Size(1001, 935);
             this.Controls.Add(this.imgBox);
             this.Controls.Add(this.ckbNet);
             this.Controls.Add(this.btnOpen);

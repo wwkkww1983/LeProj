@@ -83,7 +83,7 @@ namespace Core
                 LengthMax = 20.8f,
                 InterUp = 9,
                 InterDown = 5,
-                ImgName = "Smart Focus 5.jpg"
+                ImgName = "902002A.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -95,7 +95,7 @@ namespace Core
                 LengthMax = 27f,
                 InterUp = 3,
                 InterDown = 5,
-                ImgName = "Smart Focus 7.jpg"
+                ImgName = "902004A.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -107,7 +107,7 @@ namespace Core
                 LengthMax = 27f,
                 InterUp = 2,
                 InterDown = 5,
-                ImgName = "Smart Focus 7.jpg"
+                ImgName = "1054532A.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -119,7 +119,7 @@ namespace Core
                 LengthMax = 22f,
                 InterUp = 1,
                 InterDown = 5,
-                ImgName = "Smart Focus 7.jpg"
+                ImgName = "902003A.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -131,7 +131,7 @@ namespace Core
                 LengthMax = 27f,
                 InterUp = 5,
                 InterDown = 5,
-                ImgName = "Smart Focus 7.jpg"
+                ImgName = "1001041A.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -142,7 +142,8 @@ namespace Core
                 LengthMin = 20.6f,
                 LengthMax = 43.6f,
                 InterUp = 2,
-                InterDown = 1
+                InterDown = 1,
+                ImgName = "902001A.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -153,7 +154,8 @@ namespace Core
                 LengthMin = 19.2f,
                 LengthMax = 24.2f,
                 InterUp = 7,
-                InterDown = 5
+                InterDown = 5,
+                ImgName = "1011634A.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -164,7 +166,8 @@ namespace Core
                 LengthMin = 0f,
                 LengthMax = 0f,
                 InterUp = 6,
-                InterDown = 12
+                InterDown = 12,
+                ImgName = "1075304A.jpg"
             });
             #endregion
 
@@ -178,7 +181,8 @@ namespace Core
                 LengthMin = 10f,
                 LengthMax = 10f,
                 InterUp = 3,
-                InterDown = 6
+                InterDown = 6,
+                ImgName = "1072419A.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -189,7 +193,8 @@ namespace Core
                 LengthMin = 4f,
                 LengthMax = 4f,
                 InterUp = 10,
-                InterDown = 4
+                InterDown = 4,
+                ImgName = "903001A.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -200,7 +205,8 @@ namespace Core
                 LengthMin = 6f,
                 LengthMax = 6f,
                 InterUp = 2,
-                InterDown = 3
+                InterDown = 3,
+                ImgName = "1075556A.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -211,7 +217,8 @@ namespace Core
                 LengthMin = 4f,
                 LengthMax = 4f,
                 InterUp = 4,
-                InterDown = 3
+                InterDown = 3,
+                ImgName = "1084879A.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -222,7 +229,8 @@ namespace Core
                 LengthMin = 9f,
                 LengthMax = 9f,
                 InterUp = 8,
-                InterDown = 2
+                InterDown = 2,
+                ImgName = "903002A.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -233,7 +241,8 @@ namespace Core
                 LengthMin = 2f,
                 LengthMax = 2f,
                 InterUp = 3,
-                InterDown = 2
+                InterDown = 2,
+                ImgName = "13052A.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -244,7 +253,8 @@ namespace Core
                 LengthMin = 9.3f,
                 LengthMax = 9.3f,
                 InterUp = 8,
-                InterDown = 5
+                InterDown = 5,
+                ImgName = "21610A.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -255,7 +265,8 @@ namespace Core
                 LengthMin = 10f,
                 LengthMax = 10f,
                 InterUp = 2,
-                InterDown = 5
+                InterDown = 5,
+                ImgName = "1018385A.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -266,7 +277,8 @@ namespace Core
                 LengthMin = 6.5f,
                 LengthMax = 6.5f,
                 InterUp = 1,
-                InterDown = 5
+                InterDown = 5,
+                ImgName = "20059A.jpg"
             });
             #endregion
 
@@ -280,7 +292,8 @@ namespace Core
                 LengthMin = 6f,
                 LengthMax = 6f,
                 InterUp = 5,
-                InterDown = 5
+                InterDown = 5,
+                ImgName = "20176A.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -291,7 +304,8 @@ namespace Core
                 LengthMin = 10f,
                 LengthMax = 10f,
                 InterUp = 5,
-                InterDown = 5
+                InterDown = 5,
+                ImgName = "20178A.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -302,7 +316,8 @@ namespace Core
                 LengthMin = 25f,
                 LengthMax = 25f,
                 InterUp = 5,
-                InterDown = 5
+                InterDown = 5,
+                ImgName = "20179A.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -313,7 +328,8 @@ namespace Core
                 LengthMin = 25f,
                 LengthMax = 25f,
                 InterUp = 1,
-                InterDown = 1
+                InterDown = 1,
+                ImgName = "904001A.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -324,7 +340,8 @@ namespace Core
                 LengthMin = 10f,
                 LengthMax = 10f,
                 InterUp = 2,
-                InterDown = 2
+                InterDown = 2,
+                ImgName = "13051A.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -335,7 +352,8 @@ namespace Core
                 LengthMin = 25f,
                 LengthMax = 25f,
                 InterUp = 2,
-                InterDown = 2
+                InterDown = 2,
+                ImgName = "13050A.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -346,7 +364,8 @@ namespace Core
                 LengthMin = 10f,
                 LengthMax = 10f,
                 InterUp = 3,
-                InterDown = 3
+                InterDown = 3,
+                ImgName = "1072421A.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -357,7 +376,8 @@ namespace Core
                 LengthMin = 25f,
                 LengthMax = 25f,
                 InterUp = 3,
-                InterDown = 3
+                InterDown = 3,
+                ImgName = "26406A.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -368,7 +388,8 @@ namespace Core
                 LengthMin = 50f,
                 LengthMax = 50f,
                 InterUp = 3,
-                InterDown = 3
+                InterDown = 3,
+                ImgName = "1054733A.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -379,7 +400,8 @@ namespace Core
                 LengthMin = 10f,
                 LengthMax = 10f,
                 InterUp = 4,
-                InterDown = 4
+                InterDown = 4,
+                ImgName = "1084875A.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -390,7 +412,8 @@ namespace Core
                 LengthMin = 25f,
                 LengthMax = 25f,
                 InterUp = 4,
-                InterDown = 4
+                InterDown = 4,
+                ImgName = "1084876A.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -401,7 +424,8 @@ namespace Core
                 LengthMin = 50f,
                 LengthMax = 50f,
                 InterUp = 4,
-                InterDown = 4
+                InterDown = 4,
+                ImgName = "1084877A.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -412,7 +436,8 @@ namespace Core
                 LengthMin = 100f,
                 LengthMax = 100f,
                 InterUp = 4,
-                InterDown = 4
+                InterDown = 4,
+                ImgName = "1084878A.jpg"
             });
             #endregion
 
@@ -429,7 +454,7 @@ namespace Core
                 Length = 28.6f,
                 RatioMin = 0,
                 RatioMax = 1,
-                ImgName = "Mk-CPN-S.jpg"
+                ImgName = "35142.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -443,7 +468,7 @@ namespace Core
                 Length = 28.6f,
                 RatioMin = 0,
                 RatioMax = 1,
-                ImgName = "Mk-APO-CPN.jpg"
+                ImgName = "1070213.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -457,7 +482,7 @@ namespace Core
                 Length = 28.6f,
                 RatioMin = 0,
                 RatioMax = 1,
-                ImgName = "Makro MSR.jpg"
+                ImgName = "1070160.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -471,7 +496,7 @@ namespace Core
                 Length = 28.6f,
                 RatioMin = 0,
                 RatioMax = 1,
-                ImgName = "Mk-CPN-S.jpg"
+                ImgName = "14780.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -484,7 +509,8 @@ namespace Core
                 HH = -1.85f,
                 Length = 28.6f,
                 RatioMin = 0,
-                RatioMax = 1
+                RatioMax = 1,
+                ImgName="14802.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -498,7 +524,7 @@ namespace Core
                 Length = 28.6f,
                 RatioMin = 0,
                 RatioMax = 1,
-                ImgName = "Mk-CPN-S.jpg"
+                ImgName = "14796.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -511,7 +537,8 @@ namespace Core
                 HH = -1.8f,
                 Length = 28.6f,
                 RatioMin = 0,
-                RatioMax = 1
+                RatioMax = 1,
+                ImgName = "14783.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -524,7 +551,8 @@ namespace Core
                 HH = -2.19f,
                 Length = 28.6f,
                 RatioMin = 0,
-                RatioMax = 1
+                RatioMax = 1,
+                ImgName = "14798.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -537,7 +565,8 @@ namespace Core
                 HH = -3.54f,
                 Length = 28.6f,
                 RatioMin = 0,
-                RatioMax = 1
+                RatioMax = 1,
+                ImgName = "14792.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -550,7 +579,8 @@ namespace Core
                 HH = -2.94f,
                 Length = 28.6f,
                 RatioMin = 0,
-                RatioMax = 1
+                RatioMax = 1,
+                ImgName = "14794.jpg"
             });
 
 
@@ -566,7 +596,7 @@ namespace Core
                 Length = 28.6f,
                 RatioMin = 0.78f,
                 RatioMax = 1.23f,
-                ImgName="Makro-Symmar.jpg"
+                ImgName = "1002647.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -580,7 +610,7 @@ namespace Core
                 Length = 28.6f,
                 RatioMin = 0.53f,
                 RatioMax = 0.98f,
-                ImgName = "Makro-Symmar.jpg"
+                ImgName = "1002648.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -594,7 +624,7 @@ namespace Core
                 Length = 28.6f,
                 RatioMin = 0.28f,
                 RatioMax = 0.73f,
-                ImgName = "Makro-Symmar.jpg"
+                ImgName = "1002650.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -608,7 +638,7 @@ namespace Core
                 Length = 28.6f,
                 RatioMin = 0.16f,
                 RatioMax = 0.48f,
-                ImgName = "Makro-Symmar.jpg"
+                ImgName = "1004611.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -621,7 +651,8 @@ namespace Core
                 HH = -3.56f,
                 Length = 28.6f,
                 RatioMin = 0.1f,
-                RatioMax = 0.5f
+                RatioMax = 0.5f,
+                ImgName = "1004531.jpg"
             });
 
 
@@ -639,7 +670,7 @@ namespace Core
                 Length = 28.6f,
                 RatioMin = 3.4f,
                 RatioMax = 3.6f,
-                ImgName = "MacroVaron.jpg"
+                ImgName = "1012492.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -653,7 +684,7 @@ namespace Core
                 Length = 28.6f,
                 RatioMin = 0.4f,
                 RatioMax = 3.6f,
-                ImgName = "MacroVaron.jpg"
+                ImgName = "1072517.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -667,7 +698,7 @@ namespace Core
                 Length = 28.6f,
                 RatioMin = 3.4f,
                 RatioMax = 3.6f,
-                ImgName = "MacroVaron.jpg"
+                ImgName = "1069837.jpg"
             });
 
 
@@ -683,7 +714,7 @@ namespace Core
                 Length = 28.6f,
                 RatioMin = 0.02f,
                 RatioMax = 0.18f,
-                ImgName = "Xenon Sapphire.jpg"
+                ImgName = "1068013.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -697,7 +728,7 @@ namespace Core
                 Length = 28.6f,
                 RatioMin = 0.19f,
                 RatioMax = 0.29f,
-                ImgName = "Xenon Sapphire.jpg"
+                ImgName = "1071819.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -711,7 +742,7 @@ namespace Core
                 Length = 28.6f,
                 RatioMin = 0.245f,
                 RatioMax = 0.34f,
-                ImgName = "Xenon Sapphire.jpg"
+                ImgName = "1071818.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -725,7 +756,7 @@ namespace Core
                 Length = 28.6f,
                 RatioMin = 0.29f,
                 RatioMax = 0.40f,
-                ImgName = "Xenon Sapphire.jpg"
+                ImgName = "1068012.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -739,7 +770,7 @@ namespace Core
                 Length = 28.6f,
                 RatioMin = 0.44f,
                 RatioMax = 0.56f,
-                ImgName = "Xenon Sapphire.jpg"
+                ImgName = "1071189.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -753,7 +784,7 @@ namespace Core
                 Length = 28.6f,
                 RatioMin = 0.64f,
                 RatioMax = 0.77f,
-                ImgName = "Xenon Sapphire.jpg"
+                ImgName = "1071190.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -767,7 +798,7 @@ namespace Core
                 Length = 28.6f,
                 RatioMin = 1.64f,
                 RatioMax = 1.86f,
-                ImgName = "Xenon Sapphire.jpg"
+                ImgName = "1068014.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -781,7 +812,7 @@ namespace Core
                 Length = 28.6f,
                 RatioMin = 1.34f,
                 RatioMax = 1.55f,
-                ImgName = "Xenon Sapphire.jpg"
+                ImgName = "1076096.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -795,7 +826,7 @@ namespace Core
                 Length = 28.6f,
                 RatioMin = 1.64f,
                 RatioMax = 1.86f,
-                ImgName = "Xenon Sapphire.jpg"
+                ImgName = "1073347.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -809,7 +840,7 @@ namespace Core
                 Length = 28.6f,
                 RatioMin = 0.82f,
                 RatioMax = 0.93f,
-                ImgName = "Xenon Sapphire.jpg"
+                ImgName = "1076452.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -823,7 +854,7 @@ namespace Core
                 Length = 28.6f,
                 RatioMin = 1.07f,
                 RatioMax = 1.21f,
-                ImgName = "Xenon Sapphire.jpg"
+                ImgName = "1076453.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -837,7 +868,7 @@ namespace Core
                 Length = 28.6f,
                 RatioMin = 1.84f,
                 RatioMax = 2.16f,
-                ImgName = "Xenon Sapphire.jpg"
+                ImgName = "1076351.jpg"
             });
 
 
@@ -852,7 +883,8 @@ namespace Core
                 HH = -6.8f,
                 Length = 28.6f,
                 RatioMin = 2.44f,
-                RatioMax = 2.76f
+                RatioMax = 2.76f,
+                ImgName = "1078039.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -865,7 +897,8 @@ namespace Core
                 HH = 13.1f,
                 Length = 28.6f,
                 RatioMin = 2.44f,
-                RatioMax = 2.76f
+                RatioMax = 2.76f,
+                ImgName = "1076949.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -878,7 +911,8 @@ namespace Core
                 HH = -8.3f,
                 Length = 28.6f,
                 RatioMin = 3.34f,
-                RatioMax = 3.66f
+                RatioMax = 3.66f,
+                ImgName = "1076963.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -891,7 +925,8 @@ namespace Core
                 HH = 0.83f,
                 Length = 28.6f,
                 RatioMin = 3.34f,
-                RatioMax = 3.66f
+                RatioMax = 3.66f,
+                ImgName = "1079718.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -904,7 +939,8 @@ namespace Core
                 HH = -27.3f,
                 Length = 28.6f,
                 RatioMin = 5.04f,
-                RatioMax = 5.31f
+                RatioMax = 5.31f,
+                ImgName = "1079320.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -917,7 +953,8 @@ namespace Core
                 HH = -14.65f,
                 Length = 28.6f,
                 RatioMin = 5.04f,
-                RatioMax = 5.31f
+                RatioMax = 5.31f,
+                ImgName = "1081873.jpg"
             });
 
 
@@ -932,7 +969,8 @@ namespace Core
                 HH = -17.3f,
                 Length = 28.6f,
                 RatioMin = 0.15f,
-                RatioMax = 0.25f
+                RatioMax = 0.25f,
+                ImgName = "1073622.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -945,7 +983,8 @@ namespace Core
                 HH = -18.6f,
                 Length = 28.6f,
                 RatioMin = 0.27f,
-                RatioMax = 0.39f
+                RatioMax = 0.39f,
+                ImgName = "1079651.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -958,7 +997,8 @@ namespace Core
                 HH = -18f,
                 Length = 28.6f,
                 RatioMin = 0.42f,
-                RatioMax = 0.58f
+                RatioMax = 0.58f,
+                ImgName = "1076966.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -971,7 +1011,8 @@ namespace Core
                 HH = -21.2f,
                 Length = 28.6f,
                 RatioMin = 0.62f,
-                RatioMax = 0.78f
+                RatioMax = 0.78f,
+                ImgName = "1078947.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -984,7 +1025,8 @@ namespace Core
                 HH = -20.1f,
                 Length = 28.6f,
                 RatioMin = 0.89f,
-                RatioMax = 1.11f
+                RatioMax = 1.11f,
+                ImgName = "1078948.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -997,7 +1039,8 @@ namespace Core
                 HH = -18.4f,
                 Length = 28.6f,
                 RatioMin = 1.79f,
-                RatioMax = 2.21f
+                RatioMax = 2.21f,
+                ImgName = "1078872.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -1010,7 +1053,8 @@ namespace Core
                 HH = -11.9f,
                 Length = 28.6f,
                 RatioMin = 1.79f,
-                RatioMax = 2.21f
+                RatioMax = 2.21f,
+                ImgName = "1078988.jpg"
             });
             #endregion
         }

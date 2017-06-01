@@ -163,7 +163,7 @@ namespace Core
             float lengthMid = (lengthMin + lengthMax) / 2.0f;
 
             List<List<RingMedium>> allList = new List<List<RingMedium>>();
-            List<Dictionary<int, int>> diffCountList = new List<Dictionary<int, int>>();
+            List<Dictionary<string, int>> diffCountList = new List<Dictionary<string, int>>();
             this.FindAllExtend(allList, diffCountList,current, 0, lengthMin, lengthMax);
             //this.FindAllExtendLast(allList, lengthMin, lengthMax);
 
@@ -238,7 +238,7 @@ namespace Core
                 float extLength = -length;
                 foreach (RingMedium item in itemList)
                 {
-                    extLength += item.RingType == enumProductType.Extend ? item.Length : 0;
+                    extLength += item.RingType == enumProductType.Extend ? item.Length : 0;                    
                 }
                 extLength = Math.Abs(extLength);
                 if (extLength < minLength)
@@ -369,24 +369,24 @@ namespace Core
             return countList;
         }
 
-        private bool CheckExistsItemsWithinList(List<Dictionary<int, int>> diffCountList, List<RingMedium> ring)
+        private bool CheckExistsItemsWithinList(List<Dictionary<string, int>> diffCountList, List<RingMedium> ring)
         {
             bool exists = false, hasDiff = false;
-            Dictionary<int, int> itemCount = new Dictionary<int, int>();
+            Dictionary<string, int> itemCount = new Dictionary<string, int>();
             foreach (RingMedium item in ring)
             {
                 if (item.RingType != enumProductType.Extend)
                     continue;
-                if (itemCount.ContainsKey(item.InterUp))
-                    itemCount[item.InterUp]++;
+                if (itemCount.ContainsKey(item.Number))
+                    itemCount[item.Number]++;
                 else
-                    itemCount.Add(item.InterUp, 1);
+                    itemCount.Add(item.Number, 1);
             }
             exists = false;
-            foreach (Dictionary<int, int> item in diffCountList)
+            foreach (Dictionary<string, int> item in diffCountList)
             {
                 hasDiff = false;
-                foreach (KeyValuePair<int, int> itemChild in item)
+                foreach (KeyValuePair<string, int> itemChild in item)
                 {
                     if (!itemCount.ContainsKey(itemChild.Key) || itemCount[itemChild.Key] != itemChild.Value)
                     {
@@ -409,7 +409,7 @@ namespace Core
         private List<List<RingMedium>> FilterRepeatExtend(List<List<RingMedium>> allList)
         {
             List<List<RingMedium>> filterList = new List<List<RingMedium>>();
-            List<Dictionary<int, int>> diffCountList = new List<Dictionary<int, int>>();
+            List<Dictionary<string, int>> diffCountList = new List<Dictionary<string, int>>();
             foreach (List<RingMedium> itemList in allList)
             {
                 if (!this.CheckExistsItemsWithinList(diffCountList, itemList)) 
@@ -435,7 +435,7 @@ namespace Core
                     Lens = lens,
                     ringList = ringsTmp
                 };
-                if (DateTime.Now.Month <= 5 && this.resultsFound.Count < 100000)
+                if (DateTime.Now.Month <= 6 && this.resultsFound.Count < 100000)
                 {
                     this.resultsFound.Add(oneResult);
                 }
@@ -444,7 +444,7 @@ namespace Core
             return finish;
         }
 
-        private void FindAllExtend(List<List<RingMedium>> allList, List<Dictionary<int, int>> diffCountList, List<RingMedium> current, int idx, float lengthMin, float lengthMax)
+        private void FindAllExtend(List<List<RingMedium>> allList, List<Dictionary<string, int>> diffCountList, List<RingMedium> current, int idx, float lengthMin, float lengthMax)
         {
             if (lengthMin <= 0 && lengthMax >= 0)
             {

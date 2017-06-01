@@ -144,7 +144,6 @@ namespace SimuProteus
         /// <param name="newCursor"></param>
         private void ChangeCursor(Cursor newCursor, string clickedCompo)
         {
-            if (DateTime.Now.Month > 5) return;
             if (this.InvokeRequired)
             {
                 Action<Cursor, string> delegateChangeCursor = new Action<Cursor, string>(ChangeCursor);
@@ -611,7 +610,6 @@ namespace SimuProteus
 
         private void pnBoard_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (DateTime.Now.Month > 5) return;
             Point pointIdx = this.CalcNearestLocIdxByCoordinate(e.X, e.Y);
             if (this.newLinePoints.Count == 0)
             {

@@ -30,7 +30,7 @@ namespace CamInter
         {
             InitializeComponent();
 
-            dbHandler.InitialTable();
+            //dbHandler.InitialTable();
             this.Initial();
         }
 
@@ -194,6 +194,11 @@ namespace CamInter
 
         private void btnClose_Click(object sender, EventArgs e)
         {
+            if (!this.btnSearch.Enabled)
+            {
+                MessageBox.Show("Searching now, please wait.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             this.Close();
         }
 
@@ -285,7 +290,7 @@ namespace CamInter
                 dr["adapter"] = adapter.Count == 1 ? adapter[0].Name : adapter.Count.ToString() + POST_RING_NUMBER;
                 dr["ext"] = extend.Count == 1 ? extend[0].Name : extend.Count.ToString() + POST_RING_NUMBER; ;
                 dr["wd"] = ring.Lens.Focus * (2 + ratio + 1 / ratio) + ring.Lens.HH - ring.Lens.Length - ring.Lens.Focus * ratio - ring.Lens.Flange;
-                dr["fov"] = this.tbFovH;
+                dr["fov"] = this.isMeshCamera ? this.tbFovH.Text+"×"+this.tbFovV.Text : this.tbFovH.Text;
                 dt.Rows.Add(dr);
             }
             this.dgvProj.DataSource = dt;
@@ -451,7 +456,7 @@ namespace CamInter
                     resolution = sizeV;
                 }
                 double pixel = double.Parse(this.tbSize.Text);
-                this.tbMagnifi.Text = (resolution * pixel / fov).ToString("f4");
+                this.tbMagnifi.Text = (resolution * pixel / fov / 1000f).ToString("f4");
                 other.Text = otherValue.ToString("f4");
             }
         }
