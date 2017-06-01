@@ -22,7 +22,6 @@ namespace MotionCalc
         private int secondRecordCount = 0;
         private string imageFileName = string.Empty, recordFileName = string.Empty;
         private UCImageBox[] imgBoxArray = null;
-        private FormLine formLine = new FormLine();
 
         public FormMain()
         {
@@ -137,8 +136,6 @@ namespace MotionCalc
 
         private void btnAnaly_Click(object sender, EventArgs e)
         {
-            this.formLine.Show();
-            this.formLine.BringToFront();
         }
 
         #endregion

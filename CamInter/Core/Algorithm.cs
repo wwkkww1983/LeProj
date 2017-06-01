@@ -428,7 +428,7 @@ namespace Core
             foreach (List<RingMedium> itemList in allList)
             {
                 List<RingMedium> ringsTmp = new List<RingMedium>(itemList);
-                ringsTmp.RemoveAt(ringsTmp.Count - 1);
+                //ringsTmp.RemoveAt(ringsTmp.Count - 1);
                 RingResults oneResult = new RingResults()
                 {
                     Idx = this.resultsFound.Count + 1,

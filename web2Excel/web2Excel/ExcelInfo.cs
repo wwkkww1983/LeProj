@@ -266,7 +266,7 @@ namespace web2Excel
                             && yestdayExcelData[j, 4] == todayExcelData[i, 4]
                             && yestdayExcelData[j, 5] == todayExcelData[i, 5])
                         {
-                            if (yestdayExcelData[j, 11] == "可售")
+                            if (yestdayExcelData[j, 11] == "可售" || yestdayExcelData[j, 11] == "签订中")
                             {
                                 if (!projComparedList.Contains(todayExcelData[i, 0]))
                                     projComparedList.Add(todayExcelData[i, 0]);

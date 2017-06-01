@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLine));
             this.btnOpen = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -38,7 +39,10 @@
             this.rbGreen = new System.Windows.Forms.RadioButton();
             this.rbBlue = new System.Windows.Forms.RadioButton();
             this.rbRed = new System.Windows.Forms.RadioButton();
+            this.ckbNet = new System.Windows.Forms.CheckBox();
+            this.imgBox = new Emgu.CV.UI.ImageBox();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgBox)).BeginInit();
             this.SuspendLayout();
             // 
             // btnOpen
@@ -150,22 +154,44 @@
             this.rbRed.Text = "红色";
             this.rbRed.UseVisualStyleBackColor = false;
             // 
+            // ckbNet
+            // 
+            this.ckbNet.AutoSize = true;
+            this.ckbNet.Location = new System.Drawing.Point(242, 28);
+            this.ckbNet.Name = "ckbNet";
+            this.ckbNet.Size = new System.Drawing.Size(59, 19);
+            this.ckbNet.TabIndex = 9;
+            this.ckbNet.Text = "网格";
+            this.ckbNet.UseVisualStyleBackColor = true;
+            this.ckbNet.CheckedChanged += new System.EventHandler(this.ckbNet_CheckedChanged);
+            // 
+            // imgBox
+            // 
+            this.imgBox.Location = new System.Drawing.Point(12, 73);
+            this.imgBox.Name = "imgBox";
+            this.imgBox.Size = new System.Drawing.Size(973, 850);
+            this.imgBox.TabIndex = 2;
+            this.imgBox.TabStop = false;
+            // 
             // FormLine
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(997, 935);
+            this.Controls.Add(this.imgBox);
+            this.Controls.Add(this.ckbNet);
             this.Controls.Add(this.btnOpen);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "FormLine";
             this.Text = "动作捕捉分析系统";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormLine_FormClosing);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FormLine_KeyUp);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgBox)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -180,5 +206,7 @@
         private System.Windows.Forms.RadioButton rbGreen;
         private System.Windows.Forms.RadioButton rbBlue;
         private System.Windows.Forms.RadioButton rbRed;
+        private System.Windows.Forms.CheckBox ckbNet;
+        private Emgu.CV.UI.ImageBox imgBox;
     }
 }

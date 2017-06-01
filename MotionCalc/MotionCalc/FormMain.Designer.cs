@@ -34,7 +34,6 @@
             this.timerRecord = new System.Windows.Forms.Timer(this.components);
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.btnSaveImage = new System.Windows.Forms.Button();
-            this.btnAnaly = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnRecord
@@ -68,22 +67,11 @@
             this.btnSaveImage.UseVisualStyleBackColor = true;
             this.btnSaveImage.Click += new System.EventHandler(this.btnSaveImage_Click);
             // 
-            // btnAnaly
-            // 
-            this.btnAnaly.Location = new System.Drawing.Point(904, 12);
-            this.btnAnaly.Name = "btnAnaly";
-            this.btnAnaly.Size = new System.Drawing.Size(81, 35);
-            this.btnAnaly.TabIndex = 3;
-            this.btnAnaly.Text = "分析";
-            this.btnAnaly.UseVisualStyleBackColor = true;
-            this.btnAnaly.Click += new System.EventHandler(this.btnAnaly_Click);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(997, 935);
-            this.Controls.Add(this.btnAnaly);
             this.Controls.Add(this.btnSaveImage);
             this.Controls.Add(this.btnRecord);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -100,7 +88,6 @@
         private System.Windows.Forms.Timer timerRecord;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.Button btnSaveImage;
-        private System.Windows.Forms.Button btnAnaly;
 
     }
 }

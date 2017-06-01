@@ -94,10 +94,10 @@
             this.lbDimensional = new System.Windows.Forms.Label();
             this.pnDraw = new System.Windows.Forms.Panel();
             this.btnSearch = new System.Windows.Forms.Button();
-            this.btnMin = new System.Windows.Forms.Button();
-            this.btnClose = new System.Windows.Forms.Button();
             this.lbRemind = new System.Windows.Forms.Label();
             this.cbInterface = new System.Windows.Forms.ComboBox();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.btnMin = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProj)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetail)).BeginInit();
             this.SuspendLayout();
@@ -551,6 +551,7 @@
             this.dgvProj.RowTemplate.Height = 27;
             this.dgvProj.Size = new System.Drawing.Size(800, 158);
             this.dgvProj.TabIndex = 20;
+            this.dgvProj.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProj_CellClick);
             // 
             // dgvSugItem
             // 
@@ -753,28 +754,6 @@
             this.btnSearch.UseVisualStyleBackColor = false;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
-            // btnMin
-            // 
-            this.btnMin.BackgroundImage = global::CamInter.Properties.Resources.min;
-            this.btnMin.Location = new System.Drawing.Point(1148, 12);
-            this.btnMin.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnMin.Name = "btnMin";
-            this.btnMin.Size = new System.Drawing.Size(16, 16);
-            this.btnMin.TabIndex = 23;
-            this.btnMin.UseVisualStyleBackColor = true;
-            this.btnMin.Click += new System.EventHandler(this.btnMin_Click);
-            // 
-            // btnClose
-            // 
-            this.btnClose.BackgroundImage = global::CamInter.Properties.Resources.close;
-            this.btnClose.Location = new System.Drawing.Point(1171, 12);
-            this.btnClose.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(16, 16);
-            this.btnClose.TabIndex = 23;
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
             // lbRemind
             // 
             this.lbRemind.AutoSize = true;
@@ -800,6 +779,28 @@
             this.cbInterface.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbInterface_DrawItem);
             this.cbInterface.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.cbInterface_MeasureItem);
             this.cbInterface.SelectedIndexChanged += new System.EventHandler(this.cbInterface_SelectedIndexChanged);
+            // 
+            // btnClose
+            // 
+            this.btnClose.BackgroundImage = global::CamInter.Properties.Resources.close;
+            this.btnClose.Location = new System.Drawing.Point(1171, 12);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(16, 16);
+            this.btnClose.TabIndex = 23;
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // btnMin
+            // 
+            this.btnMin.BackgroundImage = global::CamInter.Properties.Resources.min;
+            this.btnMin.Location = new System.Drawing.Point(1148, 12);
+            this.btnMin.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnMin.Name = "btnMin";
+            this.btnMin.Size = new System.Drawing.Size(16, 16);
+            this.btnMin.TabIndex = 23;
+            this.btnMin.UseVisualStyleBackColor = true;
+            this.btnMin.Click += new System.EventHandler(this.btnMin_Click);
             // 
             // FormMain
             // 

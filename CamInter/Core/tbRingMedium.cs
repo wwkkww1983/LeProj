@@ -22,6 +22,7 @@ namespace Core
 
             info.Idx = Convert.ToInt32(dr["id"]);
             info.Name = dr["name"].ToString();
+            info.ImgName = dr["imgName"].ToString();
             info.Number = dr["number"].ToString();
             info.RingType = (enumProductType)Convert.ToInt32(dr["ringType"]);
             info.InterUp = Convert.ToInt32(dr["interUp"]);
@@ -40,6 +41,7 @@ namespace Core
             return @"create table ringMedium (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         name nvarchar(100),
+                        imgName nvarchar(100),
                         number nvarchar(100),
                         ringType int,
                         interUp int,
@@ -55,9 +57,10 @@ namespace Core
         {
             RingMedium info = (RingMedium)item;
 
-            string strSql = "insert into ringMedium (name,number,ringType,interUp,interDown,innerDiameter,weight,length,lengthMin,lengthMax) values (@name,@number,@ringType,@interUp,@interDown,@innerDiameter,@weight,@length,@lengthMin,@lengthMax)";
+            string strSql = "insert into ringMedium (name,imgName,number,ringType,interUp,interDown,innerDiameter,weight,length,lengthMin,lengthMax) values (@name,@imgName,@number,@ringType,@interUp,@interDown,@innerDiameter,@weight,@length,@lengthMin,@lengthMax)";
             List<SQLiteParameter> paraList = new List<SQLiteParameter>();
             paraList.Add(SQLiteHelper.CreateParameter("@name", DbType.String, info.Name));
+            paraList.Add(SQLiteHelper.CreateParameter("@imgName", DbType.String, info.ImgName));
             paraList.Add(SQLiteHelper.CreateParameter("@number", DbType.String, info.Number));
             paraList.Add(SQLiteHelper.CreateParameter("@ringType", DbType.Int32, (int)info.RingType));
             paraList.Add(SQLiteHelper.CreateParameter("@interUp", DbType.Int32, info.InterUp));
@@ -91,6 +94,10 @@ namespace Core
         /// 名称
         /// </summary>
         public string Name;
+        /// <summary>
+        /// 图片名
+        /// </summary>
+        public string ImgName;
         /// <summary>
         /// 货号
         /// </summary>

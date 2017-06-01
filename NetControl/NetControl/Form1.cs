@@ -21,7 +21,9 @@ namespace NetControl
         private const string PICKUP_CMD = "ATZ", HANGUP_CMD = "ATH", PHONE_CMD = "ATB",START_CMD="5",END_CMD="9",FINISH_CMD="2";
         private bool commandSended = false;
         private int workTime = 0, countTime = 0, webFailCount = 0;
-        private float mink1, maxk1, mink2, maxk2, minl1, maxl1, minl2, maxl2, mind1, maxd1, mind2, maxd2;
+        private float mink11, maxk11, mink12, maxk12, minl11, maxl11, minl12, maxl12, mind11, maxd11, mind12, maxd12;
+        private float mink21, maxk21, mink22, maxk22, minl21, maxl21, minl22, maxl22, mind21, maxd21, mind22, maxd22;
+        private float mink31, maxk31, mink32, maxk32, minl31, maxl31, minl32, maxl32, mind31, maxd31, mind32, maxd32;
         private string currentCommand = string.Empty;
         private SkinEngine skin = null;
         private SerialPort com = new SerialPort();
@@ -41,12 +43,13 @@ namespace NetControl
         private void btnStart_Click(object sender, EventArgs e)
         {
             if (!this.CheckDataValid()) return;
-            this.workTime = int.Parse(this.tbTime.Text);
-            this.countTime = this.workTime;
 
             this.EnableComponent(false);
             this.SaveCurrentConfig();
+            this.lbStatus.Text = "录波准备中。。。";
 
+            this.workTime = int.Parse(this.tbTime.Text);
+            this.countTime = this.workTime;
             this.currentCommand = START_CMD;//开始录波命令
             this.commandSended = false;
             if (!this.com.IsOpen)
@@ -61,7 +64,6 @@ namespace NetControl
         }
         private void btnStop_Click(object sender, EventArgs e)
         {
-            this.EnableComponent(true);
             this.tbTime.Text = this.workTime.ToString();
 
             this.currentCommand = END_CMD;//结束录波命令
@@ -94,6 +96,10 @@ namespace NetControl
                 this.com.DiscardInBuffer();
                 this.com.DiscardOutBuffer();
             }
+            this.timerWeb.Enabled = true;
+            this.lbStatus.Text = "串口打开";
+            this.EnableComponent(false);
+            this.SaveCurrentConfig();
         }
 
         private void timerCount_Tick(object sender, EventArgs e)
@@ -101,16 +107,20 @@ namespace NetControl
             this.countTime--;
             this.tbTime.Text = this.countTime.ToString();
             if (this.countTime <= 0)
+            {
+                this.timerCount.Enabled = false;
                 this.btnStop_Click(null, null);
+            }
         }
 
-
-        private void timerWeb_Tick(object sender, EventArgs e)
+        private List<MachineInfo> getWebData()
         {
             string strJson = string.Empty;
             try
             {
                 strJson = WebInfo.GetPageInfo("http://pcis/projects/power/correct_power.asp?callback=?");
+                //strJson = Ini.GetItemValue("general", "json");
+                strJson = strJson.Replace('(', ' ').Replace(')', ' ');
             }
             catch
             {
@@ -123,30 +133,82 @@ namespace NetControl
                     this.timerWeb.Enabled = false;
                     MessageBox.Show("网络读取数据失败");
                 }
-                return;
+                return null;
             }
-            
+
             List<MachineInfo> infoList = JSON.parse<List<MachineInfo>>(strJson);
-            this.webFailCount = 0;
-            DataTable dt = new DataTable ();
-            DataColumn dc = new DataColumn("k");
-            dt.Columns.Add(dc);
-            dc = new DataColumn("l");
-            dt.Columns.Add(dc);
-            dc = new DataColumn("d");
-            dt.Columns.Add(dc);
+            this.webFailCount = 0;           
+
+            return infoList;
+        }
+
+        private void timerWeb_Tick(object sender, EventArgs e)
+        {
+            List<MachineInfo> infoList = this.getWebData();
+            if (infoList == null || infoList.Count == 0) return;
+
+            DataTable dt = new DataTable();
+            DataColumn dc = new DataColumn("name"); dt.Columns.Add(dc);
+            dc = new DataColumn("k");            dt.Columns.Add(dc);
+            dc = new DataColumn("l");            dt.Columns.Add(dc);
+            dc = new DataColumn("d");            dt.Columns.Add(dc);
             DataRow dr1 = dt.NewRow();
             DataRow dr2 = dt.NewRow();
-            for(int i=0;i< infoList.Count;i++)
+            dr1[0] = "GONGLI1";
+            dr2[0] = "GONGLI2";
+            for (int i = 0; i < infoList.Count; i++)
             {
                 MachineInfo item = infoList[i];
-                dr1[i] = item.GONGLI1;
-                dr2[i] = item.GONGLI2;
+                dr1[i + 1] = item.GONGLI1;
+                dr2[i + 1] = item.GONGLI2;
             }
             dt.Rows.Add(dr1);
             dt.Rows.Add(dr2);
             this.dgvMachine.DataSource = dt;
+
+            if (this.checkDataValid(infoList))
+            {
+                this.btnStart_Click(null, null);
+            }
         }
+
+        private bool checkDataValid(List<MachineInfo> infoList)
+        {
+            MachineInfo infoK = infoList[0], infoL = infoList[0], infoD = infoList[0];
+            float k1, k2, l1, l2, d1, d2;
+            k1 = float.Parse(infoK.GONGLI1);
+            k2 = float.Parse(infoK.GONGLI2);
+            l1 = float.Parse(infoL.GONGLI1);
+            l2 = float.Parse(infoL.GONGLI2);
+            d1 = float.Parse(infoD.GONGLI1);
+            d2 = float.Parse(infoD.GONGLI2);
+
+            return this.mink11 <= k1 && k1 <= this.maxk11 || this.mink21 <= k1 && k1 <= this.maxk21 || this.mink31 <= k1 && k1 <= this.maxk31 ||
+                    this.mink12 <= k1 && k2 <= this.maxk12 || this.mink22 <= k1 && k2 <= this.maxk22 || this.mink31 <= k2 && k2 <= this.maxk32 ||
+                    this.minl11 <= l1 && l1 <= this.maxl11 || this.minl21 <= l1 && l1 <= this.maxl21 || this.minl31 <= l1 && l1 <= this.maxl31 ||
+                    this.minl12 <= l1 && l2 <= this.maxl12 || this.minl22 <= l1 && l2 <= this.maxl22 || this.minl31 <= l2 && l2 <= this.maxl32 ||
+                    this.mind11 <= d1 && d1 <= this.maxd11 || this.mind21 <= d1 && d1 <= this.maxd21 || this.mind31 <= d1 && d1 <= this.maxd31 ||
+                    this.mind12 <= d1 && d2 <= this.maxd12 || this.mind22 <= d1 && d2 <= this.maxd22 || this.mind31 <= d2 && d2 <= this.maxd32;
+
+        }
+
+
+        private void rb_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton rbTemp = sender as RadioButton;
+            if (!rbTemp.Checked) return;
+
+            if (rbTemp == this.rbAuto)
+            {
+                this.tcHandler.SelectedIndex = 0;
+                this.webFailCount = 0;
+            }
+            else
+            {
+                this.tcHandler.SelectedIndex = 1;
+            }
+        }
+
         #endregion
 
         #region 子函数
@@ -166,11 +228,48 @@ namespace NetControl
 
         private void InitialInfo()
         {
+            this.rbUser.Checked = true;
+
             this.cbPorts.Text = Ini.GetItemValue("general", "serialport");
             this.tbPhone.Text = Ini.GetItemValue("general", "number");
             this.tbTime.Text = Ini.GetItemValue("general", "time");
-            int idx = int.Parse(Ini.GetItemValue("general", "device"));
-            this.mink1 = float.Parse(Ini.GetItemValue("boundary","mink1"));
+            this.mink11 = float.Parse(Ini.GetItemValue("boundary", "mink11"));
+            this.mink21 = float.Parse(Ini.GetItemValue("boundary", "mink21"));
+            this.mink31 = float.Parse(Ini.GetItemValue("boundary", "mink31"));
+            this.minl11 = float.Parse(Ini.GetItemValue("boundary", "minl11"));
+            this.minl21 = float.Parse(Ini.GetItemValue("boundary", "minl21"));
+            this.minl31 = float.Parse(Ini.GetItemValue("boundary", "minl31"));
+            this.mind11 = float.Parse(Ini.GetItemValue("boundary", "mind11"));
+            this.mind21 = float.Parse(Ini.GetItemValue("boundary", "mind21"));
+            this.mind31 = float.Parse(Ini.GetItemValue("boundary", "mind31"));
+            this.maxk11 = float.Parse(Ini.GetItemValue("boundary", "maxk11"));
+            this.maxk21 = float.Parse(Ini.GetItemValue("boundary", "maxk21"));
+            this.maxk31 = float.Parse(Ini.GetItemValue("boundary", "maxk31"));
+            this.maxl11 = float.Parse(Ini.GetItemValue("boundary", "maxl11"));
+            this.maxl21 = float.Parse(Ini.GetItemValue("boundary", "maxl21"));
+            this.maxl31 = float.Parse(Ini.GetItemValue("boundary", "maxl31"));
+            this.maxd11 = float.Parse(Ini.GetItemValue("boundary", "maxd11"));
+            this.maxd21 = float.Parse(Ini.GetItemValue("boundary", "maxd21"));
+            this.maxd31 = float.Parse(Ini.GetItemValue("boundary", "maxd31"));
+
+            this.mink12 = float.Parse(Ini.GetItemValue("boundary", "mink12"));
+            this.mink22 = float.Parse(Ini.GetItemValue("boundary", "mink22"));
+            this.mink32 = float.Parse(Ini.GetItemValue("boundary", "mink32"));
+            this.minl12 = float.Parse(Ini.GetItemValue("boundary", "minl12"));
+            this.minl22 = float.Parse(Ini.GetItemValue("boundary", "minl22"));
+            this.minl32 = float.Parse(Ini.GetItemValue("boundary", "minl32"));
+            this.mind12 = float.Parse(Ini.GetItemValue("boundary", "mind12"));
+            this.mind22 = float.Parse(Ini.GetItemValue("boundary", "mind22"));
+            this.mind32 = float.Parse(Ini.GetItemValue("boundary", "mind32"));
+            this.maxk12 = float.Parse(Ini.GetItemValue("boundary", "maxk12"));
+            this.maxk22 = float.Parse(Ini.GetItemValue("boundary", "maxk22"));
+            this.maxk32 = float.Parse(Ini.GetItemValue("boundary", "maxk32"));
+            this.maxl12 = float.Parse(Ini.GetItemValue("boundary", "maxl12"));
+            this.maxl22 = float.Parse(Ini.GetItemValue("boundary", "maxl22"));
+            this.maxl32 = float.Parse(Ini.GetItemValue("boundary", "maxl32"));
+            this.maxd12 = float.Parse(Ini.GetItemValue("boundary", "maxd12"));
+            this.maxd22 = float.Parse(Ini.GetItemValue("boundary", "maxd22"));
+            this.maxd32 = float.Parse(Ini.GetItemValue("boundary", "maxd32"));
             
             this.com.BaudRate = 1200;
             this.com.DataBits = 8;
@@ -254,7 +353,7 @@ namespace NetControl
                         this.SendCommand(PHONE_CMD, this.currentCommand);
                         this.SetStatusLabel("通讯成功");
                         break;
-                    case "ATN4"://命令操作成功，开始录播
+                    case "ATN4"://命令操作成功，开始录播                        
                     case "ATN8"://结束录播
                         this.SendCommand(PHONE_CMD, FINISH_CMD);
                         System.Threading.Thread.Sleep(1000);
@@ -262,6 +361,16 @@ namespace NetControl
                         this.SetStatusLabel("操作执行成功");
                         break;
                     default: break;
+                }
+                if (tempCode == "ATN4")
+                {
+                    this.timerCount.Enabled = true;
+                    this.lbStatus.Text = "正在录波";
+                }
+                else if (tempCode == "ATN8")
+                {
+                    this.EnableComponent(true);
+                    this.lbStatus.Text = "录波完成";
                 }
             }
         }
@@ -314,7 +423,6 @@ namespace NetControl
 
         private void EnableComponent(bool status)
         {
-            this.timerCount.Enabled = !status;
             this.btnStop.Enabled = !status;
             this.btnStart.Enabled = status;
             this.tbPhone.Enabled = status;
@@ -325,6 +433,11 @@ namespace NetControl
         }
         #endregion
 
+        private void tcHandler_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            TabControl tcTemp = sender as TabControl;
 
+            tcTemp.SelectedIndex = this.rbAuto.Checked ? 0 : 1;
+        }
     }
 }

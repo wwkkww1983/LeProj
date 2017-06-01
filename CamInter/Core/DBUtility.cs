@@ -82,7 +82,8 @@ namespace Core
                 LengthMin = 15.8f,
                 LengthMax = 20.8f,
                 InterUp = 9,
-                InterDown = 5
+                InterDown = 5,
+                ImgName = "Smart Focus 5.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -93,7 +94,8 @@ namespace Core
                 LengthMin = 20f,
                 LengthMax = 27f,
                 InterUp = 3,
-                InterDown = 5
+                InterDown = 5,
+                ImgName = "Smart Focus 7.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -104,7 +106,8 @@ namespace Core
                 LengthMin = 20f,
                 LengthMax = 27f,
                 InterUp = 2,
-                InterDown = 5
+                InterDown = 5,
+                ImgName = "Smart Focus 7.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -115,7 +118,8 @@ namespace Core
                 LengthMin = 15.7f,
                 LengthMax = 22f,
                 InterUp = 1,
-                InterDown = 5
+                InterDown = 5,
+                ImgName = "Smart Focus 7.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -126,7 +130,8 @@ namespace Core
                 LengthMin = 20f,
                 LengthMax = 27f,
                 InterUp = 5,
-                InterDown = 5
+                InterDown = 5,
+                ImgName = "Smart Focus 7.jpg"
             });
             this.InsertItem(new RingMedium()
             {
@@ -423,7 +428,8 @@ namespace Core
                 HH = -2.38f,
                 Length = 28.6f,
                 RatioMin = 0,
-                RatioMax = 1
+                RatioMax = 1,
+                ImgName = "Mk-CPN-S.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -436,7 +442,8 @@ namespace Core
                 HH = -3.6f,
                 Length = 28.6f,
                 RatioMin = 0,
-                RatioMax = 1
+                RatioMax = 1,
+                ImgName = "Mk-APO-CPN.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -449,7 +456,8 @@ namespace Core
                 HH = -1.31f,
                 Length = 28.6f,
                 RatioMin = 0,
-                RatioMax = 1
+                RatioMax = 1,
+                ImgName = "Makro MSR.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -462,7 +470,8 @@ namespace Core
                 HH = -1.81f,
                 Length = 28.6f,
                 RatioMin = 0,
-                RatioMax = 1
+                RatioMax = 1,
+                ImgName = "Mk-CPN-S.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -488,7 +497,8 @@ namespace Core
                 HH = -3.14f,
                 Length = 28.6f,
                 RatioMin = 0,
-                RatioMax = 1
+                RatioMax = 1,
+                ImgName = "Mk-CPN-S.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -555,7 +565,8 @@ namespace Core
                 HH = -1.8f,
                 Length = 28.6f,
                 RatioMin = 0.78f,
-                RatioMax = 1.23f
+                RatioMax = 1.23f,
+                ImgName="Makro-Symmar.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -568,7 +579,8 @@ namespace Core
                 HH = -1.2f,
                 Length = 28.6f,
                 RatioMin = 0.53f,
-                RatioMax = 0.98f
+                RatioMax = 0.98f,
+                ImgName = "Makro-Symmar.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -581,7 +593,8 @@ namespace Core
                 HH = -0.5f,
                 Length = 28.6f,
                 RatioMin = 0.28f,
-                RatioMax = 0.73f
+                RatioMax = 0.73f,
+                ImgName = "Makro-Symmar.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -594,7 +607,8 @@ namespace Core
                 HH = 0.6f,
                 Length = 28.6f,
                 RatioMin = 0.16f,
-                RatioMax = 0.48f
+                RatioMax = 0.48f,
+                ImgName = "Makro-Symmar.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -624,7 +638,8 @@ namespace Core
                 HH = -32.518f,
                 Length = 28.6f,
                 RatioMin = 3.4f,
-                RatioMax = 3.6f
+                RatioMax = 3.6f,
+                ImgName = "MacroVaron.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -637,7 +652,8 @@ namespace Core
                 HH = -5.1f,
                 Length = 28.6f,
                 RatioMin = 0.4f,
-                RatioMax = 3.6f
+                RatioMax = 3.6f,
+                ImgName = "MacroVaron.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -650,7 +666,8 @@ namespace Core
                 HH = 2.9f,
                 Length = 28.6f,
                 RatioMin = 3.4f,
-                RatioMax = 3.6f
+                RatioMax = 3.6f,
+                ImgName = "MacroVaron.jpg"
             });
 
 
@@ -665,7 +682,8 @@ namespace Core
                 HH = -2.22f,
                 Length = 28.6f,
                 RatioMin = 0.02f,
-                RatioMax = 0.18f
+                RatioMax = 0.18f,
+                ImgName = "Xenon Sapphire.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -678,7 +696,8 @@ namespace Core
                 HH = -8.8f,
                 Length = 28.6f,
                 RatioMin = 0.19f,
-                RatioMax = 0.29f
+                RatioMax = 0.29f,
+                ImgName = "Xenon Sapphire.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -691,7 +710,8 @@ namespace Core
                 HH = -9.28f,
                 Length = 28.6f,
                 RatioMin = 0.245f,
-                RatioMax = 0.34f
+                RatioMax = 0.34f,
+                ImgName = "Xenon Sapphire.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -704,7 +724,8 @@ namespace Core
                 HH = -9.1f,
                 Length = 28.6f,
                 RatioMin = 0.29f,
-                RatioMax = 0.40f
+                RatioMax = 0.40f,
+                ImgName = "Xenon Sapphire.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -717,7 +738,8 @@ namespace Core
                 HH = -9.79f,
                 Length = 28.6f,
                 RatioMin = 0.44f,
-                RatioMax = 0.56f
+                RatioMax = 0.56f,
+                ImgName = "Xenon Sapphire.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -730,7 +752,8 @@ namespace Core
                 HH = -12.3f,
                 Length = 28.6f,
                 RatioMin = 0.64f,
-                RatioMax = 0.77f
+                RatioMax = 0.77f,
+                ImgName = "Xenon Sapphire.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -743,7 +766,8 @@ namespace Core
                 HH = -7.2f,
                 Length = 28.6f,
                 RatioMin = 1.64f,
-                RatioMax = 1.86f
+                RatioMax = 1.86f,
+                ImgName = "Xenon Sapphire.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -756,7 +780,8 @@ namespace Core
                 HH = -12.3f,
                 Length = 28.6f,
                 RatioMin = 1.34f,
-                RatioMax = 1.55f
+                RatioMax = 1.55f,
+                ImgName = "Xenon Sapphire.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -769,7 +794,8 @@ namespace Core
                 HH = -0.9f,
                 Length = 28.6f,
                 RatioMin = 1.64f,
-                RatioMax = 1.86f
+                RatioMax = 1.86f,
+                ImgName = "Xenon Sapphire.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -782,7 +808,8 @@ namespace Core
                 HH = -12.89f,
                 Length = 28.6f,
                 RatioMin = 0.82f,
-                RatioMax = 0.93f
+                RatioMax = 0.93f,
+                ImgName = "Xenon Sapphire.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -795,7 +822,8 @@ namespace Core
                 HH = -12.9f,
                 Length = 28.6f,
                 RatioMin = 1.07f,
-                RatioMax = 1.21f
+                RatioMax = 1.21f,
+                ImgName = "Xenon Sapphire.jpg"
             });
             this.InsertItem(new CameraLens
             {
@@ -808,7 +836,8 @@ namespace Core
                 HH = -9.62f,
                 Length = 28.6f,
                 RatioMin = 1.84f,
-                RatioMax = 2.16f
+                RatioMax = 2.16f,
+                ImgName = "Xenon Sapphire.jpg"
             });
 
 

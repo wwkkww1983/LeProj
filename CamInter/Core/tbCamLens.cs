@@ -23,6 +23,7 @@ namespace Core
 
             info.Idx = Convert.ToInt32(dr["id"]);
             info.Name = dr["name"].ToString ();
+            info.ImgName = dr["imgName"].ToString();
             info.Number = dr["number"].ToString();
             info.HH = Convert.ToSingle(dr["hh"]);
             info.Length = Convert.ToSingle(dr["length"]);
@@ -46,6 +47,7 @@ namespace Core
             return @"create table camLens(
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         name nvarchar(20),
+                        imgName nvarchar(100),
                         number nvarchar(20),
                         hh float,
                         length float,
@@ -67,10 +69,11 @@ namespace Core
         {
             CameraLens info = (CameraLens)item;
 
-            string strSql = @"insert into camLens (name,number,resoLength,resoWidth,connector,focus,flange,length,hh,ratioMin,ratioMax,target,weight,contrast,distort) 
-                                   values (@name,@number,@resoLength,@resoWidth,@connector,@focus,@flange,@length,@hh,@ratioMin,@ratioMax,@target,@weight,@contrast,@distort)";
+            string strSql = @"insert into camLens (name,imgName,number,resoLength,resoWidth,connector,focus,flange,length,hh,ratioMin,ratioMax,target,weight,contrast,distort) 
+                                   values (@name,@imgName,@number,@resoLength,@resoWidth,@connector,@focus,@flange,@length,@hh,@ratioMin,@ratioMax,@target,@weight,@contrast,@distort)";
             List<SQLiteParameter> paraList = new List<SQLiteParameter>();
             paraList.Add(SQLiteHelper.CreateParameter("@name", DbType.String, info.Name));
+            paraList.Add(SQLiteHelper.CreateParameter("@imgName", DbType.String, info.ImgName));
             paraList.Add(SQLiteHelper.CreateParameter("@number", DbType.String, info.Number));
             paraList.Add(SQLiteHelper.CreateParameter("@resoLength", DbType.Int32, info.ResolutionLength));
             paraList.Add(SQLiteHelper.CreateParameter("@resoWidth", DbType.Int32, info.ResolutionWidth));
@@ -120,6 +123,11 @@ namespace Core
         {
             get { return true; }
         }
+
+        /// <summary>
+        /// 图片名称
+        /// </summary>
+        public string ImgName;
 
         /// <summary>
         /// 镜头长度

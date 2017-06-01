@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
+using System.Threading;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,7 +15,7 @@ namespace CamInter
     public partial class FormMain : Form
     {
         #region 初始化
-
+        private delegate void DelegateNoneParam();
         private const string NAME_NONE = "none", PRE_PROJECT_NAME = "NO.", POST_RING_NUMBER = " total";
         private bool leftButtonPress = false, isMeshCamera = false;
         private Point mouseMoveLocation;
@@ -30,7 +30,7 @@ namespace CamInter
         {
             InitializeComponent();
 
-            //dbHandler.InitialTable();
+            dbHandler.InitialTable();
             this.Initial();
         }
 
@@ -197,29 +197,37 @@ namespace CamInter
             this.Close();
         }
 
+        private void CalcRingByChildThread(object obj)
+        {
+            float[] objFloat = obj as float[];  
+            int camInter=(int)objFloat[1];
+            float flange = objFloat[2], target = objFloat[3], ratio = objFloat[0], workLength = objFloat[4], workRange = objFloat[5];
+
+            this.resultList = this.alg.GetDevicesByBaseInfo(camInter, flange, target, ratio, workLength, workRange);
+            this.showResults(this.resultList, ratio);
+        }
+
         private void btnSearch_Click(object sender, EventArgs e)
         {
             if (!this.PreCheckUserDataIsEnough()) return;
 
             Button btnTemp = sender as Button;
             btnTemp.Text = "searching ...";
+            btnTemp.Enabled = false;
+
+            this.dgvDetail.DataSource = null;
+            this.pnDraw.Controls.Clear();
 
             float ratio = float.Parse(this.tbMagnifi.Text);
             int camInter = Convert.ToInt32(this.cbInterface.SelectedValue);
             float flange = Convert.ToSingle(this.tbFlange.Text);
             float target = float.Parse(this.tbFormat.Text);
-            float workDistance = this.tbWD.Text.Trim().Equals(string.Empty)?0f:float.Parse(this.tbWD.Text);
+            float workDistance = this.tbWD.Text.Trim().Equals(string.Empty) ? 0f : float.Parse(this.tbWD.Text);
             float workDistanceRange = this.tbWDrange.Text.Trim().Equals(string.Empty) ? 0f : float.Parse(this.tbWDrange.Text);
 
-            this.resultList = this.alg.GetDevicesByBaseInfo(camInter, flange, target, ratio, workDistance, workDistanceRange);
-            this.showResults(this.resultList, ratio);
-
-            if (this.resultList.Count <= 2)
-            {
-                MessageBox.Show("If you want more solutions, please extend the working range.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-
-            btnTemp.Text = "search";
+            float[] threadParams = new float[] { ratio,camInter,flange,target,workDistance,workDistanceRange };
+            Thread threadCalc = new Thread(new ParameterizedThreadStart(this.CalcRingByChildThread));
+            threadCalc.Start(threadParams);
         }
 
         private bool PreCheckUserDataIsEnough()
@@ -243,6 +251,19 @@ namespace CamInter
 
         private void showResults(List<RingResults> result, float ratio)
         {
+            if (this.InvokeRequired)
+            {
+                Action<List<RingResults>, float> delegateChangeCursor = new Action<List<RingResults>, float>(showResults);
+                this.Invoke(delegateChangeCursor, new object[] { result, ratio });
+                return;
+            } 
+
+            this.btnSearch.Text = "search";
+            this.btnSearch.Enabled = true;
+            if (this.resultList.Count <= 2)
+            {
+                MessageBox.Show("If you want more solutions, please extend the working range.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
 
             DataTable dt = new DataTable();
             dt.Columns.Add(new DataColumn("item"));
@@ -263,7 +284,7 @@ namespace CamInter
                 dr["focus"] = focus.Name == string.Empty ? NAME_NONE : focus.Name;
                 dr["adapter"] = adapter.Count == 1 ? adapter[0].Name : adapter.Count.ToString() + POST_RING_NUMBER;
                 dr["ext"] = extend.Count == 1 ? extend[0].Name : extend.Count.ToString() + POST_RING_NUMBER; ;
-                dr["wd"] = ring.Lens.Focus * (2 + ratio + 1 / ratio) + ring.Lens.HH - ring.Lens.Length;
+                dr["wd"] = ring.Lens.Focus * (2 + ratio + 1 / ratio) + ring.Lens.HH - ring.Lens.Length - ring.Lens.Focus * ratio - ring.Lens.Flange;
                 dr["fov"] = this.tbFovH;
                 dt.Rows.Add(dr);
             }
@@ -414,7 +435,7 @@ namespace CamInter
             {
                 other.Text = "1";
                 double target = double.Parse(this.tbFormat.Text);
-                this.tbMagnifi.Text = String.Format("{0:F}", target / fov);
+                this.tbMagnifi.Text = (target / fov).ToString("f4") ;
             }
             else
             {
@@ -430,8 +451,8 @@ namespace CamInter
                     resolution = sizeV;
                 }
                 double pixel = double.Parse(this.tbSize.Text);
-                this.tbMagnifi.Text = String.Format("{0:F}", resolution * pixel / fov);
-                other.Text = String.Format("{0:F}", otherValue);
+                this.tbMagnifi.Text = (resolution * pixel / fov).ToString("f4");
+                other.Text = otherValue.ToString("f4");
             }
         }
 
@@ -453,7 +474,7 @@ namespace CamInter
             double fovH = sizeH / magni;
             double fovV = sizeV / magni;
             this.tbFovH.Text = fovH.ToString();
-            this.tbFovV.Text = String.Format("{0:F}", fovV);
+            this.tbFovV.Text = fovV.ToString("f4");
         }
 
         private void tbSize_TextChanged(object sender, EventArgs e)
@@ -476,7 +497,7 @@ namespace CamInter
                 !this.tbSize.Text.Trim().Equals(string.Empty))
             {
                 float resolution = float.Parse(this.tbResolutionH.Text);
-                this.tbFormat.Text = String.Format("{0:F}", resolution * pixel / 1000f);
+                this.tbFormat.Text = (resolution * pixel / 1000f).ToString("f4");
             }
             else if (this.isMeshCamera &&
                !this.tbResolutionH.Text.Trim().Equals(string.Empty) &&
@@ -484,11 +505,97 @@ namespace CamInter
             {
                 int h = int.Parse(this.tbResolutionH.Text);
                 int v = int.Parse(this.tbResolutionV.Text);
-                this.tbFormat.Text = String.Format("{0:F}", Math.Sqrt(h * h + v * v) * pixel / 1000f);
+                this.tbFormat.Text = (Math.Sqrt(h * h + v * v) * pixel / 1000f).ToString("f4");
             }
 
             this.tbFov_TextChanged(this.tbFovH, null);
             this.tbMagnifi_TextChanged(this.tbMagnifi, null);
+        }
+
+        private void dgvProj_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            int projIdx = Convert.ToInt32((sender as DataGridView).Rows[e.RowIndex].Cells[0].Value.ToString().Substring(PRE_PROJECT_NAME.Length));
+            DataTable dt = new DataTable();
+            dt.Columns.Add(new DataColumn("item"));
+            dt.Columns.Add(new DataColumn("model"));
+            dt.Columns.Add(new DataColumn("name"));
+            dt.Columns.Add(new DataColumn("code"));
+            dt.Columns.Add(new DataColumn("mountA"));
+            dt.Columns.Add(new DataColumn("mountB"));
+            dt.Columns.Add(new DataColumn("length"));
+
+            RingResults ring = this.resultList.Find(item => item.Idx == projIdx);
+            int idx = 1;
+            DataRow dr = dt.NewRow();
+            dr["item"] = idx++;
+            dr["model"] = "camera";
+            dr["name"] = NAME_NONE;// NAME_NONE;
+            dr["code"] = NAME_NONE;//NAME_NONE;
+            dr["mountA"] = this.GetInterNameById(Convert.ToInt32(this.cbInterface.SelectedValue));
+            dr["mountB"] = NAME_NONE;//NAME_NONE;
+            dr["length"] = this.tbFlange.Text;
+            dt.Rows.Add(dr);
+
+            int imgIdx = 0;
+            foreach (RingMedium item in ring.ringList)
+            {
+                dr = dt.NewRow();
+                dr["item"] = idx++;
+                dr["model"] = item.RingType.ToString();// Constants.GetNameByType(item.RingType);
+                dr["name"] = item.Name;
+                dr["code"] = item.Number;
+                dr["mountA"] = this.GetInterNameById(item.InterDown);
+                dr["mountB"] = this.GetInterNameById(item.InterUp);
+                dr["length"] = item.LengthMin == item.LengthMax ? item.Length.ToString() : string.Format("[{0},{1}]", item.LengthMin, item.LengthMax);
+
+                dt.Rows.Add(dr);
+                this.AddImgShow(item.ImgName, ref imgIdx);
+            }
+
+            dr = dt.NewRow();
+            dr["item"] = idx++;
+            dr["model"] = "lens";
+            dr["name"] = ring.Lens.Name;
+            dr["code"] = ring.Lens.Number;
+            dr["mountA"] = NAME_NONE;//NAME_NONE;
+            dr["mountB"] = this.GetInterNameById(ring.Lens.Connector);
+            dr["length"] = ring.Lens.Flange;
+            dt.Rows.Add(dr);
+            this.AddImgShow(ring.Lens.ImgName, ref imgIdx);
+
+            this.dgvDetail.DataSource = dt;
+        }
+
+        private void AddImgShow(string imgName,ref int idx)
+        {
+            if (imgName == string.Empty) return;
+
+            string fullName = "img/" + imgName;
+            if(!System.IO.File.Exists(fullName)) return;
+
+            PictureBox pbImg = new PictureBox();
+            pbImg.Image = Image.FromFile(fullName);
+            pbImg.Size = new Size(150,150);
+            pbImg.Location = new Point(25, 160 * idx + 10);
+
+            this.pnDraw.Controls.Add(pbImg);
+            idx++;
+        }
+
+        private string GetInterNameById(int idx)
+        {
+            string name = string.Empty;
+            foreach (ValueType item in this.connList)
+            {
+                Connectors connItem = (Connectors)item;
+                if (connItem.Idx == idx)
+                {
+                    name = connItem.Name;
+                    break;
+                }
+            }
+            return name;
         }
         #endregion
 

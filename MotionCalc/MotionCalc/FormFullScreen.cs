@@ -38,8 +38,8 @@ namespace MotionCalc
             this.imgBox.SetZoomScale(imgScale, new Point());
             if (this.saveOneImageFlag)
             {
-                string imageFileNmae = Constants.IMAGE_FOLDER + DateTime.Now.ToString(Constants.MiloSecond_NAME_FORMAT) + Constants.IMAGE_FORMAT;
-                frame.Save(imageFileNmae);
+                string imageFileName = Constants.IMAGE_FOLDER + DateTime.Now.ToString(Constants.MiloSecond_NAME_FORMAT) + Constants.IMAGE_FORMAT;
+                frame.Save(imageFileName);
                 this.saveOneImageFlag = false;
             }
             frame.Dispose();
