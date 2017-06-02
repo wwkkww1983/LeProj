@@ -660,20 +660,6 @@ namespace Core
 //==============================================
             this.InsertItem(new CameraLens
             {
-                Name = "Micro-Symmar 2.8/50mm",
-                Number = "1012492",
-                Focus = 50.811f,
-                Connector = 5,
-                Target = 58f,
-                Flange =6.78f,
-                HH = -32.518f,
-                Length = 28.6f,
-                RatioMin = 3.4f,
-                RatioMax = 3.6f,
-                ImgName = "1012492.jpg"
-            });
-            this.InsertItem(new CameraLens
-            {
                 Name = "MacroVaron 4.5/85",
                 Number = "1072517",
                 Focus = 85.1f,

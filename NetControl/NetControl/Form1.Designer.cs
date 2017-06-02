@@ -47,25 +47,27 @@
             this.btnBreak = new System.Windows.Forms.Button();
             this.lbStatus = new System.Windows.Forms.Label();
             this.timerWeb = new System.Windows.Forms.Timer(this.components);
-            this.btnOpen = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
             this.tcHandler = new System.Windows.Forms.TabControl();
             this.tpAuto = new System.Windows.Forms.TabPage();
-            this.gbDevices = new System.Windows.Forms.GroupBox();
+            this.btnAutoStop = new System.Windows.Forms.Button();
+            this.btnAutoStart = new System.Windows.Forms.Button();
             this.tpUser = new System.Windows.Forms.TabPage();
+            this.gbDevices = new System.Windows.Forms.GroupBox();
             this.gbSet = new System.Windows.Forms.GroupBox();
             this.rbUser = new System.Windows.Forms.RadioButton();
             this.rbAuto = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMachine)).BeginInit();
             this.tcHandler.SuspendLayout();
             this.tpAuto.SuspendLayout();
-            this.gbDevices.SuspendLayout();
             this.tpUser.SuspendLayout();
+            this.gbDevices.SuspendLayout();
             this.gbSet.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(53, 71);
+            this.btnStart.Location = new System.Drawing.Point(29, 20);
             this.btnStart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(87, 38);
@@ -76,7 +78,7 @@
             // 
             // btnStop
             // 
-            this.btnStop.Location = new System.Drawing.Point(146, 71);
+            this.btnStop.Location = new System.Drawing.Point(122, 20);
             this.btnStop.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(87, 38);
@@ -95,9 +97,11 @@
             this.k,
             this.l,
             this.d});
+            this.dgvMachine.EnableHeadersVisualStyles = false;
             this.dgvMachine.Location = new System.Drawing.Point(3, 20);
             this.dgvMachine.Name = "dgvMachine";
             this.dgvMachine.ReadOnly = true;
+            this.dgvMachine.RowHeadersVisible = false;
             this.dgvMachine.RowTemplate.Height = 27;
             this.dgvMachine.Size = new System.Drawing.Size(442, 92);
             this.dgvMachine.TabIndex = 0;
@@ -109,29 +113,32 @@
             this.name.HeaderText = "名称";
             this.name.Name = "name";
             this.name.ReadOnly = true;
-            this.name.Width = 90;
+            this.name.Width = 88;
             // 
             // k
             // 
             this.k.DataPropertyName = "k";
             this.k.Frozen = true;
-            this.k.HeaderText = "K";
+            this.k.HeaderText = "岭澳三号机";
             this.k.Name = "k";
             this.k.ReadOnly = true;
+            this.k.Width = 110;
             // 
             // l
             // 
             this.l.DataPropertyName = "l";
-            this.l.HeaderText = "L";
+            this.l.HeaderText = "岭澳一号机";
             this.l.Name = "l";
             this.l.ReadOnly = true;
+            this.l.Width = 110;
             // 
             // d
             // 
             this.d.DataPropertyName = "d";
-            this.d.HeaderText = "D";
+            this.d.HeaderText = "大亚湾一号机";
             this.d.Name = "d";
             this.d.ReadOnly = true;
+            this.d.Width = 130;
             // 
             // label1
             // 
@@ -195,7 +202,7 @@
             // 
             // btnBreak
             // 
-            this.btnBreak.Location = new System.Drawing.Point(357, 71);
+            this.btnBreak.Location = new System.Drawing.Point(333, 20);
             this.btnBreak.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnBreak.Name = "btnBreak";
             this.btnBreak.Size = new System.Drawing.Size(87, 38);
@@ -215,53 +222,65 @@
             // 
             // timerWeb
             // 
+            this.timerWeb.Enabled = true;
             this.timerWeb.Interval = 1000;
             this.timerWeb.Tick += new System.EventHandler(this.timerWeb_Tick);
             // 
-            // btnOpen
+            // btnClose
             // 
-            this.btnOpen.Location = new System.Drawing.Point(357, 14);
-            this.btnOpen.Name = "btnOpen";
-            this.btnOpen.Size = new System.Drawing.Size(87, 41);
-            this.btnOpen.TabIndex = 71;
-            this.btnOpen.Text = "打开串口";
-            this.btnOpen.UseVisualStyleBackColor = true;
-            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
+            this.btnClose.Location = new System.Drawing.Point(333, 20);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(87, 38);
+            this.btnClose.TabIndex = 71;
+            this.btnClose.Text = "关闭串口";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // tcHandler
             // 
             this.tcHandler.Controls.Add(this.tpAuto);
             this.tcHandler.Controls.Add(this.tpUser);
-            this.tcHandler.Location = new System.Drawing.Point(14, 193);
+            this.tcHandler.Location = new System.Drawing.Point(14, 300);
             this.tcHandler.Name = "tcHandler";
             this.tcHandler.SelectedIndex = 0;
-            this.tcHandler.Size = new System.Drawing.Size(478, 210);
+            this.tcHandler.Size = new System.Drawing.Size(478, 110);
             this.tcHandler.TabIndex = 73;
             this.tcHandler.SelectedIndexChanged += new System.EventHandler(this.tcHandler_SelectedIndexChanged);
             // 
             // tpAuto
             // 
-            this.tpAuto.Controls.Add(this.gbDevices);
-            this.tpAuto.Controls.Add(this.btnOpen);
+            this.tpAuto.Controls.Add(this.btnAutoStop);
+            this.tpAuto.Controls.Add(this.btnAutoStart);
+            this.tpAuto.Controls.Add(this.btnClose);
             this.tpAuto.Location = new System.Drawing.Point(4, 25);
             this.tpAuto.Name = "tpAuto";
             this.tpAuto.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAuto.Size = new System.Drawing.Size(470, 181);
+            this.tpAuto.Size = new System.Drawing.Size(470, 81);
             this.tpAuto.TabIndex = 0;
             this.tpAuto.Text = "自动录波";
             this.tpAuto.UseVisualStyleBackColor = true;
             // 
-            // gbDevices
+            // btnAutoStop
             // 
-            this.gbDevices.Controls.Add(this.dgvMachine);
-            this.gbDevices.Location = new System.Drawing.Point(3, 60);
-            this.gbDevices.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.gbDevices.Name = "gbDevices";
-            this.gbDevices.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.gbDevices.Size = new System.Drawing.Size(448, 114);
-            this.gbDevices.TabIndex = 1;
-            this.gbDevices.TabStop = false;
-            this.gbDevices.Text = "机组信息";
+            this.btnAutoStop.Location = new System.Drawing.Point(122, 20);
+            this.btnAutoStop.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnAutoStop.Name = "btnAutoStop";
+            this.btnAutoStop.Size = new System.Drawing.Size(87, 38);
+            this.btnAutoStop.TabIndex = 72;
+            this.btnAutoStop.Text = "停止";
+            this.btnAutoStop.UseVisualStyleBackColor = true;
+            this.btnAutoStop.Click += new System.EventHandler(this.btnAutoStop_Click);
+            // 
+            // btnAutoStart
+            // 
+            this.btnAutoStart.Location = new System.Drawing.Point(29, 20);
+            this.btnAutoStart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnAutoStart.Name = "btnAutoStart";
+            this.btnAutoStart.Size = new System.Drawing.Size(87, 38);
+            this.btnAutoStart.TabIndex = 73;
+            this.btnAutoStart.Text = "启动";
+            this.btnAutoStart.UseVisualStyleBackColor = true;
+            this.btnAutoStart.Click += new System.EventHandler(this.btnAutoStart_Click);
             // 
             // tpUser
             // 
@@ -271,10 +290,22 @@
             this.tpUser.Location = new System.Drawing.Point(4, 25);
             this.tpUser.Name = "tpUser";
             this.tpUser.Padding = new System.Windows.Forms.Padding(3);
-            this.tpUser.Size = new System.Drawing.Size(470, 181);
+            this.tpUser.Size = new System.Drawing.Size(470, 81);
             this.tpUser.TabIndex = 1;
             this.tpUser.Text = "手动录波";
             this.tpUser.UseVisualStyleBackColor = true;
+            // 
+            // gbDevices
+            // 
+            this.gbDevices.Controls.Add(this.dgvMachine);
+            this.gbDevices.Location = new System.Drawing.Point(14, 181);
+            this.gbDevices.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.gbDevices.Name = "gbDevices";
+            this.gbDevices.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.gbDevices.Size = new System.Drawing.Size(474, 114);
+            this.gbDevices.TabIndex = 1;
+            this.gbDevices.TabStop = false;
+            this.gbDevices.Text = "机组信息";
             // 
             // gbSet
             // 
@@ -320,18 +351,21 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(503, 417);
+            this.ClientSize = new System.Drawing.Size(503, 422);
+            this.Controls.Add(this.gbDevices);
             this.Controls.Add(this.gbSet);
             this.Controls.Add(this.tcHandler);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.MaximumSize = new System.Drawing.Size(521, 487);
+            this.MinimumSize = new System.Drawing.Size(521, 467);
             this.Name = "Form1";
             this.Text = "基于网络控制的示波器远程自动录波系统";
             ((System.ComponentModel.ISupportInitialize)(this.dgvMachine)).EndInit();
             this.tcHandler.ResumeLayout(false);
             this.tpAuto.ResumeLayout(false);
-            this.gbDevices.ResumeLayout(false);
             this.tpUser.ResumeLayout(false);
+            this.gbDevices.ResumeLayout(false);
             this.gbSet.ResumeLayout(false);
             this.gbSet.PerformLayout();
             this.ResumeLayout(false);
@@ -353,11 +387,7 @@
         private System.Windows.Forms.Label lbStatus;
         private System.Windows.Forms.Timer timerWeb;
         private System.Windows.Forms.DataGridView dgvMachine;
-        private System.Windows.Forms.DataGridViewTextBoxColumn name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn k;
-        private System.Windows.Forms.DataGridViewTextBoxColumn l;
-        private System.Windows.Forms.DataGridViewTextBoxColumn d;
-        private System.Windows.Forms.Button btnOpen;
+        private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.TabControl tcHandler;
         private System.Windows.Forms.TabPage tpAuto;
         private System.Windows.Forms.TabPage tpUser;
@@ -365,6 +395,12 @@
         private System.Windows.Forms.GroupBox gbSet;
         private System.Windows.Forms.RadioButton rbUser;
         private System.Windows.Forms.RadioButton rbAuto;
+        private System.Windows.Forms.Button btnAutoStop;
+        private System.Windows.Forms.Button btnAutoStart;
+        private System.Windows.Forms.DataGridViewTextBoxColumn name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn k;
+        private System.Windows.Forms.DataGridViewTextBoxColumn l;
+        private System.Windows.Forms.DataGridViewTextBoxColumn d;
     }
 }
 

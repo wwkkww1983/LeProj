@@ -13,6 +13,7 @@ namespace MotionCalc
 {
     public partial class FormLine : Form
     {
+        #region 初始化
         private delegate void HanlderNoParams();
 
         private const int MARGIN_BOUNDARY = 20, PLAY_SPEED_STEP = 10, PLAY_SPPED_DEFAULT = 100;
@@ -23,7 +24,7 @@ namespace MotionCalc
         private OpenFileDialog fileDialog = null;
         private VideoCapture capture = null;
         private UcPanel pnNetLine = null;
-        private HanlderNoParams delegateDrawLabel, delegateDrawNet;
+        private HanlderNoParams delegateDrawInfo, delegateDrawNet;
 
         public FormLine()
         {
@@ -40,21 +41,28 @@ namespace MotionCalc
 
             this.imgBox.Location = new Point(12, 73);
             this.imgBox.Size = new Size(973, 850);
+            this.imgBox.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
 
             this.pnNetLine = new UcPanel();
             this.pnNetLine.Location = this.imgBox.Location;
             this.pnNetLine.Size = this.imgBox.Size;
+            this.imgScale = this.pnNetLine.ImageScale;
             this.Controls.Add(this.pnNetLine);
+            this.pnNetLine.BringToFront();
 
-            this.delegateDrawLabel = new HanlderNoParams(DrawRecognizedLabel);
+            this.delegateDrawInfo = new HanlderNoParams(DrawRecognizedInfo);
             this.delegateDrawNet = new HanlderNoParams(DrawNetLine);
         }
+        #endregion 
 
+        #region 用户操作
 
-        private void btnOpen_Click(object sender, EventArgs e)
+        private void btnOpen_MouseClick(object sender, MouseEventArgs e)
         {
-            this.pnNetLine.InitialDisplayInfo();
-
+            this.pnNetLine.BringToFront();
+            //RadioButton rbTemp = this.GetCurrentColorButton();
+            //rbTemp.Focus();
+            
             if (this.fileDialog.ShowDialog() != DialogResult.OK) return;
 
             this.recordFileName = this.fileDialog.FileName;
@@ -62,6 +70,26 @@ namespace MotionCalc
             this.capture = new VideoCapture(this.recordFileName);
             this.capture.ImageGrabbed += this.capture_ImageGrabbed;
             this.capture.Start();
+        }
+
+        private RadioButton GetCurrentColorButton()
+        {
+            RadioButton rbTemp = this.rbRed;
+
+            if (this.rbBlace.Checked)
+                rbTemp = this.rbBlace;
+            else if (this.rbBlue.Checked)
+                rbTemp = this.rbBlue;
+            else if (this.rbGreen.Checked)
+                rbTemp = this.rbGreen;
+            else if (this.rbPurple.Checked)
+                rbTemp = this.rbPurple;
+            else if (this.rbWhite.Checked)
+                rbTemp = this.rbWhite;
+            else if (this.rbYellow.Checked)
+                rbTemp = this.rbYellow;
+
+            return rbTemp;
         }
 
         private void FormLine_KeyUp(object sender, KeyEventArgs e)
@@ -82,14 +110,6 @@ namespace MotionCalc
             }
         }
 
-        private double getImgZoomScale(Mat frame)
-        {
-            double scaleWidth = (double)this.imgBox.Width / (double)frame.Size.Width;
-            double scaleHeight = (double)this.imgBox.Height / (double)frame.Size.Height;
-
-            return Math.Min(scaleWidth, scaleHeight);
-        }
-
         private void capture_ImageGrabbed(object sender, EventArgs e)
         {
             while (this.pulsePlayFlag)
@@ -99,19 +119,20 @@ namespace MotionCalc
             Mat frame = new Mat();
             this.capture.Read(frame);
             this.imgBox.Image = frame;
-
-            this.imgScale = this.getImgZoomScale(frame);
             this.imgBox.SetZoomScale(this.imgScale, new Point());
+
             if (this.ckbNet.Checked)
             {
                 this.DrawNetLine();
             }
-            this.DrawRecognizedLabel();
+            this.DrawRecognizedInfo();
 
             System.Threading.Thread.Sleep(this.playInterSleep);
             frame.Dispose();
         }
+        #endregion
 
+        #region 绘制
         private void DrawNetLine()
         {
             if (this.InvokeRequired)
@@ -121,31 +142,29 @@ namespace MotionCalc
             }
 
             this.pnNetLine.InitialDisplayInfo();
-            this.pnNetLine.BringToFront();
+            //this.pnNetLine.BringToFront();
         }
 
-        private void DrawRecognizedLabel()
+        private void DrawRecognizedInfo()
         {
             if (this.InvokeRequired)
             {
-                this.Invoke(this.delegateDrawLabel);
+                this.Invoke(this.delegateDrawInfo);
                 return;
             }
 
             int[] locList = this.getLabelPoint();
-            for (int i = 0; i < locList.Length; i += 2)
-            {
-                Point loc = new Point(locList[i], locList[i + 1]);
-                this.pnNetLine.DrawLabelCircle(loc, this.imgScale);
-            }
+            this.pnNetLine.DrawRecogPoints(locList);
+            //this.pnNetLine.draw
         }
 
         private int[] getLabelPoint()
         {
-            int[] result = new int[] { 50, 50, 200, 200 };
+            int[] result = new int[] { 50, 50, 200, 200,  22,55,600,55 };
 
 
             return result;
         }
+        #endregion
     }
 }

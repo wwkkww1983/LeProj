@@ -53,7 +53,7 @@
             this.btnOpen.TabIndex = 8;
             this.btnOpen.Text = "打开视频";
             this.btnOpen.UseVisualStyleBackColor = true;
-            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
+            this.btnOpen.MouseClick += new System.Windows.Forms.MouseEventHandler(this.btnOpen_MouseClick);
             // 
             // groupBox1
             // 

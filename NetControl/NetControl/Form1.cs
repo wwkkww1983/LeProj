@@ -19,7 +19,7 @@ namespace NetControl
     {
         private const int BUFFER_SIZE = 1024;
         private const string PICKUP_CMD = "ATZ", HANGUP_CMD = "ATH", PHONE_CMD = "ATB",START_CMD="5",END_CMD="9",FINISH_CMD="2";
-        private bool commandSended = false;
+        private bool commandSended = false, isAutoRecordFlag = false;
         private int workTime = 0, countTime = 0, webFailCount = 0;
         private float mink11, maxk11, mink12, maxk12, minl11, maxl11, minl12, maxl12, mind11, maxd11, mind12, maxd12;
         private float mink21, maxk21, mink22, maxk22, minl21, maxl21, minl22, maxl22, mind21, maxd21, mind22, maxd22;
@@ -82,24 +82,42 @@ namespace NetControl
             }
         }
 
+        private void tcHandler_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            TabControl tcTemp = sender as TabControl;
+
+            tcTemp.SelectedIndex = this.rbAuto.Checked ? 0 : 1;
+        }
+
+        private void btnAutoStart_Click(object sender, EventArgs e)
+        {
+            this.isAutoRecordFlag = true;
+            this.btnAutoStart.Enabled = false;
+            this.btnAutoStop.Enabled = true;
+            
+            this.OpenSeiralPort();
+        }
+
+        private void btnAutoStop_Click(object sender, EventArgs e)
+        {
+            this.isAutoRecordFlag = false;
+            this.btnAutoStart.Enabled = true;
+            this.btnAutoStop.Enabled = false;
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            if (this.com.IsOpen)
+            {
+                this.com.DiscardInBuffer();
+                this.com.DiscardOutBuffer();
+                this.com.Close();
+            }
+        }
+
         private void btnBreak_Click(object sender, EventArgs e)
         {
             this.SendCommand(HANGUP_CMD);
-        }
-
-        private void btnOpen_Click(object sender, EventArgs e)
-        {
-            if (!this.com.IsOpen)
-            {
-                this.com.PortName = this.cbPorts.Text;
-                this.com.Open();
-                this.com.DiscardInBuffer();
-                this.com.DiscardOutBuffer();
-            }
-            this.timerWeb.Enabled = true;
-            this.lbStatus.Text = "串口打开";
-            this.EnableComponent(false);
-            this.SaveCurrentConfig();
         }
 
         private void timerCount_Tick(object sender, EventArgs e)
@@ -166,7 +184,7 @@ namespace NetControl
             dt.Rows.Add(dr2);
             this.dgvMachine.DataSource = dt;
 
-            if (this.checkDataValid(infoList))
+            if (this.isAutoRecordFlag && this.checkDataValid(infoList))
             {
                 this.btnStart_Click(null, null);
             }
@@ -213,6 +231,20 @@ namespace NetControl
 
         #region 子函数
 
+        private void OpenSeiralPort()
+        {
+            if (!this.com.IsOpen)
+            {
+                this.com.PortName = this.cbPorts.Text;
+                this.com.Open();
+                this.com.DiscardInBuffer();
+                this.com.DiscardOutBuffer();
+            }
+            this.lbStatus.Text = "串口打开";
+            this.EnableComponent(false);
+            this.SaveCurrentConfig();
+        }
+
         private void PickUpPhone()
         {
             this.SendCommand(HANGUP_CMD);
@@ -228,7 +260,8 @@ namespace NetControl
 
         private void InitialInfo()
         {
-            this.rbUser.Checked = true;
+            this.rbUser.Checked = true; 
+            this.btnAutoStop.Enabled = false;
 
             this.cbPorts.Text = Ini.GetItemValue("general", "serialport");
             this.tbPhone.Text = Ini.GetItemValue("general", "number");
@@ -432,12 +465,5 @@ namespace NetControl
             this.gbDevices.Enabled = status;
         }
         #endregion
-
-        private void tcHandler_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            TabControl tcTemp = sender as TabControl;
-
-            tcTemp.SelectedIndex = this.rbAuto.Checked ? 0 : 1;
-        }
     }
 }

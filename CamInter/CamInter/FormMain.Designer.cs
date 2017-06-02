@@ -865,6 +865,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "FormMain";
             this.Text = "Lens Accessories Selector";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.FormMain_Paint);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormMain_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FormMain_MouseMove);

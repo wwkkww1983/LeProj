@@ -202,6 +202,15 @@ namespace CamInter
             this.Close();
         }
 
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!this.btnSearch.Enabled)
+            {
+                MessageBox.Show("Searching now, please wait.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                e.Cancel = true;
+            }
+        }
+
         private void CalcRingByChildThread(object obj)
         {
             float[] objFloat = obj as float[];  
@@ -603,7 +612,6 @@ namespace CamInter
             return name;
         }
         #endregion
-
 
     }
 }
