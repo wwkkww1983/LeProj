@@ -26,6 +26,8 @@ namespace MotionCalc
         private UcPanel pnNetLine = null;
         private HanlderNoParams delegateDrawInfo, delegateDrawNet;
 
+        private int inscreamIdx = 0;
+
         public FormLine()
         {
             InitializeComponent();
@@ -39,8 +41,8 @@ namespace MotionCalc
             this.fileDialog.Title = "请选择待分析的视频文件";
             this.fileDialog.Filter = "视频文件(*.avi)|*.AVI";
 
-            this.imgBox.Location = new Point(12, 73);
-            this.imgBox.Size = new Size(973, 850);
+            this.imgBox.Location = new Point(12, 147);
+            this.imgBox.Size = new Size(973, 776);
             this.imgBox.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
 
             this.pnNetLine = new UcPanel();
@@ -60,8 +62,6 @@ namespace MotionCalc
         private void btnOpen_MouseClick(object sender, MouseEventArgs e)
         {
             this.pnNetLine.BringToFront();
-            //RadioButton rbTemp = this.GetCurrentColorButton();
-            //rbTemp.Focus();
             
             if (this.fileDialog.ShowDialog() != DialogResult.OK) return;
 
@@ -119,6 +119,7 @@ namespace MotionCalc
             Mat frame = new Mat();
             this.capture.Read(frame);
             this.imgBox.Image = frame;
+            System.Threading.Thread.Sleep(10);
             this.imgBox.SetZoomScale(this.imgScale, new Point());
 
             if (this.ckbNet.Checked)
@@ -129,6 +130,34 @@ namespace MotionCalc
 
             System.Threading.Thread.Sleep(this.playInterSleep);
             frame.Dispose();
+        }
+
+        private void btnSaveImage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        #endregion
+
+        #region 菜单
+        private void lineColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lineWidthToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lineDelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lineExtendToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
         #endregion
 
@@ -141,7 +170,7 @@ namespace MotionCalc
                 return;
             }
 
-            this.pnNetLine.InitialDisplayInfo();
+            this.pnNetLine.DrawNetLine();
             //this.pnNetLine.BringToFront();
         }
 
@@ -155,16 +184,22 @@ namespace MotionCalc
 
             int[] locList = this.getLabelPoint();
             this.pnNetLine.DrawRecogPoints(locList);
-            //this.pnNetLine.draw
+            this.pnNetLine.DrawLines(locList);
+            this.lbAngle.Text = this.pnNetLine.CalcLineAngle(0, 1).ToString("f2");
         }
 
         private int[] getLabelPoint()
         {
             int[] result = new int[] { 50, 50, 200, 200,  22,55,600,55 };
-
-
+            //int directIdx = 1;
+            //for (int i = 0; i < result.Length; i++)
+            //{
+            //    directIdx = (i+1) % 2 == 0 ? 3 : -1;
+            //    result[i] += directIdx*inscreamIdx;
+            //}
+            //inscreamIdx++;
             return result;
         }
-        #endregion
+        #endregion        
     }
 }
