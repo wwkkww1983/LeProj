@@ -171,6 +171,8 @@ namespace CamInter
             this.dgvDetail.Size = new Size(800, 207);
             this.pnDraw.Size = new Size(200,580);
             this.pnDraw.Location = new Point(925,120);
+            this.dgvDetailName.Width = 200;
+            this.dgvSugLens.Width = 200;
             #endregion
         }
 
@@ -484,9 +486,10 @@ namespace CamInter
 
             double sizeH = double.Parse(this.tbResolutionH.Text);
             double sizeV = double.Parse(this.tbResolutionV.Text);
+            double pixel = double.Parse(this.tbSize.Text);
             double magni = double.Parse(tbTemp.Text);
-            double fovH = sizeH / magni;
-            double fovV = sizeV / magni;
+            double fovH = sizeH * pixel /1000f/ magni;
+            double fovV = sizeV * pixel / 1000f / magni;
             this.tbFovH.Text = fovH.ToString();
             this.tbFovV.Text = fovV.ToString("f4");
         }

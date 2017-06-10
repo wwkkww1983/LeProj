@@ -168,14 +168,16 @@ namespace Core
             //this.FindAllExtendLast(allList, lengthMin, lengthMax);
 
             List<List<RingMedium>> validList = this.FilterBySpecialCondition(allList,lens);
-            if (this.CombinationStructDataList(lens, validList)) return;
-
-            List<List<RingMedium>> shortestList = this.SearchShortestExtend(validList, lengthMid);
+           // if (this.CombinationStructDataList(lens, validList)) return;
+            //最接近中间值
+            //List<List<RingMedium>> shortestList = this.SearchShortestExtend(validList, lengthMid);
+            //根据中间值范围过滤
+            List<List<RingMedium>> shortestList = this.FilterByAdpaterRange(validList, lengthMid, lens);
             if (this.CombinationStructDataList(lens, shortestList)) return;
-
+            //最长
             List<List<RingMedium>> mostLengthList = this.SearchMostLengthExtend(shortestList);
             if (this.CombinationStructDataList(lens, mostLengthList)) return;
-
+            //最大口径
             List<List<RingMedium>> mostWidthList = this.SearchMostWidthExtendSimple(mostLengthList);
             if (this.CombinationStructDataList(lens, mostWidthList)) return;
 
@@ -229,6 +231,61 @@ namespace Core
             return validList;
         }
 
+        private float getRangeLength(RingMedium focus)
+        {
+            float range = 0f;
+            if (focus.Name.StartsWith("Smart Focus 23"))
+                range = 9f;
+            else if (focus.Name.StartsWith("Smart Focus 7"))
+                range = 2.5f;
+            else if (focus.Name.StartsWith("Smart Focus"))
+                range = 2f;
+            return range;
+        }
+
+        private float getMustExtendLength(RingMedium focus, CameraLens lens)
+        {
+            float range = 0f;
+
+            if (lens.Name.Contains("5.6/120") && (focus.Name.StartsWith("Smart Focus 23") || focus.Name.StartsWith("Smart Focus 7")))
+            {
+                range = 25f;
+            }
+            else if (focus.Name.StartsWith("Smart Focus 23"))
+            {
+                range = 10f;
+            }
+
+            return range;
+        }
+
+        private List<List<RingMedium>> FilterByAdpaterRange(List<List<RingMedium>> allList, float length, CameraLens lens)
+        {
+            List<List<RingMedium>> shortestList = new List<List<RingMedium>>();
+            if (length <= 0) return shortestList;
+
+            foreach (List<RingMedium> itemList in allList)
+            {
+                float extLength = -length, rangeLength = 0, mustLength = 0;
+                foreach (RingMedium item in itemList)
+                {
+                    extLength += item.RingType == enumProductType.Extend ? item.Length : 0;
+                    if (item.RingType == enumProductType.Focus)
+                    {
+                        rangeLength = this.getRangeLength(item);
+                        mustLength = this.getMustExtendLength(item, lens);
+                    }
+                }
+
+                extLength = Math.Abs(extLength);
+                if (length - mustLength >= 0 && extLength <= rangeLength)
+                {
+                    shortestList.Add(itemList);
+                }
+            }
+            return shortestList;
+        }
+
         private List<List<RingMedium>> SearchShortestExtend(List<List<RingMedium>> allList, float length)
         {
             float minLength = float.MaxValue;
@@ -238,7 +295,7 @@ namespace Core
                 float extLength = -length;
                 foreach (RingMedium item in itemList)
                 {
-                    extLength += item.RingType == enumProductType.Extend ? item.Length : 0;                    
+                    extLength += item.RingType == enumProductType.Extend ? item.Length : 0;
                 }
                 extLength = Math.Abs(extLength);
                 if (extLength < minLength)

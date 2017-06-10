@@ -225,6 +225,7 @@ namespace web2Excel
                         if (yestdayExcelData[j, 0] == todayExcelData[i, 0]
                             && yestdayExcelData[j, 1] == todayExcelData[i, 1]
                             && yestdayExcelData[j, 2] == todayExcelData[i, 2]
+                            && yestdayExcelData[j, 3] == todayExcelData[i, 3]
                             && yestdayExcelData[j, 4] == todayExcelData[i, 4]
                             && yestdayExcelData[j, 5] == todayExcelData[i, 5])
                         {
@@ -263,6 +264,7 @@ namespace web2Excel
                         if (yestdayExcelData[j, 0] == todayExcelData[i, 0]
                             && yestdayExcelData[j, 1] == todayExcelData[i, 1]
                             && yestdayExcelData[j, 2] == todayExcelData[i, 2]
+                            && yestdayExcelData[j, 3] == todayExcelData[i, 3]
                             && yestdayExcelData[j, 4] == todayExcelData[i, 4]
                             && yestdayExcelData[j, 5] == todayExcelData[i, 5])
                         {

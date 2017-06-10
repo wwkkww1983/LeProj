@@ -42,15 +42,9 @@
             this.ckbNet = new System.Windows.Forms.CheckBox();
             this.imgBox = new Emgu.CV.UI.ImageBox();
             this.lbAngle = new System.Windows.Forms.Label();
-            this.cmsLine = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.lineColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lineWidthToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lineDelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lineExtendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSaveImage = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgBox)).BeginInit();
-            this.cmsLine.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnOpen
@@ -189,44 +183,6 @@
             this.lbAngle.Text = "夹角";
             this.lbAngle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // cmsLine
-            // 
-            this.cmsLine.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lineColorToolStripMenuItem,
-            this.lineWidthToolStripMenuItem,
-            this.lineDelToolStripMenuItem,
-            this.lineExtendToolStripMenuItem});
-            this.cmsLine.Name = "cmsLine";
-            this.cmsLine.Size = new System.Drawing.Size(109, 100);
-            // 
-            // lineColorToolStripMenuItem
-            // 
-            this.lineColorToolStripMenuItem.Name = "lineColorToolStripMenuItem";
-            this.lineColorToolStripMenuItem.Size = new System.Drawing.Size(108, 24);
-            this.lineColorToolStripMenuItem.Text = "颜色";
-            this.lineColorToolStripMenuItem.Click += new System.EventHandler(this.lineColorToolStripMenuItem_Click);
-            // 
-            // lineWidthToolStripMenuItem
-            // 
-            this.lineWidthToolStripMenuItem.Name = "lineWidthToolStripMenuItem";
-            this.lineWidthToolStripMenuItem.Size = new System.Drawing.Size(108, 24);
-            this.lineWidthToolStripMenuItem.Text = "粗细";
-            this.lineWidthToolStripMenuItem.Click += new System.EventHandler(this.lineWidthToolStripMenuItem_Click);
-            // 
-            // lineDelToolStripMenuItem
-            // 
-            this.lineDelToolStripMenuItem.Name = "lineDelToolStripMenuItem";
-            this.lineDelToolStripMenuItem.Size = new System.Drawing.Size(108, 24);
-            this.lineDelToolStripMenuItem.Text = "删除";
-            this.lineDelToolStripMenuItem.Click += new System.EventHandler(this.lineDelToolStripMenuItem_Click);
-            // 
-            // lineExtendToolStripMenuItem
-            // 
-            this.lineExtendToolStripMenuItem.Name = "lineExtendToolStripMenuItem";
-            this.lineExtendToolStripMenuItem.Size = new System.Drawing.Size(108, 24);
-            this.lineExtendToolStripMenuItem.Text = "延长";
-            this.lineExtendToolStripMenuItem.Click += new System.EventHandler(this.lineExtendToolStripMenuItem_Click);
-            // 
             // btnSaveImage
             // 
             this.btnSaveImage.Location = new System.Drawing.Point(121, 83);
@@ -235,7 +191,7 @@
             this.btnSaveImage.TabIndex = 12;
             this.btnSaveImage.Text = "截屏";
             this.btnSaveImage.UseVisualStyleBackColor = true;
-            this.btnSaveImage.Click += new System.EventHandler(this.btnSaveImage_Click);
+            this.btnSaveImage.MouseClick += new System.Windows.Forms.MouseEventHandler(this.btnSaveImage_MouseClick);
             // 
             // FormLine
             // 
@@ -256,7 +212,6 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgBox)).EndInit();
-            this.cmsLine.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -276,11 +231,6 @@
         private System.Windows.Forms.CheckBox ckbNet;
         private Emgu.CV.UI.ImageBox imgBox;
         private System.Windows.Forms.Label lbAngle;
-        private System.Windows.Forms.ContextMenuStrip cmsLine;
-        private System.Windows.Forms.ToolStripMenuItem lineColorToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem lineWidthToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem lineDelToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem lineExtendToolStripMenuItem;
         private System.Windows.Forms.Button btnSaveImage;
     }
 }

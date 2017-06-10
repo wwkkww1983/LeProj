@@ -32,11 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.btnStart = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
-            this.dgvMachine = new System.Windows.Forms.DataGridView();
-            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.k = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.l = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.d = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label1 = new System.Windows.Forms.Label();
             this.tbPhone = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -53,16 +48,27 @@
             this.btnAutoStop = new System.Windows.Forms.Button();
             this.btnAutoStart = new System.Windows.Forms.Button();
             this.tpUser = new System.Windows.Forms.TabPage();
-            this.gbDevices = new System.Windows.Forms.GroupBox();
             this.gbSet = new System.Windows.Forms.GroupBox();
             this.rbUser = new System.Windows.Forms.RadioButton();
             this.rbAuto = new System.Windows.Forms.RadioButton();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMachine)).BeginInit();
+            this.gbDevices = new System.Windows.Forms.GroupBox();
+            this.rbLGl1 = new System.Windows.Forms.RadioButton();
+            this.rbKGl1 = new System.Windows.Forms.RadioButton();
+            this.rbDGl1 = new System.Windows.Forms.RadioButton();
+            this.lbLGl1 = new System.Windows.Forms.Label();
+            this.lbKGl1 = new System.Windows.Forms.Label();
+            this.lbDGl1 = new System.Windows.Forms.Label();
+            this.rbLGl2 = new System.Windows.Forms.RadioButton();
+            this.rbKGl2 = new System.Windows.Forms.RadioButton();
+            this.rbDGl2 = new System.Windows.Forms.RadioButton();
+            this.lbLGl2 = new System.Windows.Forms.Label();
+            this.lbKGl2 = new System.Windows.Forms.Label();
+            this.lbDGl2 = new System.Windows.Forms.Label();
             this.tcHandler.SuspendLayout();
             this.tpAuto.SuspendLayout();
             this.tpUser.SuspendLayout();
-            this.gbDevices.SuspendLayout();
             this.gbSet.SuspendLayout();
+            this.gbDevices.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnStart
@@ -86,59 +92,6 @@
             this.btnStop.Text = "立即停止";
             this.btnStop.UseVisualStyleBackColor = true;
             this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
-            // 
-            // dgvMachine
-            // 
-            this.dgvMachine.AllowUserToAddRows = false;
-            this.dgvMachine.AllowUserToDeleteRows = false;
-            this.dgvMachine.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvMachine.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.name,
-            this.k,
-            this.l,
-            this.d});
-            this.dgvMachine.EnableHeadersVisualStyles = false;
-            this.dgvMachine.Location = new System.Drawing.Point(3, 20);
-            this.dgvMachine.Name = "dgvMachine";
-            this.dgvMachine.ReadOnly = true;
-            this.dgvMachine.RowHeadersVisible = false;
-            this.dgvMachine.RowTemplate.Height = 27;
-            this.dgvMachine.Size = new System.Drawing.Size(442, 92);
-            this.dgvMachine.TabIndex = 0;
-            // 
-            // name
-            // 
-            this.name.DataPropertyName = "name";
-            this.name.Frozen = true;
-            this.name.HeaderText = "名称";
-            this.name.Name = "name";
-            this.name.ReadOnly = true;
-            this.name.Width = 88;
-            // 
-            // k
-            // 
-            this.k.DataPropertyName = "k";
-            this.k.Frozen = true;
-            this.k.HeaderText = "岭澳三号机";
-            this.k.Name = "k";
-            this.k.ReadOnly = true;
-            this.k.Width = 110;
-            // 
-            // l
-            // 
-            this.l.DataPropertyName = "l";
-            this.l.HeaderText = "岭澳一号机";
-            this.l.Name = "l";
-            this.l.ReadOnly = true;
-            this.l.Width = 110;
-            // 
-            // d
-            // 
-            this.d.DataPropertyName = "d";
-            this.d.HeaderText = "大亚湾一号机";
-            this.d.Name = "d";
-            this.d.ReadOnly = true;
-            this.d.Width = 130;
             // 
             // label1
             // 
@@ -240,7 +193,7 @@
             // 
             this.tcHandler.Controls.Add(this.tpAuto);
             this.tcHandler.Controls.Add(this.tpUser);
-            this.tcHandler.Location = new System.Drawing.Point(14, 300);
+            this.tcHandler.Location = new System.Drawing.Point(14, 329);
             this.tcHandler.Name = "tcHandler";
             this.tcHandler.SelectedIndex = 0;
             this.tcHandler.Size = new System.Drawing.Size(478, 110);
@@ -295,18 +248,6 @@
             this.tpUser.Text = "手动录波";
             this.tpUser.UseVisualStyleBackColor = true;
             // 
-            // gbDevices
-            // 
-            this.gbDevices.Controls.Add(this.dgvMachine);
-            this.gbDevices.Location = new System.Drawing.Point(14, 181);
-            this.gbDevices.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.gbDevices.Name = "gbDevices";
-            this.gbDevices.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.gbDevices.Size = new System.Drawing.Size(474, 114);
-            this.gbDevices.TabIndex = 1;
-            this.gbDevices.TabStop = false;
-            this.gbDevices.Text = "机组信息";
-            // 
             // gbSet
             // 
             this.gbSet.Controls.Add(this.rbUser);
@@ -320,7 +261,7 @@
             this.gbSet.Controls.Add(this.cbPorts);
             this.gbSet.Location = new System.Drawing.Point(14, 12);
             this.gbSet.Name = "gbSet";
-            this.gbSet.Size = new System.Drawing.Size(474, 164);
+            this.gbSet.Size = new System.Drawing.Size(478, 164);
             this.gbSet.TabIndex = 74;
             this.gbSet.TabStop = false;
             this.gbSet.Text = "信息设置";
@@ -347,27 +288,165 @@
             this.rbAuto.UseVisualStyleBackColor = true;
             this.rbAuto.CheckedChanged += new System.EventHandler(this.rb_CheckedChanged);
             // 
+            // gbDevices
+            // 
+            this.gbDevices.Controls.Add(this.lbDGl2);
+            this.gbDevices.Controls.Add(this.lbDGl1);
+            this.gbDevices.Controls.Add(this.lbKGl2);
+            this.gbDevices.Controls.Add(this.lbKGl1);
+            this.gbDevices.Controls.Add(this.lbLGl2);
+            this.gbDevices.Controls.Add(this.lbLGl1);
+            this.gbDevices.Controls.Add(this.rbDGl2);
+            this.gbDevices.Controls.Add(this.rbDGl1);
+            this.gbDevices.Controls.Add(this.rbKGl2);
+            this.gbDevices.Controls.Add(this.rbKGl1);
+            this.gbDevices.Controls.Add(this.rbLGl2);
+            this.gbDevices.Controls.Add(this.rbLGl1);
+            this.gbDevices.Location = new System.Drawing.Point(12, 181);
+            this.gbDevices.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.gbDevices.Name = "gbDevices";
+            this.gbDevices.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.gbDevices.Size = new System.Drawing.Size(480, 143);
+            this.gbDevices.TabIndex = 1;
+            this.gbDevices.TabStop = false;
+            this.gbDevices.Text = "机组信息";
+            // 
+            // rbLGl1
+            // 
+            this.rbLGl1.AutoSize = true;
+            this.rbLGl1.Checked = true;
+            this.rbLGl1.Location = new System.Drawing.Point(57, 28);
+            this.rbLGl1.Name = "rbLGl1";
+            this.rbLGl1.Size = new System.Drawing.Size(103, 19);
+            this.rbLGl1.TabIndex = 1;
+            this.rbLGl1.TabStop = true;
+            this.rbLGl1.Text = "岭澳一号机";
+            this.rbLGl1.UseVisualStyleBackColor = true;
+            // 
+            // rbKGl1
+            // 
+            this.rbKGl1.AutoSize = true;
+            this.rbKGl1.Location = new System.Drawing.Point(194, 28);
+            this.rbKGl1.Name = "rbKGl1";
+            this.rbKGl1.Size = new System.Drawing.Size(103, 19);
+            this.rbKGl1.TabIndex = 1;
+            this.rbKGl1.Text = "岭澳三号机";
+            this.rbKGl1.UseVisualStyleBackColor = true;
+            // 
+            // rbDGl1
+            // 
+            this.rbDGl1.AutoSize = true;
+            this.rbDGl1.Location = new System.Drawing.Point(319, 28);
+            this.rbDGl1.Name = "rbDGl1";
+            this.rbDGl1.Size = new System.Drawing.Size(118, 19);
+            this.rbDGl1.TabIndex = 1;
+            this.rbDGl1.Text = "大亚湾一号机";
+            this.rbDGl1.UseVisualStyleBackColor = true;
+            // 
+            // lbLGl1
+            // 
+            this.lbLGl1.AutoSize = true;
+            this.lbLGl1.Location = new System.Drawing.Point(81, 54);
+            this.lbLGl1.Name = "lbLGl1";
+            this.lbLGl1.Size = new System.Drawing.Size(22, 15);
+            this.lbLGl1.TabIndex = 2;
+            this.lbLGl1.Text = "无";
+            // 
+            // lbKGl1
+            // 
+            this.lbKGl1.AutoSize = true;
+            this.lbKGl1.Location = new System.Drawing.Point(218, 54);
+            this.lbKGl1.Name = "lbKGl1";
+            this.lbKGl1.Size = new System.Drawing.Size(22, 15);
+            this.lbKGl1.TabIndex = 3;
+            this.lbKGl1.Text = "无";
+            // 
+            // lbDGl1
+            // 
+            this.lbDGl1.AutoSize = true;
+            this.lbDGl1.Location = new System.Drawing.Point(351, 54);
+            this.lbDGl1.Name = "lbDGl1";
+            this.lbDGl1.Size = new System.Drawing.Size(22, 15);
+            this.lbDGl1.TabIndex = 3;
+            this.lbDGl1.Text = "无";
+            // 
+            // rbLGl2
+            // 
+            this.rbLGl2.AutoSize = true;
+            this.rbLGl2.Location = new System.Drawing.Point(57, 84);
+            this.rbLGl2.Name = "rbLGl2";
+            this.rbLGl2.Size = new System.Drawing.Size(103, 19);
+            this.rbLGl2.TabIndex = 1;
+            this.rbLGl2.Text = "岭澳一号机";
+            this.rbLGl2.UseVisualStyleBackColor = true;
+            // 
+            // rbKGl2
+            // 
+            this.rbKGl2.AutoSize = true;
+            this.rbKGl2.Location = new System.Drawing.Point(194, 84);
+            this.rbKGl2.Name = "rbKGl2";
+            this.rbKGl2.Size = new System.Drawing.Size(103, 19);
+            this.rbKGl2.TabIndex = 1;
+            this.rbKGl2.Text = "岭澳三号机";
+            this.rbKGl2.UseVisualStyleBackColor = true;
+            // 
+            // rbDGl2
+            // 
+            this.rbDGl2.AutoSize = true;
+            this.rbDGl2.Location = new System.Drawing.Point(319, 84);
+            this.rbDGl2.Name = "rbDGl2";
+            this.rbDGl2.Size = new System.Drawing.Size(118, 19);
+            this.rbDGl2.TabIndex = 1;
+            this.rbDGl2.Text = "大亚湾一号机";
+            this.rbDGl2.UseVisualStyleBackColor = true;
+            // 
+            // lbLGl2
+            // 
+            this.lbLGl2.AutoSize = true;
+            this.lbLGl2.Location = new System.Drawing.Point(81, 110);
+            this.lbLGl2.Name = "lbLGl2";
+            this.lbLGl2.Size = new System.Drawing.Size(22, 15);
+            this.lbLGl2.TabIndex = 2;
+            this.lbLGl2.Text = "无";
+            // 
+            // lbKGl2
+            // 
+            this.lbKGl2.AutoSize = true;
+            this.lbKGl2.Location = new System.Drawing.Point(218, 110);
+            this.lbKGl2.Name = "lbKGl2";
+            this.lbKGl2.Size = new System.Drawing.Size(22, 15);
+            this.lbKGl2.TabIndex = 3;
+            this.lbKGl2.Text = "无";
+            // 
+            // lbDGl2
+            // 
+            this.lbDGl2.AutoSize = true;
+            this.lbDGl2.Location = new System.Drawing.Point(351, 110);
+            this.lbDGl2.Name = "lbDGl2";
+            this.lbDGl2.Size = new System.Drawing.Size(22, 15);
+            this.lbDGl2.TabIndex = 3;
+            this.lbDGl2.Text = "无";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(503, 422);
+            this.ClientSize = new System.Drawing.Size(503, 450);
             this.Controls.Add(this.gbDevices);
             this.Controls.Add(this.gbSet);
             this.Controls.Add(this.tcHandler);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.MaximumSize = new System.Drawing.Size(521, 487);
             this.MinimumSize = new System.Drawing.Size(521, 467);
             this.Name = "Form1";
-            this.Text = "基于网络控制的示波器远程自动录波系统";
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMachine)).EndInit();
+            this.Text = "示波器远程录波控制系统";
             this.tcHandler.ResumeLayout(false);
             this.tpAuto.ResumeLayout(false);
             this.tpUser.ResumeLayout(false);
-            this.gbDevices.ResumeLayout(false);
             this.gbSet.ResumeLayout(false);
             this.gbSet.PerformLayout();
+            this.gbDevices.ResumeLayout(false);
+            this.gbDevices.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -386,21 +465,28 @@
         private System.Windows.Forms.Button btnBreak;
         private System.Windows.Forms.Label lbStatus;
         private System.Windows.Forms.Timer timerWeb;
-        private System.Windows.Forms.DataGridView dgvMachine;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.TabControl tcHandler;
         private System.Windows.Forms.TabPage tpAuto;
         private System.Windows.Forms.TabPage tpUser;
-        private System.Windows.Forms.GroupBox gbDevices;
         private System.Windows.Forms.GroupBox gbSet;
         private System.Windows.Forms.RadioButton rbUser;
         private System.Windows.Forms.RadioButton rbAuto;
         private System.Windows.Forms.Button btnAutoStop;
         private System.Windows.Forms.Button btnAutoStart;
-        private System.Windows.Forms.DataGridViewTextBoxColumn name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn k;
-        private System.Windows.Forms.DataGridViewTextBoxColumn l;
-        private System.Windows.Forms.DataGridViewTextBoxColumn d;
+        private System.Windows.Forms.GroupBox gbDevices;
+        private System.Windows.Forms.RadioButton rbLGl1;
+        private System.Windows.Forms.RadioButton rbDGl1;
+        private System.Windows.Forms.RadioButton rbKGl1;
+        private System.Windows.Forms.Label lbDGl1;
+        private System.Windows.Forms.Label lbKGl1;
+        private System.Windows.Forms.Label lbLGl1;
+        private System.Windows.Forms.Label lbDGl2;
+        private System.Windows.Forms.Label lbKGl2;
+        private System.Windows.Forms.Label lbLGl2;
+        private System.Windows.Forms.RadioButton rbDGl2;
+        private System.Windows.Forms.RadioButton rbKGl2;
+        private System.Windows.Forms.RadioButton rbLGl2;
     }
 }
 

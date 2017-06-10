@@ -18,7 +18,7 @@ namespace NetControl
     public partial class Form1 : Form
     {
         private const int BUFFER_SIZE = 1024;
-        private const string PICKUP_CMD = "ATZ", HANGUP_CMD = "ATH", PHONE_CMD = "ATB",START_CMD="5",END_CMD="9",FINISH_CMD="2";
+        private const string PICKUP_CMD = "ATZ", HANGUP_CMD = "ATH", PHONE_CMD = "ATB", START_CMD = "5", END_CMD = "9", FINISH_CMD = "2";
         private bool commandSended = false, isAutoRecordFlag = false;
         private int workTime = 0, countTime = 0, webFailCount = 0;
         private float mink11, maxk11, mink12, maxk12, minl11, maxl11, minl12, maxl12, mind11, maxd11, mind12, maxd12;
@@ -94,7 +94,7 @@ namespace NetControl
             this.isAutoRecordFlag = true;
             this.btnAutoStart.Enabled = false;
             this.btnAutoStop.Enabled = true;
-            
+
             this.OpenSeiralPort();
         }
 
@@ -155,7 +155,7 @@ namespace NetControl
             }
 
             List<MachineInfo> infoList = JSON.parse<List<MachineInfo>>(strJson);
-            this.webFailCount = 0;           
+            this.webFailCount = 0;
 
             return infoList;
         }
@@ -163,26 +163,17 @@ namespace NetControl
         private void timerWeb_Tick(object sender, EventArgs e)
         {
             List<MachineInfo> infoList = this.getWebData();
-            if (infoList == null || infoList.Count == 0) return;
+            if (infoList == null || infoList.Count < 3) return;
 
-            DataTable dt = new DataTable();
-            DataColumn dc = new DataColumn("name"); dt.Columns.Add(dc);
-            dc = new DataColumn("k");            dt.Columns.Add(dc);
-            dc = new DataColumn("l");            dt.Columns.Add(dc);
-            dc = new DataColumn("d");            dt.Columns.Add(dc);
-            DataRow dr1 = dt.NewRow();
-            DataRow dr2 = dt.NewRow();
-            dr1[0] = "GONGLI1";
-            dr2[0] = "GONGLI2";
-            for (int i = 0; i < infoList.Count; i++)
-            {
-                MachineInfo item = infoList[i];
-                dr1[i + 1] = item.GONGLI1;
-                dr2[i + 1] = item.GONGLI2;
-            }
-            dt.Rows.Add(dr1);
-            dt.Rows.Add(dr2);
-            this.dgvMachine.DataSource = dt;
+            MachineInfo kInfo = infoList[0];
+            MachineInfo lInfo = infoList[1];
+            MachineInfo dInfo = infoList[2];
+            lbKGl1.Text = kInfo.GONGLI1;
+            lbKGl2.Text = kInfo.GONGLI2;
+            lbLGl1.Text = lInfo.GONGLI1;
+            lbLGl2.Text = lInfo.GONGLI2;
+            lbDGl1.Text = dInfo.GONGLI1;
+            lbDGl2.Text = dInfo.GONGLI2;
 
             if (this.isAutoRecordFlag && this.checkDataValid(infoList))
             {
@@ -201,12 +192,12 @@ namespace NetControl
             d1 = float.Parse(infoD.GONGLI1);
             d2 = float.Parse(infoD.GONGLI2);
 
-            return this.mink11 <= k1 && k1 <= this.maxk11 || this.mink21 <= k1 && k1 <= this.maxk21 || this.mink31 <= k1 && k1 <= this.maxk31 ||
-                    this.mink12 <= k1 && k2 <= this.maxk12 || this.mink22 <= k1 && k2 <= this.maxk22 || this.mink31 <= k2 && k2 <= this.maxk32 ||
-                    this.minl11 <= l1 && l1 <= this.maxl11 || this.minl21 <= l1 && l1 <= this.maxl21 || this.minl31 <= l1 && l1 <= this.maxl31 ||
-                    this.minl12 <= l1 && l2 <= this.maxl12 || this.minl22 <= l1 && l2 <= this.maxl22 || this.minl31 <= l2 && l2 <= this.maxl32 ||
-                    this.mind11 <= d1 && d1 <= this.maxd11 || this.mind21 <= d1 && d1 <= this.maxd21 || this.mind31 <= d1 && d1 <= this.maxd31 ||
-                    this.mind12 <= d1 && d2 <= this.maxd12 || this.mind22 <= d1 && d2 <= this.maxd22 || this.mind31 <= d2 && d2 <= this.maxd32;
+            return this.rbKGl1.Checked && (this.mink11 <= k1 && k1 <= this.maxk11 || this.mink21 <= k1 && k1 <= this.maxk21 || this.mink31 <= k1 && k1 <= this.maxk31) ||
+                    this.rbKGl2.Checked && (this.mink12 <= k1 && k2 <= this.maxk12 || this.mink22 <= k1 && k2 <= this.maxk22 || this.mink31 <= k2 && k2 <= this.maxk32) ||
+                    this.rbLGl1.Checked && (this.minl11 <= l1 && l1 <= this.maxl11 || this.minl21 <= l1 && l1 <= this.maxl21 || this.minl31 <= l1 && l1 <= this.maxl31) ||
+                    this.rbLGl2.Checked && (this.minl12 <= l1 && l2 <= this.maxl12 || this.minl22 <= l1 && l2 <= this.maxl22 || this.minl31 <= l2 && l2 <= this.maxl32) ||
+                    this.rbDGl1.Checked && (this.mind11 <= d1 && d1 <= this.maxd11 || this.mind21 <= d1 && d1 <= this.maxd21 || this.mind31 <= d1 && d1 <= this.maxd31) ||
+                    this.rbDGl2.Checked && (this.mind12 <= d1 && d2 <= this.maxd12 || this.mind22 <= d1 && d2 <= this.maxd22 || this.mind31 <= d2 && d2 <= this.maxd32);
 
         }
 
@@ -260,7 +251,7 @@ namespace NetControl
 
         private void InitialInfo()
         {
-            this.rbUser.Checked = true; 
+            this.rbUser.Checked = true;
             this.btnAutoStop.Enabled = false;
 
             this.cbPorts.Text = Ini.GetItemValue("general", "serialport");
@@ -303,7 +294,7 @@ namespace NetControl
             this.maxd12 = float.Parse(Ini.GetItemValue("boundary", "maxd12"));
             this.maxd22 = float.Parse(Ini.GetItemValue("boundary", "maxd22"));
             this.maxd32 = float.Parse(Ini.GetItemValue("boundary", "maxd32"));
-            
+
             this.com.BaudRate = 1200;
             this.com.DataBits = 8;
             this.com.StopBits = StopBits.One;
@@ -372,7 +363,7 @@ namespace NetControl
                         System.Threading.Thread.Sleep(1000);
                         break;
                     case "ATS2":// 线路繁忙时，挂断电话
-                                //case "ATS4":// 线路信号为60秒静音时（电话连线但没人讲话）
+                        //case "ATS4":// 线路信号为60秒静音时（电话连线但没人讲话）
                         this.SendCommand(HANGUP_CMD);
                         break;
                     case "ATHOK"://挂机成功后，关闭串口
@@ -429,7 +420,7 @@ namespace NetControl
             bool isValid = true;
             if (!this.IsPhoneNumber(this.tbPhone.Text))
             {
-                MessageBox.Show("电话号码有误","警告",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                MessageBox.Show("电话号码有误", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 isValid = false;
             }
 
@@ -444,8 +435,8 @@ namespace NetControl
 
         private bool IsPhoneNumber(string input)
         {
-             string strPattern = @"((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)" ;
-             return Regex.IsMatch(input, strPattern, RegexOptions.IgnoreCase);
+            string strPattern = @"^\d*$";
+            return Regex.IsMatch(input, strPattern, RegexOptions.IgnoreCase);
         }
 
         private bool isUnsignedNumber(string input)
@@ -462,7 +453,6 @@ namespace NetControl
             this.tbTime.Enabled = status;
             this.btnRefresh.Enabled = status;
             this.cbPorts.Enabled = status;
-            this.gbDevices.Enabled = status;
         }
         #endregion
     }

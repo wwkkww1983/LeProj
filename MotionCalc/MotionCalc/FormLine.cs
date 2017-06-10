@@ -21,12 +21,11 @@ namespace MotionCalc
         private double imgScale;
         private bool pulsePlayFlag;
         private string recordFileName;
+        private Mat videoFrame;
         private OpenFileDialog fileDialog = null;
         private VideoCapture capture = null;
         private UcPanel pnNetLine = null;
         private HanlderNoParams delegateDrawInfo, delegateDrawNet;
-
-        private int inscreamIdx = 0;
 
         public FormLine()
         {
@@ -49,20 +48,23 @@ namespace MotionCalc
             this.pnNetLine.Location = this.imgBox.Location;
             this.pnNetLine.Size = this.imgBox.Size;
             this.imgScale = this.pnNetLine.ImageScale;
+            //this.pnNetLine.Paint += pnNetLine_Paint;
             this.Controls.Add(this.pnNetLine);
             this.pnNetLine.BringToFront();
 
             this.delegateDrawInfo = new HanlderNoParams(DrawRecognizedInfo);
             this.delegateDrawNet = new HanlderNoParams(DrawNetLine);
+
+            this.videoFrame = new Mat();
         }
-        #endregion 
+        #endregion
 
         #region 用户操作
 
         private void btnOpen_MouseClick(object sender, MouseEventArgs e)
         {
             this.pnNetLine.BringToFront();
-            
+
             if (this.fileDialog.ShowDialog() != DialogResult.OK) return;
 
             this.recordFileName = this.fileDialog.FileName;
@@ -116,48 +118,54 @@ namespace MotionCalc
             {
                 System.Threading.Thread.Sleep(PLAY_SPPED_DEFAULT);
             }
-            Mat frame = new Mat();
-            this.capture.Read(frame);
-            this.imgBox.Image = frame;
+            this.capture.Read(this.videoFrame);
+            this.imgBox.Image = this.videoFrame;
             System.Threading.Thread.Sleep(10);
             this.imgBox.SetZoomScale(this.imgScale, new Point());
 
-            if (this.ckbNet.Checked)
-            {
-                this.DrawNetLine();
-            }
-            this.DrawRecognizedInfo();
+            this.refreshUserInfo();
 
             System.Threading.Thread.Sleep(this.playInterSleep);
-            frame.Dispose();
         }
 
-        private void btnSaveImage_Click(object sender, EventArgs e)
+        private void btnSaveImage_MouseClick(object sender, MouseEventArgs e)
         {
+            SaveFileDialog fileDialog = new SaveFileDialog();
+            fileDialog.DefaultExt = ".jpg";
+            fileDialog.Filter = "视频图像文件(*.jpg)|*.jpg";
+            fileDialog.RestoreDirectory = true;
+            if (!(fileDialog.ShowDialog() == DialogResult.OK)) return;
 
+            string fileName = fileDialog.FileName;
+
+            Mat frameImg = new Mat();
+            Size imageSize = new Size((int)(this.imgScale * Core.Constants.IMAGE_WIDTH), (int)(this.imgScale * Core.Constants.IMAGE_HEIGHT));
+            CvInvoke.Resize(this.videoFrame, frameImg, imageSize);
+
+            //CvInvoke.Line(frameImg,new Point (),new Point (),
+
+
+            frameImg.Save(fileName);
         }
 
-        #endregion
-
-        #region 菜单
-        private void lineColorToolStripMenuItem_Click(object sender, EventArgs e)
+        public void RefreshImageShow()
         {
+            this.imgBox.Refresh();
 
+            if (this.ckbNet.Checked)
+            {
+                this.pnNetLine.DrawNetLine();
+            }
+            this.pnNetLine.DrawRecogPoints();
+            this.pnNetLine.DrawLinesDefault();
+            this.lbAngle.Text = this.pnNetLine.CalcLineAngle(0, 1).ToString("f2");
         }
 
-        private void lineWidthToolStripMenuItem_Click(object sender, EventArgs e)
+        private void refreshUserInfo()
         {
+            this.DrawNetLine();
 
-        }
-
-        private void lineDelToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lineExtendToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
+            this.DrawRecognizedInfo();
         }
         #endregion
 
@@ -170,8 +178,11 @@ namespace MotionCalc
                 return;
             }
 
-            this.pnNetLine.DrawNetLine();
-            //this.pnNetLine.BringToFront();
+            if (this.ckbNet.Checked)
+            {
+                this.pnNetLine.DrawNetLine();
+                //this.pnNetLine.BringToFront();
+            }
         }
 
         private void DrawRecognizedInfo()
@@ -184,13 +195,13 @@ namespace MotionCalc
 
             int[] locList = this.getLabelPoint();
             this.pnNetLine.DrawRecogPoints(locList);
-            this.pnNetLine.DrawLines(locList);
+            this.pnNetLine.DrawLines();
             this.lbAngle.Text = this.pnNetLine.CalcLineAngle(0, 1).ToString("f2");
         }
 
         private int[] getLabelPoint()
         {
-            int[] result = new int[] { 50, 50, 200, 200,  22,55,600,55 };
+            int[] result = new int[] { 50, 50, 200, 200, 22, 55, 600, 55 };
             //int directIdx = 1;
             //for (int i = 0; i < result.Length; i++)
             //{
@@ -200,6 +211,6 @@ namespace MotionCalc
             //inscreamIdx++;
             return result;
         }
-        #endregion        
+        #endregion
     }
 }

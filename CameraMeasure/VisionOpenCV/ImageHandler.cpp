@@ -32,6 +32,7 @@ ImageHandler::ImageHandler(void)
 		cout<<"CANNOT open config file, Params use DEFAULT."<<endl; 	
 		minDistance = 20;
 		maxDistance = 80;
+		warningDistance = 60;
 		return;
 	}
 	char tmpChar[256];
@@ -88,6 +89,14 @@ int ImageHandler::CalculateDistance(vector<Rect> eyes)
 	lengthSum += distance;
 	lengthCount ++;
 	printf("距离：%d \n",distance);
+
+	bool validFlag = (distance == warningDistance);
+	//if(validFlag && !hasAlarmFlag)
+	if(validFlag)
+	{
+		PlaySound("warning.wav",NULL, SND_FILENAME|SND_ASYNC );
+		hasAlarmFlag = true;
+	}
 	return distance;
 }
 
@@ -140,16 +149,6 @@ bool ImageHandler::RecognitionHumanFace(Mat sourceFrame){
 		}
 		isExists = true;
 		freeCount=0;
-		if(lengthCount > 0)
-		{
-			int length = lengthSum/lengthCount;
-			bool validFlag = length > minDistance && length < maxDistance;
-			if(validFlag && !hasAlarmFlag)
-			{
-				PlaySound("warning.wav",NULL, SND_FILENAME|SND_ASYNC );
-				hasAlarmFlag = true;
-			}
-		}
 	}
 	existCount++;
 	
@@ -181,10 +180,13 @@ void ImageHandler::UpdateParams(string keyValue){
 
 	string tmpKey = keyValue.substr(0,pos);
 	transform(tmpKey.begin(), tmpKey.end(), tmpKey.begin(), (int(*)(int))toupper);
-	if(tmpKey == "MINDISTANCE"){ //中值滤波帧数		
+	if(tmpKey == "MINDISTANCE"){ 
 		minDistance = atoi(keyValue.substr(pos + 1).c_str());
 	}
-	else if(tmpKey == "MAXDISTANCE"){//均值滤波帧数
+	else if(tmpKey == "MAXDISTANCE"){
 		maxDistance = atoi(keyValue.substr(pos + 1).c_str());
+	}
+	else if(tmpKey == "WARNINGDISTANCE"){
+		warningDistance = atoi(keyValue.substr(pos + 1).c_str());
 	}
 }

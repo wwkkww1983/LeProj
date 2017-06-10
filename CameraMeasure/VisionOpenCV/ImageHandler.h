@@ -23,7 +23,7 @@ private:
 	bool isExists, tempExistsFlag, hasAlarmFlag;
 	int existCount,freeCount;
 	int lengthSum, lengthCount;
-	int minDistance, maxDistance;
+	int minDistance, maxDistance,warningDistance;
 	double timeDetect,freeTimeDetect;
 	CascadeClassifier faceCascade;
 	int CalculateDistance(vector<Rect>);
