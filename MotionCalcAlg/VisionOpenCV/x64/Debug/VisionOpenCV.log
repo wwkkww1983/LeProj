@@ -1,4 +1,4 @@
-﻿生成启动时间为 2017/5/20 星期六 下午 12:20:19。
+﻿生成启动时间为 2017/6/12 星期一 下午 3:30:34。
      1>项目“D:\Project\LeProj\MotionCalcAlg\VisionOpenCV\VisionOpenCV.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
          D:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\x86_amd64\CL.exe /c /Zi /nologo /W3 /WX- /Od /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc110.pdb" /Gd /TP /errorReport:prompt ImageHandler.cpp
@@ -15,4 +15,4 @@
 
 生成成功。
 
-已用时间 00:00:01.83
+已用时间 00:00:02.64

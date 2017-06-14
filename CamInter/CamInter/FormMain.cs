@@ -16,8 +16,10 @@ namespace CamInter
     {
         #region 初始化
         private delegate void DelegateNoneParam();
+
         private const string NAME_NONE = "none", PRE_PROJECT_NAME = "NO.", POST_RING_NUMBER = " total";
         private bool leftButtonPress = false, isMeshCamera = false;
+        private int searchCount = 0;
         private Point mouseMoveLocation;
         private Color colorBorder = Color.FromArgb(100, 100, 100), colorBackground = Color.FromArgb(27, 30, 35);
         private DataTable dtInter = null;
@@ -52,7 +54,6 @@ namespace CamInter
             this.dgvProj.DefaultCellStyle.BackColor = this.colorBorder;
             this.dgvDetail.ColumnHeadersDefaultCellStyle.BackColor = this.colorBackground;
             this.dgvDetail.DefaultCellStyle.BackColor = this.colorBorder;
-
 
             this.pnSplit1.BackColor = this.colorBorder;
             this.pnSplit2.BackColor = this.colorBorder;
@@ -156,8 +157,12 @@ namespace CamInter
             #endregion
 
             #region 点击按钮
+            this.btnSearch.BackColor = Color.FromArgb(0x7f, 0xc0, 0x41);
             this.btnSearch.Size = new Size(100,25);
-            this.btnSearch.Location = new Point(628,190);
+            this.btnSearch.Location = new Point(547, 190);
+            this.btnStop.BackColor = Color.FromArgb(0xc0, 0x41, 0x41);
+            this.btnStop.Size = new Size(100, 25);
+            this.btnStop.Location = new Point(726,190);
             this.btnMin.Location = new Point(1148,12);
             this.btnMin.Size = new Size(18,18);
             this.btnClose.Location = new Point(1171, 12);
@@ -171,8 +176,6 @@ namespace CamInter
             this.dgvDetail.Size = new Size(800, 207);
             this.pnDraw.Size = new Size(200,580);
             this.pnDraw.Location = new Point(925,120);
-            this.dgvDetailName.Width = 200;
-            this.dgvSugLens.Width = 200;
             #endregion
         }
 
@@ -223,15 +226,32 @@ namespace CamInter
             this.showResults(this.resultList, ratio);
         }
 
+        private void clearDataGridView()
+        {
+            DataTable dt = (DataTable)this.dgvProj.DataSource;
+            if (dt != null)
+            {
+                dt.Rows.Clear();
+                this.dgvProj.DataSource = dt;
+            }
+
+            dt = (DataTable)this.dgvDetail.DataSource;
+            if (dt != null)
+            {
+                dt.Rows.Clear();
+                this.dgvDetail.DataSource = dt;
+            }
+        }
+
         private void btnSearch_Click(object sender, EventArgs e)
         {
             if (!this.PreCheckUserDataIsEnough()) return;
 
             Button btnTemp = sender as Button;
-            btnTemp.Text = "searching ...";
             btnTemp.Enabled = false;
+            this.timerSearch.Enabled = true;
 
-            this.dgvDetail.DataSource = null;
+            this.clearDataGridView();
             this.pnDraw.Controls.Clear();
 
             float ratio = float.Parse(this.tbMagnifi.Text);
@@ -244,6 +264,23 @@ namespace CamInter
             float[] threadParams = new float[] { ratio,camInter,flange,target,workDistance,workDistanceRange };
             Thread threadCalc = new Thread(new ParameterizedThreadStart(this.CalcRingByChildThread));
             threadCalc.Start(threadParams);
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            this.alg.NormalSearchFlag = false;
+        }
+
+        private void timerSearch_Tick(object sender, EventArgs e)
+        {
+            string strSearch = "search ";
+            for (int i = 0; i < this.searchCount; i++)
+            {
+                strSearch += ".";
+            }
+            this.btnSearch.Text = strSearch;
+
+            this.searchCount = (this.searchCount + 1) % 4;
         }
 
         private bool PreCheckUserDataIsEnough()
@@ -272,8 +309,10 @@ namespace CamInter
                 Action<List<RingResults>, float> delegateChangeCursor = new Action<List<RingResults>, float>(showResults);
                 this.Invoke(delegateChangeCursor, new object[] { result, ratio });
                 return;
-            } 
+            }
 
+            this.searchCount = 0;
+            this.timerSearch.Enabled = false;
             this.btnSearch.Text = "search";
             this.btnSearch.Enabled = true;
             if (this.resultList.Count <= 2)
@@ -305,6 +344,7 @@ namespace CamInter
                 dt.Rows.Add(dr);
             }
             this.dgvProj.DataSource = dt;
+            this.alg.NormalSearchFlag = true;
         }
 
         private void FormMain_MouseDown(object sender, MouseEventArgs e)
@@ -615,6 +655,5 @@ namespace CamInter
             return name;
         }
         #endregion
-
     }
 }

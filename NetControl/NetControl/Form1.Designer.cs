@@ -52,18 +52,21 @@
             this.rbUser = new System.Windows.Forms.RadioButton();
             this.rbAuto = new System.Windows.Forms.RadioButton();
             this.gbDevices = new System.Windows.Forms.GroupBox();
-            this.rbLGl1 = new System.Windows.Forms.RadioButton();
-            this.rbKGl1 = new System.Windows.Forms.RadioButton();
-            this.rbDGl1 = new System.Windows.Forms.RadioButton();
-            this.lbLGl1 = new System.Windows.Forms.Label();
-            this.lbKGl1 = new System.Windows.Forms.Label();
-            this.lbDGl1 = new System.Windows.Forms.Label();
-            this.rbLGl2 = new System.Windows.Forms.RadioButton();
-            this.rbKGl2 = new System.Windows.Forms.RadioButton();
-            this.rbDGl2 = new System.Windows.Forms.RadioButton();
-            this.lbLGl2 = new System.Windows.Forms.Label();
-            this.lbKGl2 = new System.Windows.Forms.Label();
             this.lbDGl2 = new System.Windows.Forms.Label();
+            this.lbDGl1 = new System.Windows.Forms.Label();
+            this.lbKGl2 = new System.Windows.Forms.Label();
+            this.lbKGl1 = new System.Windows.Forms.Label();
+            this.lbLGl2 = new System.Windows.Forms.Label();
+            this.lbLGl1 = new System.Windows.Forms.Label();
+            this.rbDGl2 = new System.Windows.Forms.RadioButton();
+            this.rbDGl1 = new System.Windows.Forms.RadioButton();
+            this.rbKGl2 = new System.Windows.Forms.RadioButton();
+            this.rbKGl1 = new System.Windows.Forms.RadioButton();
+            this.rbLGl2 = new System.Windows.Forms.RadioButton();
+            this.rbLGl1 = new System.Windows.Forms.RadioButton();
+            this.rtbWebContent = new System.Windows.Forms.RichTextBox();
+            this.btnTest = new System.Windows.Forms.Button();
+            this.tbUrl = new System.Windows.Forms.TextBox();
             this.tcHandler.SuspendLayout();
             this.tpAuto.SuspendLayout();
             this.tpUser.SuspendLayout();
@@ -175,7 +178,6 @@
             // 
             // timerWeb
             // 
-            this.timerWeb.Enabled = true;
             this.timerWeb.Interval = 1000;
             this.timerWeb.Tick += new System.EventHandler(this.timerWeb_Tick);
             // 
@@ -311,6 +313,110 @@
             this.gbDevices.TabStop = false;
             this.gbDevices.Text = "机组信息";
             // 
+            // lbDGl2
+            // 
+            this.lbDGl2.AutoSize = true;
+            this.lbDGl2.Location = new System.Drawing.Point(351, 110);
+            this.lbDGl2.Name = "lbDGl2";
+            this.lbDGl2.Size = new System.Drawing.Size(22, 15);
+            this.lbDGl2.TabIndex = 3;
+            this.lbDGl2.Text = "无";
+            // 
+            // lbDGl1
+            // 
+            this.lbDGl1.AutoSize = true;
+            this.lbDGl1.Location = new System.Drawing.Point(351, 54);
+            this.lbDGl1.Name = "lbDGl1";
+            this.lbDGl1.Size = new System.Drawing.Size(22, 15);
+            this.lbDGl1.TabIndex = 3;
+            this.lbDGl1.Text = "无";
+            // 
+            // lbKGl2
+            // 
+            this.lbKGl2.AutoSize = true;
+            this.lbKGl2.Location = new System.Drawing.Point(218, 110);
+            this.lbKGl2.Name = "lbKGl2";
+            this.lbKGl2.Size = new System.Drawing.Size(22, 15);
+            this.lbKGl2.TabIndex = 3;
+            this.lbKGl2.Text = "无";
+            // 
+            // lbKGl1
+            // 
+            this.lbKGl1.AutoSize = true;
+            this.lbKGl1.Location = new System.Drawing.Point(218, 54);
+            this.lbKGl1.Name = "lbKGl1";
+            this.lbKGl1.Size = new System.Drawing.Size(22, 15);
+            this.lbKGl1.TabIndex = 3;
+            this.lbKGl1.Text = "无";
+            // 
+            // lbLGl2
+            // 
+            this.lbLGl2.AutoSize = true;
+            this.lbLGl2.Location = new System.Drawing.Point(81, 110);
+            this.lbLGl2.Name = "lbLGl2";
+            this.lbLGl2.Size = new System.Drawing.Size(22, 15);
+            this.lbLGl2.TabIndex = 2;
+            this.lbLGl2.Text = "无";
+            // 
+            // lbLGl1
+            // 
+            this.lbLGl1.AutoSize = true;
+            this.lbLGl1.Location = new System.Drawing.Point(81, 54);
+            this.lbLGl1.Name = "lbLGl1";
+            this.lbLGl1.Size = new System.Drawing.Size(22, 15);
+            this.lbLGl1.TabIndex = 2;
+            this.lbLGl1.Text = "无";
+            // 
+            // rbDGl2
+            // 
+            this.rbDGl2.AutoSize = true;
+            this.rbDGl2.Location = new System.Drawing.Point(319, 84);
+            this.rbDGl2.Name = "rbDGl2";
+            this.rbDGl2.Size = new System.Drawing.Size(118, 19);
+            this.rbDGl2.TabIndex = 1;
+            this.rbDGl2.Text = "大亚湾一号机";
+            this.rbDGl2.UseVisualStyleBackColor = true;
+            // 
+            // rbDGl1
+            // 
+            this.rbDGl1.AutoSize = true;
+            this.rbDGl1.Location = new System.Drawing.Point(319, 28);
+            this.rbDGl1.Name = "rbDGl1";
+            this.rbDGl1.Size = new System.Drawing.Size(118, 19);
+            this.rbDGl1.TabIndex = 1;
+            this.rbDGl1.Text = "大亚湾一号机";
+            this.rbDGl1.UseVisualStyleBackColor = true;
+            // 
+            // rbKGl2
+            // 
+            this.rbKGl2.AutoSize = true;
+            this.rbKGl2.Location = new System.Drawing.Point(194, 84);
+            this.rbKGl2.Name = "rbKGl2";
+            this.rbKGl2.Size = new System.Drawing.Size(103, 19);
+            this.rbKGl2.TabIndex = 1;
+            this.rbKGl2.Text = "岭澳三号机";
+            this.rbKGl2.UseVisualStyleBackColor = true;
+            // 
+            // rbKGl1
+            // 
+            this.rbKGl1.AutoSize = true;
+            this.rbKGl1.Location = new System.Drawing.Point(194, 28);
+            this.rbKGl1.Name = "rbKGl1";
+            this.rbKGl1.Size = new System.Drawing.Size(103, 19);
+            this.rbKGl1.TabIndex = 1;
+            this.rbKGl1.Text = "岭澳三号机";
+            this.rbKGl1.UseVisualStyleBackColor = true;
+            // 
+            // rbLGl2
+            // 
+            this.rbLGl2.AutoSize = true;
+            this.rbLGl2.Location = new System.Drawing.Point(57, 84);
+            this.rbLGl2.Name = "rbLGl2";
+            this.rbLGl2.Size = new System.Drawing.Size(103, 19);
+            this.rbLGl2.TabIndex = 1;
+            this.rbLGl2.Text = "岭澳一号机";
+            this.rbLGl2.UseVisualStyleBackColor = true;
+            // 
             // rbLGl1
             // 
             this.rbLGl1.AutoSize = true;
@@ -323,115 +429,40 @@
             this.rbLGl1.Text = "岭澳一号机";
             this.rbLGl1.UseVisualStyleBackColor = true;
             // 
-            // rbKGl1
+            // rtbWebContent
             // 
-            this.rbKGl1.AutoSize = true;
-            this.rbKGl1.Location = new System.Drawing.Point(194, 28);
-            this.rbKGl1.Name = "rbKGl1";
-            this.rbKGl1.Size = new System.Drawing.Size(103, 19);
-            this.rbKGl1.TabIndex = 1;
-            this.rbKGl1.Text = "岭澳三号机";
-            this.rbKGl1.UseVisualStyleBackColor = true;
+            this.rtbWebContent.Location = new System.Drawing.Point(498, 50);
+            this.rtbWebContent.Name = "rtbWebContent";
+            this.rtbWebContent.Size = new System.Drawing.Size(720, 389);
+            this.rtbWebContent.TabIndex = 75;
+            this.rtbWebContent.Text = "";
             // 
-            // rbDGl1
+            // btnTest
             // 
-            this.rbDGl1.AutoSize = true;
-            this.rbDGl1.Location = new System.Drawing.Point(319, 28);
-            this.rbDGl1.Name = "rbDGl1";
-            this.rbDGl1.Size = new System.Drawing.Size(118, 19);
-            this.rbDGl1.TabIndex = 1;
-            this.rbDGl1.Text = "大亚湾一号机";
-            this.rbDGl1.UseVisualStyleBackColor = true;
+            this.btnTest.Location = new System.Drawing.Point(498, 21);
+            this.btnTest.Name = "btnTest";
+            this.btnTest.Size = new System.Drawing.Size(75, 23);
+            this.btnTest.TabIndex = 76;
+            this.btnTest.Text = "读取网页";
+            this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
-            // lbLGl1
+            // tbUrl
             // 
-            this.lbLGl1.AutoSize = true;
-            this.lbLGl1.Location = new System.Drawing.Point(81, 54);
-            this.lbLGl1.Name = "lbLGl1";
-            this.lbLGl1.Size = new System.Drawing.Size(22, 15);
-            this.lbLGl1.TabIndex = 2;
-            this.lbLGl1.Text = "无";
-            // 
-            // lbKGl1
-            // 
-            this.lbKGl1.AutoSize = true;
-            this.lbKGl1.Location = new System.Drawing.Point(218, 54);
-            this.lbKGl1.Name = "lbKGl1";
-            this.lbKGl1.Size = new System.Drawing.Size(22, 15);
-            this.lbKGl1.TabIndex = 3;
-            this.lbKGl1.Text = "无";
-            // 
-            // lbDGl1
-            // 
-            this.lbDGl1.AutoSize = true;
-            this.lbDGl1.Location = new System.Drawing.Point(351, 54);
-            this.lbDGl1.Name = "lbDGl1";
-            this.lbDGl1.Size = new System.Drawing.Size(22, 15);
-            this.lbDGl1.TabIndex = 3;
-            this.lbDGl1.Text = "无";
-            // 
-            // rbLGl2
-            // 
-            this.rbLGl2.AutoSize = true;
-            this.rbLGl2.Location = new System.Drawing.Point(57, 84);
-            this.rbLGl2.Name = "rbLGl2";
-            this.rbLGl2.Size = new System.Drawing.Size(103, 19);
-            this.rbLGl2.TabIndex = 1;
-            this.rbLGl2.Text = "岭澳一号机";
-            this.rbLGl2.UseVisualStyleBackColor = true;
-            // 
-            // rbKGl2
-            // 
-            this.rbKGl2.AutoSize = true;
-            this.rbKGl2.Location = new System.Drawing.Point(194, 84);
-            this.rbKGl2.Name = "rbKGl2";
-            this.rbKGl2.Size = new System.Drawing.Size(103, 19);
-            this.rbKGl2.TabIndex = 1;
-            this.rbKGl2.Text = "岭澳三号机";
-            this.rbKGl2.UseVisualStyleBackColor = true;
-            // 
-            // rbDGl2
-            // 
-            this.rbDGl2.AutoSize = true;
-            this.rbDGl2.Location = new System.Drawing.Point(319, 84);
-            this.rbDGl2.Name = "rbDGl2";
-            this.rbDGl2.Size = new System.Drawing.Size(118, 19);
-            this.rbDGl2.TabIndex = 1;
-            this.rbDGl2.Text = "大亚湾一号机";
-            this.rbDGl2.UseVisualStyleBackColor = true;
-            // 
-            // lbLGl2
-            // 
-            this.lbLGl2.AutoSize = true;
-            this.lbLGl2.Location = new System.Drawing.Point(81, 110);
-            this.lbLGl2.Name = "lbLGl2";
-            this.lbLGl2.Size = new System.Drawing.Size(22, 15);
-            this.lbLGl2.TabIndex = 2;
-            this.lbLGl2.Text = "无";
-            // 
-            // lbKGl2
-            // 
-            this.lbKGl2.AutoSize = true;
-            this.lbKGl2.Location = new System.Drawing.Point(218, 110);
-            this.lbKGl2.Name = "lbKGl2";
-            this.lbKGl2.Size = new System.Drawing.Size(22, 15);
-            this.lbKGl2.TabIndex = 3;
-            this.lbKGl2.Text = "无";
-            // 
-            // lbDGl2
-            // 
-            this.lbDGl2.AutoSize = true;
-            this.lbDGl2.Location = new System.Drawing.Point(351, 110);
-            this.lbDGl2.Name = "lbDGl2";
-            this.lbDGl2.Size = new System.Drawing.Size(22, 15);
-            this.lbDGl2.TabIndex = 3;
-            this.lbDGl2.Text = "无";
+            this.tbUrl.Location = new System.Drawing.Point(602, 18);
+            this.tbUrl.Name = "tbUrl";
+            this.tbUrl.Size = new System.Drawing.Size(616, 25);
+            this.tbUrl.TabIndex = 77;
+            this.tbUrl.Text = "https://www.jiankang.com/detail/194865.shtml";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(503, 450);
+            this.ClientSize = new System.Drawing.Size(1230, 450);
+            this.Controls.Add(this.tbUrl);
+            this.Controls.Add(this.btnTest);
+            this.Controls.Add(this.rtbWebContent);
             this.Controls.Add(this.gbDevices);
             this.Controls.Add(this.gbSet);
             this.Controls.Add(this.tcHandler);
@@ -448,6 +479,7 @@
             this.gbDevices.ResumeLayout(false);
             this.gbDevices.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -487,6 +519,9 @@
         private System.Windows.Forms.RadioButton rbDGl2;
         private System.Windows.Forms.RadioButton rbKGl2;
         private System.Windows.Forms.RadioButton rbLGl2;
+        private System.Windows.Forms.RichTextBox rtbWebContent;
+        private System.Windows.Forms.Button btnTest;
+        private System.Windows.Forms.TextBox tbUrl;
     }
 }
 

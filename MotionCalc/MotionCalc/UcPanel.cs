@@ -14,40 +14,59 @@ namespace MotionCalc
     public partial class UcPanel : Panel
     {
         #region 初始化
-        private const int NET_LINE_WIDTH = 4, LINE_SEPERATION = 50, USER_LINK_LINE_WIDTH = 4;
-        private const int LINE_ONE_HEIGHT = NET_LINE_WIDTH + LINE_SEPERATION;
-        private const int CIRCLE_RADIUS_BK = 8, CIRCLE_RADIUS_INNER = 4, CIRCLE_WIDTH_INNER = 2;
+        private const int USER_LINK_LINE_WIDTH = 4;
         private const int POINT_MAX_JUMP = 100;
         private const double DOUBLE_MAX_DIFF = 1e-6;
-        private bool onePointClickFlag = false;
+        private bool onePointClickFlag = false, userMovingLineFlag = false;
         private EnumLineType selectedLineType;
         private int selectedLineIdx = -1;
         private float imgScale;
-        private Point rightClickPosition;
-        private Pen penCircleInner = null;
-        private Brush brushCircleBK = null;
-        private Color colorNetLine, colorUserLine, colorCircleInner, colorCircleBK;
+        private Point rightClickPosition, lastMousePosition;
+        private Color colorUserLine;
+        private List<int> selectedLinePoints = null;
         private List<Point> recgPointBoardList = null;
         private List<LineInfo> currentLinePoints = null, middleHVLinePoints = null;
         private ContextMenuStrip cmsHorizonVertical = null, cmsUserLineHanler = null;
+        private Action<double> showAngleForTwoLine;
 
-
-        public UcPanel()
+        public UcPanel(Action<double> showAngleForTwoLine)
         {
+            this.showAngleForTwoLine = showAngleForTwoLine;
+
             SetStyle(ControlStyles.Opaque | ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
 
+            this.selectedLinePoints = new List<int>();
             this.recgPointBoardList = new List<Point>();
             this.middleHVLinePoints = new List<LineInfo>();
             this.currentLinePoints = new List<LineInfo>();
 
-            this.colorNetLine = Color.DarkRed;
             this.colorUserLine = Color.LightGreen;
-            this.colorCircleInner = Color.Black;
-            this.colorCircleBK = Color.Yellow;
 
             this.InitialContextMenu();
-            this.penCircleInner = new Pen(this.colorCircleInner, CIRCLE_WIDTH_INNER);
-            this.brushCircleBK = new SolidBrush(this.colorCircleBK);
+        }
+
+        public List<LineInfo> CurrentLinePoints
+        {
+            get
+            {
+                return this.currentLinePoints;
+            }
+        }
+
+        public List<LineInfo> MiddleHVLinePoints
+        {
+            get
+            {
+                return this.middleHVLinePoints;
+            }
+        }
+
+        public List<Point> RecgPointBoardList
+        {
+            get
+            {
+                return this.recgPointBoardList;
+            }
         }
 
         protected override CreateParams CreateParams//v1.10 
@@ -134,8 +153,14 @@ namespace MotionCalc
         protected override void OnMouseClick(MouseEventArgs e)
         {
             base.OnMouseClick(e);
-
-            int lineIdx = this.getSelectedLine(e.Location);
+            if (this.selectedLineIdx != -1)
+            {
+                if (this.selectedLinePoints.Count >= 2) this.selectedLinePoints.Clear();
+                if (!this.selectedLinePoints.Contains(this.selectedLineIdx))
+                {
+                    this.selectedLinePoints.Add(this.selectedLineIdx);
+                }
+            }
 
             Point clickPoint = this.checkClickPoint(e.Location);
             if (clickPoint.X < 0) return;
@@ -227,7 +252,7 @@ namespace MotionCalc
 
         private void lineWidth_Click(object sender, EventArgs e)
         {
-            FormLineWidth formWidth = new FormLineWidth(USER_LINK_LINE_WIDTH, this.resetLineWidth);
+            SetLineWidth formWidth = new SetLineWidth(USER_LINK_LINE_WIDTH, this.resetLineWidth);
             formWidth.ShowDialog();
         }
 
@@ -274,35 +299,62 @@ namespace MotionCalc
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
-
             this.selectedLineIdx = this.getSelectedLine(e.Location);
+            if (e.Button == MouseButtons.Right)
+            {
+                this.ContextMenuStrip = this.selectedLineIdx >= 0 ? this.cmsUserLineHanler : this.cmsHorizonVertical;
+            }
+            else
+            {
+                if (this.selectedLineIdx > -1)
+                {
+                    this.userMovingLineFlag = true;
+                    this.lastMousePosition = e.Location;
+                }
+            }
+        }
 
-            this.ContextMenuStrip = this.selectedLineIdx >= 0 ? this.cmsUserLineHanler : this.cmsHorizonVertical;
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+
+            if (!this.userMovingLineFlag) return;
+
+            LineInfo selectedLine = this.getCurrentSelectedLine();
+            Point one = selectedLine.One, other = selectedLine.Other;
+            int diffX = e.X - this.lastMousePosition.X, diffY = e.Y - this.lastMousePosition.Y;
+            this.lastMousePosition = e.Location;
+
+            selectedLine.One = new Point(one.X + diffX, one.Y + diffY);
+            selectedLine.Other = new Point(other.X + diffX, other.Y + diffY);
+
+            this.refreshView();
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
             base.OnMouseUp(e);
-            if (e.Button != MouseButtons.Right) return;
 
             this.rightClickPosition = e.Location;
+            this.userMovingLineFlag = false;
         }
         #endregion
 
         #region 绘图
 
-        public void DrawRecogPoints(int[] locList)
+        public void DrawRecogPoints(List<Point> locList)
         {
             using (Graphics g = this.CreateGraphics())
             {
-
-                for (int i = 0; i < locList.Length; i += 2)
+                Pen penCircleInner = new Pen(Constants.RecogCircleColorInner, Constants.RecogCircleWidthInner);
+                Brush brushCircleBK = new SolidBrush(Constants.RecogCircleColorBK);
+                this.recgPointBoardList.Clear();
+                foreach (Point loc in locList)
                 {
-                    Point loc = new Point(locList[i], locList[i + 1]);
                     Point locBoard = this.exchangeRecon_Board(loc);
 
                     this.recgPointBoardList.Add(locBoard);
-                    this.DrawRecogPoints(g, locBoard);
+                    this.DrawRecogPoints(penCircleInner, brushCircleBK, g, locBoard);
                 }
             }
         }
@@ -311,32 +363,36 @@ namespace MotionCalc
         {
             using (Graphics g = this.CreateGraphics())
             {
+                Pen penCircleInner = new Pen(Constants.RecogCircleColorInner, Constants.RecogCircleWidthInner);
+                Brush brushCircleBK = new SolidBrush(Constants.RecogCircleColorBK);
                 foreach (Point locBoard in this.recgPointBoardList)
                 {
-                    this.DrawRecogPoints(g, locBoard);
+                    this.DrawRecogPoints(penCircleInner, brushCircleBK,g, locBoard);
                 }
             }
         }
 
-        private void DrawRecogPoints(Graphics g, Point loc)
+        private void DrawRecogPoints(Pen penCircleInner,Brush brushCircleBK,Graphics g, Point loc)
         {
-            g.FillEllipse(this.brushCircleBK, loc.X - CIRCLE_RADIUS_BK, loc.Y - CIRCLE_RADIUS_BK, CIRCLE_RADIUS_BK * 2, CIRCLE_RADIUS_BK * 2);
-            g.DrawEllipse(this.penCircleInner, loc.X - CIRCLE_RADIUS_INNER, loc.Y - CIRCLE_RADIUS_INNER, CIRCLE_RADIUS_INNER * 2, CIRCLE_RADIUS_INNER * 2);
+            g.FillEllipse(brushCircleBK, loc.X - Constants.RecogCircleRadiusBK, loc.Y - Constants.RecogCircleRadiusBK, Constants.RecogCircleRadiusBK * 2, Constants.RecogCircleRadiusBK * 2);
+            g.DrawEllipse(penCircleInner, loc.X - Constants.RecogCircleRadiusInner, loc.Y - Constants.RecogCircleRadiusInner, Constants.RecogCircleRadiusInner * 2, Constants.RecogCircleRadiusInner * 2);
         }
 
         public void DrawNetLine()
         {
             using (Graphics g = this.CreateGraphics())
             {
-                Pen pen = new Pen(Color.LightGray, NET_LINE_WIDTH);
-                for (int i = 0; i < this.Height; i += LINE_ONE_HEIGHT)
+                int lineOneHeight = Constants.NetLineWidth + Constants.LineSeperationHeight;
+                int lineOneWidth = Constants.NetLineWidth + Constants.LineSeperationWidth;
+                Pen pen = new Pen(Constants.ColorNetLine, Constants.NetLineWidth);
+                for (int i = 0; i < this.Height; i += lineOneHeight)
                 {
                     Point start = new Point(0, i);
                     Point end = new Point(this.Width, i);
                     g.DrawLine(pen, start, end);
                 }
 
-                for (int i = 0; i < this.Width; i += LINE_ONE_HEIGHT)
+                for (int i = 0; i < this.Width; i += lineOneWidth)
                 {
                     Point start = new Point(i, 0);
                     Point end = new Point(i, this.Height);
@@ -394,17 +450,27 @@ namespace MotionCalc
 
         public void DrawLinesDefault(Graphics g)
         {
-            if (this.currentLinePoints.Count < 1) return;
+            this.drawLines(g, this.currentLinePoints);
+            this.drawLines(g, this.middleHVLinePoints);
 
-            for (int i = 0; i < this.currentLinePoints.Count; i++)
+            Pen pen = new Pen(Constants.LineColorSelected, Constants.LineWidthSelected);
+            pen.DashStyle = System.Drawing.Drawing2D.DashStyle.DashDot;
+            foreach (int lineIdx in this.selectedLinePoints)
             {
-                LineInfo info = this.currentLinePoints[i];
-                Pen pen = new Pen(info.Color, info.Width);
+                LineInfo info = this.currentLinePoints[lineIdx];
                 g.DrawLine(pen, info.One, info.Other);
             }
-            for (int i = 0; i < this.middleHVLinePoints.Count; i++)
+            if (this.selectedLinePoints.Count >= 2)
             {
-                LineInfo info = this.middleHVLinePoints[i];
+                double angle = this.CalcLineAngle(this.selectedLinePoints[0], this.selectedLinePoints[1]);
+                this.showAngleForTwoLine(angle);
+            }
+        }
+
+        private void drawLines(Graphics g,List<LineInfo> lineList)
+        {
+            foreach (LineInfo info in lineList)
+            {
                 Pen pen = new Pen(info.Color, info.Width);
                 g.DrawLine(pen, info.One, info.Other);
             }
@@ -414,7 +480,7 @@ namespace MotionCalc
 
         #region 坐标变换/计算
 
-        public double CalcLineAngle(int lineOne, int lineTwo)
+        private double CalcLineAngle(int lineOne, int lineTwo)
         {
             double angle = 0d;
 
@@ -615,7 +681,7 @@ namespace MotionCalc
             {
                 double circle = Math.Pow(loc.X - item.X, 2) + Math.Pow(loc.Y - item.Y, 2);
 
-                if (circle <= CIRCLE_RADIUS_BK * CIRCLE_RADIUS_BK)
+                if (circle <= Constants.RecogCircleRadiusBK * Constants.RecogCircleRadiusBK)
                 {
                     clickPoint = item;
                     break;

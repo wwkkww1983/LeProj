@@ -455,5 +455,11 @@ namespace NetControl
             this.cbPorts.Enabled = status;
         }
         #endregion
+
+        private void btnTest_Click(object sender, EventArgs e)
+        {
+            string strHTML = WebInfo.GetPageInfo(tbUrl.Text);
+            this.rtbWebContent.Text = strHTML;
+        }
     }
 }

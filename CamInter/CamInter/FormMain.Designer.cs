@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -98,6 +99,8 @@
             this.cbInterface = new System.Windows.Forms.ComboBox();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnMin = new System.Windows.Forms.Button();
+            this.btnStop = new System.Windows.Forms.Button();
+            this.timerSearch = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgvProj)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetail)).BeginInit();
             this.SuspendLayout();
@@ -787,7 +790,7 @@
             this.btnClose.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(16, 16);
-            this.btnClose.TabIndex = 23;
+            this.btnClose.TabIndex = 200;
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
@@ -798,9 +801,27 @@
             this.btnMin.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnMin.Name = "btnMin";
             this.btnMin.Size = new System.Drawing.Size(16, 16);
-            this.btnMin.TabIndex = 23;
+            this.btnMin.TabIndex = 100;
             this.btnMin.UseVisualStyleBackColor = true;
             this.btnMin.Click += new System.EventHandler(this.btnMin_Click);
+            // 
+            // btnStop
+            // 
+            this.btnStop.FlatAppearance.BorderSize = 0;
+            this.btnStop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnStop.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnStop.Location = new System.Drawing.Point(771, 190);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(75, 23);
+            this.btnStop.TabIndex = 31;
+            this.btnStop.Text = "stop";
+            this.btnStop.UseVisualStyleBackColor = false;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            // 
+            // timerSearch
+            // 
+            this.timerSearch.Interval = 500;
+            this.timerSearch.Tick += new System.EventHandler(this.timerSearch_Tick);
             // 
             // FormMain
             // 
@@ -808,6 +829,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Silver;
             this.ClientSize = new System.Drawing.Size(1200, 800);
+            this.Controls.Add(this.btnStop);
             this.Controls.Add(this.cbInterface);
             this.Controls.Add(this.lbRemind);
             this.Controls.Add(this.btnClose);
@@ -944,6 +966,8 @@
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Label lbRemind;
         private System.Windows.Forms.ComboBox cbInterface;
+        private System.Windows.Forms.Button btnStop;
+        private System.Windows.Forms.Timer timerSearch;
 
     }
 }

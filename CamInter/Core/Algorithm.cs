@@ -38,6 +38,13 @@ namespace Core
                 Connectors connItem = (Connectors)item;
                 this.connectorIDLen.Add(connItem.Idx, connItem.Length);
             }
+            this.NormalSearchFlag = true;
+        }
+
+        public bool NormalSearchFlag
+        {
+            get;
+            set;
         }
 
         /// <summary>
@@ -114,7 +121,7 @@ namespace Core
                 if (//调焦环：最多有一个
                     item.RingType == enumProductType.Focus && current != null && current.Find(itmp => itmp.RingType == enumProductType.Focus).Idx > 0 ||
                     //调焦环：相机靶面 >= 56，仅用smart focus 23
-                    item.RingType == enumProductType.Focus && target >= 56 && item.Name != "Smart Focus 23" ||
+                    item.RingType == enumProductType.Focus && target >= 56 && item.Name != "Smart Focus 23" && !lens.Name.StartsWith("Xenon") ||
                     //调焦环：名字以Xenon-Zirconia开头的镜头，用V48 to V70
                     item.RingType == enumProductType.Focus && lens.Name.StartsWith("Xenon-Zirconia") && !item.Name.Equals("V48 to V70") ||
                     //调焦环：Xenon-sapphire，xenon-Diamond系列不需要聚焦环
@@ -234,18 +241,36 @@ namespace Core
         private float getRangeLength(RingMedium focus)
         {
             float range = 0f;
+
             if (focus.Name.StartsWith("Smart Focus 23"))
                 range = 9f;
             else if (focus.Name.StartsWith("Smart Focus 7"))
                 range = 2.5f;
             else if (focus.Name.StartsWith("Smart Focus"))
                 range = 2f;
+
+            return range;
+        }
+
+        private float getRangeLength(CameraLens lens)
+        {
+            float range = 0f;
+
+            if (lens.Name.StartsWith("Xenon-Diamond"))
+                range = 16f;
+            else if (lens.Name.StartsWith("Xenon Zirconia"))
+                range = 9f;
+            else if (lens.Name.StartsWith("Xenon Sapphire"))
+                range = 10f;
+
             return range;
         }
 
         private float getMustExtendLength(RingMedium focus, CameraLens lens)
         {
             float range = 0f;
+
+             return range;
 
             if (lens.Name.Contains("5.6/120") && (focus.Name.StartsWith("Smart Focus 23") || focus.Name.StartsWith("Smart Focus 7")))
             {
@@ -267,12 +292,13 @@ namespace Core
             foreach (List<RingMedium> itemList in allList)
             {
                 float extLength = -length, rangeLength = 0, mustLength = 0;
+                rangeLength = this.getRangeLength(lens);
                 foreach (RingMedium item in itemList)
                 {
                     extLength += item.RingType == enumProductType.Extend ? item.Length : 0;
-                    if (item.RingType == enumProductType.Focus)
+                    if (item.RingType == enumProductType.Focus) 
                     {
-                        rangeLength = this.getRangeLength(item);
+                        rangeLength = rangeLength == 0 ? this.getRangeLength(item) : rangeLength;
                         mustLength = this.getMustExtendLength(item, lens);
                     }
                 }
@@ -503,6 +529,7 @@ namespace Core
 
         private void FindAllExtend(List<List<RingMedium>> allList, List<Dictionary<int, int>> diffCountList, List<RingMedium> current, int idx, float lengthMin, float lengthMax)
         {
+            if (!this.NormalSearchFlag) return;
             if (lengthMin <= 0 && lengthMax >= 0)
             {
                 if (!this.CheckExistsItemsWithinList(diffCountList, current))

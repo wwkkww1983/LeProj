@@ -8,14 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Emgu.CV;
+using Emgu.CV.Structure;
+using Core;
 
 namespace MotionCalc
 {
+    public delegate void HanlderNoParams();
+
     public partial class FormLine : Form
     {
         #region 初始化
-        private delegate void HanlderNoParams();
-
         private const int MARGIN_BOUNDARY = 20, PLAY_SPEED_STEP = 10, PLAY_SPPED_DEFAULT = 100;
         private int playInterSleep = PLAY_SPPED_DEFAULT;
         private double imgScale;
@@ -25,7 +27,8 @@ namespace MotionCalc
         private OpenFileDialog fileDialog = null;
         private VideoCapture capture = null;
         private UcPanel pnNetLine = null;
-        private HanlderNoParams delegateDrawInfo, delegateDrawNet;
+        private HanlderNoParams delegateDrawInfo = null, delegateDrawNet = null;
+        private Algorithm algoHandler = null;
 
         public FormLine()
         {
@@ -40,15 +43,14 @@ namespace MotionCalc
             this.fileDialog.Title = "请选择待分析的视频文件";
             this.fileDialog.Filter = "视频文件(*.avi)|*.AVI";
 
-            this.imgBox.Location = new Point(12, 147);
+            this.imgBox.Location = new Point(12, 31);
             this.imgBox.Size = new Size(973, 776);
             this.imgBox.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
 
-            this.pnNetLine = new UcPanel();
+            this.pnNetLine = new UcPanel(this.ShowLineAngle);
             this.pnNetLine.Location = this.imgBox.Location;
             this.pnNetLine.Size = this.imgBox.Size;
             this.imgScale = this.pnNetLine.ImageScale;
-            //this.pnNetLine.Paint += pnNetLine_Paint;
             this.Controls.Add(this.pnNetLine);
             this.pnNetLine.BringToFront();
 
@@ -56,43 +58,32 @@ namespace MotionCalc
             this.delegateDrawNet = new HanlderNoParams(DrawNetLine);
 
             this.videoFrame = new Mat();
+            this.algoHandler = new Algorithm();
+
+            Constants.MinRecogRectArea = int.Parse(Ini.GetItemValue("general", "minLabelArea"));
+            Constants.MaxRecogRectArea = int.Parse(Ini.GetItemValue("general", "maxLabelArea"));
+            Constants.MinRecogRectWHRatio = float.Parse(Ini.GetItemValue("general", "minLabelWHRatio"));
+            Constants.MaxRecogRectWHRatio = float.Parse(Ini.GetItemValue("general", "maxLabelWHRatio"));
+            Constants.LabelColor = int.Parse(Ini.GetItemValue("general", "labelColor"));
+
+            Constants.ShowNetFlag= bool.Parse(Ini.GetItemValue("general", "showNet"));
+            Constants.NetLineWidth = int.Parse(Ini.GetItemValue("general", "netLineWidth"));
+            Constants.LineSeperationHeight = int.Parse(Ini.GetItemValue("general", "netHeight"));
+            Constants.LineSeperationWidth = int.Parse(Ini.GetItemValue("general", "netWidth"));
+            Constants.ColorNetLine = Color.FromArgb(int.Parse(Ini.GetItemValue("general", "netLineColor")));
+            
+            Constants.RecogCircleWidthInner = int.Parse(Ini.GetItemValue("general", "selectedLineWidth"));
+            Constants.RecogCircleColorInner = Color.FromArgb(int.Parse(Ini.GetItemValue("general", "selectedLineColor")));
+            
+            Constants.RecogCircleRadiusBK = int.Parse(Ini.GetItemValue("general", "recogPointRadius"));
+            Constants.RecogCircleRadiusInner = int.Parse(Ini.GetItemValue("general", "recogPointLineRadius"));
+            Constants.RecogCircleWidthInner = int.Parse(Ini.GetItemValue("general", "recogPointLineWidth"));
+            Constants.RecogCircleColorBK = Color.FromArgb(int.Parse(Ini.GetItemValue("general", "recogPointColor")));
+            Constants.RecogCircleColorInner = Color.FromArgb(int.Parse(Ini.GetItemValue("general", "recogPointLineColor")));
         }
         #endregion
 
         #region 用户操作
-
-        private void btnOpen_MouseClick(object sender, MouseEventArgs e)
-        {
-            this.pnNetLine.BringToFront();
-
-            if (this.fileDialog.ShowDialog() != DialogResult.OK) return;
-
-            this.recordFileName = this.fileDialog.FileName;
-
-            this.capture = new VideoCapture(this.recordFileName);
-            this.capture.ImageGrabbed += this.capture_ImageGrabbed;
-            this.capture.Start();
-        }
-
-        private RadioButton GetCurrentColorButton()
-        {
-            RadioButton rbTemp = this.rbRed;
-
-            if (this.rbBlace.Checked)
-                rbTemp = this.rbBlace;
-            else if (this.rbBlue.Checked)
-                rbTemp = this.rbBlue;
-            else if (this.rbGreen.Checked)
-                rbTemp = this.rbGreen;
-            else if (this.rbPurple.Checked)
-                rbTemp = this.rbPurple;
-            else if (this.rbWhite.Checked)
-                rbTemp = this.rbWhite;
-            else if (this.rbYellow.Checked)
-                rbTemp = this.rbYellow;
-
-            return rbTemp;
-        }
 
         private void FormLine_KeyUp(object sender, KeyEventArgs e)
         {
@@ -123,49 +114,84 @@ namespace MotionCalc
             System.Threading.Thread.Sleep(10);
             this.imgBox.SetZoomScale(this.imgScale, new Point());
 
-            this.refreshUserInfo();
+            this.DrawNetLine();
+            this.DrawRecognizedInfo();
 
             System.Threading.Thread.Sleep(this.playInterSleep);
         }
 
-        private void btnSaveImage_MouseClick(object sender, MouseEventArgs e)
+        private void drawNetLineForImage(Mat frameImg)
         {
-            SaveFileDialog fileDialog = new SaveFileDialog();
-            fileDialog.DefaultExt = ".jpg";
-            fileDialog.Filter = "视频图像文件(*.jpg)|*.jpg";
-            fileDialog.RestoreDirectory = true;
-            if (!(fileDialog.ShowDialog() == DialogResult.OK)) return;
+            if (!Constants.ShowNetFlag) return;
+            int lineOneHeight = Constants.NetLineWidth + Constants.LineSeperationHeight;
+            int lineOneWidth = Constants.NetLineWidth + Constants.LineSeperationWidth;
 
-            string fileName = fileDialog.FileName;
+            MCvScalar scalar = new MCvScalar(Constants.ColorNetLine.B, Constants.ColorNetLine.G, Constants.ColorNetLine.R);
 
-            Mat frameImg = new Mat();
-            Size imageSize = new Size((int)(this.imgScale * Core.Constants.IMAGE_WIDTH), (int)(this.imgScale * Core.Constants.IMAGE_HEIGHT));
-            CvInvoke.Resize(this.videoFrame, frameImg, imageSize);
+            for (int i = 0; i < this.Height; i += lineOneHeight)
+            {
+                Point start = new Point(0, i);
+                Point end = new Point(this.Width, i);
+                CvInvoke.Line(frameImg, start, end, scalar, Constants.NetLineWidth);
+            }
 
-            //CvInvoke.Line(frameImg,new Point (),new Point (),
+            for (int i = 0; i < this.Width; i += lineOneWidth)
+            {
+                Point start = new Point(i, 0);
+                Point end = new Point(i, this.Height);
+                CvInvoke.Line(frameImg, start, end, scalar, Constants.NetLineWidth);
+            }
+        }
 
+        private void drawRecogPointsForImage(Mat frameImg)
+        {
+            List<Point> recgPointBoardList = this.pnNetLine.RecgPointBoardList;
 
-            frameImg.Save(fileName);
+            MCvScalar scalarCircleBK = new MCvScalar(Constants.RecogCircleColorBK.B, Constants.RecogCircleColorBK.G, Constants.RecogCircleColorBK.R);
+            MCvScalar scalarCircleInner = new MCvScalar(Constants.RecogCircleColorInner.B, Constants.RecogCircleColorInner.G, Constants.RecogCircleColorInner.R);
+            foreach (Point locBoard in recgPointBoardList)
+            {
+                Point circleCenter = new Point(locBoard.X, locBoard.Y);
+
+                CvInvoke.Circle(frameImg, circleCenter, Constants.RecogCircleRadiusBK, scalarCircleBK, -1);
+                CvInvoke.Circle(frameImg, circleCenter, Constants.RecogCircleRadiusInner, scalarCircleInner, Constants.RecogCircleWidthInner);
+            }
+        }
+
+        private void drawUserLineForImage(Mat frameImg)
+        {
+            List<LineInfo> currentLinePoints = this.pnNetLine.CurrentLinePoints;
+            List<LineInfo> middleHVLinePoints = this.pnNetLine.MiddleHVLinePoints;
+
+            for (int i = 0; i < currentLinePoints.Count; i++)
+            {
+                LineInfo info = currentLinePoints[i];
+                MCvScalar scalar = new MCvScalar(info.Color.B, info.Color.G, info.Color.R);
+                CvInvoke.Line(frameImg, info.One, info.Other, scalar, info.Width);
+            }
+            for (int i = 0; i < middleHVLinePoints.Count; i++)
+            {
+                LineInfo info = middleHVLinePoints[i];
+                MCvScalar scalar = new MCvScalar(info.Color.B, info.Color.G, info.Color.R);
+                CvInvoke.Line(frameImg, info.One, info.Other, scalar, info.Width);
+            }
         }
 
         public void RefreshImageShow()
         {
             this.imgBox.Refresh();
 
-            if (this.ckbNet.Checked)
+            if (Constants.ShowNetFlag)
             {
                 this.pnNetLine.DrawNetLine();
             }
             this.pnNetLine.DrawRecogPoints();
             this.pnNetLine.DrawLinesDefault();
-            this.lbAngle.Text = this.pnNetLine.CalcLineAngle(0, 1).ToString("f2");
         }
 
-        private void refreshUserInfo()
+        private void ShowLineAngle(double angle)
         {
-            this.DrawNetLine();
-
-            this.DrawRecognizedInfo();
+            this.lbAngle.Text = angle.ToString("f2");
         }
         #endregion
 
@@ -178,7 +204,7 @@ namespace MotionCalc
                 return;
             }
 
-            if (this.ckbNet.Checked)
+            if (Constants.ShowNetFlag)
             {
                 this.pnNetLine.DrawNetLine();
                 //this.pnNetLine.BringToFront();
@@ -193,24 +219,71 @@ namespace MotionCalc
                 return;
             }
 
-            int[] locList = this.getLabelPoint();
+            List<Point> locList = this.algoHandler.RecognizeColor(this.videoFrame, Constants.LabelColor);
             this.pnNetLine.DrawRecogPoints(locList);
             this.pnNetLine.DrawLines();
-            this.lbAngle.Text = this.pnNetLine.CalcLineAngle(0, 1).ToString("f2");
-        }
-
-        private int[] getLabelPoint()
-        {
-            int[] result = new int[] { 50, 50, 200, 200, 22, 55, 600, 55 };
-            //int directIdx = 1;
-            //for (int i = 0; i < result.Length; i++)
-            //{
-            //    directIdx = (i+1) % 2 == 0 ? 3 : -1;
-            //    result[i] += directIdx*inscreamIdx;
-            //}
-            //inscreamIdx++;
-            return result;
         }
         #endregion
+
+        #region 菜单事件
+        private void setNetLineToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetNetLine formSet = new SetNetLine(this.RefreshImageShow);
+            formSet.ShowDialog();
+        }
+
+        private void setRecogPointToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetRecogPoint formSet = new SetRecogPoint(this.RefreshImageShow);
+            formSet.ShowDialog();
+        }
+
+        private void setRecogLineToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetRecogLine formSet = new SetRecogLine(this.RefreshImageShow);
+            formSet.ShowDialog();
+        }
+
+        private void setColorLabelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetColorLabel formSet = new SetColorLabel(this.RefreshImageShow);
+            formSet.ShowDialog();
+        }
+        
+        private void openVideoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.pnNetLine.BringToFront();
+
+            if (this.fileDialog.ShowDialog() != DialogResult.OK) return;
+
+            this.recordFileName = this.fileDialog.FileName;
+
+            this.capture = new VideoCapture(this.recordFileName);
+            this.capture.ImageGrabbed += this.capture_ImageGrabbed;
+            this.capture.Start();
+        }
+
+        private void saveImageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog fileDialog = new SaveFileDialog();
+            fileDialog.DefaultExt = ".jpg";
+            fileDialog.Filter = "视频图像文件(*.jpg)|*.jpg";
+            fileDialog.RestoreDirectory = true;
+            if (!(fileDialog.ShowDialog() == DialogResult.OK)) return;
+
+            string fileName = fileDialog.FileName;
+
+            Mat frameImg = new Mat();
+            Size imageSize = new Size((int)(this.imgScale * Constants.IMAGE_WIDTH), (int)(this.imgScale * Constants.IMAGE_HEIGHT));
+            CvInvoke.Resize(this.videoFrame, frameImg, imageSize);
+            this.drawNetLineForImage(frameImg);
+            this.drawRecogPointsForImage(frameImg);
+            this.drawUserLineForImage(frameImg);
+
+            frameImg.Save(fileName);
+        }
+
+        #endregion
+
     }
 }
