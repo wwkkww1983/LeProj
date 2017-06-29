@@ -126,7 +126,7 @@ namespace NetControl
             this.tbTime.Text = this.countTime.ToString();
             if (this.countTime <= 0)
             {
-                this.timerCount.Enabled = false;
+                this.EnableTimeCount( false);
                 this.btnStop_Click(null, null);
             }
         }
@@ -138,7 +138,8 @@ namespace NetControl
             {
                 strJson = WebInfo.GetPageInfo("http://pcis/projects/power/correct_power.asp?callback=?");
                 //strJson = Ini.GetItemValue("general", "json");
-                strJson = strJson.Replace('(', ' ').Replace(')', ' ');
+                int startIdx = strJson.IndexOf('('), endIdx = strJson.IndexOf(')');
+                strJson = strJson.Substring(startIdx, endIdx - startIdx + 1);
             }
             catch
             {
@@ -388,13 +389,13 @@ namespace NetControl
                 }
                 if (tempCode == "ATN4")
                 {
-                    this.timerCount.Enabled = true;
-                    this.lbStatus.Text = "正在录波";
+                    this.EnableTimeCount(true);
+                    this.SetStatusLabel("正在录波");
                 }
                 else if (tempCode == "ATN8")
                 {
                     this.EnableComponent(true);
-                    this.lbStatus.Text = "录波完成";
+                    this.SetStatusLabel( "录波完成");
                 }
             }
         }
@@ -445,8 +446,27 @@ namespace NetControl
             return Regex.IsMatch(input, strPattern, RegexOptions.IgnoreCase);
         }
 
+        private void EnableTimeCount(bool status)
+        {
+            if (this.InvokeRequired)
+            {
+                Action<bool> delegateSetTimer = new Action<bool>(EnableTimeCount);
+                this.Invoke(delegateSetTimer, new object[] { status });
+                return;
+            }
+
+            this.timerCount.Enabled = status;
+        }
+
         private void EnableComponent(bool status)
         {
+            if (this.InvokeRequired)
+            {
+                Action<bool> delegateSetStatus = new Action<bool>(EnableComponent);
+                this.Invoke(delegateSetStatus, new object[] { status });
+                return;
+            }
+
             this.btnStop.Enabled = !status;
             this.btnStart.Enabled = status;
             this.tbPhone.Enabled = status;

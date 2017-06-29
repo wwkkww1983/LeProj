@@ -453,7 +453,7 @@
             this.tbUrl.Name = "tbUrl";
             this.tbUrl.Size = new System.Drawing.Size(616, 25);
             this.tbUrl.TabIndex = 77;
-            this.tbUrl.Text = "https://www.jiankang.com/detail/194865.shtml";
+            this.tbUrl.Text = "http://pcis/projects/power/correct_power.asp?callback=?";
             // 
             // Form1
             // 

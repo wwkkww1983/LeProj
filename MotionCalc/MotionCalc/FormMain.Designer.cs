@@ -30,21 +30,13 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            this.btnRecord = new System.Windows.Forms.Button();
             this.timerRecord = new System.Windows.Forms.Timer(this.components);
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.btnSaveImage = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.recordVideoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveImgToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // btnRecord
-            // 
-            this.btnRecord.Location = new System.Drawing.Point(12, 12);
-            this.btnRecord.Name = "btnRecord";
-            this.btnRecord.Size = new System.Drawing.Size(141, 35);
-            this.btnRecord.TabIndex = 3;
-            this.btnRecord.Text = "录制视频";
-            this.btnRecord.UseVisualStyleBackColor = true;
-            this.btnRecord.Click += new System.EventHandler(this.btnRecord_Click);
             // 
             // timerRecord
             // 
@@ -57,37 +49,57 @@
             this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // btnSaveImage
+            // menuStrip1
             // 
-            this.btnSaveImage.Location = new System.Drawing.Point(159, 12);
-            this.btnSaveImage.Name = "btnSaveImage";
-            this.btnSaveImage.Size = new System.Drawing.Size(81, 35);
-            this.btnSaveImage.TabIndex = 3;
-            this.btnSaveImage.Text = "截屏";
-            this.btnSaveImage.UseVisualStyleBackColor = true;
-            this.btnSaveImage.Click += new System.EventHandler(this.btnSaveImage_Click);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.recordVideoToolStripMenuItem,
+            this.saveImgToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(997, 28);
+            this.menuStrip1.TabIndex = 4;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // recordVideoToolStripMenuItem
+            // 
+            this.recordVideoToolStripMenuItem.Name = "recordVideoToolStripMenuItem";
+            this.recordVideoToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
+            this.recordVideoToolStripMenuItem.Text = "录制视频";
+            this.recordVideoToolStripMenuItem.Click += new System.EventHandler(this.recordVideoToolStripMenuItem_Click);
+            // 
+            // saveImgToolStripMenuItem
+            // 
+            this.saveImgToolStripMenuItem.Name = "saveImgToolStripMenuItem";
+            this.saveImgToolStripMenuItem.Size = new System.Drawing.Size(51, 24);
+            this.saveImgToolStripMenuItem.Text = "截屏";
+            this.saveImgToolStripMenuItem.Click += new System.EventHandler(this.saveImgToolStripMenuItem_Click);
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(997, 935);
-            this.Controls.Add(this.btnSaveImage);
-            this.Controls.Add(this.btnRecord);
+            this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormMain";
             this.Text = "动作捕捉分析系统";
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Button btnRecord;
+
         private System.Windows.Forms.Timer timerRecord;
         private System.Windows.Forms.ImageList imageList1;
-        private System.Windows.Forms.Button btnSaveImage;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem recordVideoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveImgToolStripMenuItem;
 
     }
 }

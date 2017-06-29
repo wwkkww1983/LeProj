@@ -36,22 +36,22 @@ namespace MotionCalc
             UCImageBox imgBoxLU, imgBoxRU, imgBoxLD, imgBoxRD;
 
             imgBoxLU = new UCImageBox(0);
-            imgBoxLU.Location = new Point(12, 53);
+            imgBoxLU.Location = new Point(12, 33);
             imgBoxLU.Size = new Size(483, 431);
             this.Controls.Add(imgBoxLU);
 
             imgBoxRU = new UCImageBox(1);
-            imgBoxRU.Location = new Point(501, 53);
+            imgBoxRU.Location = new Point(501, 33);
             imgBoxRU.Size = new Size(483, 431);
             this.Controls.Add(imgBoxRU);
 
             imgBoxLD = new UCImageBox(2);
-            imgBoxLD.Location = new Point(12, 490);
+            imgBoxLD.Location = new Point(12, 470);
             imgBoxLD.Size = new Size(483, 431);
             this.Controls.Add(imgBoxLD);
 
             imgBoxRD = new UCImageBox(3);
-            imgBoxRD.Location = new Point(501, 490);
+            imgBoxRD.Location = new Point(501, 470);
             imgBoxRD.Size = new Size(483, 431);
             this.Controls.Add(imgBoxRD);
 
@@ -60,16 +60,17 @@ namespace MotionCalc
         #endregion 
 
         #region 窗体事件
-        private void btnRecord_Click(object sender, EventArgs e)
+
+        private void recordVideoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (this.recordSaveFlag)
             {
-                this.btnRecord.Text = "录制视频";
-                this.btnRecord.ForeColor = SystemColors.ControlText;
-                this.btnRecord.BackColor = SystemColors.Control;
+                this.recordVideoToolStripMenuItem.Text = "录制视频";
+                this.recordVideoToolStripMenuItem.ForeColor = SystemColors.ControlText;
+                this.recordVideoToolStripMenuItem.BackColor = SystemColors.Control;
                 this.recordSaveFlag = false;
                 this.timerRecord.Enabled = false;
-                
+
                 foreach (UCImageBox imgBox in this.imgBoxArray)
                 {
                     imgBox.StopRecord();
@@ -77,9 +78,9 @@ namespace MotionCalc
             }
             else
             {
-                this.btnRecord.Text = "停止录制";
-                this.btnRecord.ForeColor = Color.White;
-                this.btnRecord.BackColor = Color.Red;
+                this.recordVideoToolStripMenuItem.Text = "停止录制";
+                this.recordVideoToolStripMenuItem.ForeColor = Color.White;
+                this.recordVideoToolStripMenuItem.BackColor = Color.Red;
                 this.recordSaveFlag = true;
                 this.timerRecord.Enabled = true;
                 this.secondRecordCount = 0;
@@ -92,7 +93,7 @@ namespace MotionCalc
             }
         }
 
-        private void btnSaveImage_Click(object sender, EventArgs e)
+        private void saveImgToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string imageFileName = Constants.IMAGE_FOLDER + DateTime.Now.ToString(Constants.MiloSecond_NAME_FORMAT);
             foreach (UCImageBox imgBox in this.imgBoxArray)
@@ -105,7 +106,7 @@ namespace MotionCalc
         {
             this.secondRecordCount++;
             string strTime = string.Format("（{0}:{1}）", this.secondRecordCount / 60, this.secondRecordCount % 60);
-            this.btnRecord.Text = "停止录制" + strTime;
+            this.recordVideoToolStripMenuItem.Text = "停止录制" + strTime;
         }
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
@@ -132,10 +133,6 @@ namespace MotionCalc
             }
 
             this.isPlaying = !this.isPlaying;
-        }
-
-        private void btnAnaly_Click(object sender, EventArgs e)
-        {
         }
 
         #endregion

@@ -786,6 +786,7 @@
             // btnClose
             // 
             this.btnClose.BackgroundImage = global::CamInter.Properties.Resources.close;
+            this.btnClose.FlatAppearance.BorderSize = 0;
             this.btnClose.Location = new System.Drawing.Point(1171, 12);
             this.btnClose.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnClose.Name = "btnClose";
@@ -797,6 +798,7 @@
             // btnMin
             // 
             this.btnMin.BackgroundImage = global::CamInter.Properties.Resources.min;
+            this.btnMin.FlatAppearance.BorderSize = 0;
             this.btnMin.Location = new System.Drawing.Point(1148, 12);
             this.btnMin.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnMin.Name = "btnMin";

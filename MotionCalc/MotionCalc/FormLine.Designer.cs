@@ -33,12 +33,12 @@
             this.imgBox = new Emgu.CV.UI.ImageBox();
             this.lbAngle = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.openVideoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setNetLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setRecogPointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setRecogLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setColorLabelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openVideoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.imgBox)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -54,7 +54,7 @@
             // 
             // lbAngle
             // 
-            this.lbAngle.Location = new System.Drawing.Point(549, -1);
+            this.lbAngle.Location = new System.Drawing.Point(886, -1);
             this.lbAngle.Name = "lbAngle";
             this.lbAngle.Size = new System.Drawing.Size(96, 29);
             this.lbAngle.TabIndex = 10;
@@ -73,6 +73,13 @@
             this.menuStrip1.TabIndex = 13;
             this.menuStrip1.Text = "menuStrip1";
             // 
+            // openVideoToolStripMenuItem
+            // 
+            this.openVideoToolStripMenuItem.Name = "openVideoToolStripMenuItem";
+            this.openVideoToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
+            this.openVideoToolStripMenuItem.Text = "打开文件";
+            this.openVideoToolStripMenuItem.Click += new System.EventHandler(this.openVideoToolStripMenuItem_Click);
+            // 
             // settingToolStripMenuItem
             // 
             this.settingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -87,37 +94,30 @@
             // setNetLineToolStripMenuItem
             // 
             this.setNetLineToolStripMenuItem.Name = "setNetLineToolStripMenuItem";
-            this.setNetLineToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.setNetLineToolStripMenuItem.Size = new System.Drawing.Size(138, 24);
             this.setNetLineToolStripMenuItem.Text = "网格线";
             this.setNetLineToolStripMenuItem.Click += new System.EventHandler(this.setNetLineToolStripMenuItem_Click);
             // 
             // setRecogPointToolStripMenuItem
             // 
             this.setRecogPointToolStripMenuItem.Name = "setRecogPointToolStripMenuItem";
-            this.setRecogPointToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.setRecogPointToolStripMenuItem.Size = new System.Drawing.Size(138, 24);
             this.setRecogPointToolStripMenuItem.Text = "标识点";
             this.setRecogPointToolStripMenuItem.Click += new System.EventHandler(this.setRecogPointToolStripMenuItem_Click);
             // 
             // setRecogLineToolStripMenuItem
             // 
             this.setRecogLineToolStripMenuItem.Name = "setRecogLineToolStripMenuItem";
-            this.setRecogLineToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.setRecogLineToolStripMenuItem.Size = new System.Drawing.Size(138, 24);
             this.setRecogLineToolStripMenuItem.Text = "夹角线条";
             this.setRecogLineToolStripMenuItem.Click += new System.EventHandler(this.setRecogLineToolStripMenuItem_Click);
             // 
             // setColorLabelToolStripMenuItem
             // 
             this.setColorLabelToolStripMenuItem.Name = "setColorLabelToolStripMenuItem";
-            this.setColorLabelToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.setColorLabelToolStripMenuItem.Size = new System.Drawing.Size(138, 24);
             this.setColorLabelToolStripMenuItem.Text = "颜色标签";
             this.setColorLabelToolStripMenuItem.Click += new System.EventHandler(this.setColorLabelToolStripMenuItem_Click);
-            // 
-            // openVideoToolStripMenuItem
-            // 
-            this.openVideoToolStripMenuItem.Name = "openVideoToolStripMenuItem";
-            this.openVideoToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
-            this.openVideoToolStripMenuItem.Text = "打开文件";
-            this.openVideoToolStripMenuItem.Click += new System.EventHandler(this.openVideoToolStripMenuItem_Click);
             // 
             // saveImageToolStripMenuItem
             // 

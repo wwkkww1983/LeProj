@@ -15,18 +15,17 @@ namespace MotionCalc
     {
         #region 初始化
         private const int USER_LINK_LINE_WIDTH = 4;
-        private const int POINT_MAX_JUMP = 100;
+        private const int  MAX_DISTANCE_FOR_DIFF_TWO_POINTS = 20;
         private const double DOUBLE_MAX_DIFF = 1e-6;
         private bool onePointClickFlag = false, userMovingLineFlag = false;
-        private EnumLineType selectedLineType;
         private int selectedLineIdx = -1;
         private float imgScale;
-        private Point rightClickPosition, lastMousePosition;
+        private Point rightClickPosition, lastMousePosition, selectedPoint;
         private Color colorUserLine;
         private List<int> selectedLinePoints = null;
-        private List<Point> recgPointBoardList = null;
-        private List<LineInfo> currentLinePoints = null, middleHVLinePoints = null;
-        private ContextMenuStrip cmsHorizonVertical = null, cmsUserLineHanler = null;
+        private List<Point> recgPointBoardList = null,userAddPointsList = null, userHidePointsList = null;
+        private List<LineInfo> currentLinePoints = null;
+        private ContextMenuStrip cmsHorizonVertical = null, cmsUserLineHanler = null, cmsUserPointHandler = null;
         private Action<double> showAngleForTwoLine;
 
         public UcPanel(Action<double> showAngleForTwoLine)
@@ -37,7 +36,8 @@ namespace MotionCalc
 
             this.selectedLinePoints = new List<int>();
             this.recgPointBoardList = new List<Point>();
-            this.middleHVLinePoints = new List<LineInfo>();
+            this.userAddPointsList = new List<Point>();
+            this.userHidePointsList = new List<Point>();
             this.currentLinePoints = new List<LineInfo>();
 
             this.colorUserLine = Color.LightGreen;
@@ -50,14 +50,6 @@ namespace MotionCalc
             get
             {
                 return this.currentLinePoints;
-            }
-        }
-
-        public List<LineInfo> MiddleHVLinePoints
-        {
-            get
-            {
-                return this.middleHVLinePoints;
             }
         }
 
@@ -81,7 +73,7 @@ namespace MotionCalc
 
         private void InitialContextMenu()
         {
-            ToolStripMenuItem horizonMenu, verticalMenu;
+            ToolStripMenuItem horizonMenu, verticalMenu, addPointMenu;
             this.cmsHorizonVertical = new ContextMenuStrip();
             this.cmsHorizonVertical.SuspendLayout();
 
@@ -97,9 +89,15 @@ namespace MotionCalc
             verticalMenu.Text = "垂直";
             verticalMenu.Click += new System.EventHandler(this.verticalMenuItem_Click);
 
+            addPointMenu = new ToolStripMenuItem();
+            addPointMenu.Name = "addPointMenu";
+            addPointMenu.Size = new System.Drawing.Size(108, 24);
+            addPointMenu.Text = "标记点";
+            addPointMenu.Click += new System.EventHandler(this.addPointMenuItem_Click);
+
             this.cmsHorizonVertical.Name = "cmsHorizonVertical";
             this.cmsHorizonVertical.Size = new Size(109, 100);
-            this.cmsHorizonVertical.Items.AddRange(new ToolStripItem[] { horizonMenu, verticalMenu });
+            this.cmsHorizonVertical.Items.AddRange(new ToolStripItem[] { horizonMenu, verticalMenu, addPointMenu });
             this.ContextMenuStrip = this.cmsHorizonVertical;
             this.cmsHorizonVertical.ResumeLayout();
 
@@ -136,6 +134,22 @@ namespace MotionCalc
             this.cmsUserLineHanler.Size = new Size(109, 100);
             this.cmsUserLineHanler.Items.AddRange(new ToolStripItem[] { lineColor, lineWidth, lineDel, lineExtend });
             this.cmsUserLineHanler.ResumeLayout();
+
+
+            ToolStripMenuItem pointHide;
+            this.cmsUserPointHandler = new ContextMenuStrip();
+            this.cmsUserPointHandler.SuspendLayout();
+
+            pointHide = new ToolStripMenuItem();
+            pointHide.Name = "pointHide";
+            pointHide.Size = new System.Drawing.Size(108, 24);
+            pointHide.Text = "隐藏";
+            pointHide.Click += new System.EventHandler(this.pointHide_Click);
+
+            this.cmsUserPointHandler.Name = "cmsUserLineHanler";
+            this.cmsUserPointHandler.Size = new Size(109, 100);
+            this.cmsUserPointHandler.Items.Add( pointHide );
+            this.cmsUserPointHandler.ResumeLayout();
         }
 
         public float ImageScale
@@ -160,18 +174,19 @@ namespace MotionCalc
                 {
                     this.selectedLinePoints.Add(this.selectedLineIdx);
                 }
+                this.refreshView();
             }
+            
 
-            Point clickPoint = this.checkClickPoint(e.Location);
-            if (clickPoint.X < 0) return;
+            if (this.selectedPoint.X < 0) return;
 
             if (this.onePointClickFlag)
             {
                 int idx = this.currentLinePoints.Count - 1;
                 LineInfo info = this.currentLinePoints[idx];
 
-                if (info.One.X == clickPoint.X && info.One.Y == clickPoint.Y) return;
-                info.Other = clickPoint;
+                if (info.One.X == this.selectedPoint.X && info.One.Y == this.selectedPoint.Y) return;
+                info.Other = this.selectedPoint;
 
                 this.drawOneLine(info);
             }
@@ -180,7 +195,7 @@ namespace MotionCalc
                 LineInfo info = new LineInfo()
                 {
                     Idx = this.currentLinePoints.Count,
-                    One = clickPoint,
+                    One = this.selectedPoint,
                     Color = this.colorUserLine,
                     Width = USER_LINK_LINE_WIDTH
                 };
@@ -199,7 +214,7 @@ namespace MotionCalc
                 Color = this.colorUserLine,
                 Width = USER_LINK_LINE_WIDTH
             };
-            this.middleHVLinePoints.Add(info);
+            this.currentLinePoints.Add(info);
 
             this.drawOneLine(info);
         }
@@ -208,33 +223,27 @@ namespace MotionCalc
         {
             LineInfo info = new LineInfo()
             {
-                Idx = this.middleHVLinePoints.Count,
+                Idx = this.currentLinePoints.Count,
                 One = new Point(this.rightClickPosition.X, 0),
                 Other = new Point(this.rightClickPosition.X, this.Height),
                 Color = this.colorUserLine,
                 Width = USER_LINK_LINE_WIDTH
             };
-            this.middleHVLinePoints.Add(info);
+            this.currentLinePoints.Add(info);
 
             this.drawOneLine(info);
         }
 
+        private void addPointMenuItem_Click(object sender, EventArgs e)
+        {
+            this.userAddPointsList.Add(this.rightClickPosition);
+            this.recgPointBoardList.Add(this.rightClickPosition);
+            this.refreshView();
+        }
+
         private LineInfo getCurrentSelectedLine()
         {
-            LineInfo tempLine = null;
-            switch (this.selectedLineType)
-            {
-                case EnumLineType.UserLink:
-                    tempLine = this.currentLinePoints[this.selectedLineIdx];
-                    break;
-                case EnumLineType.HVLine:
-                    tempLine = this.middleHVLinePoints[this.selectedLineIdx];
-                    break;
-                default:
-                    tempLine = new LineInfo();
-                    break;
-            }
-            return tempLine;
+            return this.currentLinePoints[this.selectedLineIdx];
         }
 
         private void lineColor_Click(object sender, EventArgs e)
@@ -265,17 +274,8 @@ namespace MotionCalc
 
         private void lineDel_Click(object sender, EventArgs e)
         {
-            switch (this.selectedLineType)
-            {
-                case EnumLineType.UserLink:
-                    this.currentLinePoints.RemoveAt(this.selectedLineIdx);
-                    break;
-                case EnumLineType.HVLine:
-                    this.middleHVLinePoints.RemoveAt(this.selectedLineIdx);
-                    break;
-                default:
-                    break;
-            }
+            this.currentLinePoints.RemoveAt(this.selectedLineIdx);
+
             this.refreshView();
         }
 
@@ -291,6 +291,34 @@ namespace MotionCalc
             this.refreshView();
         }
 
+        private void pointHide_Click(object sender, EventArgs e)
+        {
+            //bool foundFlag = false;
+            //for (int i = 0; i < this.userAddPointsList.Count; i++)
+            //{
+            //    if (this.selectedPoint == this.userAddPointsList[i])
+            //    {
+            //        foundFlag = true;
+            //        this.userAddPointsList.RemoveAt(i);
+            //        break;
+            //    }
+            //}
+            //if (!foundFlag)
+            //{
+            this.userHidePointsList.Add(this.selectedPoint);
+            //}
+
+            for (int i = 0; i < this.recgPointBoardList.Count; i++)
+            {
+                if (this.selectedPoint == this.recgPointBoardList[i])
+                {
+                    this.recgPointBoardList.RemoveAt(i);
+                    break;
+                }
+            }
+            this.refreshView();
+        }
+
         private void refreshView()
         {
             (this.Parent as FormLine).RefreshImageShow();
@@ -300,9 +328,11 @@ namespace MotionCalc
         {
             base.OnMouseDown(e);
             this.selectedLineIdx = this.getSelectedLine(e.Location);
+            this.selectedPoint = this.checkClickPoint(e.Location);
+
             if (e.Button == MouseButtons.Right)
             {
-                this.ContextMenuStrip = this.selectedLineIdx >= 0 ? this.cmsUserLineHanler : this.cmsHorizonVertical;
+                this.ContextMenuStrip = this.selectedLineIdx >= 0 ? this.cmsUserLineHanler : (this.selectedPoint.X >= 0 ? this.cmsUserPointHandler : this.cmsHorizonVertical);
             }
             else
             {
@@ -352,9 +382,43 @@ namespace MotionCalc
                 foreach (Point loc in locList)
                 {
                     Point locBoard = this.exchangeRecon_Board(loc);
-
-                    this.recgPointBoardList.Add(locBoard);
-                    this.DrawRecogPoints(penCircleInner, brushCircleBK, g, locBoard);
+                    //bool hideFlag = false;
+                    //for (int i = 0; i < this.userHidePointsList.Count;i++ )
+                    //{
+                    //    double distanceHide = this.calcTwoPointsDistance(locBoard, this.userHidePointsList[i]);
+                    //    hideFlag = distanceHide < MAX_DISTANCE_FOR_DIFF_TWO_POINTS;
+                    //    if (hideFlag)
+                    //    {
+                    //        this.userHidePointsList.RemoveAt(i);
+                    //        this.userHidePointsList.Add(locBoard);
+                    //        break;
+                    //    }
+                    //}
+                    //if (!hideFlag)
+                    //{
+                        this.recgPointBoardList.Add(locBoard);
+                        this.DrawRecogPoints(penCircleInner, brushCircleBK, g, locBoard);
+                    //}
+                }
+                for (int i = 0; i < this.userAddPointsList.Count; i++)
+                {
+                    bool foundFlag = false;
+                    foreach (Point loc in this.recgPointBoardList)
+                    {
+                        double distanceHide = this.calcTwoPointsDistance(loc, this.userAddPointsList[i]);
+                        if (distanceHide < MAX_DISTANCE_FOR_DIFF_TWO_POINTS)
+                        {
+                            this.userAddPointsList.RemoveAt(i);
+                            this.userAddPointsList.Add(loc);
+                            foundFlag = true;
+                            break;
+                        }
+                    }
+                    if (!foundFlag)
+                    {
+                        this.recgPointBoardList.Add(this.userAddPointsList[i]);
+                        this.DrawRecogPoints(penCircleInner, brushCircleBK, g, this.userAddPointsList[i]);
+                    }
                 }
             }
         }
@@ -411,21 +475,6 @@ namespace MotionCalc
             }
         }
 
-        private void drawMiddleLines()
-        {
-            if (this.middleHVLinePoints.Count < 2) return;
-
-            using (Graphics g = this.CreateGraphics())
-            {
-                for (int i = 0; i < this.middleHVLinePoints.Count; i++)
-                {
-                    LineInfo info = this.middleHVLinePoints[i];
-                    Pen pen = new Pen(info.Color, info.Width);
-                    g.DrawLine(pen, info.One, info.Other);
-                }
-            }
-        }
-
         public void DrawLines()
         {
             this.calcLatestPointsForLine();
@@ -448,23 +497,11 @@ namespace MotionCalc
             }
         }
 
-        public void DrawLinesDefault(Graphics g)
+        private void DrawLinesDefault(Graphics g)
         {
             this.drawLines(g, this.currentLinePoints);
-            this.drawLines(g, this.middleHVLinePoints);
 
-            Pen pen = new Pen(Constants.LineColorSelected, Constants.LineWidthSelected);
-            pen.DashStyle = System.Drawing.Drawing2D.DashStyle.DashDot;
-            foreach (int lineIdx in this.selectedLinePoints)
-            {
-                LineInfo info = this.currentLinePoints[lineIdx];
-                g.DrawLine(pen, info.One, info.Other);
-            }
-            if (this.selectedLinePoints.Count >= 2)
-            {
-                double angle = this.CalcLineAngle(this.selectedLinePoints[0], this.selectedLinePoints[1]);
-                this.showAngleForTwoLine(angle);
-            }
+            this.drawSelectedLine(g);
         }
 
         private void drawLines(Graphics g,List<LineInfo> lineList)
@@ -474,6 +511,23 @@ namespace MotionCalc
                 Pen pen = new Pen(info.Color, info.Width);
                 g.DrawLine(pen, info.One, info.Other);
             }
+        }
+
+        private void drawSelectedLine(Graphics g)
+        {
+            Pen pen = new Pen(Constants.LineColorSelected, Constants.LineWidthSelected);
+            pen.DashStyle = System.Drawing.Drawing2D.DashStyle.DashDot;
+            foreach (int lineIdx in this.selectedLinePoints)
+            {
+                LineInfo info = this.currentLinePoints[lineIdx];
+                g.DrawLine(pen, info.One, info.Other);
+            }
+            double angle = 0.0d;
+            if (this.selectedLinePoints.Count >= 2)
+            {
+                angle = this.CalcLineAngle(this.selectedLinePoints[0], this.selectedLinePoints[1]);
+            }
+            this.showAngleForTwoLine(angle);
         }
 
         #endregion
@@ -545,27 +599,12 @@ namespace MotionCalc
 
         private int getSelectedLine(Point clickPoint)
         {
-            this.selectedLineType = EnumLineType.None;
-
             int lineIdx = -1, lineCount = this.currentLinePoints.Count;
             for (int i = 0; i < lineCount; i++)
             {
                 if (this.checkPointOnLine(clickPoint, this.currentLinePoints[i]))
                 {
                     lineIdx = i;
-                    this.selectedLineType = EnumLineType.UserLink;
-                    break;
-                }
-            }
-            if (lineIdx != -1) return lineIdx;
-
-            lineCount = this.middleHVLinePoints.Count;
-            for (int i = 0; i < lineCount; i++)
-            {
-                if (this.checkPointOnLine(clickPoint, this.middleHVLinePoints[i]))
-                {
-                    lineIdx = i;
-                    this.selectedLineType = EnumLineType.HVLine;
                     break;
                 }
             }
@@ -668,7 +707,7 @@ namespace MotionCalc
                 }
             }
             //表示当前点消失，删除线条
-            if (minDistance >= POINT_MAX_JUMP)
+            if (minDistance >= MAX_DISTANCE_FOR_DIFF_TWO_POINTS)
                 minPoint = oldPoint;// new Point(-1, -1);
 
             return minPoint;

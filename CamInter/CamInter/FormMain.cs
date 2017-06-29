@@ -315,10 +315,6 @@ namespace CamInter
             this.timerSearch.Enabled = false;
             this.btnSearch.Text = "search";
             this.btnSearch.Enabled = true;
-            if (this.resultList.Count <= 2)
-            {
-                MessageBox.Show("If you want more solutions, please extend the working range.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
 
             DataTable dt = new DataTable();
             dt.Columns.Add(new DataColumn("item"));
@@ -345,6 +341,11 @@ namespace CamInter
             }
             this.dgvProj.DataSource = dt;
             this.alg.NormalSearchFlag = true;
+
+            if (this.resultList.Count <= 2)
+            {
+                MessageBox.Show("If you want more solutions, please extend the working range.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void FormMain_MouseDown(object sender, MouseEventArgs e)

@@ -7,6 +7,7 @@ using namespace std;
 
 int main()
 {
+	
 	//////////////////////变量定义
 	const int CAMERA_WIDTH = 640, CAMERA_HIGHT = 480, COMPRESS_WIDTH = 400;
 	int objXValue = -1, compressHight;
@@ -17,6 +18,11 @@ int main()
 	compressHight = 1.0 * CAMERA_HIGHT * COMPRESS_WIDTH / CAMERA_WIDTH;
 	VideoCapture capture(0);
 	if (!capture.isOpened()) return 0;
+
+	capture.set(CV_CAP_PROP_FRAME_WIDTH,1284);//最大
+	capture.set(CV_CAP_PROP_FRAME_HEIGHT,963);
+	
+	_sleep(3000);
 	bool stopFlag(false);
 	while (!stopFlag)
 	{
@@ -28,7 +34,7 @@ int main()
 			if (!capture.isOpened() || !capture.read(sourceFrame)) break;
 		}
 		resize(sourceFrame,compressFrame,Size(COMPRESS_WIDTH, compressHight));
-		imshow("Source Image", compressFrame);
+		imshow("Source Image", sourceFrame);
 		moveWindow("Source Image",0,0);
 		//////////////////////核心算法
 		distance = imageTool.RecognitionHumanFace(compressFrame);

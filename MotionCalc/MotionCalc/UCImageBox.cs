@@ -39,7 +39,13 @@ namespace MotionCalc
             this.capture = new VideoCapture(this.VideoIdx);
             this.fullScreen = new FormFullScreen(this.capture);
             this.capture.ImageGrabbed += this.capture_ImageGrabbed;
+
+            //this.capture.SetCaptureProperty(CapProp.FrameWidth, 1600);
+            //this.capture.SetCaptureProperty(CapProp.FrameHeight, 1200);
+
             this.capture.Start();
+
+
 
             this.imgBox.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
             this.imgBox.DoubleClick += imgBox_DoubleClick;

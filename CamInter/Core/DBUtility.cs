@@ -280,6 +280,20 @@ namespace Core
                 InterDown = 5,
                 ImgName = "20059A.jpg"
             });
+
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Adapter,
+                Name = "V90 to M95",
+                Number = "1077293A",
+                Length = 10f,
+                LengthMin = 10f,
+                LengthMax = 10f,
+                InterUp = 10,
+                InterDown = 11,
+                ImgName = "1077293A.jpg"
+            });
+
             #endregion
 
             #region 延长环
@@ -439,6 +453,56 @@ namespace Core
                 InterDown = 4,
                 ImgName = "1084878A.jpg"
             });
+
+
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Extend,
+                Name = "Ext.Tube M95 x 1.0",
+                Number = "1077290A",
+                Length = 10f,
+                LengthMin = 10f,
+                LengthMax = 10f,
+                InterUp = 10,
+                InterDown = 10,
+                ImgName = "1077290A.jpg"
+            });
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Extend,
+                Name = "Ext.Tube M95 x 1.0",
+                Number = "1062892A",
+                Length = 25f,
+                LengthMin = 25f,
+                LengthMax = 25f,
+                InterUp = 10,
+                InterDown = 10,
+                ImgName = "1077290A.jpg"
+            });
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Extend,
+                Name = "Ext.Tube M95 x 1.0",
+                Number = "1062893A",
+                Length = 50f,
+                LengthMin = 50f,
+                LengthMax = 50f,
+                InterUp = 10,
+                InterDown = 10,
+                ImgName = "1077290A.jpg"
+            });
+            this.InsertItem(new RingMedium()
+            {
+                RingType = enumProductType.Extend,
+                Name = "Ext.Tube M95 x 1.0",
+                Number = "1062894A",
+                Length = 100f,
+                LengthMin = 100f,
+                LengthMax = 100f,
+                InterUp = 10,
+                InterDown = 10,
+                ImgName = "1077290A.jpg"
+            });
             #endregion
 
             #region 镜头
@@ -593,7 +657,7 @@ namespace Core
                 Target = 82f,
                 Flange = 115.3f,
                 HH = -1.8f,
-                Length = 28.6f,
+                Length = 32.6f,
                 RatioMin = 0.78f,
                 RatioMax = 1.23f,
                 ImgName = "1002647.jpg"
@@ -607,7 +671,7 @@ namespace Core
                 Target = 82f,
                 Flange = 114.9f,
                 HH = -1.2f,
-                Length = 28.6f,
+                Length = 32.6f,
                 RatioMin = 0.53f,
                 RatioMax = 0.98f,
                 ImgName = "1002648.jpg"
@@ -621,7 +685,7 @@ namespace Core
                 Target = 82f,
                 Flange = 114.1f,
                 HH = -0.5f,
-                Length = 28.6f,
+                Length = 32.6f,
                 RatioMin = 0.28f,
                 RatioMax = 0.73f,
                 ImgName = "1002650.jpg"
@@ -635,7 +699,7 @@ namespace Core
                 Target = 82f,
                 Flange = 113.8f,
                 HH = 0.6f,
-                Length = 28.6f,
+                Length = 32.6f,
                 RatioMin = 0.16f,
                 RatioMax = 0.48f,
                 ImgName = "1004611.jpg"
@@ -649,7 +713,7 @@ namespace Core
                 Target = 82f,
                 Flange = 86.55f,
                 HH = -3.56f,
-                Length = 28.6f,
+                Length = 32.6f,
                 RatioMin = 0.1f,
                 RatioMax = 0.5f,
                 ImgName = "1004531.jpg"
@@ -667,7 +731,7 @@ namespace Core
                 Target = 63f,
                 Flange = 64.05f,
                 HH = -5.1f,
-                Length = 28.6f,
+                Length = 43.5f,
                 RatioMin = 0.4f,
                 RatioMax = 3.6f,
                 ImgName = "1072517.jpg"
@@ -681,7 +745,7 @@ namespace Core
                 Target = 63f,
                 Flange = 60.9f,
                 HH = 2.9f,
-                Length = 28.6f,
+                Length = 71.8f,
                 RatioMin = 3.4f,
                 RatioMax = 3.6f,
                 ImgName = "1069837.jpg"
@@ -697,7 +761,7 @@ namespace Core
                 Target = 62.5f,
                 Flange =60.87f,
                 HH = -2.22f,
-                Length = 28.6f,
+                Length = 84.9f,
                 RatioMin = 0.02f,
                 RatioMax = 0.18f,
                 ImgName = "1068013.jpg"
@@ -711,7 +775,7 @@ namespace Core
                 Target = 62.5f,
                 Flange = 62.33f,
                 HH = -8.8f,
-                Length = 28.6f,
+                Length = 80.4f,
                 RatioMin = 0.19f,
                 RatioMax = 0.29f,
                 ImgName = "1071819.jpg"
@@ -725,7 +789,7 @@ namespace Core
                 Target = 62.5f,
                 Flange = 60.85f,
                 HH = -9.28f,
-                Length = 28.6f,
+                Length = 80.4f,
                 RatioMin = 0.245f,
                 RatioMax = 0.34f,
                 ImgName = "1071818.jpg"
@@ -739,7 +803,7 @@ namespace Core
                 Target = 62.5f,
                 Flange = 60.15f,
                 HH = -9.1f,
-                Length = 28.6f,
+                Length = 79.4f,
                 RatioMin = 0.29f,
                 RatioMax = 0.40f,
                 ImgName = "1068012.jpg"
@@ -753,7 +817,7 @@ namespace Core
                 Target = 62.5f,
                 Flange =60.82f,
                 HH = -9.79f,
-                Length = 28.6f,
+                Length = 82f,
                 RatioMin = 0.44f,
                 RatioMax = 0.56f,
                 ImgName = "1071189.jpg"
@@ -767,7 +831,7 @@ namespace Core
                 Target = 62.5f,
                 Flange = 60.24f,
                 HH = -12.3f,
-                Length = 28.6f,
+                Length = 79.4f,
                 RatioMin = 0.64f,
                 RatioMax = 0.77f,
                 ImgName = "1071190.jpg"
@@ -781,7 +845,7 @@ namespace Core
                 Target = 62.5f,
                 Flange = 59.8f,
                 HH = -7.2f,
-                Length = 28.6f,
+                Length = 73.6f,
                 RatioMin = 1.64f,
                 RatioMax = 1.86f,
                 ImgName = "1068014.jpg"
@@ -795,7 +859,7 @@ namespace Core
                 Target = 82f,
                 Flange =10.8f,
                 HH = -12.3f,
-                Length = 28.6f,
+                Length = 129.4f,
                 RatioMin = 1.34f,
                 RatioMax = 1.55f,
                 ImgName = "1076096.jpg"
@@ -809,7 +873,7 @@ namespace Core
                 Target = 62.5f,
                 Flange = 60.8f,
                 HH = -0.9f,
-                Length = 28.6f,
+                Length = 104.1f,
                 RatioMin = 1.64f,
                 RatioMax = 1.86f,
                 ImgName = "1073347.jpg"
@@ -823,7 +887,7 @@ namespace Core
                 Target = 62.5f,
                 Flange = 61.46f,
                 HH = -12.89f,
-                Length = 28.6f,
+                Length = 78.5f,
                 RatioMin = 0.82f,
                 RatioMax = 0.93f,
                 ImgName = "1076452.jpg"
@@ -837,7 +901,7 @@ namespace Core
                 Target = 82f,
                 Flange = 9.7f,
                 HH = -12.9f,
-                Length = 28.6f,
+                Length = 130.4f,
                 RatioMin = 1.07f,
                 RatioMax = 1.21f,
                 ImgName = "1076453.jpg"
@@ -851,7 +915,7 @@ namespace Core
                 Target = 82f,
                 Flange = 17.28f,
                 HH = -9.62f,
-                Length = 28.6f,
+                Length = 128.6f,
                 RatioMin = 1.84f,
                 RatioMax = 2.16f,
                 ImgName = "1076351.jpg"
@@ -867,7 +931,7 @@ namespace Core
                 Target = 82f,
                 Flange = 66.17f,
                 HH = -6.8f,
-                Length = 28.6f,
+                Length = 108f,
                 RatioMin = 2.44f,
                 RatioMax = 2.76f,
                 ImgName = "1078039.jpg"
@@ -881,7 +945,7 @@ namespace Core
                 Target = 82f,
                 Flange = 68.44f,
                 HH = 13.1f,
-                Length = 28.6f,
+                Length = 133.1f,
                 RatioMin = 2.44f,
                 RatioMax = 2.76f,
                 ImgName = "1076949.jpg"
@@ -895,7 +959,7 @@ namespace Core
                 Target = 82f,
                 Flange = 36.9f,
                 HH = -8.3f,
-                Length = 28.6f,
+                Length = 148.8f,
                 RatioMin = 3.34f,
                 RatioMax = 3.66f,
                 ImgName = "1076963.jpg"
@@ -909,7 +973,7 @@ namespace Core
                 Target = 82f,
                 Flange = 32.9f,
                 HH = 0.83f,
-                Length = 28.6f,
+                Length = 179.3f,
                 RatioMin = 3.34f,
                 RatioMax = 3.66f,
                 ImgName = "1079718.jpg"
@@ -923,7 +987,7 @@ namespace Core
                 Target = 82f,
                 Flange = 0.59f,
                 HH = -27.3f,
-                Length = 28.6f,
+                Length = 96.6f,
                 RatioMin = 5.04f,
                 RatioMax = 5.31f,
                 ImgName = "1079320.jpg"
@@ -937,7 +1001,7 @@ namespace Core
                 Target = 82f,
                 Flange = 3.1f,
                 HH = -14.65f,
-                Length = 28.6f,
+                Length = 123.7f,
                 RatioMin = 5.04f,
                 RatioMax = 5.31f,
                 ImgName = "1081873.jpg"
@@ -953,7 +1017,7 @@ namespace Core
                 Target = 82f,
                 Flange = 52.32f,
                 HH = -17.3f,
-                Length = 28.6f,
+                Length = 68.62f,
                 RatioMin = 0.15f,
                 RatioMax = 0.25f,
                 ImgName = "1073622.jpg"
@@ -967,7 +1031,7 @@ namespace Core
                 Target = 82f,
                 Flange = 58.72f,
                 HH = -18.6f,
-                Length = 28.6f,
+                Length = 69.6f,
                 RatioMin = 0.27f,
                 RatioMax = 0.39f,
                 ImgName = "1079651.jpg"
@@ -981,7 +1045,7 @@ namespace Core
                 Target = 82f,
                 Flange = 48.07f,
                 HH = -18f,
-                Length = 28.6f,
+                Length = 71.5f,
                 RatioMin = 0.42f,
                 RatioMax = 0.58f,
                 ImgName = "1076966.jpg"
@@ -995,7 +1059,7 @@ namespace Core
                 Target = 82f,
                 Flange = 43.8f,
                 HH = -21.2f,
-                Length = 28.6f,
+                Length = 77.6f,
                 RatioMin = 0.62f,
                 RatioMax = 0.78f,
                 ImgName = "1078947.jpg"
@@ -1009,7 +1073,7 @@ namespace Core
                 Target = 82f,
                 Flange = 41.28f,
                 HH = -20.1f,
-                Length = 28.6f,
+                Length = 71.3f,
                 RatioMin = 0.89f,
                 RatioMax = 1.11f,
                 ImgName = "1078948.jpg"
@@ -1023,7 +1087,7 @@ namespace Core
                 Target = 82f,
                 Flange = 41f,
                 HH = -18.4f,
-                Length = 28.6f,
+                Length = 68.62f,
                 RatioMin = 1.79f,
                 RatioMax = 2.21f,
                 ImgName = "1078872.jpg"
@@ -1037,7 +1101,7 @@ namespace Core
                 Target = 82f,
                 Flange = 45.1f,
                 HH = -11.9f,
-                Length = 28.6f,
+                Length = 70.6f,
                 RatioMin = 1.79f,
                 RatioMax = 2.21f,
                 ImgName = "1078988.jpg"

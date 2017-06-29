@@ -57,13 +57,13 @@ namespace Core
         /// <param name="workLength">工作距离</param>
         /// <param name="workRange">工作范围</param>
         /// <returns></returns>
-        public List<RingResults> GetDevicesByBaseInfo(int camera, float flange, float target,  float ratio, float workLength, float workRange)
+        public List<RingResults> GetDevicesByBaseInfo(int camera, float flange, float target, float ratio, float workLength, float workRange)
         {
             results = new List<RingResult>();
             this.resultsFound = new List<RingResults>();
             List<RingMedium> current = new List<RingMedium>();
 
-            List<CameraLens> lensList = this.FindCamera(target,  ratio, workLength, workRange);
+            List<CameraLens> lensList = this.FindCamera(target, ratio, workLength, workRange);
             foreach (CameraLens lens in lensList)
             {
                 float ringLength = lens.Focus * ratio + lens.Flange - flange;
@@ -90,7 +90,7 @@ namespace Core
         /// <param name="workLength">工作距离</param>
         /// <param name="workRange">工作距离范围</param>
         /// <returns>有效镜头列表</returns>
-        private List<CameraLens> FindCamera(float target,  float ratio, float workLength, float workRange)
+        private List<CameraLens> FindCamera(float target, float ratio, float workLength, float workRange)
         {
             List<CameraLens> result = new List<CameraLens>();
             foreach (CameraLens item in this.camList)
@@ -137,10 +137,10 @@ namespace Core
                 if (item.InterUp == interUp && item.LengthMin < lengthMax)
                 {
                     current.Add(item);
-                    if (item.InterDown == interDown && 
+                    if (item.InterDown == interDown &&
                         //调焦环：Xenon-sapphire，xenon-Diamond系列不需要聚焦环，其它至少有一个
                             (current.Find(itmp => itmp.RingType == enumProductType.Focus).Idx > 0 ||
-                            lens.Name.StartsWith("Xenon-Diamond")||
+                            lens.Name.StartsWith("Xenon-Diamond") ||
                             lens.Name.StartsWith("Xenon Zirconia"))
                         )
                     {
@@ -171,11 +171,11 @@ namespace Core
 
             List<List<RingMedium>> allList = new List<List<RingMedium>>();
             List<Dictionary<int, int>> diffCountList = new List<Dictionary<int, int>>();
-            this.FindAllExtend(allList, diffCountList,current, 0, lengthMin, lengthMax);
+            this.FindAllExtend(allList, diffCountList, current, 0, lengthMin, lengthMax);
             //this.FindAllExtendLast(allList, lengthMin, lengthMax);
 
-            List<List<RingMedium>> validList = this.FilterBySpecialCondition(allList,lens);
-           // if (this.CombinationStructDataList(lens, validList)) return;
+            List<List<RingMedium>> validList = this.FilterBySpecialCondition(allList, lens);
+            // if (this.CombinationStructDataList(lens, validList)) return;
             //最接近中间值
             //List<List<RingMedium>> shortestList = this.SearchShortestExtend(validList, lengthMid);
             //根据中间值范围过滤
@@ -192,10 +192,10 @@ namespace Core
             this.CombinationStructDataList(lens, resultList, true);
         }
 
-        private List<List<RingMedium>> FilterBySpecialCondition(List<List<RingMedium>> allList,CameraLens lens)
+        private List<List<RingMedium>> FilterBySpecialCondition(List<List<RingMedium>> allList, CameraLens lens)
         {
-            bool focus23Flag = false,focus7Flag = false, extend25Flag = false, extend10Flag = false,lens120Flag = false;
-            
+            bool focus23Flag = false, focus7Flag = false, extend25Flag = false, extend10Flag = false, lens120Flag = false;
+
             if (lens.Name.Contains("5.6/120"))
             {
                 lens120Flag = true;
@@ -213,7 +213,7 @@ namespace Core
                     {
                         focus23Flag = true;
                     }
-                    else if(item.RingType == enumProductType.Focus && item.Name == "Smart Focus 7" )
+                    else if (item.RingType == enumProductType.Focus && item.Name == "Smart Focus 7")
                     {
                         focus7Flag = true;
                     }
@@ -270,8 +270,6 @@ namespace Core
         {
             float range = 0f;
 
-             return range;
-
             if (lens.Name.Contains("5.6/120") && (focus.Name.StartsWith("Smart Focus 23") || focus.Name.StartsWith("Smart Focus 7")))
             {
                 range = 25f;
@@ -288,15 +286,14 @@ namespace Core
         {
             List<List<RingMedium>> shortestList = new List<List<RingMedium>>();
             if (length <= 0) return shortestList;
-
+            float rangeLength = this.getRangeLength(lens);
             foreach (List<RingMedium> itemList in allList)
             {
-                float extLength = -length, rangeLength = 0, mustLength = 0;
-                rangeLength = this.getRangeLength(lens);
+                float extLength = -length, mustLength = 0;
                 foreach (RingMedium item in itemList)
                 {
                     extLength += item.RingType == enumProductType.Extend ? item.Length : 0;
-                    if (item.RingType == enumProductType.Focus) 
+                    if (item.RingType == enumProductType.Focus)
                     {
                         rangeLength = rangeLength == 0 ? this.getRangeLength(item) : rangeLength;
                         mustLength = this.getMustExtendLength(item, lens);
@@ -364,16 +361,16 @@ namespace Core
 
         private List<List<RingMedium>> SearchMostWidthExtend(List<List<RingMedium>> allList)
         {
-            List<List<RingMedium>> widthList = new List<List<RingMedium>>(),result = new List<List<RingMedium>>();
+            List<List<RingMedium>> widthList = new List<List<RingMedium>>(), result = new List<List<RingMedium>>();
             List<List<float>> minList = new List<List<float>>();
-            List<float> countList = new List<float> ();
+            List<float> countList = new List<float>();
             float minWidth = this.SearchMostWidthExtendMinWidth(allList, widthList, minList);
-            float maxCount = this.FindMaxCountInList(minList,countList);
-            for (int i = 0; i < countList.Count;i++ )
+            float maxCount = this.FindMaxCountInList(minList, countList);
+            for (int i = 0; i < countList.Count; i++)
             {
                 if (countList[i] != maxCount) continue;
 
-                result.Add(widthList[i]);                
+                result.Add(widthList[i]);
             }
             return result;
         }
@@ -411,15 +408,15 @@ namespace Core
 
         private float FindMaxCountInList(List<List<float>> minList, List<float> countList)
         {
-            float maxValue = 0f, tempCount = 0f ;
-            for (int i = 0; i < minList.Count;i++ )
+            float maxValue = 0f, tempCount = 0f;
+            for (int i = 0; i < minList.Count; i++)
             {
                 tempCount = 0f;
                 foreach (float temp in minList[i])
                 {
                     tempCount += temp;
                 }
-                countList.Insert(i,tempCount);
+                countList.Insert(i, tempCount);
                 if (maxValue < tempCount)
                 {
                     maxValue = tempCount;
@@ -495,7 +492,7 @@ namespace Core
             List<Dictionary<int, int>> diffCountList = new List<Dictionary<int, int>>();
             foreach (List<RingMedium> itemList in allList)
             {
-                if (!this.CheckExistsItemsWithinList(diffCountList, itemList)) 
+                if (!this.CheckExistsItemsWithinList(diffCountList, itemList))
                 {
                     filterList.Add(itemList);
                 }
@@ -539,7 +536,7 @@ namespace Core
                     {
                         tempResults.Add(item);
                     }
-                    tempResults.RemoveAt(tempResults.Count-1);
+                    tempResults.RemoveAt(tempResults.Count - 1);
                     allList.Add(tempResults);
                 }
             }
@@ -551,13 +548,13 @@ namespace Core
                 {
                     if (ring.InterUp != item.InterDown || item.Length > lengthMax) continue;
                     current.Insert(i, item);
-                    this.FindAllExtend(allList,diffCountList, current, i + 1, lengthMin - item.Length, lengthMax - item.Length);
+                    this.FindAllExtend(allList, diffCountList, current, i + 1, lengthMin - item.Length, lengthMax - item.Length);
                     current.RemoveAt(i);
                 }
             }
         }
 
-        private void FindAllExtendLast(List<List<RingMedium>> allList,float lengthMin, float lengthMax)
+        private void FindAllExtendLast(List<List<RingMedium>> allList, float lengthMin, float lengthMax)
         {
             int idxCount = allList.Count;
             for (int i = 0; i < idxCount; i++)
@@ -568,9 +565,9 @@ namespace Core
                 float extLength = 0f;
                 foreach (RingMedium item in ringLastList)
                 {
-                    extLength += item.RingType == enumProductType.Extend?item.Length:0f;
+                    extLength += item.RingType == enumProductType.Extend ? item.Length : 0f;
                 }
-                this.FindAllExtendLast(allList, allList[i], lengthMin - extLength, lengthMax - extLength,false);                
+                this.FindAllExtendLast(allList, allList[i], lengthMin - extLength, lengthMax - extLength, false);
             }
         }
 

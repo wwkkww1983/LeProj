@@ -162,14 +162,14 @@ namespace Core
             get;
             set;
         }
-    }
 
-    public enum EnumLineType
-    {
-        None = 0x00,
-
-        UserLink,
-
-        HVLine
+        /// <summary>
+        /// 是否显示（被用户隐藏后为false）
+        /// </summary>
+        public bool ShowFlag
+        {
+            get;
+            set;
+        }
     }
 }

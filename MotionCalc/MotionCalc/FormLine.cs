@@ -161,17 +161,10 @@ namespace MotionCalc
         private void drawUserLineForImage(Mat frameImg)
         {
             List<LineInfo> currentLinePoints = this.pnNetLine.CurrentLinePoints;
-            List<LineInfo> middleHVLinePoints = this.pnNetLine.MiddleHVLinePoints;
 
             for (int i = 0; i < currentLinePoints.Count; i++)
             {
                 LineInfo info = currentLinePoints[i];
-                MCvScalar scalar = new MCvScalar(info.Color.B, info.Color.G, info.Color.R);
-                CvInvoke.Line(frameImg, info.One, info.Other, scalar, info.Width);
-            }
-            for (int i = 0; i < middleHVLinePoints.Count; i++)
-            {
-                LineInfo info = middleHVLinePoints[i];
                 MCvScalar scalar = new MCvScalar(info.Color.B, info.Color.G, info.Color.R);
                 CvInvoke.Line(frameImg, info.One, info.Other, scalar, info.Width);
             }
