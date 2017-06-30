@@ -25,8 +25,8 @@ namespace MotionCalc
 
         private void InitialInfo()
         {
-            this.tbWidth.Text = Constants.RecogCircleWidthInner.ToString ();
-            this.lbColorLine.BackColor = Constants.RecogCircleColorInner;
+            this.tbWidth.Text = Constants.LineWidthSelected.ToString();
+            this.lbColorLine.BackColor = Constants.LineColorSelected;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -42,8 +42,8 @@ namespace MotionCalc
                ))
                 return;
 
-            Constants.RecogCircleWidthInner = int.Parse(this.tbWidth.Text);
-            Constants.RecogCircleColorInner = this.lbColorLine.BackColor;
+            Constants.LineWidthSelected = int.Parse(this.tbWidth.Text);
+            Constants.LineColorSelected = this.lbColorLine.BackColor;
 
             Ini.SetItemValue("general", "selectedLineWidth", this.tbWidth.Text);
             Ini.SetItemValue("general", "selectedLineColor", this.lbColorLine.BackColor.ToArgb().ToString());

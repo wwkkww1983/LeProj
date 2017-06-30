@@ -64,6 +64,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Program Files\emgucv-windesktop_x64-cuda 3.2.0.2682\Emgu.CV.World\obj\Debug\Emgu.CV.World.dll</HintPath>
     </Reference>
+    <Reference Include="IrisSkin2">
+      <HintPath>..\..\SimuProteus\SimuProteus\bin\Debug\IrisSkin2.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceModel" />

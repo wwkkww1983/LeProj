@@ -66,7 +66,7 @@ namespace MotionCalc
             Ini.SetItemValue("general", "minLabelArea", this.tbMinArea.Text);
             Ini.SetItemValue("general", "maxLabelArea", this.tbMaxArea.Text);
             Ini.SetItemValue("general", "minLabelWHRatio", this.tbMinRatio.Text);
-            Ini.SetItemValue("general", "minLabelWHRatio", this.tbMaxRatio.Text);
+            Ini.SetItemValue("general", "maxLabelWHRatio", this.tbMaxRatio.Text);
             Ini.SetItemValue("general", "labelColor", this.colorLabelSelected.ToString());
 
             this.refreshImageShow();

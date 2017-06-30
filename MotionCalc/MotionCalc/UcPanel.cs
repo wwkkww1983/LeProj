@@ -20,9 +20,12 @@ namespace MotionCalc
         private bool onePointClickFlag = false, userMovingLineFlag = false;
         private int selectedLineIdx = -1;
         private float imgScale;
-        private Point rightClickPosition, lastMousePosition, selectedPoint;
+        private Point rightClickPosition, lastMousePosition, selectedPoint,originPoint;
         private Color colorUserLine;
         private List<int> selectedLinePoints = null;
+        /// <summary>
+        /// recgPointBoardList 包括了识别的点和用户增加的点，每次绘图前讲用户增加的点加入
+        /// </summary>
         private List<Point> recgPointBoardList = null,userAddPointsList = null, userHidePointsList = null;
         private List<LineInfo> currentLinePoints = null;
         private ContextMenuStrip cmsHorizonVertical = null, cmsUserLineHanler = null, cmsUserPointHandler = null;
@@ -41,6 +44,7 @@ namespace MotionCalc
             this.currentLinePoints = new List<LineInfo>();
 
             this.colorUserLine = Color.LightGreen;
+            this.originPoint = new Point(0, 0);
 
             this.InitialContextMenu();
         }
@@ -73,7 +77,7 @@ namespace MotionCalc
 
         private void InitialContextMenu()
         {
-            ToolStripMenuItem horizonMenu, verticalMenu, addPointMenu;
+            ToolStripMenuItem horizonMenu, verticalMenu, addPointMenu, refreshMenu;
             this.cmsHorizonVertical = new ContextMenuStrip();
             this.cmsHorizonVertical.SuspendLayout();
 
@@ -95,9 +99,15 @@ namespace MotionCalc
             addPointMenu.Text = "标记点";
             addPointMenu.Click += new System.EventHandler(this.addPointMenuItem_Click);
 
+            refreshMenu = new ToolStripMenuItem();
+            refreshMenu.Name = "refreshMenu";
+            refreshMenu.Size = new System.Drawing.Size(108, 24);
+            refreshMenu.Text = "刷新";
+            refreshMenu.Click += new System.EventHandler(this.refreshMenuItem_Click);
+
             this.cmsHorizonVertical.Name = "cmsHorizonVertical";
             this.cmsHorizonVertical.Size = new Size(109, 100);
-            this.cmsHorizonVertical.Items.AddRange(new ToolStripItem[] { horizonMenu, verticalMenu, addPointMenu });
+            this.cmsHorizonVertical.Items.AddRange(new ToolStripItem[] { horizonMenu, verticalMenu, addPointMenu, refreshMenu });
             this.ContextMenuStrip = this.cmsHorizonVertical;
             this.cmsHorizonVertical.ResumeLayout();
 
@@ -160,6 +170,11 @@ namespace MotionCalc
                 return this.imgScale;
             }
         }
+
+        public float CalcImageScaleBySize(int width, int height)
+        {
+            return this.getImgZoomScale(width, height);
+        }
         #endregion
 
         #region 用户交互
@@ -169,11 +184,14 @@ namespace MotionCalc
             base.OnMouseClick(e);
             if (this.selectedLineIdx != -1)
             {
-                if (this.selectedLinePoints.Count >= 2) this.selectedLinePoints.Clear();
-                if (!this.selectedLinePoints.Contains(this.selectedLineIdx))
-                {
+                bool selectedSameLineFlag = this.selectedLinePoints.Contains(this.selectedLineIdx);
+                if (this.selectedLinePoints.Count > 2 || this.selectedLinePoints.Count == 2 && !selectedSameLineFlag)
+                    this.selectedLinePoints.Clear();
+                if (selectedSameLineFlag)//双击线条，删除选中
+                    this.selectedLinePoints.Remove(this.selectedLineIdx);
+                else//增加选中
                     this.selectedLinePoints.Add(this.selectedLineIdx);
-                }
+                
                 this.refreshView();
             }
             
@@ -241,6 +259,11 @@ namespace MotionCalc
             this.refreshView();
         }
 
+        private void refreshMenuItem_Click(object sender, EventArgs e)
+        {
+            this.refreshView();
+        }
+
         private LineInfo getCurrentSelectedLine()
         {
             return this.currentLinePoints[this.selectedLineIdx];
@@ -275,6 +298,7 @@ namespace MotionCalc
         private void lineDel_Click(object sender, EventArgs e)
         {
             this.currentLinePoints.RemoveAt(this.selectedLineIdx);
+            this.selectedLinePoints.Remove(this.selectedLineIdx);
 
             this.refreshView();
         }
@@ -379,47 +403,96 @@ namespace MotionCalc
                 Pen penCircleInner = new Pen(Constants.RecogCircleColorInner, Constants.RecogCircleWidthInner);
                 Brush brushCircleBK = new SolidBrush(Constants.RecogCircleColorBK);
                 this.recgPointBoardList.Clear();
-                foreach (Point loc in locList)
-                {
-                    Point locBoard = this.exchangeRecon_Board(loc);
-                    //bool hideFlag = false;
-                    //for (int i = 0; i < this.userHidePointsList.Count;i++ )
-                    //{
-                    //    double distanceHide = this.calcTwoPointsDistance(locBoard, this.userHidePointsList[i]);
-                    //    hideFlag = distanceHide < MAX_DISTANCE_FOR_DIFF_TWO_POINTS;
-                    //    if (hideFlag)
-                    //    {
-                    //        this.userHidePointsList.RemoveAt(i);
-                    //        this.userHidePointsList.Add(locBoard);
-                    //        break;
-                    //    }
-                    //}
-                    //if (!hideFlag)
-                    //{
-                        this.recgPointBoardList.Add(locBoard);
-                        this.DrawRecogPoints(penCircleInner, brushCircleBK, g, locBoard);
-                    //}
-                }
+
                 for (int i = 0; i < this.userAddPointsList.Count; i++)
-                {
-                    bool foundFlag = false;
-                    foreach (Point loc in this.recgPointBoardList)
+                {//更新用户增加的点
+                    foreach (Point loc in locList)
                     {
                         double distanceHide = this.calcTwoPointsDistance(loc, this.userAddPointsList[i]);
                         if (distanceHide < MAX_DISTANCE_FOR_DIFF_TWO_POINTS)
                         {
                             this.userAddPointsList.RemoveAt(i);
-                            this.userAddPointsList.Add(loc);
-                            foundFlag = true;
+                            this.userAddPointsList.Add(loc);                           
                             break;
                         }
                     }
-                    if (!foundFlag)
-                    {
-                        this.recgPointBoardList.Add(this.userAddPointsList[i]);
-                        this.DrawRecogPoints(penCircleInner, brushCircleBK, g, this.userAddPointsList[i]);
-                    }
                 }
+
+                foreach (Point loc in locList)
+                {//绘制识别的点
+                    Point locBoard = this.exchangeRecon_Board(loc);                    
+                    this.DrawRecogPoints(g,locBoard,penCircleInner,brushCircleBK);
+                }
+                
+                foreach (Point loc in this.userAddPointsList)
+                {//绘制用户增加的点
+                    this.DrawRecogPoints(g, loc, penCircleInner, brushCircleBK);
+                }
+
+
+                //for (int i = 0; i < this.userAddPointsList.Count; i++)
+                //{
+                //    bool foundFlag = false;
+                //    foreach (Point loc in locList)
+                //    {
+                //        double distanceHide = this.calcTwoPointsDistance(loc, this.userAddPointsList[i]);
+                //        if (distanceHide < MAX_DISTANCE_FOR_DIFF_TWO_POINTS)
+                //        {
+                //            this.userAddPointsList.RemoveAt(i);
+                //            this.userAddPointsList.Add(loc);
+                //            foundFlag = true;
+                //            break;
+                //        }
+                //    }
+                //    if (!foundFlag)
+                //    {
+                //        this.recgPointBoardList.Add(this.userAddPointsList[i]);
+                //        this.DrawRecogPoints(penCircleInner, brushCircleBK, g, this.userAddPointsList[i]);
+                //    }
+                //}
+
+                //foreach (Point loc in locList)
+                //{
+                //    Point locBoard = this.exchangeRecon_Board(loc);
+                //    bool hideFlag = false;
+                //    for (int i = 0; i < this.userHidePointsList.Count;i++ )
+                //    {
+                //        double distanceHide = this.calcTwoPointsDistance(locBoard, this.userHidePointsList[i]);
+                //        hideFlag = distanceHide < MAX_DISTANCE_FOR_DIFF_TWO_POINTS;
+                //        if (hideFlag)
+                //        {
+                //            this.userHidePointsList.RemoveAt(i);
+                //            this.userHidePointsList.Add(locBoard);
+                //            break;
+                //        }
+                //    }
+                //    if (!hideFlag)
+                //    {
+                //        this.recgPointBoardList.Add(locBoard);
+                //        this.DrawRecogPoints(penCircleInner, brushCircleBK, g, locBoard);
+                //    }
+                //}
+            }
+        }
+
+        private void DrawRecogPoints(Graphics g, Point locBoard, Pen penCircleInner, Brush brushCircleBK)
+        {
+            bool hideFlag = false;
+            for (int i = 0; i < this.userHidePointsList.Count; i++)
+            {
+                double distanceHide = this.calcTwoPointsDistance(locBoard, this.userHidePointsList[i]);
+                hideFlag = distanceHide < MAX_DISTANCE_FOR_DIFF_TWO_POINTS;
+                if (hideFlag)
+                {
+                    this.userHidePointsList.RemoveAt(i);
+                    this.userHidePointsList.Add(locBoard);
+                    break;
+                }
+            }
+            if (!hideFlag)
+            {
+                this.recgPointBoardList.Add(locBoard);
+                this.DrawRecogPoints(penCircleInner, brushCircleBK, g, locBoard);
             }
         }
 
@@ -431,7 +504,7 @@ namespace MotionCalc
                 Brush brushCircleBK = new SolidBrush(Constants.RecogCircleColorBK);
                 foreach (Point locBoard in this.recgPointBoardList)
                 {
-                    this.DrawRecogPoints(penCircleInner, brushCircleBK,g, locBoard);
+                    this.DrawRecogPoints(penCircleInner, brushCircleBK, g, locBoard);
                 }
             }
         }
@@ -509,6 +582,8 @@ namespace MotionCalc
             foreach (LineInfo info in lineList)
             {
                 Pen pen = new Pen(info.Color, info.Width);
+                if (info.One == this.originPoint || info.Other == this.originPoint) continue;
+
                 g.DrawLine(pen, info.One, info.Other);
             }
         }
@@ -739,8 +814,13 @@ namespace MotionCalc
 
         private float getImgZoomScale()
         {
-            double scaleWidth = (double)this.Width / Constants.IMAGE_WIDTH;
-            double scaleHeight = (double)this.Height / Constants.IMAGE_HEIGHT;
+            return this.getImgZoomScale(Constants.IMAGE_WIDTH, Constants.IMAGE_HEIGHT);
+        }
+
+        private float getImgZoomScale(int width,int height)
+        {
+            double scaleWidth = (double)this.Width / width;
+            double scaleHeight = (double)this.Height / height;
 
             return (float)Math.Min(scaleWidth, scaleHeight);
         }

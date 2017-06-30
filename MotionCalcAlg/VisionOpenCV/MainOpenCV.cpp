@@ -14,7 +14,8 @@ int main()
 	Mat sourceFrame, compressFrame;	
 	//////////////////////变量初始化
 	compressHight = 1.0 * CAMERA_HIGHT * COMPRESS_WIDTH / CAMERA_WIDTH;
-	VideoCapture capture(0);
+	//VideoCapture capture(0);
+	VideoCapture capture("20170629155101_A.avi");
 	if (!capture.isOpened()) return 0;
 	bool stopFlag(false);
 

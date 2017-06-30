@@ -40,6 +40,7 @@
             this.setRecogLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setColorLabelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hSBarVideo = new System.Windows.Forms.HScrollBar();
             ((System.ComponentModel.ISupportInitialize)(this.imgBox)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -54,6 +55,7 @@
             // 
             // lbAngle
             // 
+            this.lbAngle.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lbAngle.Location = new System.Drawing.Point(886, -1);
             this.lbAngle.Name = "lbAngle";
             this.lbAngle.Size = new System.Drawing.Size(96, 29);
@@ -69,7 +71,7 @@
             this.saveImageToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(996, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(993, 28);
             this.menuStrip1.TabIndex = 13;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -126,18 +128,27 @@
             this.saveImageToolStripMenuItem.Text = "截屏";
             this.saveImageToolStripMenuItem.Click += new System.EventHandler(this.saveImageToolStripMenuItem_Click);
             // 
+            // hSBarVideo
+            // 
+            this.hSBarVideo.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.hSBarVideo.Location = new System.Drawing.Point(0, 798);
+            this.hSBarVideo.Name = "hSBarVideo";
+            this.hSBarVideo.Size = new System.Drawing.Size(993, 21);
+            this.hSBarVideo.TabIndex = 14;
+            // 
             // FormLine
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(996, 819);
+            this.ClientSize = new System.Drawing.Size(993, 819);
+            this.Controls.Add(this.hSBarVideo);
             this.Controls.Add(this.lbAngle);
             this.Controls.Add(this.imgBox);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.MaximumSize = new System.Drawing.Size(1034, 980);
+            this.MaximumSize = new System.Drawing.Size(1031, 880);
             this.Name = "FormLine";
             this.Text = "动作捕捉分析系统";
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FormLine_KeyUp);
@@ -161,5 +172,6 @@
         private System.Windows.Forms.ToolStripMenuItem setColorLabelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openVideoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveImageToolStripMenuItem;
+        private System.Windows.Forms.HScrollBar hSBarVideo;
     }
 }

@@ -116,7 +116,7 @@ namespace Core
             }
         }
 
-        public List<Point> RecognizeColor(Mat sourceFrame, int color)
+        public List<Point> RecognizeColor(Mat sourceFrame, int color,ref Mat testFrame)
         {
             List<Point> locList = new List<Point> ();
 
@@ -136,11 +136,18 @@ namespace Core
                 {
                     CvInvoke.ApproxPolyDP(contours[i], contours[i], 5, true);
                     Rectangle rect = CvInvoke.BoundingRectangle(contours[i]);
+
+                    CvInvoke.DrawContours(testFrame, contours, i, new MCvScalar(255), -1);
+
                     int rectArea = rect.Width * rect.Height;
-                    if (rectArea < Constants.MinRecogRectArea || rectArea > Constants.MaxRecogRectArea) continue;
+                    double rectRatio = rect.Width * 1.0d / rect.Height;
+                    if (rectArea < Constants.MinRecogRectArea || rectArea > Constants.MaxRecogRectArea || 
+                        rectRatio<Constants.MinRecogRectWHRatio || rectRatio > Constants.MaxRecogRectWHRatio)
+                        continue;
                     
                     locList.Add(rect.Location);
                     CvInvoke.DrawContours(imgThreshold, contours, i, new MCvScalar(255), -1);
+                    testFrame = imgThreshold;
                 }
             }
             return locList;

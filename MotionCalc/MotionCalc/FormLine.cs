@@ -23,11 +23,11 @@ namespace MotionCalc
         private double imgScale;
         private bool pulsePlayFlag;
         private string recordFileName;
-        private Mat videoFrame;
+        private Mat videoFrame,testFrame;
         private OpenFileDialog fileDialog = null;
         private VideoCapture capture = null;
         private UcPanel pnNetLine = null;
-        private HanlderNoParams delegateDrawInfo = null, delegateDrawNet = null;
+        private HanlderNoParams delegateDrawInfo = null, delegateDrawNet = null, delegateVideoScroll = null;
         private Algorithm algoHandler = null;
 
         public FormLine()
@@ -41,7 +41,7 @@ namespace MotionCalc
         {
             this.fileDialog = new OpenFileDialog();
             this.fileDialog.Title = "请选择待分析的视频文件";
-            this.fileDialog.Filter = "视频文件(*.avi)|*.AVI";
+            this.fileDialog.Filter = "视频文件(*.avi)|*.AVI|图片文件(*.jpg;*.JPG)|*.jpg;*.JPG";
 
             this.imgBox.Location = new Point(12, 31);
             this.imgBox.Size = new Size(973, 776);
@@ -53,11 +53,14 @@ namespace MotionCalc
             this.imgScale = this.pnNetLine.ImageScale;
             this.Controls.Add(this.pnNetLine);
             this.pnNetLine.BringToFront();
+            //this.lbAngle.BackColor = 
 
-            this.delegateDrawInfo = new HanlderNoParams(DrawRecognizedInfo);
-            this.delegateDrawNet = new HanlderNoParams(DrawNetLine);
+            this.delegateDrawInfo = new HanlderNoParams(this.DrawRecognizedInfo);
+            this.delegateDrawNet = new HanlderNoParams(this.DrawNetLine);
+            this.delegateVideoScroll = new HanlderNoParams(this.moveVideoScroll);
 
             this.videoFrame = new Mat();
+            this.testFrame = new Mat();
             this.algoHandler = new Algorithm();
 
             Constants.MinRecogRectArea = int.Parse(Ini.GetItemValue("general", "minLabelArea"));
@@ -117,7 +120,20 @@ namespace MotionCalc
             this.DrawNetLine();
             this.DrawRecognizedInfo();
 
+            this.moveVideoScroll();
+
             System.Threading.Thread.Sleep(this.playInterSleep);
+        }
+
+        private void moveVideoScroll()
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(this.delegateVideoScroll);
+                return;
+            }
+
+            this.hSBarVideo.Value++;
         }
 
         private void drawNetLineForImage(Mat frameImg)
@@ -212,9 +228,11 @@ namespace MotionCalc
                 return;
             }
 
-            List<Point> locList = this.algoHandler.RecognizeColor(this.videoFrame, Constants.LabelColor);
+            List<Point> locList = this.algoHandler.RecognizeColor(this.videoFrame, Constants.LabelColor, ref this.testFrame);
             this.pnNetLine.DrawRecogPoints(locList);
             this.pnNetLine.DrawLines();
+
+            //this.imageBox1.Image = this.testFrame;
         }
         #endregion
 
@@ -251,9 +269,22 @@ namespace MotionCalc
 
             this.recordFileName = this.fileDialog.FileName;
 
-            this.capture = new VideoCapture(this.recordFileName);
-            this.capture.ImageGrabbed += this.capture_ImageGrabbed;
-            this.capture.Start();
+            string strExtension = System.IO.Path.GetExtension(this.recordFileName).ToLower();
+            if (strExtension == ".jpg")
+            {
+                this.videoFrame = CvInvoke.Imread(this.recordFileName, Emgu.CV.CvEnum.ImreadModes.Unchanged);
+                this.imgBox.Image = this.videoFrame;
+                this.hSBarVideo.Visible = false;
+            }
+            else
+            {
+                this.hSBarVideo.Visible = true;
+                this.capture = new VideoCapture(this.recordFileName);
+                this.hSBarVideo.Maximum = (int)this.capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameCount);
+                this.hSBarVideo.Value = 1;
+                this.capture.ImageGrabbed += this.capture_ImageGrabbed;
+                this.capture.Start();
+            }
         }
 
         private void saveImageToolStripMenuItem_Click(object sender, EventArgs e)

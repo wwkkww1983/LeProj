@@ -27,6 +27,10 @@ private:
 	Mat imgHSV; 
 	vector<Mat> hsvSplit;
 
+	
+	vector<vector<Point> > contourAll;
+	vector<Vec4i>hierarchy;	
+
 	void UpdateParams(string keyValue);
 };
 
