@@ -112,8 +112,7 @@ namespace MotionCalc
             {
                 System.Threading.Thread.Sleep(PLAY_SPPED_DEFAULT);
             }
-            this.capture.Read(this.videoFrame);
-            if (this.videoFrame.Height <= 0 || this.videoFrame.Width <= 0)                 return;
+            this.capture.Retrieve(this.videoFrame);
             this.imgBox.Image = this.videoFrame;
 
             System.Threading.Thread.Sleep(10);
@@ -134,9 +133,6 @@ namespace MotionCalc
             }
 
             this.hSBarVideo.Value++;
-
-            //if (this.hSBarVideo.Value <= this.hSBarVideo.Maximum - 2)
-            //    this.hSBarVideo.Value += 5;
         }
 
         private void drawNetLineForImage(Mat frameImg)
@@ -285,9 +281,9 @@ namespace MotionCalc
                 this.capture = new VideoCapture(this.recordFileName);
                 this.hSBarVideo.Maximum = (int)this.capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameCount);
 
-                this.capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, 100);
+              //  this.capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, 100);
 
-                this.hSBarVideo.Value = 1;
+                this.hSBarVideo.Value = 0;
                 this.capture.ImageGrabbed += this.capture_ImageGrabbed;
                 this.capture.Start();
             }

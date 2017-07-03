@@ -1,26 +1,19 @@
-﻿生成启动时间为 2017/7/3 星期一 上午 11:13:27。
-     1>项目“D:\Project\LeProj\CameraMeasure\VisionOpenCV\VisionOpenCV.vcxproj”在节点 2 上(Rebuild 个目标)。
+﻿生成启动时间为 2017/7/3 星期一 下午 6:20:56。
+     1>项目“D:\Project\LeProj\CameraMeasure\VisionOpenCV\VisionOpenCV.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
-         D:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt MainOpenCV.cpp ImageHandler.cpp
+         D:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ImageHandler.cpp
          ImageHandler.cpp
      1>d:\vejoe\opencv\2.4.13\build\include\opencv2\flann\logger.h(66): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  d:\program files (x86)\microsoft visual studio 11.0\vc\include\stdio.h(218) : 参见“fopen”的声明
      1>d:\project\leproj\camerameasure\visionopencv\recordlog.h(34): warning C4996: 'localtime': This function or variable may be unsafe. Consider using localtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  d:\program files (x86)\microsoft visual studio 11.0\vc\include\time.inl(112) : 参见“localtime”的声明
-     1>d:\project\leproj\camerameasure\visionopencv\imagehandler.cpp(138): warning C4305: “return”: 从“int”到“bool”截断
-         MainOpenCV.cpp
-     1>d:\vejoe\opencv\2.4.13\build\include\opencv2\flann\logger.h(66): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 d:\program files (x86)\microsoft visual studio 11.0\vc\include\stdio.h(218) : 参见“fopen”的声明
-     1>d:\project\leproj\camerameasure\visionopencv\mainopencv.cpp(18): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-     1>d:\project\leproj\camerameasure\visionopencv\mainopencv.cpp(25): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-                 d:\program files (x86)\microsoft visual studio 11.0\vc\include\stdlib.h(881) : 参见“_sleep”的声明
-         正在生成代码...
+     1>d:\project\leproj\camerameasure\visionopencv\imagehandler.cpp(156): warning C4305: “return”: 从“int”到“bool”截断
        Link:
          D:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Project\LeProj\CameraMeasure\Debug\CameraMeasure.exe" /INCREMENTAL /NOLOGO opencv_ml2413d.lib opencv_calib3d2413d.lib opencv_contrib2413d.lib opencv_core2413d.lib opencv_features2d2413d.lib opencv_flann2413d.lib opencv_gpu2413d.lib opencv_highgui2413d.lib opencv_imgproc2413d.lib opencv_legacy2413d.lib opencv_objdetect2413d.lib opencv_ts2413d.lib opencv_video2413d.lib opencv_nonfree2413d.lib opencv_ocl2413d.lib opencv_photo2413d.lib opencv_stitching2413d.lib opencv_superres2413d.lib opencv_videostab2413d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Project\LeProj\CameraMeasure\Debug\CameraMeasure.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Project\LeProj\CameraMeasure\Debug\CameraMeasure.lib" /MACHINE:X86 Debug\MainOpenCV.obj
          Debug\ImageHandler.obj
          VisionOpenCV.vcxproj -> D:\Project\LeProj\CameraMeasure\Debug\CameraMeasure.exe
-     1>已完成生成项目“D:\Project\LeProj\CameraMeasure\VisionOpenCV\VisionOpenCV.vcxproj”(Rebuild 个目标)的操作。
+     1>已完成生成项目“D:\Project\LeProj\CameraMeasure\VisionOpenCV\VisionOpenCV.vcxproj”(Build 个目标)的操作。
 
 生成成功。
 
-已用时间 00:00:03.78
+已用时间 00:00:02.87
