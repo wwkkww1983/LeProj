@@ -135,6 +135,7 @@
             this.hSBarVideo.Name = "hSBarVideo";
             this.hSBarVideo.Size = new System.Drawing.Size(993, 21);
             this.hSBarVideo.TabIndex = 14;
+            this.hSBarVideo.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hSBarVideo_Scroll);
             // 
             // FormLine
             // 

@@ -161,7 +161,6 @@ bool ImageHandler::RecognitionHumanFace(Mat sourceFrame){
 
 	int distance = CalculateDistance(eyes);
 
-
 	imshow("Í«¿×",sourceFrame);
 	moveWindow("Í«¿×",700,0);
 	bool needWarning = false;

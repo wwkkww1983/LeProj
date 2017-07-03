@@ -26,6 +26,9 @@
     <ClCompile Include="MainOpenCV.cpp" />
     <ClCompile Include="ImageHandler.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="C:\Users\Administrator\Desktop\logo.ico" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{71A26623-B4D4-4BDA-967D-58951CA328E8}</ProjectGuid>
     <RootNamespace>VisionOpenCV</RootNamespace>

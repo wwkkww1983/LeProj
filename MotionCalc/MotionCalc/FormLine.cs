@@ -113,13 +113,13 @@ namespace MotionCalc
                 System.Threading.Thread.Sleep(PLAY_SPPED_DEFAULT);
             }
             this.capture.Read(this.videoFrame);
+            if (this.videoFrame.Height <= 0 || this.videoFrame.Width <= 0)                 return;
             this.imgBox.Image = this.videoFrame;
+
             System.Threading.Thread.Sleep(10);
             this.imgBox.SetZoomScale(this.imgScale, new Point());
-
             this.DrawNetLine();
             this.DrawRecognizedInfo();
-
             this.moveVideoScroll();
 
             System.Threading.Thread.Sleep(this.playInterSleep);
@@ -134,6 +134,9 @@ namespace MotionCalc
             }
 
             this.hSBarVideo.Value++;
+
+            //if (this.hSBarVideo.Value <= this.hSBarVideo.Maximum - 2)
+            //    this.hSBarVideo.Value += 5;
         }
 
         private void drawNetLineForImage(Mat frameImg)
@@ -281,6 +284,9 @@ namespace MotionCalc
                 this.hSBarVideo.Visible = true;
                 this.capture = new VideoCapture(this.recordFileName);
                 this.hSBarVideo.Maximum = (int)this.capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameCount);
+
+                this.capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, 100);
+
                 this.hSBarVideo.Value = 1;
                 this.capture.ImageGrabbed += this.capture_ImageGrabbed;
                 this.capture.Start();
@@ -308,6 +314,13 @@ namespace MotionCalc
         }
 
         #endregion
+
+        private void hSBarVideo_Scroll(object sender, ScrollEventArgs e)
+        {
+            if (e.NewValue > this.hSBarVideo.Maximum) return;
+
+            this.capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, e.NewValue);
+        }
 
     }
 }
