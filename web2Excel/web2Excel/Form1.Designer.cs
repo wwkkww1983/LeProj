@@ -47,6 +47,8 @@
             this.tbEnd = new System.Windows.Forms.TextBox();
             this.tbStart = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.tbSearchNumber = new System.Windows.Forms.TextBox();
             this.btnCompare = new System.Windows.Forms.Button();
             this.btnToday = new System.Windows.Forms.Button();
             this.btnYesterday = new System.Windows.Forms.Button();
@@ -67,8 +69,8 @@
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(376, 136);
-            this.btnStart.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnStart.Location = new System.Drawing.Point(376, 181);
+            this.btnStart.Margin = new System.Windows.Forms.Padding(4);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(101, 45);
             this.btnStart.TabIndex = 0;
@@ -79,7 +81,7 @@
             // dtpDeal
             // 
             this.dtpDeal.Location = new System.Drawing.Point(104, 146);
-            this.dtpDeal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpDeal.Margin = new System.Windows.Forms.Padding(4);
             this.dtpDeal.Name = "dtpDeal";
             this.dtpDeal.Size = new System.Drawing.Size(208, 25);
             this.dtpDeal.TabIndex = 1;
@@ -97,7 +99,7 @@
             // pgbProj
             // 
             this.pgbProj.Location = new System.Drawing.Point(104, 34);
-            this.pgbProj.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pgbProj.Margin = new System.Windows.Forms.Padding(4);
             this.pgbProj.Name = "pgbProj";
             this.pgbProj.Size = new System.Drawing.Size(476, 29);
             this.pgbProj.TabIndex = 3;
@@ -119,7 +121,7 @@
             // btnFolder
             // 
             this.btnFolder.Location = new System.Drawing.Point(24, 34);
-            this.btnFolder.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnFolder.Margin = new System.Windows.Forms.Padding(4);
             this.btnFolder.Name = "btnFolder";
             this.btnFolder.Size = new System.Drawing.Size(71, 29);
             this.btnFolder.TabIndex = 5;
@@ -130,7 +132,7 @@
             // tbFolder
             // 
             this.tbFolder.Location = new System.Drawing.Point(104, 35);
-            this.tbFolder.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbFolder.Margin = new System.Windows.Forms.Padding(4);
             this.tbFolder.Name = "tbFolder";
             this.tbFolder.Size = new System.Drawing.Size(420, 25);
             this.tbFolder.TabIndex = 6;
@@ -138,7 +140,7 @@
             // lbItemCount
             // 
             this.lbItemCount.AutoSize = true;
-            this.lbItemCount.Location = new System.Drawing.Point(265, 151);
+            this.lbItemCount.Location = new System.Drawing.Point(265, 196);
             this.lbItemCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbItemCount.Name = "lbItemCount";
             this.lbItemCount.Size = new System.Drawing.Size(47, 15);
@@ -147,27 +149,27 @@
             // 
             // tbTime
             // 
-            this.tbTime.Location = new System.Drawing.Point(453, 84);
-            this.tbTime.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbTime.Location = new System.Drawing.Point(419, 85);
+            this.tbTime.Margin = new System.Windows.Forms.Padding(4);
             this.tbTime.Name = "tbTime";
-            this.tbTime.Size = new System.Drawing.Size(69, 25);
+            this.tbTime.Size = new System.Drawing.Size(105, 25);
             this.tbTime.TabIndex = 8;
             this.tbTime.Leave += new System.EventHandler(this.tbTime_Leave);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(316, 89);
+            this.label3.Location = new System.Drawing.Point(314, 90);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(128, 15);
+            this.label3.Size = new System.Drawing.Size(98, 15);
             this.label3.TabIndex = 9;
-            this.label3.Text = "网页读取间隔(秒)";
+            this.label3.Text = "读取间隔(秒)";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(203, 151);
+            this.label4.Location = new System.Drawing.Point(203, 196);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(52, 15);
@@ -182,17 +184,19 @@
             this.groupBox1.Controls.Add(this.tbStart);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.btnFolder);
+            this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.tbSearchNumber);
             this.groupBox1.Controls.Add(this.tbFolder);
             this.groupBox1.Controls.Add(this.tbTime);
             this.groupBox1.Controls.Add(this.btnStart);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.lbItemCount);
             this.groupBox1.Location = new System.Drawing.Point(28, 174);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBox1.Size = new System.Drawing.Size(552, 204);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox1.Size = new System.Drawing.Size(552, 242);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "抓取数据";
@@ -200,8 +204,8 @@
             // cbClose
             // 
             this.cbClose.AutoSize = true;
-            this.cbClose.Location = new System.Drawing.Point(47, 149);
-            this.cbClose.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbClose.Location = new System.Drawing.Point(47, 194);
+            this.cbClose.Margin = new System.Windows.Forms.Padding(4);
             this.cbClose.Name = "cbClose";
             this.cbClose.Size = new System.Drawing.Size(104, 19);
             this.cbClose.TabIndex = 13;
@@ -212,7 +216,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(172, 98);
+            this.label6.Location = new System.Drawing.Point(176, 98);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(15, 15);
@@ -221,8 +225,8 @@
             // 
             // tbEnd
             // 
-            this.tbEnd.Location = new System.Drawing.Point(196, 85);
-            this.tbEnd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbEnd.Location = new System.Drawing.Point(202, 85);
+            this.tbEnd.Margin = new System.Windows.Forms.Padding(4);
             this.tbEnd.Name = "tbEnd";
             this.tbEnd.Size = new System.Drawing.Size(55, 25);
             this.tbEnd.TabIndex = 11;
@@ -231,7 +235,7 @@
             // tbStart
             // 
             this.tbStart.Location = new System.Drawing.Point(104, 85);
-            this.tbStart.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbStart.Margin = new System.Windows.Forms.Padding(4);
             this.tbStart.Name = "tbStart";
             this.tbStart.Size = new System.Drawing.Size(55, 25);
             this.tbStart.TabIndex = 11;
@@ -247,10 +251,28 @@
             this.label5.TabIndex = 10;
             this.label5.Text = "抓取页码";
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(27, 145);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(67, 15);
+            this.label7.TabIndex = 9;
+            this.label7.Text = "权证号码";
+            // 
+            // tbSearchNumber
+            // 
+            this.tbSearchNumber.Location = new System.Drawing.Point(104, 135);
+            this.tbSearchNumber.Margin = new System.Windows.Forms.Padding(4);
+            this.tbSearchNumber.Name = "tbSearchNumber";
+            this.tbSearchNumber.Size = new System.Drawing.Size(420, 25);
+            this.tbSearchNumber.TabIndex = 8;
+            // 
             // btnCompare
             // 
             this.btnCompare.Location = new System.Drawing.Point(376, 138);
-            this.btnCompare.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCompare.Margin = new System.Windows.Forms.Padding(4);
             this.btnCompare.Name = "btnCompare";
             this.btnCompare.Size = new System.Drawing.Size(101, 45);
             this.btnCompare.TabIndex = 13;
@@ -261,7 +283,7 @@
             // btnToday
             // 
             this.btnToday.Location = new System.Drawing.Point(24, 39);
-            this.btnToday.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnToday.Margin = new System.Windows.Forms.Padding(4);
             this.btnToday.Name = "btnToday";
             this.btnToday.Size = new System.Drawing.Size(71, 29);
             this.btnToday.TabIndex = 14;
@@ -272,7 +294,7 @@
             // btnYesterday
             // 
             this.btnYesterday.Location = new System.Drawing.Point(24, 82);
-            this.btnYesterday.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnYesterday.Margin = new System.Windows.Forms.Padding(4);
             this.btnYesterday.Name = "btnYesterday";
             this.btnYesterday.Size = new System.Drawing.Size(71, 29);
             this.btnYesterday.TabIndex = 15;
@@ -283,7 +305,7 @@
             // tbToday
             // 
             this.tbToday.Location = new System.Drawing.Point(104, 41);
-            this.tbToday.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbToday.Margin = new System.Windows.Forms.Padding(4);
             this.tbToday.Name = "tbToday";
             this.tbToday.Size = new System.Drawing.Size(420, 25);
             this.tbToday.TabIndex = 16;
@@ -291,7 +313,7 @@
             // tbYesterday
             // 
             this.tbYesterday.Location = new System.Drawing.Point(104, 85);
-            this.tbYesterday.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbYesterday.Margin = new System.Windows.Forms.Padding(4);
             this.tbYesterday.Name = "tbYesterday";
             this.tbYesterday.Size = new System.Drawing.Size(420, 25);
             this.tbYesterday.TabIndex = 17;
@@ -313,9 +335,9 @@
             this.gbHouseType.Controls.Add(this.rbAll);
             this.gbHouseType.Controls.Add(this.rbNone);
             this.gbHouseType.Location = new System.Drawing.Point(28, 85);
-            this.gbHouseType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbHouseType.Margin = new System.Windows.Forms.Padding(4);
             this.gbHouseType.Name = "gbHouseType";
-            this.gbHouseType.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbHouseType.Padding = new System.Windows.Forms.Padding(4);
             this.gbHouseType.Size = new System.Drawing.Size(552, 81);
             this.gbHouseType.TabIndex = 18;
             this.gbHouseType.TabStop = false;
@@ -325,7 +347,7 @@
             // 
             this.rbCompare.AutoSize = true;
             this.rbCompare.Location = new System.Drawing.Point(427, 40);
-            this.rbCompare.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbCompare.Margin = new System.Windows.Forms.Padding(4);
             this.rbCompare.Name = "rbCompare";
             this.rbCompare.Size = new System.Drawing.Size(103, 19);
             this.rbCompare.TabIndex = 0;
@@ -339,7 +361,7 @@
             // 
             this.rbSell.AutoSize = true;
             this.rbSell.Location = new System.Drawing.Point(300, 40);
-            this.rbSell.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbSell.Margin = new System.Windows.Forms.Padding(4);
             this.rbSell.Name = "rbSell";
             this.rbSell.Size = new System.Drawing.Size(73, 19);
             this.rbSell.TabIndex = 0;
@@ -353,7 +375,7 @@
             // 
             this.rbAll.AutoSize = true;
             this.rbAll.Location = new System.Drawing.Point(157, 40);
-            this.rbAll.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbAll.Margin = new System.Windows.Forms.Padding(4);
             this.rbAll.Name = "rbAll";
             this.rbAll.Size = new System.Drawing.Size(88, 19);
             this.rbAll.TabIndex = 0;
@@ -367,7 +389,7 @@
             // 
             this.rbNone.AutoSize = true;
             this.rbNone.Location = new System.Drawing.Point(47, 40);
-            this.rbNone.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbNone.Margin = new System.Windows.Forms.Padding(4);
             this.rbNone.Name = "rbNone";
             this.rbNone.Size = new System.Drawing.Size(58, 19);
             this.rbNone.TabIndex = 0;
@@ -386,10 +408,10 @@
             this.groupBox2.Controls.Add(this.btnYesterday);
             this.groupBox2.Controls.Add(this.tbToday);
             this.groupBox2.Controls.Add(this.tbYesterday);
-            this.groupBox2.Location = new System.Drawing.Point(28, 385);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Location = new System.Drawing.Point(28, 424);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox2.Size = new System.Drawing.Size(552, 208);
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
@@ -399,14 +421,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(604, 598);
+            this.ClientSize = new System.Drawing.Size(604, 646);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.gbHouseType);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.pgbProj);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "住房信息获取";
             this.groupBox1.ResumeLayout(false);
@@ -453,6 +475,8 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.CheckBox cbClose;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox tbSearchNumber;
     }
 }
 

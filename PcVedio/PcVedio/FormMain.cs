@@ -256,14 +256,14 @@ namespace PcVedio
 
         private void CreateVideo()
         {
-            string tmpImgPath = videoPath, videoName = DateTime.Now.ToString("dd-MM-yyyy_HH-mm-ss-fff.") + "mp4";
+            string tmpImgPath = videoPath, videoName = DateTime.Now.ToString("dd-MM-yyyy_HH-mm-ss-fff.") + "avi";
             if (!videoPath.Contains(':'))
                 tmpImgPath = currentFolder + "\\" + videoPath;
             string ffmpegPath = string.Format("{0}\\x{1}\\ffmpeg.exe", currentFolder,OperateSystem.Is64Bits?"64":"86");
             ProcessStartInfo startInfo = new ProcessStartInfo(ffmpegPath);
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             string outFilePath = tmpImgPath + "\\" + videoName;
-            startInfo.Arguments = string.Format("-i {0}{1}%4d.jpg -vcodec libx264 {2}", tmpImgPath, VideoTmpFolder, outFilePath);
+            startInfo.Arguments = string.Format("-i {0}{1}%4d.jpg -r 10 -vcodec mpeg4 {2}", tmpImgPath, VideoTmpFolder, outFilePath);
             p.StartInfo = startInfo;
             p.Exited += RenewTmpFolder;
             p.Start();

@@ -132,6 +132,15 @@ namespace web2Excel
             NextPagePara(strHtml, postData);
         }
 
+        public static void FirstSearchNumber(string strHtml, string strNumber, IDictionary<string, string> postData)
+        {
+            postData.Add("ctl00%24ContentPlaceHolder1%24txtPreSaleCert", strNumber);
+            postData.Add("ctl00%24ContentPlaceHolder1%24ImgBtnSearch.x", "15");
+            postData.Add("ctl00%24ContentPlaceHolder1%24ImgBtnSearch.y", "16");
+
+            NextPagePara(strHtml, postData);
+        }
+
         /// <summary>
         /// 解析下一页参数
         /// </summary>

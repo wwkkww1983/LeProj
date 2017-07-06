@@ -75,7 +75,6 @@ void ImageHandler::RecognitionColor(Mat sourceFrame){
 }
 
 
-
 //使用配置文件更新参数值
 void ImageHandler::UpdateParams(string keyValue){
 	if(keyValue.substr(0,2) == "//") return;//注释

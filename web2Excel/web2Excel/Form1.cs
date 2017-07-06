@@ -83,7 +83,7 @@ namespace web2Excel
                 ctl.UpdateProgess = new UpdateBoardValue(this.UpdateProjProgress);
 
                 string fileName = string.Format("{0}\\{1}.xlsx", tbFolder.Text,dtpDeal.Value.ToString("yyyyMMdd"));
-                ctl.ExplainNormalInfo(tbFolder.Text, fileName);
+                ctl.ExplainNormalInfo(tbFolder.Text, fileName,tbSearchNumber.Text.Trim ());
             }
             catch (Exception ex)
             {
@@ -181,6 +181,7 @@ namespace web2Excel
             this.tbStart.Enabled = status;
             this.tbEnd.Enabled = status;
             this.cbClose.Enabled = status;
+            this.tbSearchNumber.Enabled = status;
         }
 
         private void tbTime_Leave(object sender, EventArgs e)

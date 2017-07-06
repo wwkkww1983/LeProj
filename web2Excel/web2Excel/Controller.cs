@@ -8,7 +8,7 @@ namespace web2Excel
     class Controller
     {
         private const string hostContentPreUrl = "https://61.143.53.130:4433/zhpubweb/";
-        private const string typeHousePreUrl = "http://www.zhzgj.gov.cn/house/";
+        private const string typeHousePreUrl = "http://www.zhzgj.gov.cn/house/", FIRST_MAIN_URL = "projectQuery.aspx";
         private int pageCount = 0, pageIdx = -1;
         private int pageStart = 1, pageEnd = 1;
         private int resultIdx = 2;
@@ -44,11 +44,12 @@ namespace web2Excel
         /// </summary>
         /// <param name="foldName">文件夹路径</param>
         /// <param name="fileName">文件名</param>
-        public void ExplainNormalInfo(string foldName, string fileName)
+        /// <param name="number">要搜索的权证号</param>
+        public void ExplainNormalInfo(string foldName, string fileName,string number)
         {
             ExcelInfo.CreateExcelFile(foldName, fileName);
-            string addressProjectUrl = "projectQuery.aspx";
-            string strHtml = WebInfo.GetPageInfo(hostContentPreUrl + addressProjectUrl);
+            string strHtml = WebInfo.GetPageInfo(hostContentPreUrl + FIRST_MAIN_URL);
+            string strFirstPage = strHtml;
             Explain.FirstPage(strHtml, ref pageIdx, ref pageCount);
 
             int pageProjIdx = 1;
@@ -66,15 +67,20 @@ namespace web2Excel
                 }
                 if (pageIdx >= pageCount || pageIdx >= pageEnd) break;
                 //每栋楼抓完后保存数据
-                if( pageIdx % 30 ==0 )//每30页保存一次
+                if (pageIdx % 30 == 0)//每30页保存一次
                     ExcelInfo.SaveInfo();
 
                 //开始下一轮循环
-                Dictionary<string,string> nextKey = new Dictionary<string,string> ();
-                Explain.FirstNextPage(strHtml,nextKey);
-                strHtml = WebInfo.PostPageInfo(hostContentPreUrl + addressProjectUrl, nextKey);
+                Dictionary<string, string> nextKey = new Dictionary<string, string>();
+                Explain.FirstNextPage(strHtml, nextKey);
+                strHtml = WebInfo.PostPageInfo(hostContentPreUrl + FIRST_MAIN_URL, nextKey);
                 Explain.FirstPage(strHtml, ref pageIdx, ref pageCount);
             }
+            if (number.Length > 3)
+            {
+                this.GetSearchProjects(strFirstPage, number);
+            }
+
             ExcelInfo.FinishExcel();
         }
 
@@ -194,6 +200,27 @@ namespace web2Excel
 
             ExcelInfo.updateTypeInfo(2, typeListByItemIdx);
             ExcelInfo.FinishExcel();
+        }
+
+        private void GetSearchProjects(string strHtmlFirstPage, string number)
+        {
+            string[] numArray = number.Split(',');
+            foreach (string strNum in numArray)
+            {
+                Dictionary<string, string> postValue = new Dictionary<string, string>();
+
+                Explain.FirstSearchNumber(strHtmlFirstPage, strNum, postValue);
+
+                string strHtml = WebInfo.PostPageInfo(hostContentPreUrl + FIRST_MAIN_URL, postValue);
+
+                List<string> projList = new List<string>();
+                Explain.FirstProj(strHtml, projList);
+
+                foreach (string projItem in projList)
+                {
+                    this.ExplainSecondBuilding(projItem);
+                }
+            }
         }
 
         /// <summary>
