@@ -40,7 +40,7 @@ namespace MotionCalc
         private void InitialInfo()
         {
             this.fileDialog = new OpenFileDialog();
-            this.fileDialog.Title = "请选择待分析的视频文件";
+            this.fileDialog.Title = "请选择待分析的文件（视频在video，图片在image）";
             this.fileDialog.Filter = "视频文件(*.avi)|*.AVI|图片文件(*.jpg;*.JPG)|*.jpg;*.JPG";
 
             this.imgBox.Location = new Point(12, 31);
@@ -67,6 +67,7 @@ namespace MotionCalc
             Constants.MaxRecogRectArea = int.Parse(Ini.GetItemValue("general", "maxLabelArea"));
             Constants.MinRecogRectWHRatio = float.Parse(Ini.GetItemValue("general", "minLabelWHRatio"));
             Constants.MaxRecogRectWHRatio = float.Parse(Ini.GetItemValue("general", "maxLabelWHRatio"));
+            Constants.AutoRecogColorFlag = bool.Parse(Ini.GetItemValue("general", "autoColorRecog"));
             Constants.LabelColor = int.Parse(Ini.GetItemValue("general", "labelColor"));
 
             Constants.ShowNetFlag= bool.Parse(Ini.GetItemValue("general", "showNet"));
@@ -227,7 +228,12 @@ namespace MotionCalc
                 return;
             }
 
-            List<Point> locList = this.algoHandler.RecognizeColor(this.videoFrame, Constants.LabelColor, ref this.testFrame);
+            List<Point> locList =new List<Point> ();
+            if (Constants.AutoRecogColorFlag)
+            {
+                locList = this.algoHandler.RecognizeColor(this.videoFrame, Constants.LabelColor, ref this.testFrame);
+            }
+            
             this.pnNetLine.DrawRecogPoints(locList);
             this.pnNetLine.DrawLines();
 
@@ -264,6 +270,7 @@ namespace MotionCalc
         {
             this.pnNetLine.BringToFront();
 
+            this.fileDialog.InitialDirectory = System.Environment.CurrentDirectory;
             if (this.fileDialog.ShowDialog() != DialogResult.OK) return;
 
             this.recordFileName = this.fileDialog.FileName;

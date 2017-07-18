@@ -59,6 +59,7 @@ namespace web2Excel
         {
             try
             {
+                this.tbTime_Leave(this.tbTime, null);
                 EnableSetting(false);
                 this.Text = "查看网页信息中。。。";
                 if (!ValidNumber(tbStart.Text) || !ValidNumber(tbEnd.Text))

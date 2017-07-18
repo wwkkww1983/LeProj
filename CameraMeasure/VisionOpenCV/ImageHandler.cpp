@@ -33,6 +33,7 @@ ImageHandler::ImageHandler(void)
 		minDistance = 20;
 		maxDistance = 80;
 		warningDistance = 60;
+		cameraFocus = 4;
 		return;
 	}
 	char tmpChar[256];
@@ -84,7 +85,8 @@ bool FilterInvalidEyes(vector<Rect> faces,vector<Rect> &result)
 int ImageHandler::CalculateDistance(vector<Rect> eyes)
 {
 	int cameraDistance = abs(eyes[0].x - eyes[1].x);
-	int distance = cvRound(CONSTANT_MULTIPLY / cameraDistance);
+	//测量距离根据相机焦距，等比例缩放（默认焦距4mm对应3500）
+	int distance = cvRound(1.0f * CONSTANT_MULTIPLY / cameraDistance * cameraFocus / 4.0f);
 
 	lengthSum += distance;
 	lengthCount ++;
@@ -179,13 +181,18 @@ void ImageHandler::UpdateParams(string keyValue){
 
 	string tmpKey = keyValue.substr(0,pos);
 	transform(tmpKey.begin(), tmpKey.end(), tmpKey.begin(), (int(*)(int))toupper);
+	int intTemp = atoi(keyValue.substr(pos + 1).c_str());
+	
 	if(tmpKey == "MINDISTANCE"){ 
-		minDistance = atoi(keyValue.substr(pos + 1).c_str());
+		minDistance = intTemp;
 	}
 	else if(tmpKey == "MAXDISTANCE"){
-		maxDistance = atoi(keyValue.substr(pos + 1).c_str());
+		maxDistance = intTemp;
 	}
 	else if(tmpKey == "WARNINGDISTANCE"){
-		warningDistance = atoi(keyValue.substr(pos + 1).c_str());
+		warningDistance = intTemp;
+	}
+	else if(tmpKey == "CAMERAFOCUS"){
+		cameraFocus = intTemp;
 	}
 }

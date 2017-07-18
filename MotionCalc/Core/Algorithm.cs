@@ -141,8 +141,10 @@ namespace Core
 
                     int rectArea = rect.Width * rect.Height;
                     double rectRatio = rect.Width * 1.0d / rect.Height;
-                    if (rectArea < Constants.MinRecogRectArea || rectArea > Constants.MaxRecogRectArea || 
-                        rectRatio<Constants.MinRecogRectWHRatio || rectRatio > Constants.MaxRecogRectWHRatio)
+                    if (Constants.MinRecogRectArea != -1 && rectArea < Constants.MinRecogRectArea ||
+                        Constants.MaxRecogRectArea != -1 && rectArea > Constants.MaxRecogRectArea ||
+                        Constants.MinRecogRectWHRatio != -1 && rectRatio < Constants.MinRecogRectWHRatio ||
+                        Constants.MaxRecogRectWHRatio != -1 && rectRatio > Constants.MaxRecogRectWHRatio)
                         continue;
                     
                     locList.Add(rect.Location);

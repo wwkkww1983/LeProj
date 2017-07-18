@@ -31,6 +31,7 @@ namespace MotionCalc
             this.tbMaxArea.Text = Constants.MaxRecogRectArea.ToString();
             this.tbMinRatio.Text = Constants.MinRecogRectWHRatio.ToString();
             this.tbMaxRatio.Text = Constants.MaxRecogRectWHRatio.ToString();
+            this.ckbSwitch.Checked = Constants.AutoRecogColorFlag;
             this.colorLabelSelected = Constants.LabelColor;
             bool selectedRatio = this.initialRatioSelection(this.rbBlack) || this.initialRatioSelection(this.rbBlue) ||
                this.initialRatioSelection(this.rbGreen) || this.initialRatioSelection(this.rbPurple) ||
@@ -61,12 +62,14 @@ namespace MotionCalc
             Constants.MaxRecogRectArea = int.Parse(this.tbMaxArea.Text);
             Constants.MinRecogRectWHRatio = float.Parse(this.tbMinRatio.Text);
             Constants.MaxRecogRectWHRatio = float.Parse(this.tbMaxRatio.Text);
+            Constants.AutoRecogColorFlag = this.ckbSwitch.Checked;
             Constants.LabelColor = this.colorLabelSelected;
 
             Ini.SetItemValue("general", "minLabelArea", this.tbMinArea.Text);
             Ini.SetItemValue("general", "maxLabelArea", this.tbMaxArea.Text);
             Ini.SetItemValue("general", "minLabelWHRatio", this.tbMinRatio.Text);
             Ini.SetItemValue("general", "maxLabelWHRatio", this.tbMaxRatio.Text);
+            Ini.SetItemValue("general", "autoColorRecog", this.ckbSwitch.Checked.ToString ());
             Ini.SetItemValue("general", "labelColor", this.colorLabelSelected.ToString());
 
             this.refreshImageShow();

@@ -595,6 +595,8 @@ namespace MotionCalc
             foreach (int lineIdx in this.selectedLinePoints)
             {
                 LineInfo info = this.currentLinePoints[lineIdx];
+                if (info.Other == Point.Empty) continue;
+
                 g.DrawLine(pen, info.One, info.Other);
             }
             double angle = 0.0d;

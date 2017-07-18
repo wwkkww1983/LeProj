@@ -49,6 +49,7 @@
             this.rbGreen = new System.Windows.Forms.RadioButton();
             this.rbBlue = new System.Windows.Forms.RadioButton();
             this.rbRed = new System.Windows.Forms.RadioButton();
+            this.ckbSwitch = new System.Windows.Forms.CheckBox();
             this.gbArea.SuspendLayout();
             this.gbRatio.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -272,11 +273,22 @@
             this.rbRed.UseVisualStyleBackColor = false;
             this.rbRed.CheckedChanged += new System.EventHandler(this.rbColor_CheckedChanged);
             // 
+            // ckbSwitch
+            // 
+            this.ckbSwitch.AutoSize = true;
+            this.ckbSwitch.Location = new System.Drawing.Point(503, 215);
+            this.ckbSwitch.Name = "ckbSwitch";
+            this.ckbSwitch.Size = new System.Drawing.Size(89, 19);
+            this.ckbSwitch.TabIndex = 12;
+            this.ckbSwitch.Text = "自动识别";
+            this.ckbSwitch.UseVisualStyleBackColor = true;
+            // 
             // SetColorLabel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(650, 263);
+            this.Controls.Add(this.ckbSwitch);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.gbRatio);
@@ -319,5 +331,6 @@
         private System.Windows.Forms.RadioButton rbGreen;
         private System.Windows.Forms.RadioButton rbBlue;
         private System.Windows.Forms.RadioButton rbRed;
+        private System.Windows.Forms.CheckBox ckbSwitch;
     }
 }

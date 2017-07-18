@@ -50,6 +50,11 @@ namespace Core
         public static bool ShowNetFlag = false;
 
         /// <summary>
+        /// 是否启动自动识别颜色
+        /// </summary>
+        public static bool AutoRecogColorFlag = false;
+
+        /// <summary>
         /// 网格线宽
         /// </summary>
         public static int NetLineWidth = 2;
