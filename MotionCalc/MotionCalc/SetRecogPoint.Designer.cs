@@ -32,7 +32,9 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSubmit = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.tbRadiusLine = new System.Windows.Forms.TextBox();
             this.tbWidth = new System.Windows.Forms.TextBox();
+            this.lbRadiusLine = new System.Windows.Forms.Label();
             this.lbColorLine = new System.Windows.Forms.Label();
             this.lbWidth = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -41,8 +43,6 @@
             this.lbColorPoint = new System.Windows.Forms.Label();
             this.lbRadius = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.lbRadiusLine = new System.Windows.Forms.Label();
-            this.tbRadiusLine = new System.Windows.Forms.TextBox();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -82,12 +82,28 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "线条属性";
             // 
+            // tbRadiusLine
+            // 
+            this.tbRadiusLine.Location = new System.Drawing.Point(71, 31);
+            this.tbRadiusLine.Name = "tbRadiusLine";
+            this.tbRadiusLine.Size = new System.Drawing.Size(60, 25);
+            this.tbRadiusLine.TabIndex = 4;
+            // 
             // tbWidth
             // 
             this.tbWidth.Location = new System.Drawing.Point(71, 62);
             this.tbWidth.Name = "tbWidth";
             this.tbWidth.Size = new System.Drawing.Size(60, 25);
             this.tbWidth.TabIndex = 4;
+            // 
+            // lbRadiusLine
+            // 
+            this.lbRadiusLine.AutoSize = true;
+            this.lbRadiusLine.Location = new System.Drawing.Point(28, 36);
+            this.lbRadiusLine.Name = "lbRadiusLine";
+            this.lbRadiusLine.Size = new System.Drawing.Size(37, 15);
+            this.lbRadiusLine.TabIndex = 3;
+            this.lbRadiusLine.Text = "半径";
             // 
             // lbColorLine
             // 
@@ -160,22 +176,6 @@
             this.label4.Size = new System.Drawing.Size(37, 15);
             this.label4.TabIndex = 8;
             this.label4.Text = "颜色";
-            // 
-            // lbRadiusLine
-            // 
-            this.lbRadiusLine.AutoSize = true;
-            this.lbRadiusLine.Location = new System.Drawing.Point(28, 36);
-            this.lbRadiusLine.Name = "lbRadiusLine";
-            this.lbRadiusLine.Size = new System.Drawing.Size(37, 15);
-            this.lbRadiusLine.TabIndex = 3;
-            this.lbRadiusLine.Text = "半径";
-            // 
-            // tbRadiusLine
-            // 
-            this.tbRadiusLine.Location = new System.Drawing.Point(71, 31);
-            this.tbRadiusLine.Name = "tbRadiusLine";
-            this.tbRadiusLine.Size = new System.Drawing.Size(60, 25);
-            this.tbRadiusLine.TabIndex = 4;
             // 
             // SetRecogPoint
             // 

@@ -59,7 +59,7 @@ namespace SimuProteus
             InitializeComponent();
 
             this.InitialControl();
-            //dbHandler.InitialTable();
+            dbHandler.InitialTable();
             this.elementList = dbHandler.GetBaseComponents();
             int idx = 0;
             foreach (ElementInfo item in this.elementList)

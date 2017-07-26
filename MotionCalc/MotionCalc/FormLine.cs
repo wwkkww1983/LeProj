@@ -44,7 +44,7 @@ namespace MotionCalc
             this.fileDialog.Filter = "视频文件(*.avi)|*.AVI|图片文件(*.jpg;*.JPG)|*.jpg;*.JPG";
 
             this.imgBox.Location = new Point(12, 31);
-            this.imgBox.Size = new Size(973, 776);
+            this.imgBox.Size = new Size(973, 764);
             this.imgBox.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
 
             this.pnNetLine = new UcPanel(this.ShowLineAngle);
@@ -202,6 +202,14 @@ namespace MotionCalc
         {
             this.lbAngle.Text = angle.ToString("f2");
         }
+
+
+        private void hSBarVideo_Scroll(object sender, ScrollEventArgs e)
+        {
+            if (e.NewValue > this.hSBarVideo.Maximum) return;
+
+            this.capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, e.NewValue);
+        }
         #endregion
 
         #region 绘制
@@ -281,6 +289,10 @@ namespace MotionCalc
                 this.videoFrame = CvInvoke.Imread(this.recordFileName, Emgu.CV.CvEnum.ImreadModes.Unchanged);
                 this.imgBox.Image = this.videoFrame;
                 this.hSBarVideo.Visible = false;
+                Constants.IMAGE_WIDTH = this.videoFrame.Width;
+                Constants.IMAGE_HEIGHT = this.videoFrame.Height;
+                this.imgScale = this.pnNetLine.ImageScale;
+                this.imgBox.SetZoomScale(this.imgScale, new Point());
             }
             else
             {
@@ -293,6 +305,9 @@ namespace MotionCalc
                 this.hSBarVideo.Value = 0;
                 this.capture.ImageGrabbed += this.capture_ImageGrabbed;
                 this.capture.Start();
+                Constants.IMAGE_WIDTH = this.capture.Width;
+                Constants.IMAGE_HEIGHT = this.capture.Height;
+                this.imgScale = this.pnNetLine.ImageScale;
             }
         }
 
@@ -316,14 +331,13 @@ namespace MotionCalc
             frameImg.Save(fileName);
         }
 
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormAbout form = new FormAbout();
+            form.ShowDialog();
+        }
         #endregion
 
-        private void hSBarVideo_Scroll(object sender, ScrollEventArgs e)
-        {
-            if (e.NewValue > this.hSBarVideo.Maximum) return;
-
-            this.capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, e.NewValue);
-        }
 
     }
 }

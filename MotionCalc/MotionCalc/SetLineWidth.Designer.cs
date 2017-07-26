@@ -71,7 +71,7 @@
             this.tbWidth.Size = new System.Drawing.Size(162, 25);
             this.tbWidth.TabIndex = 2;
             // 
-            // FormLineWidth
+            // SetLineWidth
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -81,7 +81,7 @@
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSubmit);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "FormLineWidth";
+            this.Name = "SetLineWidth";
             this.Text = "动作捕捉分析系统";
             this.ResumeLayout(false);
             this.PerformLayout();

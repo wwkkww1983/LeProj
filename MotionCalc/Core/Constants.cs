@@ -37,12 +37,12 @@ namespace Core
         /// <summary>
         /// 图片宽度
         /// </summary>
-        public const int IMAGE_WIDTH = 640;
+        public static int IMAGE_WIDTH = 640;
 
         /// <summary>
         /// 图片高度
         /// </summary>
-        public const int IMAGE_HEIGHT = 480;
+        public static int IMAGE_HEIGHT = 480;
 
         /// <summary>
         /// 是否显示网格线

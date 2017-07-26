@@ -102,6 +102,12 @@ namespace MotionCalc
             }
         }
 
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormAbout form = new FormAbout();
+            form.ShowDialog();
+        }
+
         private void timerRecord_Tick(object sender, EventArgs e)
         {
             this.secondRecordCount++;
@@ -136,6 +142,7 @@ namespace MotionCalc
         }
 
         #endregion
+
     }
 
 }

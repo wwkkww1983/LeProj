@@ -19,8 +19,8 @@ namespace MotionCalc
         {
             InitializeComponent();
 
-            //this.skin = new SkinEngine(this);
-            //this.skin.SkinFile = "Wave.ssk";
+            this.skin = new SkinEngine(this);
+            this.skin.SkinFile = "motion.ssk";
         }
 
         private void btnRecord_Click(object sender, EventArgs e)

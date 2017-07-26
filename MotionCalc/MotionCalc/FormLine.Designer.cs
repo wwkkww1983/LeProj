@@ -40,6 +40,7 @@
             this.setRecogLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setColorLabelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hSBarVideo = new System.Windows.Forms.HScrollBar();
             ((System.ComponentModel.ISupportInitialize)(this.imgBox)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -49,7 +50,7 @@
             // 
             this.imgBox.Location = new System.Drawing.Point(12, 31);
             this.imgBox.Name = "imgBox";
-            this.imgBox.Size = new System.Drawing.Size(973, 776);
+            this.imgBox.Size = new System.Drawing.Size(973, 764);
             this.imgBox.TabIndex = 2;
             this.imgBox.TabStop = false;
             // 
@@ -68,7 +69,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openVideoToolStripMenuItem,
             this.settingToolStripMenuItem,
-            this.saveImageToolStripMenuItem});
+            this.saveImageToolStripMenuItem,
+            this.aboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(993, 28);
@@ -128,6 +130,13 @@
             this.saveImageToolStripMenuItem.Text = "截屏";
             this.saveImageToolStripMenuItem.Click += new System.EventHandler(this.saveImageToolStripMenuItem_Click);
             // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(51, 24);
+            this.aboutToolStripMenuItem.Text = "关于";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
             // hSBarVideo
             // 
             this.hSBarVideo.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -174,5 +183,6 @@
         private System.Windows.Forms.ToolStripMenuItem openVideoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveImageToolStripMenuItem;
         private System.Windows.Forms.HScrollBar hSBarVideo;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
     }
 }
