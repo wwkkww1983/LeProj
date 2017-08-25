@@ -23,11 +23,13 @@ namespace MotionCalc
         private double imgScale;
         private bool pulsePlayFlag;
         private string recordFileName;
+        private object captureLocker = new object ();
         private Mat videoFrame,testFrame;
         private OpenFileDialog fileDialog = null;
         private VideoCapture capture = null;
         private UcPanel pnNetLine = null;
         private HanlderNoParams delegateDrawInfo = null, delegateDrawNet = null, delegateVideoScroll = null;
+        private Action<double> delegateChangeShowScale = null;
         private Algorithm algoHandler = null;
 
         public FormLine()
@@ -44,7 +46,7 @@ namespace MotionCalc
             this.fileDialog.Filter = "视频文件(*.avi)|*.AVI|图片文件(*.jpg;*.JPG)|*.jpg;*.JPG";
 
             this.imgBox.Location = new Point(12, 31);
-            this.imgBox.Size = new Size(973, 764);
+            this.imgBox.Size = new Size(973, 752);
             this.imgBox.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
 
             this.pnNetLine = new UcPanel(this.ShowLineAngle);
@@ -58,6 +60,7 @@ namespace MotionCalc
             this.delegateDrawInfo = new HanlderNoParams(this.DrawRecognizedInfo);
             this.delegateDrawNet = new HanlderNoParams(this.DrawNetLine);
             this.delegateVideoScroll = new HanlderNoParams(this.moveVideoScroll);
+            this.delegateChangeShowScale = new Action<double>(childSetImgShowScale);
 
             this.videoFrame = new Mat();
             this.testFrame = new Mat();
@@ -91,6 +94,7 @@ namespace MotionCalc
 
         private void FormLine_KeyUp(object sender, KeyEventArgs e)
         {
+            if (e.KeyCode != Keys.Space) this.pulsePlayFlag = true;
             switch (e.KeyCode)
             {
                 case Keys.Left: this.playInterSleep += PLAY_SPEED_STEP; break;
@@ -100,6 +104,7 @@ namespace MotionCalc
                 case Keys.Space: this.pulsePlayFlag = !this.pulsePlayFlag; break;
                 default: break;
             }
+            if (e.KeyCode != Keys.Space) this.pulsePlayFlag = false;
 
             if (this.playInterSleep <= PLAY_SPEED_STEP)
             {
@@ -113,16 +118,30 @@ namespace MotionCalc
             {
                 System.Threading.Thread.Sleep(PLAY_SPPED_DEFAULT);
             }
-            this.capture.Retrieve(this.videoFrame);
+            lock (captureLocker)
+            {
+                this.capture.Retrieve(this.videoFrame);
+            }
             this.imgBox.Image = this.videoFrame;
 
             System.Threading.Thread.Sleep(10);
-            this.imgBox.SetZoomScale(this.imgScale, new Point());
+            this.childSetImgShowScale(this.imgScale);
             this.DrawNetLine();
             this.DrawRecognizedInfo();
             this.moveVideoScroll();
 
             System.Threading.Thread.Sleep(this.playInterSleep);
+        }
+
+        private void childSetImgShowScale(double scale)
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(delegateChangeShowScale, new object[] { scale });
+                return;
+            }
+
+            this.imgBox.SetZoomScale(scale, new Point());
         }
 
         private void moveVideoScroll()
@@ -133,7 +152,7 @@ namespace MotionCalc
                 return;
             }
 
-            this.hSBarVideo.Value++;
+            if(this.hSBarVideo.Value<this.hSBarVideo.Maximum) this.hSBarVideo.Value++;
         }
 
         private void drawNetLineForImage(Mat frameImg)
@@ -203,12 +222,21 @@ namespace MotionCalc
             this.lbAngle.Text = angle.ToString("f2");
         }
 
-
         private void hSBarVideo_Scroll(object sender, ScrollEventArgs e)
         {
             if (e.NewValue > this.hSBarVideo.Maximum) return;
 
-            this.capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, e.NewValue);
+            this.pulsePlayFlag = true;
+
+            lock (captureLocker)
+            {
+                this.capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, e.NewValue);
+            }
+        }
+
+        private void hSBarVideo_MouseLeave(object sender, EventArgs e)
+        {
+            this.pulsePlayFlag = false;
         }
         #endregion
 
@@ -292,7 +320,7 @@ namespace MotionCalc
                 Constants.IMAGE_WIDTH = this.videoFrame.Width;
                 Constants.IMAGE_HEIGHT = this.videoFrame.Height;
                 this.imgScale = this.pnNetLine.ImageScale;
-                this.imgBox.SetZoomScale(this.imgScale, new Point());
+                this.childSetImgShowScale(this.imgScale);
             }
             else
             {
@@ -337,7 +365,5 @@ namespace MotionCalc
             form.ShowDialog();
         }
         #endregion
-
-
     }
 }

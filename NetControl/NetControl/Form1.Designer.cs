@@ -316,7 +316,7 @@
             // lbDGl2
             // 
             this.lbDGl2.AutoSize = true;
-            this.lbDGl2.Location = new System.Drawing.Point(351, 110);
+            this.lbDGl2.Location = new System.Drawing.Point(63, 110);
             this.lbDGl2.Name = "lbDGl2";
             this.lbDGl2.Size = new System.Drawing.Size(22, 15);
             this.lbDGl2.TabIndex = 3;
@@ -325,7 +325,7 @@
             // lbDGl1
             // 
             this.lbDGl1.AutoSize = true;
-            this.lbDGl1.Location = new System.Drawing.Point(351, 54);
+            this.lbDGl1.Location = new System.Drawing.Point(63, 54);
             this.lbDGl1.Name = "lbDGl1";
             this.lbDGl1.Size = new System.Drawing.Size(22, 15);
             this.lbDGl1.TabIndex = 3;
@@ -334,7 +334,7 @@
             // lbKGl2
             // 
             this.lbKGl2.AutoSize = true;
-            this.lbKGl2.Location = new System.Drawing.Point(218, 110);
+            this.lbKGl2.Location = new System.Drawing.Point(343, 110);
             this.lbKGl2.Name = "lbKGl2";
             this.lbKGl2.Size = new System.Drawing.Size(22, 15);
             this.lbKGl2.TabIndex = 3;
@@ -343,7 +343,7 @@
             // lbKGl1
             // 
             this.lbKGl1.AutoSize = true;
-            this.lbKGl1.Location = new System.Drawing.Point(218, 54);
+            this.lbKGl1.Location = new System.Drawing.Point(343, 54);
             this.lbKGl1.Name = "lbKGl1";
             this.lbKGl1.Size = new System.Drawing.Size(22, 15);
             this.lbKGl1.TabIndex = 3;
@@ -352,7 +352,7 @@
             // lbLGl2
             // 
             this.lbLGl2.AutoSize = true;
-            this.lbLGl2.Location = new System.Drawing.Point(81, 110);
+            this.lbLGl2.Location = new System.Drawing.Point(206, 110);
             this.lbLGl2.Name = "lbLGl2";
             this.lbLGl2.Size = new System.Drawing.Size(22, 15);
             this.lbLGl2.TabIndex = 2;
@@ -361,7 +361,7 @@
             // lbLGl1
             // 
             this.lbLGl1.AutoSize = true;
-            this.lbLGl1.Location = new System.Drawing.Point(81, 54);
+            this.lbLGl1.Location = new System.Drawing.Point(206, 54);
             this.lbLGl1.Name = "lbLGl1";
             this.lbLGl1.Size = new System.Drawing.Size(22, 15);
             this.lbLGl1.TabIndex = 2;
@@ -370,17 +370,17 @@
             // rbDGl2
             // 
             this.rbDGl2.AutoSize = true;
-            this.rbDGl2.Location = new System.Drawing.Point(319, 84);
+            this.rbDGl2.Location = new System.Drawing.Point(31, 84);
             this.rbDGl2.Name = "rbDGl2";
             this.rbDGl2.Size = new System.Drawing.Size(118, 19);
             this.rbDGl2.TabIndex = 1;
-            this.rbDGl2.Text = "大亚湾一号机";
+            this.rbDGl2.Text = "大亚湾二号机";
             this.rbDGl2.UseVisualStyleBackColor = true;
             // 
             // rbDGl1
             // 
             this.rbDGl1.AutoSize = true;
-            this.rbDGl1.Location = new System.Drawing.Point(319, 28);
+            this.rbDGl1.Location = new System.Drawing.Point(31, 28);
             this.rbDGl1.Name = "rbDGl1";
             this.rbDGl1.Size = new System.Drawing.Size(118, 19);
             this.rbDGl1.TabIndex = 1;
@@ -390,17 +390,17 @@
             // rbKGl2
             // 
             this.rbKGl2.AutoSize = true;
-            this.rbKGl2.Location = new System.Drawing.Point(194, 84);
+            this.rbKGl2.Location = new System.Drawing.Point(319, 84);
             this.rbKGl2.Name = "rbKGl2";
             this.rbKGl2.Size = new System.Drawing.Size(103, 19);
             this.rbKGl2.TabIndex = 1;
-            this.rbKGl2.Text = "岭澳三号机";
+            this.rbKGl2.Text = "岭澳四号机";
             this.rbKGl2.UseVisualStyleBackColor = true;
             // 
             // rbKGl1
             // 
             this.rbKGl1.AutoSize = true;
-            this.rbKGl1.Location = new System.Drawing.Point(194, 28);
+            this.rbKGl1.Location = new System.Drawing.Point(319, 28);
             this.rbKGl1.Name = "rbKGl1";
             this.rbKGl1.Size = new System.Drawing.Size(103, 19);
             this.rbKGl1.TabIndex = 1;
@@ -410,18 +410,18 @@
             // rbLGl2
             // 
             this.rbLGl2.AutoSize = true;
-            this.rbLGl2.Location = new System.Drawing.Point(57, 84);
+            this.rbLGl2.Location = new System.Drawing.Point(182, 84);
             this.rbLGl2.Name = "rbLGl2";
             this.rbLGl2.Size = new System.Drawing.Size(103, 19);
             this.rbLGl2.TabIndex = 1;
-            this.rbLGl2.Text = "岭澳一号机";
+            this.rbLGl2.Text = "岭澳二号机";
             this.rbLGl2.UseVisualStyleBackColor = true;
             // 
             // rbLGl1
             // 
             this.rbLGl1.AutoSize = true;
             this.rbLGl1.Checked = true;
-            this.rbLGl1.Location = new System.Drawing.Point(57, 28);
+            this.rbLGl1.Location = new System.Drawing.Point(182, 28);
             this.rbLGl1.Name = "rbLGl1";
             this.rbLGl1.Size = new System.Drawing.Size(103, 19);
             this.rbLGl1.TabIndex = 1;

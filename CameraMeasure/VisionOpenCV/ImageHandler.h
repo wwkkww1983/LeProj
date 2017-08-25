@@ -17,13 +17,13 @@ public:
 	ImageHandler(void);
 	~ImageHandler(void);
 	bool RecognitionHumanFace(Mat);
+	int minDistance, maxDistance,warningDistance, cameraFocus;
 
 private:
 
 	bool isExists, tempExistsFlag, hasAlarmFlag;
 	int existCount,freeCount;
 	int lengthSum, lengthCount;
-	int minDistance, maxDistance,warningDistance, cameraFocus;
 	double timeDetect,freeTimeDetect;
 	CascadeClassifier faceCascade;
 	int CalculateDistance(vector<Rect>);

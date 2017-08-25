@@ -50,7 +50,7 @@
             // 
             this.imgBox.Location = new System.Drawing.Point(12, 31);
             this.imgBox.Name = "imgBox";
-            this.imgBox.Size = new System.Drawing.Size(973, 764);
+            this.imgBox.Size = new System.Drawing.Size(973, 748);
             this.imgBox.TabIndex = 2;
             this.imgBox.TabStop = false;
             // 
@@ -145,6 +145,7 @@
             this.hSBarVideo.Size = new System.Drawing.Size(993, 21);
             this.hSBarVideo.TabIndex = 14;
             this.hSBarVideo.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hSBarVideo_Scroll);
+            this.hSBarVideo.MouseLeave += new System.EventHandler(this.hSBarVideo_MouseLeave);
             // 
             // FormLine
             // 
