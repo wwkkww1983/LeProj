@@ -18,7 +18,11 @@ namespace MotionCalc
         private const int  MAX_DISTANCE_FOR_DIFF_TWO_POINTS = 20;
         private const double DOUBLE_MAX_DIFF = 1e-6;
         private bool onePointClickFlag = false, userMovingLineFlag = false;
-        private int selectedLineIdx = -1;
+        /// <summary>
+        /// 
+        /// selectedPointForLineIdx：连线时，点击的第一个节点新增的线条索引
+        /// </summary>
+        private int selectedLineIdx = -1,selectedPointForLineIdx = -1;
         private float imgScale;
         private Point rightClickPosition, lastMousePosition, selectedPoint,originPoint;
         private Color colorUserLine;
@@ -27,6 +31,7 @@ namespace MotionCalc
         /// recgPointBoardList 包括了识别的点和用户增加的点，每次绘图前讲用户增加的点加入
         /// </summary>
         private List<Point> recgPointBoardList = null,userAddPointsList = null, userHidePointsList = null;
+
         private List<LineInfo> currentLinePoints = null;
         private ContextMenuStrip cmsHorizonVertical = null, cmsUserLineHanler = null, cmsUserPointHandler = null;
         private Action<double> showAngleForTwoLine;
@@ -198,15 +203,15 @@ namespace MotionCalc
 
             if (this.selectedPoint.X < 0) return;
 
-            if (this.onePointClickFlag)
+            if (this.onePointClickFlag && this.selectedPointForLineIdx >= 0)
             {
-                int idx = this.currentLinePoints.Count - 1;
-                LineInfo info = this.currentLinePoints[idx];
+                LineInfo info = this.currentLinePoints[this.selectedPointForLineIdx];
 
                 if (info.One.X == this.selectedPoint.X && info.One.Y == this.selectedPoint.Y) return;
                 info.Other = this.selectedPoint;
 
                 this.drawOneLine(info);
+                this.selectedPointForLineIdx = -1;
             }
             else
             {
@@ -218,6 +223,7 @@ namespace MotionCalc
                     Width = USER_LINK_LINE_WIDTH
                 };
                 this.currentLinePoints.Add(info);
+                this.selectedPointForLineIdx = this.currentLinePoints.Count - 1;
             }
             this.onePointClickFlag = !this.onePointClickFlag;
         }
@@ -299,6 +305,23 @@ namespace MotionCalc
         {
             this.currentLinePoints.RemoveAt(this.selectedLineIdx);
             this.selectedLinePoints.Remove(this.selectedLineIdx);
+            if(this.selectedPointForLineIdx > this.selectedLineIdx)
+            {
+                this.selectedPointForLineIdx--;
+            }
+
+            for (int i = 0; i < this.selectedLinePoints.Count;i++ )
+            {
+                if (this.selectedLinePoints[i] == this.selectedLineIdx)
+                {
+                    this.selectedLinePoints.RemoveAt(i);
+                    i--;
+                }
+                else if (selectedLinePoints[i] > this.selectedLineIdx)
+                {
+                    this.selectedLinePoints[i]--;
+                }
+            }
 
             this.refreshView();
         }
@@ -331,6 +354,11 @@ namespace MotionCalc
             //{
             this.userHidePointsList.Add(this.selectedPoint);
             //}
+            if (this.selectedPointForLineIdx >=0 && this.selectedPointForLineIdx < this.currentLinePoints.Count)
+            {//删除选中、用于连线的节点
+                this.currentLinePoints.RemoveAt(this.selectedPointForLineIdx);
+                this.selectedPointForLineIdx = -1;
+            }
 
             for (int i = 0; i < this.recgPointBoardList.Count; i++)
             {
@@ -356,7 +384,7 @@ namespace MotionCalc
 
             if (e.Button == MouseButtons.Right)
             {
-                this.ContextMenuStrip = this.selectedLineIdx >= 0 ? this.cmsUserLineHanler : (this.selectedPoint.X >= 0 ? this.cmsUserPointHandler : this.cmsHorizonVertical);
+                this.ContextMenuStrip = this.selectedLineIdx >= 0 && this.currentLinePoints[this.selectedLineIdx].Other.X > 0 ? this.cmsUserLineHanler : (this.selectedPoint.X >= 0 ? this.cmsUserPointHandler : this.cmsHorizonVertical);
             }
             else
             {
@@ -594,7 +622,10 @@ namespace MotionCalc
             pen.DashStyle = System.Drawing.Drawing2D.DashStyle.DashDot;
             foreach (int lineIdx in this.selectedLinePoints)
             {
+                if (lineIdx >= this.currentLinePoints.Count || lineIdx < 0) continue;
+
                 LineInfo info = this.currentLinePoints[lineIdx];
+
                 if (info.Other == Point.Empty) continue;
 
                 g.DrawLine(pen, info.One, info.Other);

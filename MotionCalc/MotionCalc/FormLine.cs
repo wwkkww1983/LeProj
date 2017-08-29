@@ -43,7 +43,7 @@ namespace MotionCalc
         {
             this.fileDialog = new OpenFileDialog();
             this.fileDialog.Title = "请选择待分析的文件（视频在video，图片在image）";
-            this.fileDialog.Filter = "视频文件(*.avi)|*.AVI|图片文件(*.jpg;*.JPG)|*.jpg;*.JPG";
+            this.fileDialog.Filter = "待分析文件(*.*)|*.*";
 
             this.imgBox.Location = new Point(12, 31);
             this.imgBox.Size = new Size(973, 752);
@@ -341,10 +341,16 @@ namespace MotionCalc
 
         private void saveImageToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (this.videoFrame.Height == 0 || this.videoFrame.Width == 0)
+            {
+                MessageBox.Show("未选择文件", "无内容可保存", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             SaveFileDialog fileDialog = new SaveFileDialog();
             fileDialog.DefaultExt = ".jpg";
             fileDialog.Filter = "视频图像文件(*.jpg)|*.jpg";
-            fileDialog.RestoreDirectory = true;
+            fileDialog.InitialDirectory = System.Environment.CurrentDirectory + "\\" + Constants.IMAGE_FOLDER_NAME;
             if (!(fileDialog.ShowDialog() == DialogResult.OK)) return;
 
             string fileName = fileDialog.FileName;

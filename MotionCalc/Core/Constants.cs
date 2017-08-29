@@ -20,9 +20,14 @@ namespace Core
         public const string VIDEO_FOLDER = "video/";
 
         /// <summary>
+        /// 图片文件夹名称
+        /// </summary>
+        public const string IMAGE_FOLDER_NAME = "image";
+
+        /// <summary>
         /// 图片文件夹目录
         /// </summary>
-        public const string IMAGE_FOLDER = "image/";
+        public const string IMAGE_FOLDER = IMAGE_FOLDER_NAME + "/";
 
         /// <summary>
         /// 视频文件格式
