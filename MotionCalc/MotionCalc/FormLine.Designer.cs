@@ -144,6 +144,7 @@
             this.hSBarVideo.Name = "hSBarVideo";
             this.hSBarVideo.Size = new System.Drawing.Size(993, 21);
             this.hSBarVideo.TabIndex = 14;
+            this.hSBarVideo.Visible = false;
             this.hSBarVideo.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hSBarVideo_Scroll);
             this.hSBarVideo.MouseLeave += new System.EventHandler(this.hSBarVideo_MouseLeave);
             // 
@@ -159,6 +160,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(1031, 880);
             this.Name = "FormLine";
             this.Text = "动作捕捉分析系统";

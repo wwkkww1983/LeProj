@@ -95,7 +95,7 @@ namespace MotionCalc
             {
                 if (this.vwRecord == null)
                 {
-                    this.vwRecord = new VideoWriter(this.recordFileName + "_" + this.VideoIdxString + Constants.VIDEO_FORMAT, 18, new Size(this.capture.Width, this.capture.Height), true);
+                    this.vwRecord = new VideoWriter(this.recordFileName + "_" + this.VideoIdxString + Constants.VIDEO_FORMAT, 18, new Size(frame.Width, frame.Height), true);
                 }
                 this.vwRecord.Write(frame);
             }
