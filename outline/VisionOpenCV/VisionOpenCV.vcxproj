@@ -36,6 +36,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{71A26623-B4D4-4BDA-967D-58951CA328E8}</ProjectGuid>
     <RootNamespace>VisionOpenCV</RootNamespace>
+    <ProjectName>Edge</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

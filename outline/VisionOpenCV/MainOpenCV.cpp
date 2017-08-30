@@ -8,20 +8,11 @@ using namespace std;
 
 int main()
 {
-	//摄像头宽、高（分辨率），显示图片宽度（高度等比例缩放）
-	const int CAMERA_WIDTH = 640, CAMERA_HIGHT = 480, COMPRESS_WIDTH = 400;
-	int objXValue = -1, compressHight, angleMin,angleMax, xValue;
 	ImageHandler imageTool;	
-	Mat sourceFrame,foreground, compressFrame;
-	compressHight = 1.0 * CAMERA_HIGHT * COMPRESS_WIDTH / CAMERA_WIDTH;
+	Mat sourceFrame;
 	VideoCapture capture(0);//"D:/2.avi"
 	if (!capture.isOpened()) return 0;
-	MotionCalc motionCalc(COMPRESS_WIDTH,imageTool.MAX_VISION);
-	angleMax = motionCalc.MAX_VISION_ANGLE / 2;
-	angleMin = -1 * angleMax;	
-	//高斯混合背景/前景分割方法
-	BackgroundSubtractorMOG2 toolGaussBackground(100,16);
-//	BackgroundSubtractorMOG toolGaussBackground(100,16,0.6);
+
 	bool stopFlag(false);
 	int idx=0;
 	while (!stopFlag)
@@ -33,18 +24,15 @@ int main()
 			cout<<endl<<capture.isOpened()<<"Camera Read Fail;"<<endl;
 			if (!capture.isOpened() || !capture.read(sourceFrame)) break;
 		}
-		//resize(sourceFrame,compressFrame,Size(COMPRESS_WIDTH, compressHight));
+
 		//显示原始图像
 		imshow("Source Image", sourceFrame);
 		moveWindow("Source Image",0,0);
-		//人脸跟踪识别
-		xValue = imageTool.RecognitionHumanFace(sourceFrame);
-		//显示结果
-		if(xValue >= 0 && (xValue >= objXValue + 2 || xValue <= objXValue - 2))
-		{//转动不低于2度才显示
-			objXValue = xValue;
-			motionCalc.CalcAngleNextStepBySection(xValue);
-		}
+		
+		imageTool.edgeSobel(sourceFrame);
+		imageTool.edgeLaplacian(sourceFrame);
+		imageTool.edgeCanny(sourceFrame);
+
 		//程序结束开关
 		if (waitKey(10) == 27)
 		{//监听到ESC退出
