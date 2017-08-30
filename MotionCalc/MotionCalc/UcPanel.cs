@@ -25,6 +25,8 @@ namespace MotionCalc
         private int selectedLineIdx = -1,selectedPointForLineIdx = -1;
         private float imgScale;
         private Point rightClickPosition, lastMousePosition, selectedPoint,originPoint;
+        //绘制线条的第一个点
+        private Point OnePointForNewLine;
         private Color colorUserLine;
         private List<int> selectedLinePoints = null;
         /// <summary>
@@ -200,30 +202,28 @@ namespace MotionCalc
                 this.refreshView();
             }
             
-
             if (this.selectedPoint.X < 0) return;
 
-            if (this.onePointClickFlag && this.selectedPointForLineIdx >= 0)
+            if (this.onePointClickFlag && (this.OnePointForNewLine.X > 0 || this.OnePointForNewLine.Y > 0))
             {
-                LineInfo info = this.currentLinePoints[this.selectedPointForLineIdx];
-
-                if (info.One.X == this.selectedPoint.X && info.One.Y == this.selectedPoint.Y) return;
-                info.Other = this.selectedPoint;
-
-                this.drawOneLine(info);
-                this.selectedPointForLineIdx = -1;
-            }
-            else
-            {
+                if (this.OnePointForNewLine.X == this.selectedPoint.X && this.OnePointForNewLine.Y == this.selectedPoint.Y) 
+                    return;
                 LineInfo info = new LineInfo()
                 {
                     Idx = this.currentLinePoints.Count,
                     One = this.selectedPoint,
+                    Other = this.OnePointForNewLine,
                     Color = this.colorUserLine,
                     Width = USER_LINK_LINE_WIDTH
                 };
                 this.currentLinePoints.Add(info);
-                this.selectedPointForLineIdx = this.currentLinePoints.Count - 1;
+                this.drawOneLine(info);
+                this.OnePointForNewLine.X = 0;
+                this.OnePointForNewLine.Y = 0;
+            }
+            else
+            {
+                this.OnePointForNewLine = this.selectedPoint;
             }
             this.onePointClickFlag = !this.onePointClickFlag;
         }
@@ -305,10 +305,6 @@ namespace MotionCalc
         {
             this.currentLinePoints.RemoveAt(this.selectedLineIdx);
             this.selectedLinePoints.Remove(this.selectedLineIdx);
-            if(this.selectedPointForLineIdx > this.selectedLineIdx)
-            {
-                this.selectedPointForLineIdx--;
-            }
 
             for (int i = 0; i < this.selectedLinePoints.Count;i++ )
             {
@@ -354,10 +350,11 @@ namespace MotionCalc
             //{
             this.userHidePointsList.Add(this.selectedPoint);
             //}
-            if (this.selectedPointForLineIdx >=0 && this.selectedPointForLineIdx < this.currentLinePoints.Count)
+            if (this.OnePointForNewLine.X == this.selectedPoint.X && this.OnePointForNewLine.Y == this.selectedPoint.Y) 
             {//删除选中、用于连线的节点
-                this.currentLinePoints.RemoveAt(this.selectedPointForLineIdx);
-                this.selectedPointForLineIdx = -1;
+                this.OnePointForNewLine.X = 0;
+                this.OnePointForNewLine.Y = 0;
+                this.onePointClickFlag = false;
             }
 
             for (int i = 0; i < this.recgPointBoardList.Count; i++)
