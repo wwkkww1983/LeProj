@@ -45,8 +45,6 @@ namespace MotionCalc
 
             this.capture.Start();
 
-
-
             this.imgBox.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
             this.imgBox.DoubleClick += imgBox_DoubleClick;
         }
@@ -57,8 +55,10 @@ namespace MotionCalc
 
             Mat frame = new Mat();
             capture.Read(frame);
-            
-            imgBox.Image = frame;
+
+            this.imgBox.Image = frame;
+            double imgScale = this.getImgZoomScale(frame);
+            this.imgBox.SetZoomScale(imgScale, new Point());
             if (this.imageSaveFlag)
             {
                 this.SaveImage(frame);
@@ -68,7 +68,15 @@ namespace MotionCalc
                 this.StartRecord(frame);
             }
             frame.Dispose();
-        }        
+        }
+
+        private double getImgZoomScale(Mat frame)
+        {
+            double scaleWidth = (double)this.imgBox.Width / (double)frame.Size.Width;
+            double scaleHeight = (double)this.imgBox.Height / (double)frame.Size.Height;
+
+            return Math.Min(scaleWidth, scaleHeight);
+        }
 
         public void SaveImage(string fileName)
         {
