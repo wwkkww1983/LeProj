@@ -37,6 +37,8 @@ namespace MotionCalc
             InitializeComponent();
 
             this.InitialInfo();
+
+            this.WindowState = FormWindowState.Maximized;
         }
 
         private void InitialInfo()
@@ -46,7 +48,7 @@ namespace MotionCalc
             this.fileDialog.Filter = "待分析文件(*.*)|*.*";
 
             this.imgBox.Location = new Point(12, 31);
-            this.imgBox.Size = new Size(973, 752);
+            this.imgBox.Size = new Size(973, 670);
             this.imgBox.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
 
             this.pnNetLine = new UcPanel(this.ShowLineAngle);
@@ -125,6 +127,11 @@ namespace MotionCalc
             this.imgBox.Image = this.videoFrame;
 
             System.Threading.Thread.Sleep(10);
+
+            Constants.IMAGE_WIDTH = this.videoFrame.Width;
+            Constants.IMAGE_HEIGHT = this.videoFrame.Height;
+            this.imgScale = this.pnNetLine.ImageScale;
+
             this.childSetImgShowScale(this.imgScale);
             this.DrawNetLine();
             this.DrawRecognizedInfo();
@@ -333,9 +340,6 @@ namespace MotionCalc
                 this.hSBarVideo.Value = 0;
                 this.capture.ImageGrabbed += this.capture_ImageGrabbed;
                 this.capture.Start();
-                Constants.IMAGE_WIDTH = this.capture.Width;
-                Constants.IMAGE_HEIGHT = this.capture.Height;
-                this.imgScale = this.pnNetLine.ImageScale;
             }
         }
 

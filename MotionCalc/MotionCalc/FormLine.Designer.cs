@@ -50,7 +50,7 @@
             // 
             this.imgBox.Location = new System.Drawing.Point(12, 31);
             this.imgBox.Name = "imgBox";
-            this.imgBox.Size = new System.Drawing.Size(973, 748);
+            this.imgBox.Size = new System.Drawing.Size(973, 670);
             this.imgBox.TabIndex = 2;
             this.imgBox.TabStop = false;
             // 
@@ -140,7 +140,7 @@
             // hSBarVideo
             // 
             this.hSBarVideo.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.hSBarVideo.Location = new System.Drawing.Point(0, 798);
+            this.hSBarVideo.Location = new System.Drawing.Point(0, 714);
             this.hSBarVideo.Name = "hSBarVideo";
             this.hSBarVideo.Size = new System.Drawing.Size(993, 21);
             this.hSBarVideo.TabIndex = 14;
@@ -152,7 +152,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(993, 819);
+            this.ClientSize = new System.Drawing.Size(993, 735);
             this.Controls.Add(this.hSBarVideo);
             this.Controls.Add(this.lbAngle);
             this.Controls.Add(this.imgBox);
@@ -161,7 +161,7 @@
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(1031, 880);
+            this.MaximumSize = new System.Drawing.Size(1021, 800);
             this.Name = "FormLine";
             this.Text = "动作捕捉分析系统";
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FormLine_KeyUp);
