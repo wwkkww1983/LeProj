@@ -8,3 +8,5 @@ Release/
 *.log
 *.obj
 *.tlog
+*.mdf
+*.ldf

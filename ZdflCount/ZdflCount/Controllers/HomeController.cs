@@ -10,21 +10,21 @@ namespace ZdflCount.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Message = "修改此模板以快速启动你的 ASP.NET MVC 应用程序。";
+            ViewBag.Message = "纱布计数管理系统";
 
             return View();
         }
 
         public ActionResult About()
         {
-            ViewBag.Message = "你的应用程序说明页。";
+            ViewBag.Message = "系统使用说明";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "你的联系方式页。";
+            ViewBag.Message = "使用问题反馈对象";
 
             return View();
         }
