@@ -50,12 +50,13 @@
             // 
             this.imgBox.Location = new System.Drawing.Point(12, 31);
             this.imgBox.Name = "imgBox";
-            this.imgBox.Size = new System.Drawing.Size(973, 670);
+            this.imgBox.Size = new System.Drawing.Size(973, 680);
             this.imgBox.TabIndex = 2;
             this.imgBox.TabStop = false;
             // 
             // lbAngle
             // 
+            this.lbAngle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lbAngle.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lbAngle.Location = new System.Drawing.Point(886, -1);
             this.lbAngle.Name = "lbAngle";
@@ -160,10 +161,9 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(1021, 800);
             this.Name = "FormLine";
             this.Text = "动作捕捉分析系统";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormLine_FormClosing);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FormLine_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.imgBox)).EndInit();
             this.menuStrip1.ResumeLayout(false);

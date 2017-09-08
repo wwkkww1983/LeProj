@@ -39,6 +39,8 @@ namespace MotionCalc
             this.InitialInfo();
 
             this.WindowState = FormWindowState.Maximized;
+            //this.Size = new Size(1021, 800);
+            
         }
 
         private void InitialInfo()
@@ -48,12 +50,10 @@ namespace MotionCalc
             this.fileDialog.Filter = "待分析文件(*.*)|*.*";
 
             this.imgBox.Location = new Point(12, 31);
-            this.imgBox.Size = new Size(973, 670);
             this.imgBox.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
 
             this.pnNetLine = new UcPanel(this.ShowLineAngle);
             this.pnNetLine.Location = this.imgBox.Location;
-            this.pnNetLine.Size = this.imgBox.Size;
             this.imgScale = this.pnNetLine.ImageScale;
             this.Controls.Add(this.pnNetLine);
             this.pnNetLine.BringToFront();
@@ -138,6 +138,11 @@ namespace MotionCalc
             this.moveVideoScroll();
 
             System.Threading.Thread.Sleep(this.playInterSleep);
+        }
+        
+        private void FormLine_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.pulsePlayFlag = true;
         }
 
         private void childSetImgShowScale(double scale)
@@ -311,6 +316,8 @@ namespace MotionCalc
         
         private void openVideoToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.imgBox.Size = new Size(this.Width - 38, this.Height - 130);
+            this.pnNetLine.Size = this.imgBox.Size;
             this.pnNetLine.BringToFront();
 
             this.fileDialog.InitialDirectory = System.Environment.CurrentDirectory;

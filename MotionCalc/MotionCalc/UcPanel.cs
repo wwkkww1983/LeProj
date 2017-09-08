@@ -18,11 +18,7 @@ namespace MotionCalc
         private const int  MAX_DISTANCE_FOR_DIFF_TWO_POINTS = 20;
         private const double DOUBLE_MAX_DIFF = 1e-6;
         private bool onePointClickFlag = false, userMovingLineFlag = false;
-        /// <summary>
-        /// 
-        /// selectedPointForLineIdx：连线时，点击的第一个节点新增的线条索引
-        /// </summary>
-        private int selectedLineIdx = -1,selectedPointForLineIdx = -1;
+        private int selectedLineIdx = -1, imgRealWidth,imgRealHeight;
         private float imgScale;
         private Point rightClickPosition, lastMousePosition, selectedPoint,originPoint;
         //绘制线条的第一个点
@@ -234,7 +230,7 @@ namespace MotionCalc
             {
                 Idx = this.currentLinePoints.Count,
                 One = new Point(0, this.rightClickPosition.Y),
-                Other = new Point(this.Width, this.rightClickPosition.Y),
+                Other = new Point(this.imgRealWidth, this.rightClickPosition.Y),
                 Color = this.colorUserLine,
                 Width = USER_LINK_LINE_WIDTH
             };
@@ -249,7 +245,7 @@ namespace MotionCalc
             {
                 Idx = this.currentLinePoints.Count,
                 One = new Point(this.rightClickPosition.X, 0),
-                Other = new Point(this.rightClickPosition.X, this.Height),
+                Other = new Point(this.rightClickPosition.X, this.imgRealHeight),
                 Color = this.colorUserLine,
                 Width = USER_LINK_LINE_WIDTH
             };
@@ -325,7 +321,7 @@ namespace MotionCalc
         private void lineExtend_Click(object sender, EventArgs e)
         {
             LineInfo selectedLine = this.getCurrentSelectedLine();
-            List<Point> linePoints = this.calcLineCrossRectangle(selectedLine.One, selectedLine.Other, new Point(0, 0), new Point(this.Width, this.Height));
+            List<Point> linePoints = this.calcLineCrossRectangle(selectedLine.One, selectedLine.Other, new Point(0, 0), new Point(this.imgRealWidth, this.imgRealHeight));
 
             if (linePoints.Count < 2) return;
             selectedLine.One = linePoints[0];
@@ -547,17 +543,17 @@ namespace MotionCalc
                 int lineOneHeight = Constants.NetLineWidth + Constants.LineSeperationHeight;
                 int lineOneWidth = Constants.NetLineWidth + Constants.LineSeperationWidth;
                 Pen pen = new Pen(Constants.ColorNetLine, Constants.NetLineWidth);
-                for (int i = 0; i < this.Height; i += lineOneHeight)
+                for (int i = 0; i < this.imgRealHeight; i += lineOneHeight)
                 {
                     Point start = new Point(0, i);
-                    Point end = new Point(this.Width, i);
+                    Point end = new Point(this.imgRealWidth, i);
                     g.DrawLine(pen, start, end);
                 }
 
-                for (int i = 0; i < this.Width; i += lineOneWidth)
+                for (int i = 0; i < this.imgRealWidth; i += lineOneWidth)
                 {
                     Point start = new Point(i, 0);
-                    Point end = new Point(i, this.Height);
+                    Point end = new Point(i, this.imgRealHeight);
                     g.DrawLine(pen, start, end);
                 }
             }
@@ -852,7 +848,20 @@ namespace MotionCalc
             double scaleWidth = (double)this.Width / width;
             double scaleHeight = (double)this.Height / height;
 
-            return (float)Math.Min(scaleWidth, scaleHeight);
+            double minSacle = Math.Min(scaleWidth, scaleHeight);
+
+            if (Math.Abs(scaleWidth - minSacle) < 1e-6)
+            {
+                this.imgRealWidth = this.Width;
+                this.imgRealHeight = (int)(1.0 * this.Width * height / width);
+            }
+            else
+            {
+                this.imgRealWidth = (int)(1.0 * this.Height * width / height);
+                this.imgRealHeight = this.Height;
+            }
+
+            return (float)minSacle;
         }
 
         private int exchangeRecon_Board(int loc)
