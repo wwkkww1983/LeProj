@@ -1,0 +1,61 @@
+﻿@model ZdflCount.Models.Schedules
+
+@{
+    ViewBag.Title = "修改施工单";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>ScheduleModels</legend>
+
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DateCreate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DateCreate)
+            @Html.ValidationMessageFor(model => model.DateCreate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CreatorID)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CreatorID)
+            @Html.ValidationMessageFor(model => model.CreatorID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProductCount)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ProductCount)
+            @Html.ValidationMessageFor(model => model.ProductCount)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FinishCount)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FinishCount)
+            @Html.ValidationMessageFor(model => model.FinishCount)
+        </div>
+
+        <p>
+            <input type="submit" value="保存修改" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("返回列表页", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

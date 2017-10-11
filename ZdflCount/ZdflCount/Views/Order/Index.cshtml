@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "添加订单信息";
+    var orderStatus = "";
+}
+
+<h2>已加载订单列表</h2>  
+<table id="tableOrder"  border="1"  width="100%" > 
+    <thead>   
+        <th>订单编号</th> 
+        <th>订单状态</th>
+        <th>订单日期</th>  
+        <th>加载日期</th>
+        <th>施工单数</th>  
+        <th>商品总数量</th>  
+        <th>已分派数</th> 
+        <th>已生产数</th> 
+        <th>在生产数</th> 
+        <th>施工单</th>
+
+    </thead>   
+    @foreach (var item in Model) 
+    {
+         <tr>   
+             <td>@item.OrderNumber</td> 
+             <td>
+                 @switch ((int)@item.Status)
+                 {
+                     case 1: orderStatus="已分派"; break;
+                     case 2:orderStatus="停止生产"; break;
+                     case 3:orderStatus="已完成"; break;
+                     default :orderStatus="未处理"; break;
+                 }
+                 @orderStatus
+             </td>
+             <td>@string.Format("{0:yyyy年MM月dd日}", item.DateCreate)</td>  
+             <td>@string.Format("{0:yyyy年MM月dd日}", item.DateAssign)</td>
+             <td>@item.AssignedCount</td>  
+             <td>@item.ProductCount</td>  
+             <td>@item.ProductAssignedCount</td>  
+             <td>@item.ProductFinishedCount</td>  
+             <td>@item.ProductWorkingCount</td>
+             <td>@Html.ActionLink("点击查看", "Index", "Schedule", new { orderId = @item.OrderId},null)</td>
+         </tr>   
+    }                     
+</table>

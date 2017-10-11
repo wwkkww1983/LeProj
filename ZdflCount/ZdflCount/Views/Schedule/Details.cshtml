@@ -1,0 +1,43 @@
+﻿@model ZdflCount.Models.Schedules
+
+@{
+    ViewBag.Title = "施工单详情";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<fieldset>
+    <legend>ScheduleModels</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DateCreate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DateCreate)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CreatorID)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CreatorID)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ProductCount)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ProductCount)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.FinishCount)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FinishCount)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("修改", "Edit", new { id=Model.ID }) |
+    @Html.ActionLink("返回列表页", "Index")
+</p>
