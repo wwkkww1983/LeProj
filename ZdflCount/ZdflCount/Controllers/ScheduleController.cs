@@ -12,19 +12,30 @@ namespace ZdflCount.Controllers
     public class ScheduleController : Controller
     {
         private ScheduleDbContext db = new ScheduleDbContext();
+        private ScheduleOrder modelSchOrder = new ScheduleOrder();
 
         //
         // GET: /Schedule/
 
-        public ActionResult Index(int orderId)
+        public ActionResult Index(int id)
         {
-            Schedules schedules = db.Schedules.Find(id);
+            //string strSql = string.Format("selet * from Schedules where orderId={0}",orderId);
+            //IEnumerable<Schedules> scheduleList = db.Schedules.SqlQuery(strSql);
+            //if (scheduleList == null)
+            //{
+            //    return HttpNotFound();
+            //}
+
+            //return View(scheduleList);
+            var schedules = from item in db.Schedules
+                            where item.OrderId == id
+                            select item;
             if (schedules == null)
             {
                 return HttpNotFound();
             }
 
-            return View(db.schedules.ToList());
+            return View(schedules);
         }
 
         //
@@ -41,11 +52,13 @@ namespace ZdflCount.Controllers
         }
 
         //
-        // GET: /Schedule/Create
+        // GET: /Schedule/Create/1
 
-        public ActionResult Create()
+        public ActionResult Create(int id=0)
         {
-            return View();
+            this.modelSchOrder.GetOrderById(id);
+
+            return View(this.modelSchOrder);
         }
 
         //
@@ -56,6 +69,12 @@ namespace ZdflCount.Controllers
         {
             if (ModelState.IsValid)
             {
+                schedules.DateCreate = DateTime.Now;
+                schedules.FinishCount = 0;
+                schedules.CreatorID = Convert.ToInt32(Session["UserID"]);
+                schedules.CreatorName = User.Identity.Name;
+                schedules.LastUpdatePersonID = schedules.CreatorID;
+                schedules.LastUpdatePersonName = User.Identity.Name;
                 db.Schedules.Add(schedules);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -74,7 +93,11 @@ namespace ZdflCount.Controllers
             {
                 return HttpNotFound();
             }
-            return View(schedules);
+
+            this.modelSchOrder.Schedules = schedules;
+            this.modelSchOrder.GetOrderById(schedules.OrderId);
+
+            return View(this.modelSchOrder);
         }
 
         //

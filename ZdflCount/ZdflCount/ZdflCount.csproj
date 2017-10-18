@@ -50,6 +50,9 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -163,6 +166,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\UserLoginAuthentication.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -172,9 +176,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201710110616186_Initial.cs" />
-    <Compile Include="Migrations\201710110616186_Initial.Designer.cs">
-      <DependentUpon>201710110616186_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201710180912441_Initial.cs" />
+    <Compile Include="Migrations\201710180912441_Initial.Designer.cs">
+      <DependentUpon>201710180912441_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
@@ -302,6 +306,7 @@
     <Content Include="Views\Schedule\Create.cshtml" />
     <Content Include="Views\Schedule\Edit.cshtml" />
     <Content Include="Views\Schedule\Delete.cshtml" />
+    <Content Include="Views\Schedule\_OrderCountPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -310,8 +315,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201710110616186_Initial.resx">
-      <DependentUpon>201710110616186_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201710180912441_Initial.resx">
+      <DependentUpon>201710180912441_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -395,7 +395,8 @@ aside {
     margin: 5px 0 0 10px;
 }
 
-/* forms */
+/*
+
 fieldset {
     border: none;
     margin: 0;
@@ -414,7 +415,7 @@ fieldset {
         fieldset ol li {
             padding-bottom: 5px;
         }
-
+*/
 label {
     display: block;
     font-size: 1.2em;

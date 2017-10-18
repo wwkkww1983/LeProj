@@ -1,0 +1,20 @@
+﻿@model ZdflCount.Models.ScheduleOrder
+
+<h4>对应订单信息</h4>
+
+<table>
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Orders.OrderNumber)</th>
+            <th>@Html.DisplayNameFor(model => model.Orders.ProductCount)</th>
+            <th>@Html.DisplayNameFor(model => model.Orders.ProductFreeCount)</th>
+        </tr>
+    </thead>
+    <tr>
+        <td>@Html.DisplayFor(model => model.Orders.OrderNumber)</td>
+        <td>@Html.DisplayFor(model => model.Orders.ProductCount)</td>
+        <td>@Html.DisplayFor(model => model.Orders.ProductFreeCount)</td>
+    </tr>
+
+</table>
+<br /><hr /><br />

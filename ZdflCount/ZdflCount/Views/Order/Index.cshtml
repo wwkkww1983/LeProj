@@ -37,9 +37,9 @@
              <td>@item.AssignedCount</td>  
              <td>@item.ProductCount</td>  
              <td>@item.ProductAssignedCount</td>  
-             <td>@item.ProductFinishedCount</td>  
-             <td>@item.ProductWorkingCount</td>
-             <td>@Html.ActionLink("点击查看", "Index", "Schedule", new { orderId = @item.OrderId},null)</td>
+             <td>@item.ProductFinishedCount</td>
+             <td>@item.ProductFreeCount</td>
+             <td>@Html.ActionLink("点击查看", "Index", "Schedule", new {id = item.OrderId},null)</td>
          </tr>   
     }                     
 </table>
