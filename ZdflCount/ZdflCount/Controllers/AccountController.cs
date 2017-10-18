@@ -37,6 +37,7 @@ namespace ZdflCount.Controllers
         {
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
+                Session["UserID"] = WebSecurity.GetUserId(model.UserName);
                 return RedirectToLocal(returnUrl);
             }
 
@@ -53,7 +54,7 @@ namespace ZdflCount.Controllers
         public ActionResult LogOff()
         {
             WebSecurity.Logout();
-
+            Session["UserID"] = null;
             return RedirectToAction("Index", "Home");
         }
 

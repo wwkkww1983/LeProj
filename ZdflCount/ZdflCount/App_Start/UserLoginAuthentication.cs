@@ -1,25 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.ServiceModel.DomainServices.Hosting;
-using System.ServiceModel.DomainServices.Server;
-using System.ServiceModel.DomainServices.Server.ApplicationServices;
+using System.Web.Mvc; 
 
 namespace ZdflCount.App_Start
 {
-    [EnableClientAccess]
-    public class UserLoginAuthentication : AuthenticationBase<User>
+    public class UserLoginAuthenticationAttribute : ActionFilterAttribute    
     {
-        // 若要对 Web 应用程序启用 Forms/Windows 身份验证，请编辑 web.config 文件的相应部分。
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            if (filterContext.HttpContext.Session["UserID"] == null)
+            {
+                filterContext.HttpContext.Response.Redirect("/Account/Login");
+            }
+        }  
     }
 
-    public class User : UserBase
-    {
-        // 注意: 此处可以添加配置文件属性
-        // 若要启用配置文件，请编辑 web.config 文件的相应部分。
-
-        // public string MyProfileProperty { get; set; }
-    }
 }

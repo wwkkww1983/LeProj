@@ -7,6 +7,7 @@ using ZdflCount.Models;
 
 namespace ZdflCount.Controllers
 {
+    //[App_Start.UserLoginAuthentication]
     public class OrderController : Controller
     {
         private OrderDbContext db = new OrderDbContext();

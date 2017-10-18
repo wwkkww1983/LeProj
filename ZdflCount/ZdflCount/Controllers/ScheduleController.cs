@@ -9,6 +9,7 @@ using ZdflCount.Models;
 
 namespace ZdflCount.Controllers
 {
+    //[App_Start.UserLoginAuthentication]
     public class ScheduleController : Controller
     {
         private ScheduleDbContext db = new ScheduleDbContext();
@@ -17,16 +18,8 @@ namespace ZdflCount.Controllers
         //
         // GET: /Schedule/
 
-        public ActionResult Index(int id)
+        public ActionResult Index(int id = 0)
         {
-            //string strSql = string.Format("selet * from Schedules where orderId={0}",orderId);
-            //IEnumerable<Schedules> scheduleList = db.Schedules.SqlQuery(strSql);
-            //if (scheduleList == null)
-            //{
-            //    return HttpNotFound();
-            //}
-
-            //return View(scheduleList);
             var schedules = from item in db.Schedules
                             where item.OrderId == id
                             select item;
@@ -77,7 +70,7 @@ namespace ZdflCount.Controllers
                 schedules.LastUpdatePersonName = User.Identity.Name;
                 db.Schedules.Add(schedules);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { id = schedules.OrderId });
             }
 
             return View(schedules);
@@ -108,9 +101,21 @@ namespace ZdflCount.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(schedules).State = EntityState.Modified;
+                //db.Entry(schedules).State = EntityState.Modified;
+                db.Schedules.Attach(schedules);
+                var tempEntity = db.Entry(schedules);
+                tempEntity.Property(item => item.ProductCount).IsModified = true;
+                tempEntity.Property(item => item.FinishCount).IsModified = true;
+                tempEntity.Property(item => item.DetailInfo).IsModified = true;
+                tempEntity.Property(item => item.NoticeInfo).IsModified = true;
+                tempEntity.Property(item => item.LastUpdatePersonID).IsModified = true;
+                tempEntity.Property(item => item.LastUpdatePersonName).IsModified = true;
+
+                schedules.LastUpdatePersonID = Convert.ToInt32(Session["UserID"]);
+                schedules.LastUpdatePersonName = User.Identity.Name;
+
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = schedules.ID });
             }
             return View(schedules);
         }

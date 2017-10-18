@@ -36,6 +36,7 @@ namespace ZdflCount.Models
         /// <summary>
         /// 订单编号
         /// </summary>
+        [StringLength(50)]
         [DisplayName("订单编号")]
         public string OrderNumber { get; set; }
 
@@ -120,6 +121,7 @@ namespace ZdflCount.Models
         /// <summary>
         /// 订单编号
         /// </summary>
+        [StringLength(50)]
         [DisplayName("订单编号")]
         public string OrderNumber { get; set; }
 
@@ -135,12 +137,14 @@ namespace ZdflCount.Models
         [DisplayName("创建者")]
         public int CreatorID { get; set; }
 
+        [StringLength(50)]
         [DisplayName("创建者")]
         public string CreatorName { get; set; }
 
         [DisplayName("最后修改人")]
         public int LastUpdatePersonID { get; set; }
 
+        [StringLength(50)]
         [DisplayName("最后修改人")]
         public string LastUpdatePersonName { get; set; }
 
