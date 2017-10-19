@@ -13,6 +13,7 @@ namespace ZdflCount.Controllers
     public class ScheduleController : Controller
     {
         private ScheduleDbContext db = new ScheduleDbContext();
+        private OrderDbContext dbOrder = new OrderDbContext();
         private ScheduleOrder modelSchOrder = new ScheduleOrder();
 
         //
@@ -21,12 +22,15 @@ namespace ZdflCount.Controllers
         public ActionResult Index(int id = 0)
         {
             var schedules = from item in db.Schedules
-                            where item.OrderId == id
+                            where item.OrderId == id && item.Status != enumOrderStatus.Deleted
                             select item;
             if (schedules == null)
             {
                 return HttpNotFound();
             }
+            Orders orderInfo = dbOrder.Orders.Find(id);
+            ViewData["OrderId"] = id;
+            ViewData["OrderNumber"] = orderInfo.OrderNumber;
 
             return View(schedules);
         }
@@ -50,6 +54,7 @@ namespace ZdflCount.Controllers
         public ActionResult Create(int id=0)
         {
             this.modelSchOrder.GetOrderById(id);
+            ViewData["CreatorName"] = User.Identity.Name;
 
             return View(this.modelSchOrder);
         }
@@ -62,18 +67,33 @@ namespace ZdflCount.Controllers
         {
             if (ModelState.IsValid)
             {
+                Orders orderInfo = dbOrder.Orders.Find(schedules.OrderId);
+                if (orderInfo.ProductFreeCount < schedules.ProductCount)
+                {
+                    this.modelSchOrder.Schedules = schedules;
+                    this.modelSchOrder.Orders = orderInfo;
+                    ViewData["error"] = "分派数量超过订单剩余总数";
+                    return View(this.modelSchOrder);
+                }
+
                 schedules.DateCreate = DateTime.Now;
+                schedules.DateLastUpdate = DateTime.Now;
                 schedules.FinishCount = 0;
                 schedules.CreatorID = Convert.ToInt32(Session["UserID"]);
                 schedules.CreatorName = User.Identity.Name;
                 schedules.LastUpdatePersonID = schedules.CreatorID;
                 schedules.LastUpdatePersonName = User.Identity.Name;
+                schedules.Number = string.Format("gd{0}{1}", schedules.CreatorID,DateTime.Now.ToString("yyyyMMddHHmmssffff"));
                 db.Schedules.Add(schedules);
                 db.SaveChanges();
+
+                orderInfo.ProductFreeCount -= schedules.ProductCount;
+                dbOrder.Entry(orderInfo).State = EntityState.Modified;
+                dbOrder.SaveChanges();
                 return RedirectToAction("Index", new { id = schedules.OrderId });
             }
 
-            return View(schedules);
+            return Content("输入数据无效");
         }
 
         //
@@ -110,9 +130,11 @@ namespace ZdflCount.Controllers
                 tempEntity.Property(item => item.NoticeInfo).IsModified = true;
                 tempEntity.Property(item => item.LastUpdatePersonID).IsModified = true;
                 tempEntity.Property(item => item.LastUpdatePersonName).IsModified = true;
+                tempEntity.Property(item => item.DateLastUpdate).IsModified = true;
 
                 schedules.LastUpdatePersonID = Convert.ToInt32(Session["UserID"]);
                 schedules.LastUpdatePersonName = User.Identity.Name;
+                schedules.DateLastUpdate = DateTime.Now;
 
                 db.SaveChanges();
                 return RedirectToAction("Details", new { id = schedules.ID });
@@ -140,9 +162,16 @@ namespace ZdflCount.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Schedules schedules = db.Schedules.Find(id);
-            db.Schedules.Remove(schedules);
+            //db.Schedules.Remove(schedules);
+
+            db.Schedules.Attach(schedules);
+            var tempEntity = db.Entry(schedules);
+            schedules.Status = enumOrderStatus.Deleted;
+            schedules.LastUpdatePersonID = Convert.ToInt32(Session["UserID"]);
+            schedules.LastUpdatePersonName = User.Identity.Name;
+
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { id = schedules.OrderId });
         }
 
         protected override void Dispose(bool disposing)

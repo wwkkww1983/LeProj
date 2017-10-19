@@ -3,6 +3,9 @@ using System.Web.Mvc;
 
 namespace ZdflCount.App_Start
 {
+    /// <summary>
+    /// 用户登录验证
+    /// </summary>
     public class UserLoginAuthenticationAttribute : ActionFilterAttribute    
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -13,5 +16,4 @@ namespace ZdflCount.App_Start
             }
         }  
     }
-
 }

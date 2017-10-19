@@ -6,21 +6,25 @@
 
 <h2>@ViewBag.Title</h2>
 
-<p>
-    @foreach (var item in @Model.Take(1)) {
-        @Html.ActionLink("创建施工单", "Create",new {id=item.OrderId})
-    }
-</p>
+<div class="left-outof-table">        
+    当前订单编号：@ViewData["OrderNumber"]    
+</div>
+    <div class="right-outof-table">
+        @Html.ActionLink("创建施工单", "Create",new {id=ViewData["OrderId"]})
+    </div>
 <table>
     <thead>
         <th>
-            @Html.DisplayNameFor(model => model.OrderNumber)
+            @Html.DisplayNameFor(model => model.Number)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DateCreate)
+            @Html.DisplayNameFor(model => model.DateLastUpdate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CreatorID)
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastUpdatePersonName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.ProductCount)
@@ -34,13 +38,16 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.OrderNumber)
+            @Html.DisplayFor(modelItem => item.Number)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DateCreate)
+            @Html.DisplayFor(modelItem => item.DateLastUpdate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CreatorID)
+            @Html.DisplayEnumDescription("enumOrderStatus",(int)item.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastUpdatePersonName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ProductCount)
@@ -57,3 +64,7 @@
 }
 
 </table>
+
+<div class="left-outof-table">
+    @Html.ActionLink("返回订单列表", "Index", "Order" )
+</div>

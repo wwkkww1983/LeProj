@@ -416,10 +416,36 @@ fieldset {
             padding-bottom: 5px;
         }
 */
+
+/*显示在表单右上角的错误提示*/
+fieldset .error-message-ur-fieldset {
+    float: right;
+    height: 50px;
+    width: 40%;
+    color: red;
+    font-weight: bold;
+}
+
+/*表格外面模块样式*/
+.left-outof-table {
+    margin:10px;
+    float: left;
+}
+
+.right-outof-table {
+    margin:10px;
+    float: right;
+}
+
+.link-create-new-ur {
+    float:right;
+}
+
 label {
     display: block;
     font-size: 1.2em;
     font-weight: 600;
+    margin-right: 10px;
 }
 
 label.checkbox {
@@ -526,6 +552,14 @@ input[type="checkbox"].input-validation-error {
     display: none;
 }
 
+.display-field, .editor-field{
+    line-height: 3em;
+}
+
+.display-label, .editor-label{
+    float: left;
+    line-height: 3em;
+}
 
 /********************
 *   Mobile Styles   *

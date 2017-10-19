@@ -10,3 +10,4 @@ Release/
 *.tlog
 *.mdf
 *.ldf
+Migrations/

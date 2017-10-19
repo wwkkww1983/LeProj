@@ -2,27 +2,48 @@
 
 @{
     ViewBag.Title = "新建施工单";
+    var errorMsg = "";
+    if (ViewData["error"] != null)
+    {
+        errorMsg = ViewData["error"].ToString();
+    }
 }
 
 <h2>@ViewBag.Title</h2>
 
+<script >
+    function CheckProductCount(createForm) {
+        var t = document.getElementById('orderCount').innerHTML;
+        var c = createForm.Schedules_ProductCount.value;
+        if (Number(t) < Number(c)) {
+            window.alert("分派数量超过订单剩余总数");
+            return false;
+        }
+        return true;
+        
+    }
+</script>
+
 @Html.Partial("_OrderCountPartial")
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true)
 
     <fieldset>
-        <legend>Schedules</legend>
+        <legend>输入施工单信息</legend>
         
-        @Html.Hidden("Schedules.OrderId",Model.Orders.OrderId)
-        @Html.Hidden("Schedules.OrderNumber",Model.Orders.OrderNumber)
+        @Html.Hidden("Schedules.OrderId", Model.Orders.OrderId)
+        @Html.Hidden("Schedules.OrderNumber", Model.Orders.OrderNumber)
 
+        <div class="error-message-ur-fieldset">
+            @errorMsg
+        </div>
         <div class="editor-label">
-            @Html.LabelFor(model => model.Schedules.CreatorID)
+            @Html.LabelFor(model => model.Schedules.CreatorName)
         </div>
         <div class="editor-field">
-            @Html.DisplayFor(model => model.Schedules.CreatorID)
-            @Html.ValidationMessageFor(model => model.Schedules.CreatorID)
+            ：@ViewData["CreatorName"]
         </div>
 
         <div class="editor-label">
@@ -37,23 +58,23 @@
             @Html.LabelFor(model => model.Schedules.DetailInfo)
         </div>
         <div class="editor-field">
-            @Html.TextAreaFor(model => model.Schedules.DetailInfo, new { rows = "8", style = "width:99%" })
+            @Html.TextAreaFor(model => model.Schedules.DetailInfo, new { rows = "8", style = "width:99%" })
         </div>        
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Schedules.NoticeInfo)
         </div>
         <div class="editor-field">
-            @Html.TextAreaFor(model => model.Schedules.NoticeInfo, new { rows = "8", style = "width:99%" })
+            @Html.TextAreaFor(model => model.Schedules.NoticeInfo, new { rows = "8", style = "width:99%" })
         </div>
         <p>
-            <input type="submit" value="Create" />
+            <input type="submit" value="保存新施工单" onclick="return CheckProductCount(this.form)" />
         </p>
     </fieldset>
 }
 
-<div>
-    @Html.ActionLink("返回列表页", "Index",  new {id = Model.Orders.OrderId})
+<div class="left-outof-table">
+    @Html.ActionLink("返回施工单列表", "Index",  new {id = Model.Orders.OrderId})
 </div>
 
 @section Scripts {

@@ -15,25 +15,36 @@
         <legend>施工单信息</legend>
 
         @Html.HiddenFor(model => model.Schedules.ID)
-        @Html.Hidden("Schedules.OrderId",Model.Orders.OrderId)
-        @Html.Hidden("Schedules.OrderNumber",Model.Orders.OrderNumber)
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Schedules.DateCreate)          
-            @Html.DisplayFor(model => model.Schedules.DateCreate)
+            @Html.LabelFor(model => model.Schedules.DateCreate)           
         </div>
-
+        <div class="editor-field">
+            ：@Html.DisplayFor(model => model.Schedules.DateCreate)
+        </div>
         <div class="editor-label">
-            @Html.LabelFor(model => model.Schedules.LastUpdatePersonName)            
-            @Html.DisplayFor(model => model.Schedules.LastUpdatePersonName)
+             @Html.DisplayNameFor(model => model.Schedules.Number)
         </div>
-
+        <div class="editor-field">
+            ：@Html.DisplayFor(model => model.Schedules.Number)
+        </div>
+        <div class="editor-label">
+             @Html.LabelFor(model => model.Schedules.Status)
+        </div>
+        <div class="editor-field">
+            ： @Html.DisplayEnumDescription("enumOrderStatus",(int)@Model.Schedules.Status)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Schedules.LastUpdatePersonName)
+        </div>        
+        <div class="editor-field">        
+            ：@Html.DisplayFor(model => model.Schedules.LastUpdatePersonName)
+        </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.Schedules.ProductCount)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Schedules.ProductCount)
-            @Html.ValidationMessageFor(model => model.Schedules.ProductCount)
+           ： @Html.DisplayFor(model => model.Schedules.ProductCount)
         </div>
 
         <div class="editor-label">
@@ -64,8 +75,8 @@
     </fieldset>
 }
 
-<div>
-    @Html.ActionLink("返回列表页", "Index",  new {id = Model.Orders.OrderId})
+<div class="left-outof-table">
+    @Html.ActionLink("返回施工单列表", "Index",  new {id = Model.Orders.OrderId})
 </div>
 
 @section Scripts {

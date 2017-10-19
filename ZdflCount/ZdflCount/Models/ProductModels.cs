@@ -11,16 +11,34 @@ namespace ZdflCount.Models
 {
     public enum enumOrderStatus
     {
-        //未处理
+        /// <summary>
+        /// 已删除
+        /// </summary>
+        [Description("已删除")]
+        Deleted = -1,
+
+        /// <summary>
+        /// 未处理
+        /// </summary>
+        [Description("未处理")]
         Unhandle = 0x00,
 
-        //已分派
+        /// <summary>
+        /// 已分派
+        /// </summary>
+        [Description("已分派")]
         Assigned,
 
-        //停止生产
+        /// <summary>
+        /// 已中止
+        /// </summary>
+        [Description("已中止")]
         Pause,
 
-        //已完成
+        /// <summary>
+        /// 已完成
+        /// </summary>
+        [Description("已完成")]
         Finished
     }
 
@@ -79,7 +97,7 @@ namespace ZdflCount.Models
         /// <summary>
         /// 待分派商品数
         /// </summary>
-        [DisplayName("待分派数量")]
+        [DisplayName("可分派数量")]
         public int ProductFreeCount{get;set;}
     }
 
@@ -113,6 +131,10 @@ namespace ZdflCount.Models
         [DisplayName("工单状态")]
         public enumOrderStatus Status { get; set; }
 
+        [StringLength(50)]
+        [DisplayName("工单编号")]
+        public string Number { get; set; }
+
         /// <summary>
         /// 订单编号
         /// </summary>
@@ -130,6 +152,10 @@ namespace ZdflCount.Models
         /// </summary>
         [DisplayName("施工单创建时间")]
         public DateTime DateCreate { get; set; }
+
+
+        [DisplayName("最后修改时间")]
+        public DateTime DateLastUpdate { get; set; }
 
         /// <summary>
         /// 创建者编号
@@ -151,12 +177,14 @@ namespace ZdflCount.Models
         /// <summary>
         /// 商品总数量
         /// </summary>
+        [RegularExpression(@"^[1-9]\d*$", ErrorMessage = "仅可以输入正整数")]
         [DisplayName("需生产总数")]
         public int ProductCount { get; set; }
 
         /// <summary>
         /// 已完成数
         /// </summary>
+        [RegularExpression(@"^[0-9]\d*$", ErrorMessage = "仅可以输入正整数")]
         [DisplayName("已完成数")]
         public int FinishCount { get; set; }
 
