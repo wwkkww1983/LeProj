@@ -437,6 +437,21 @@ fieldset .error-message-ur-fieldset {
     float: right;
 }
 
+.normal-margin {
+    margin:10px;
+}
+
+.right-outof-warning-button {    
+    color: red;
+    float: right;
+}
+
+.right-within-handler-button {   
+    float: right;
+    height: 50px;
+    margin: 20px;
+}
+
 .link-create-new-ur {
     float:right;
 }

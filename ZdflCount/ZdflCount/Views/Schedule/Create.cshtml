@@ -20,7 +20,6 @@
             return false;
         }
         return true;
-        
     }
 </script>
 
@@ -34,7 +33,7 @@
         <legend>输入施工单信息</legend>
         
         @Html.Hidden("Schedules.OrderId", Model.Orders.OrderId)
-        @Html.Hidden("Schedules.OrderNumber", Model.Orders.OrderNumber)
+        <input id="temporary" type="hidden" value="2">
 
         <div class="error-message-ur-fieldset">
             @errorMsg
@@ -45,7 +44,13 @@
         <div class="editor-field">
             ：@ViewData["CreatorName"]
         </div>
-
+        
+        <div class="editor-label">
+             @Html.DisplayNameFor(model => model.Schedules.MachineName)
+        </div>
+        <div class="editor-field">
+           ： @Html.DropDownList("machine", @Model.MachineList)
+        </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.Schedules.ProductCount)
         </div>
@@ -69,6 +74,7 @@
         </div>
         <p>
             <input type="submit" value="保存新施工单" onclick="return CheckProductCount(this.form)" />
+            <input type="checkbox" value="1" name="temporary" />保存为草稿
         </p>
     </fieldset>
 }

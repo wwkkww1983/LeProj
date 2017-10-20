@@ -8,7 +8,13 @@
 
 <fieldset>
     <legend>详细信息</legend>
-    
+
+    @if(@Model.Status == ZdflCount.Models.enumStatus.Unhandle){
+        using (Html.BeginForm("Assign","Schedule",new {id=Model.ID},FormMethod.Post,null)) {
+            <input class="right-within-handler-button" value="下派施工单" type="submit"/>
+        }
+    }
+        
     <div class="display-label">
          @Html.DisplayNameFor(model => model.OrderNumber)：
     </div>
@@ -25,7 +31,13 @@
          @Html.DisplayNameFor(model => model.Status)：
     </div>
     <div class="display-field">
-        @Html.DisplayEnumDescription("enumOrderStatus",(int)@Model.Status)
+        @Html.DisplayEnumDescription("enumStatus",(int)@Model.Status)
+    </div>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.MachineName)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.MachineName)
     </div>
     <div class="display-label">
          @Html.DisplayNameFor(model => model.DateCreate)：

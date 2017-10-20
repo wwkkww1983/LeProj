@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "修改施工单";
+    ViewBag.colon="：";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -15,6 +16,7 @@
         <legend>施工单信息</legend>
 
         @Html.HiddenFor(model => model.Schedules.ID)
+        @Html.Hidden("Schedules.OrderId", Model.Orders.OrderId)
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Schedules.DateCreate)           
@@ -32,7 +34,13 @@
              @Html.LabelFor(model => model.Schedules.Status)
         </div>
         <div class="editor-field">
-            ： @Html.DisplayEnumDescription("enumOrderStatus",(int)@Model.Schedules.Status)
+            ： @Html.DisplayEnumDescription("enumStatus",(int)@Model.Schedules.Status)
+        </div>
+        <div class="editor-label">
+             @Html.DisplayNameFor(model => model.Schedules.MachineName)
+        </div>
+        <div class="editor-field">
+           ：@Html.DropDownList("machine", @Model.MachineList)
         </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.Schedules.LastUpdatePersonName)
@@ -44,7 +52,13 @@
             @Html.LabelFor(model => model.Schedules.ProductCount)
         </div>
         <div class="editor-field">
-           ： @Html.DisplayFor(model => model.Schedules.ProductCount)
+            @if(@Model.Schedules.Status == ZdflCount.Models.enumStatus.Temporary){
+                @Html.EditorFor(model => model.Schedules.ProductCount);
+                @Html.ValidationMessageFor(model => model.Schedules.ProductCount);
+            }else{
+                @ViewBag.colon;
+                @Html.DisplayFor(model => model.Schedules.ProductCount);
+            }
         </div>
 
         <div class="editor-label">

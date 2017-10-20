@@ -17,9 +17,10 @@
         <th>
             @Html.DisplayNameFor(model => model.Number)
         </th>
-        <th>
+        <th class="th-datetime">
             @Html.DisplayNameFor(model => model.DateLastUpdate)
         </th>
+        <th>@Html.DisplayNameFor(model => model.MachineName)</th>
         <th>
             @Html.DisplayNameFor(model => model.Status)
         </th>
@@ -44,7 +45,10 @@
             @Html.DisplayFor(modelItem => item.DateLastUpdate)
         </td>
         <td>
-            @Html.DisplayEnumDescription("enumOrderStatus",(int)item.Status)
+            @Html.DisplayFor(modelItem => item.MachineName)
+        </td>
+        <td>
+            @Html.DisplayEnumDescription("enumStatus",(int)item.Status)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.LastUpdatePersonName)
@@ -56,9 +60,10 @@
             @Html.DisplayFor(modelItem => item.FinishCount)
         </td>
         <td>
-            @Html.ActionLink("修改", "Edit", new { id=item.ID }) |
             @Html.ActionLink("查看详情", "Details", new { id=item.ID }) |
-            @Html.ActionLink("删除", "Delete", new { id=item.ID })
+            @Html.ActionLink("修改", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("关闭", "Delete", new { id=item.ID })|
+            @Html.ActionLink("报废", "Discard", new { id=item.ID })
         </td>
     </tr>
 }

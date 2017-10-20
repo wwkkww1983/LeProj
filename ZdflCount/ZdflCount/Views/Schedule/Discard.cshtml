@@ -1,14 +1,14 @@
 ﻿@model ZdflCount.Models.Schedules
 
 @{
-    ViewBag.Title = "关闭施工单";
+    ViewBag.Title = "报废施工单";
 }
 
 <h2>@ViewBag.Title</h2>
 
-<h3 class="normal-margin">确定要关闭当前施工单吗?</h3>
+<h3 class="normal-margin">确定要报废当前施工单吗?</h3>
 <fieldset>
-    <legend>施工单详细信息</legend>
+    <legend>施工单详细信息（报废后，原生产数据将无效）</legend>
 
     
     <div class="display-label">
@@ -91,5 +91,5 @@
     <div class="left-outof-table">
         @Html.ActionLink("返回施工单列表", "Index",  new {id = Model.OrderId})
     </div>
-    <input type="submit" value="执行关闭" class="right-outof-warning-button"/>
+    <input type="submit" value="执行报废（原生产将无效）" class="right-outof-warning-button"/>
 }
