@@ -16,6 +16,7 @@ namespace ZdflCount.Controllers
         private OrderDbContext dbOrder = new OrderDbContext();
         private ScheduleOrder modelSchOrder = new ScheduleOrder();
 
+        #region 列表页
         //
         // GET: /Schedule/
 
@@ -35,6 +36,9 @@ namespace ZdflCount.Controllers
 
             return View(schedules);
         }
+        #endregion 
+
+        #region 详情页
 
         //
         // GET: /Schedule/Details/5
@@ -48,7 +52,9 @@ namespace ZdflCount.Controllers
             }
             return View(schedules);
         }
+        #endregion
 
+        #region 下派施工单
         [HttpPost]
         public ActionResult Assign(int id = 0)
         {
@@ -59,7 +65,9 @@ namespace ZdflCount.Controllers
             }
             return View("Details",  schedules );
         }
+        #endregion 
 
+        #region 新建
         //
         // GET: /Schedule/Create/1
 
@@ -115,7 +123,9 @@ namespace ZdflCount.Controllers
 
             return Content("输入创建施工单数据无效");
         }
+        #endregion 
 
+        #region 编辑
         //
         // GET: /Schedule/Edit/5
 
@@ -177,7 +187,9 @@ namespace ZdflCount.Controllers
             }
             return Content("输入修改施工单数据无效");;
         }
+        #endregion
 
+        #region 停止
         //
         // GET: /Schedule/Delete/5
 
@@ -209,7 +221,9 @@ namespace ZdflCount.Controllers
             db.SaveChanges();
             return RedirectToAction("Index", new { id = schedules.OrderId });
         }
+        #endregion
 
+        #region 报废
         //
         // GET: /Schedule/Discard/5
 
@@ -247,6 +261,7 @@ namespace ZdflCount.Controllers
 
             return RedirectToAction("Index", new { id = schedules.OrderId });
         }
+        #endregion 
 
         protected override void Dispose(bool disposing)
         {
