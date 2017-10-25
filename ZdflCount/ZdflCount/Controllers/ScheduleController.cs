@@ -12,8 +12,7 @@ namespace ZdflCount.Controllers
     //[App_Start.UserLoginAuthentication]
     public class ScheduleController : Controller
     {
-        private ScheduleDbContext db = new ScheduleDbContext();
-        private OrderDbContext dbOrder = new OrderDbContext();
+        private DbTableDbContext db = new DbTableDbContext();
         private ScheduleOrder modelSchOrder = new ScheduleOrder();
 
         #region 列表页
@@ -30,7 +29,7 @@ namespace ZdflCount.Controllers
             {
                 return HttpNotFound();
             }
-            Orders orderInfo = dbOrder.Orders.Find(id);
+            Orders orderInfo = db.Orders.Find(id);
             ViewData["OrderId"] = id;
             ViewData["OrderNumber"] = orderInfo.OrderNumber;
 
@@ -59,9 +58,19 @@ namespace ZdflCount.Controllers
         public ActionResult Assign(int id = 0)
         {
             Schedules schedules = db.Schedules.Find(id);
+            schedules.DetailInfo = schedules.DetailInfo == null ? string.Empty : schedules.DetailInfo;
+            schedules.NoticeInfo = schedules.NoticeInfo == null ? string.Empty : schedules.NoticeInfo;
             if (schedules == null)
             {
                 return HttpNotFound();
+            }
+            byte[] buff=null;
+            App_Start.Coder.EncodeSchedule(schedules, out buff);
+            int result = App_Start.TcpProtocolClient.SendScheduleInfo("127.0.0.1", buff);
+            if (result == 0)
+            {
+                schedules.Status = enumStatus.Assigned;
+                db.SaveChanges();
             }
             return View("Details",  schedules );
         }
@@ -87,7 +96,7 @@ namespace ZdflCount.Controllers
         {
             if (ModelState.IsValid)
             {
-                Orders orderInfo = dbOrder.Orders.Find(schedules.OrderId);
+                Orders orderInfo = db.Orders.Find(schedules.OrderId);
                 if (temporary == 0 && orderInfo.ProductFreeCount < schedules.ProductCount)
                 {
                     this.modelSchOrder.Schedules = schedules;
@@ -115,8 +124,8 @@ namespace ZdflCount.Controllers
                 if (temporary == 0)
                 {
                     orderInfo.ProductFreeCount -= schedules.ProductCount;
-                    dbOrder.Entry(orderInfo).State = EntityState.Modified;
-                    dbOrder.SaveChanges();
+                    db.Entry(orderInfo).State = EntityState.Modified;
+                    db.SaveChanges();
                 }
                 return RedirectToAction("Index", new { id = schedules.OrderId });
             }
@@ -176,10 +185,10 @@ namespace ZdflCount.Controllers
                     tempEntity.Property(item => item.Status).IsModified = true;
                     schedules.Status = enumStatus.Unhandle;
 
-                    Orders orderInfo = dbOrder.Orders.Find(schedules.OrderId);
+                    Orders orderInfo = db.Orders.Find(schedules.OrderId);
                     orderInfo.ProductFreeCount -= schedules.ProductCount;
-                    dbOrder.Entry(orderInfo).State = EntityState.Modified;
-                    dbOrder.SaveChanges();
+                    db.Entry(orderInfo).State = EntityState.Modified;
+                    db.SaveChanges();
                 }
 
                 db.SaveChanges();
@@ -254,10 +263,10 @@ namespace ZdflCount.Controllers
 
             db.SaveChanges();
 
-            Orders orderInfo = dbOrder.Orders.Find(schedules.OrderId);
+            Orders orderInfo = db.Orders.Find(schedules.OrderId);
             orderInfo.ProductFreeCount += schedules.ProductCount;
-            dbOrder.Entry(orderInfo).State = EntityState.Modified;
-            dbOrder.SaveChanges();
+            db.Entry(orderInfo).State = EntityState.Modified;
+            db.SaveChanges();
 
             return RedirectToAction("Index", new { id = schedules.OrderId });
         }

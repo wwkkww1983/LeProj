@@ -10,6 +10,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ZdflCount.Models
 {
+    #region 状态枚举
     public enum enumStatus
     {
         /// <summary>
@@ -87,10 +88,10 @@ namespace ZdflCount.Models
         [Description("设备报废")]
         Discard
     }
+    #endregion
 
-    /// <summary>
-    /// 订单模型
-    /// </summary>
+    #region 数据结构类
+    #region 订单
     public class Orders
     {
         [Key]
@@ -146,21 +147,9 @@ namespace ZdflCount.Models
         [DisplayName("可分派数量")]
         public int ProductFreeCount{get;set;}
     }
+    #endregion 
 
-
-    public class OrderDbContext : DbContext
-    {
-        public OrderDbContext()
-            : base("DefaultConnection")
-        {
-        }
-
-        public DbSet<Orders> Orders { get; set; }
-    }
-
-    /// <summary>
-    /// 施工单模型
-    /// </summary>
+    #region 施工单
     public class Schedules
     {
         /// <summary>
@@ -246,16 +235,9 @@ namespace ZdflCount.Models
         [DisplayName("注意事项")]
         public string NoticeInfo { get; set; }
     }
+    #endregion
 
-    public class ScheduleDbContext : DbContext
-    {
-        public ScheduleDbContext(): base("DefaultConnection")
-        {
-        }
-
-        public DbSet<Schedules> Schedules { get; set; }
-    }
-
+    #region 机器设备
     public class Machines
     {
         [Key]
@@ -282,28 +264,130 @@ namespace ZdflCount.Models
         public enumMachineStatus Status { get; set; }
 
     }
+    #endregion
 
-    public class MachineDbContext : DbContext
+    #region 生产记录
+    public class ProductInfo
     {
-        public MachineDbContext()
-            : base("DefaultConnection")
-        {
-        }
+        /// <summary>
+        /// 索引
+        /// </summary>
+        [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int ID { get; set; }
 
-        public DbSet<Machines> Machines { get; set; }
+        [DisplayName("记录上传时间")]
+        public DateTime DateCreate { get; set; }
+
+        [StringLength(50)]
+        [DisplayName("员工工号")]
+        public string staffId { get; set; }
+
+        [StringLength(50)]
+        [DisplayName("员工姓名")]
+        public string StaffName { get; set; }
+
+        [DisplayName("机台")]
+        public int MachineId { get; set; }
+
+        [DisplayName("机台")]
+        public string MachineName { get; set; }
+
+        [DisplayName("机台网络地址")]
+        public string MachineIP { get; set; }
+
+        [DisplayName("通道数")]
+        public int ChannelCount { get; set; }
+
+        [DisplayName("通道1计划")]
+        public int PlanCount1 { get; set; }
+        [DisplayName("通道1已完成")]
+        public int Finish1 { get; set; }
+        [DisplayName("通道1异常")]
+        public int Exception1 { get; set; }
+
+        [DisplayName("通道2计划")]
+        public int PlanCount2 { get; set; }
+        [DisplayName("通道2已完成")]
+        public int Finish2 { get; set; }
+        [DisplayName("通道2异常")]
+        public int Exception2 { get; set; }
+
+        [DisplayName("通道3计划")]
+        public int PlanCount3 { get; set; }
+        [DisplayName("通道3已完成")]
+        public int Finish3 { get; set; }
+        [DisplayName("通道3异常")]
+        public int Exception3 { get; set; }
+
+        [DisplayName("通道4计划")]
+        public int PlanCount4 { get; set; }
+        [DisplayName("通道4已完成")]
+        public int Finish4 { get; set; }
+        [DisplayName("通道4异常")]
+        public int Exception4 { get; set; }
     }
+    #endregion
 
+    #region 心跳
+    public class HeartBreak
+    {
+        [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int ID { get; set; }
+
+        [DisplayName("记录上传时间")]
+        public DateTime DateCreate { get; set; }
+
+        [DisplayName("机台")]
+        public int MachineId { get; set; }
+
+        [DisplayName("机台")]
+        public string MachineName { get; set; }
+
+        [DisplayName("机台网络地址")]
+        public string MachineIP { get; set; }
+
+        public int ChannelInfo { get; set; }
+
+    }
+    #endregion
+
+    /// <summary>
+    /// 异常日志
+    /// </summary>
+    public class ErrorInfo
+    {
+        [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int ID { get; set; }
+
+        public DateTime HappenTime { get; set; }
+
+        public int userID { get; set; }
+
+        public string Remark { get; set; }
+
+        public string ErrorMsg { get; set; }
+
+        public string ErrorSource { get; set; }
+
+        public string ErrorStack { get; set; }
+    }
+    #endregion
+
+    #region 前台页面显示模型
     public class ScheduleOrder
     {
         public Schedules Schedules { get; set; }
         public Orders Orders { get; set; }
         public List<SelectListItem> MachineList { get; private set; }
 
-        private OrderDbContext dbOrder = new OrderDbContext();
+        private DbTableDbContext db = new DbTableDbContext();
 
         public ScheduleOrder()
         {
-            IEnumerable<Machines> allMachines = from item in new MachineDbContext().Machines
+            IEnumerable<Machines> allMachines = from item in  db.Machines
                                                 where item.Status == enumMachineStatus.Normal
                                                 select item;            
             this.MachineList = new List<SelectListItem>(allMachines.Count<Machines>());
@@ -325,7 +409,81 @@ namespace ZdflCount.Models
 
         public void GetOrderById(int orderId)
         {
-            this.Orders = this.dbOrder.Orders.Find(orderId);
+            this.Orders = this.db.Orders.Find(orderId);
         }
     }
+    #endregion
+
+    #region 数据库操作
+    public class DbTableDbContext : DbContext
+    {
+        public DbTableDbContext()
+            : base("DefaultConnection")
+        {
+        }
+        /// <summary>
+        /// 生产记录
+        /// </summary>
+        public DbSet<ProductInfo> ProductionInfo { get; set; }
+        /// <summary>
+        /// 施工单
+        /// </summary>
+        public DbSet<Schedules> Schedules { get; set; }
+        /// <summary>
+        /// 心跳
+        /// </summary>
+        public DbSet<HeartBreak> HeartBreak { get; set; }
+        /// <summary>
+        /// 订单
+        /// </summary>
+        public DbSet<Orders> Orders { get; set; }
+        /// <summary>
+        /// 机器设备
+        /// </summary>
+        public DbSet<Machines> Machines { get; set; }
+        /// <summary>
+        /// 异常日志
+        /// </summary>
+        public DbSet<ErrorInfo> ErrorInfo { get; set; }
+
+
+        /// <summary>
+        /// 根据设备IP获取设备信息
+        /// </summary>
+        /// <param name="strIP"></param>
+        /// <returns></returns>
+        public Machines GetMachineByIp(string strIP)
+        {
+            Machines result = null;
+            IEnumerable<Machines> allMachines = from item in this.Machines
+                                                where item.IpAddress == strIP && item.Status == enumMachineStatus.Normal
+                                                select item;
+
+            if (allMachines.Count() > 0)
+                result = allMachines.First();
+
+            return result;
+        }
+
+        /// <summary>
+        /// 记录错误日志
+        /// </summary>
+        /// <param name="ex">异常</param>
+        /// <param name="remark">备注信息（参数值）</param>
+        public void RecordErrorInfo(Exception ex, string remark)
+        {
+            ErrorInfo info = new ErrorInfo()
+            {
+                HappenTime = DateTime.Now,
+                Remark = remark,
+                ErrorMsg = ex.Message,
+                ErrorSource = ex.Source,
+                ErrorStack = ex.StackTrace
+            };
+            this.ErrorInfo.Add(info);
+            this.SaveChanges();
+        }
+
+    }
+    #endregion
 }

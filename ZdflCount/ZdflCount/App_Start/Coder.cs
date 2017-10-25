@@ -4,9 +4,81 @@ using System.Collections.Generic;
 
 namespace ZdflCount.App_Start
 {
+    /// <summary>
+    /// 解码接口
+    /// </summary>
+    /// <typeparam name="T">解码结果类型</typeparam>
+    public interface interfaceDecoder<T>
+    {
+        T DecoderHandler(byte[] buff);
+    }
+
+    /// <summary>
+    /// 客户端返回消息解码
+    /// </summary>
+    public class DecodeRespInfo : interfaceDecoder<Int32>
+    {
+        public Int32 DecoderHandler(byte[] buff)
+        {
+            int result = -1;
+            if (buff != null && buff.Length > 0)
+                result = buff[0];
+            return result;
+        }
+    }
+
+    /// <summary>
+    /// 客户端返回消息解码
+    /// </summary>
+    public class DecodeProductInfo : interfaceDecoder<ProductInfo>
+    {
+        private void DecodeChannelInfo(byte[] buff, ref int locIdx, ref ChannelInfo channel)
+        {
+            channel.PlanCount = ConvertHelper.BytesToInt32(buff, locIdx, true);
+            locIdx += 4;
+            channel.Finish = ConvertHelper.BytesToInt32(buff, locIdx, true);
+            locIdx += 4;
+            channel.Exception = ConvertHelper.BytesToInt32(buff, locIdx, true);
+            locIdx += 4;
+        }
+
+        /// <summary>
+        /// 上传生产情况解码
+        /// </summary>
+        /// <param name="buff"></param>
+        /// <returns></returns>
+        public ProductInfo DecoderHandler(byte[] buff)
+        {
+            ProductInfo info = new ProductInfo();
+            byte[] tempData = buff;
+            //工号长度
+            int locIdx = 1, tempLen = tempData[0];
+            //工号
+            byte[] numberByte = new byte[tempLen];
+            Array.Copy(tempData, locIdx, numberByte, 0, tempLen);
+            info.StaffNumber = Encoding.ASCII.GetString(numberByte);
+            locIdx += tempLen;
+            //姓名长度
+            tempLen = tempData[locIdx++];
+            //工号
+            byte[] nameByte = new byte[tempLen];
+            Array.Copy(tempData, locIdx, nameByte, 0, tempLen);
+            info.StaffName = Encoding.ASCII.GetString(nameByte);
+            locIdx += tempLen;
+            //通道
+            DecodeChannelInfo(tempData, ref locIdx, ref info.Channel1);
+            DecodeChannelInfo(tempData, ref  locIdx, ref info.Channel2);
+            DecodeChannelInfo(tempData, ref locIdx, ref info.Channel2);
+            DecodeChannelInfo(tempData, ref  locIdx, ref info.Channel2);
+
+            return info;
+        }
+    }
+
     public class Coder 
     {
         public const int FACTORY_NORMAL = 0x5A44666C;
+        public const int PROTOCOL_HEAD_COUNT = 12;
         
         /// <summary>
         /// 基本格式编码
@@ -23,7 +95,7 @@ namespace ZdflCount.App_Start
             Array.Copy(cmdByte, 0, buff, 4, 2);
             byte[] conLenByte = ConvertHelper.Int32ToBytes(data.contentLen, true);
             Array.Copy(conLenByte, 0, buff, 6, 4);
-            int randInfo = new Random().Next(0, 0xFF);
+            int randInfo = new Random().Next(0, 0xFFFF);
             byte[] randInfoByte = ConvertHelper.Int16ToBytes(randInfo, true);
             Array.Copy(randInfoByte, 0, buff, 10, 2);
 
@@ -38,7 +110,7 @@ namespace ZdflCount.App_Start
         /// </summary>
         /// <param name="buff"></param>
         /// <returns></returns>
-        private static NormalDataStruct DecodeData(byte[] buff)
+        public static NormalDataStruct DecodeData(byte[] buff)
         {
             NormalDataStruct data = new NormalDataStruct();
 
@@ -54,7 +126,6 @@ namespace ZdflCount.App_Start
             locIdx += 2;
 
             data.Content = new byte[data.contentLen];
-            Array.Copy(buff, locIdx, data.Content, 0, data.contentLen);
 
             return data;
         }
@@ -102,47 +173,25 @@ namespace ZdflCount.App_Start
             EncodeData(data, out buff);
         }
 
-        private static void DecodeChannelInfo(byte[] buff, ref int locIdx, ref ChannelInfo channel)
-        {
-            channel.PlanCount = ConvertHelper.BytesToInt32(buff, locIdx, true);
-            locIdx += 4;
-            channel.Finish = ConvertHelper.BytesToInt32(buff, locIdx, true);
-            locIdx += 4;
-            channel.Exception = ConvertHelper.BytesToInt32(buff, locIdx, true);
-            locIdx += 4;
-        }
-
         /// <summary>
-        /// 上传生产情况解码
+        /// 服务器返回结果编码
         /// </summary>
+        /// <param name="cmd"></param>
+        /// <param name="status"></param>
         /// <param name="buff"></param>
-        /// <returns></returns>
-        public static ProductInfo DecodeProductInfo(byte[] buff)
+        public static void EncodeResp(enumCommandType cmd, bool status, out byte[] buff)
         {
-            ProductInfo info = new ProductInfo();
-            NormalDataStruct dataInfo = DecodeData(buff);
-            byte[] tempData = dataInfo.Content;
-            //工号长度
-            int locIdx = 1,tempLen = tempData[0];
-            //工号
-            byte[] numberByte = new byte[tempLen];
-            Array.Copy(tempData,locIdx,numberByte,0,tempLen);
-            info.StaffNumber = Encoding.ASCII.GetString(numberByte);
-            locIdx += tempLen;
-            //姓名长度
-            tempLen = tempData[locIdx++];
-            //工号
-            byte[] nameByte = new byte[tempLen];
-            Array.Copy(tempData, locIdx, nameByte, 0, tempLen);
-            info.StaffName = Encoding.ASCII.GetString(nameByte);
-            locIdx += tempLen;
-            //通道
-            DecodeChannelInfo(tempData, ref locIdx, ref info.Channel1);
-            DecodeChannelInfo(tempData, ref  locIdx, ref info.Channel2);
-            DecodeChannelInfo(tempData, ref locIdx, ref info.Channel2);
-            DecodeChannelInfo(tempData, ref  locIdx, ref info.Channel2);
-
-            return info;
+            byte[] tempContent = { status ? (byte)1 : (byte)0 };
+            NormalDataStruct data = new NormalDataStruct()
+            {
+                Code = cmd,
+                FactoryNumber = FACTORY_NORMAL,
+                contentLen = 1,
+                Content = tempContent
+            };
+            EncodeData(data, out buff);
         }
     }
+
+
 }

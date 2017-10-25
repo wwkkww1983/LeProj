@@ -10,7 +10,7 @@ namespace ZdflCount.Controllers
     //[App_Start.UserLoginAuthentication]
     public class OrderController : Controller
     {
-        private OrderDbContext db = new OrderDbContext();
+        private DbTableDbContext db = new DbTableDbContext();
 
         //
         // GET: /Order/

@@ -27,7 +27,7 @@ namespace ZdflCount.App_Start
         /// 生产情况
         /// </summary>
         UP_PRODUCT_SEND = 110,
-        UP_HEART_RESP = 210
+        UP_PRODUCT_RESP = 210
     }
 
     /// <summary>
