@@ -1,0 +1,109 @@
+﻿@model ZdflCount.Models.StaffInfo
+
+@{
+    ViewBag.Title = "员工个人信息详情";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<fieldset>
+    <legend>详细信息</legend>
+            
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Name)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Number)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Number)
+    </div>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Status)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayEnumDescription("enumStaffStatus",(int)@Model.Status)
+    </div>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Position)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Position)
+    </div>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Sex)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Sex)
+    </div>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DeptName)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DeptName)
+    </div>
+    
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Phone)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Phone)
+    </div>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.telPhone)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.telPhone)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Address)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Address)
+    </div>
+    
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.HomeAddress)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.HomeAddress)
+    </div>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.BirthDate)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.BirthDate)
+    </div>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.JoinInDate)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.JoinInDate)
+    </div>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.EmergencyName)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.EmergencyName)
+    </div>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.EmergencyPhone)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.EmergencyPhone)
+    </div>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Remarks)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Remarks)
+    </div>
+</fieldset>
+<div class="left-outof-table">
+    @Html.ActionLink("修改", "Edit", new { id=Model.ID }) |
+    @Html.ActionLink("返回员工信息列表", "Index")
+</div>

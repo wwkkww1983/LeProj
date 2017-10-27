@@ -72,25 +72,25 @@ namespace ZdflCount.App_Start
             content[locIdx++] = (byte)tempLen;
             //施工单编号
             byte[] numberBytes = Encoding.ASCII.GetBytes(schedule.Number);
-            Array.Copy(numberBytes, content, tempLen);
+            Array.Copy(numberBytes, 0, content, locIdx, tempLen);
             locIdx += tempLen;
             //施工单商品总数量
             byte[] countByte = ConvertHelper.Int32ToBytes(schedule.ProductCount, true);
-            Array.Copy(countByte, content, 4);
+            Array.Copy(countByte, 0, content, locIdx, 4);
             locIdx += 4 ;
             //详细信息数据长度
             tempLen = schedule.DetailInfo.Length;
             content[locIdx++] = (byte)tempLen;
             //详细信息
             byte[] detailBytes = Encoding.GetEncoding("GBK").GetBytes(schedule.DetailInfo);
-            Array.Copy(detailBytes, content, tempLen);
+            Array.Copy(detailBytes,0, content,locIdx, tempLen);
             locIdx += tempLen;
             //注意事项数据长度
             tempLen = schedule.NoticeInfo.Length;
             content[locIdx++] = (byte)tempLen;
             //注意事项
             byte[] noticeBytes = Encoding.GetEncoding("GBK").GetBytes(schedule.NoticeInfo);
-            Array.Copy(detailBytes, content, tempLen);
+            Array.Copy(noticeBytes, 0, content, locIdx, tempLen);
             locIdx += tempLen;
 
             NormalDataStruct data = new NormalDataStruct()

@@ -1,0 +1,113 @@
+﻿@model ZdflCount.Models.StaffInfo
+
+@{
+    ViewBag.Title = "删除当前员工信息";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<h3 class="normal-margin">确定要删除当前员工吗?</h3>
+
+<fieldset>
+    <legend>详细信息</legend>
+            
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Name)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Number)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Number)
+    </div>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Status)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayEnumDescription("enumStaffStatus",(int)@Model.Status)
+    </div>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Position)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Position)
+    </div>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Sex)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Sex)
+    </div>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DeptName)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DeptName)
+    </div>
+    
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Phone)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Phone)
+    </div>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.telPhone)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.telPhone)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Address)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Address)
+    </div>
+    
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.HomeAddress)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.HomeAddress)
+    </div>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.BirthDate)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.BirthDate)
+    </div>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.JoinInDate)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.JoinInDate)
+    </div>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.EmergencyName)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.EmergencyName)
+    </div>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.EmergencyPhone)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.EmergencyPhone)
+    </div>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Remarks)：
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Remarks)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <div class="left-outof-table">
+        @Html.ActionLink("返回施工单列表", "Index")
+    </div>
+    <input type="submit" value="执行删除" class="right-outof-warning-button"/>
+}

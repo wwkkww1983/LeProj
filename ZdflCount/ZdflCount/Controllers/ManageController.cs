@@ -4,11 +4,13 @@ using System.Linq;
 using System.Web;
 using ZdflCount.App_Start;
 using System.Web.Mvc;
+using ZdflCount.Models;
 
 namespace ZdflCount.Controllers
 {
     public class ManageController : Controller
     {
+        private DbTableDbContext db = new DbTableDbContext();
         //
         // GET: /Setting/
 
@@ -18,6 +20,18 @@ namespace ZdflCount.Controllers
 
             return View();
         }
+
+        #region 设备
+        public ActionResult Machines()
+        {
+            var itemList = from item in db.Machines
+                           orderby item.Status
+                           select item;
+            return View(itemList);
+        }
+        #endregion
+
+
         #region 服务器操作
         [HttpPost]
         public ActionResult StartServer()

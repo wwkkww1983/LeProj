@@ -1,6 +1,5 @@
 ﻿@{
     ViewBag.Title = "添加订单信息";
-    var orderStatus = "";
 }
 
 <h2>已加载订单列表</h2>  
@@ -22,16 +21,7 @@
     {
          <tr>   
              <td>@item.OrderNumber</td> 
-             <td>
-                 @switch ((int)@item.Status)
-                 {
-                     case 1: orderStatus="已分派"; break;
-                     case 2:orderStatus="停止生产"; break;
-                     case 3:orderStatus="已完成"; break;
-                     default :orderStatus="未处理"; break;
-                 }
-                 @orderStatus
-             </td>
+             <td>@Html.DisplayEnumDescription("enumStatus",(int)item.Status)</td>
              <td>@string.Format("{0:yyyy年MM月dd日}", item.DateCreate)</td>  
              <td>@string.Format("{0:yyyy年MM月dd日}", item.DateAssign)</td>
              <td>@item.AssignedCount</td>  

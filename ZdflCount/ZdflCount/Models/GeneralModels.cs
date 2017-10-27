@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity;
 using System.Data.Entity.Migrations;
 
 namespace ZdflCount.Models
@@ -90,6 +89,33 @@ namespace ZdflCount.Models
         [Description("设备报废")]
         Discard
     }
+
+    public enum enumStaffStatus
+    {
+        /// <summary>
+        /// 正常
+        /// </summary>
+        [Description("正常")]
+        Normal = 0x00,
+
+        /// <summary>
+        /// 离职
+        /// </summary>
+        [Description("离职")]
+        Dimission, 
+
+        /// <summary>
+        /// 退休
+        /// </summary>
+        [Description("退休")]
+        Retire,
+
+        /// <summary>
+        /// 已删除
+        /// </summary>
+        [Description("已删除")]
+        Deleted
+    }
     #endregion
 
     #region 数据结构类
@@ -150,6 +176,79 @@ namespace ZdflCount.Models
         public int ProductFreeCount{get;set;}
     }
     #endregion 
+
+    #region 员工信息
+    public class StaffInfo
+    {
+        [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int ID { get; set; }
+
+        [DisplayName("状态")]
+        public enumStaffStatus Status { get; set; }
+
+        [StringLength(20)]
+        [DisplayName("姓名")]
+        [Required]
+        public string Name { get; set; }
+
+        [StringLength(20)]
+        [DisplayName("职位")]
+        public string Position { get; set; }
+
+        [StringLength(5)]
+        [DisplayName("性别")]
+        public string Sex { get; set; }
+
+        [StringLength(20)]
+        [Required]
+        [DisplayName("工号")]
+        public string Number { get; set; }
+
+        [StringLength(20)]
+        [DisplayName("所在部门")]
+        public string DeptName { get; set; }
+
+        [StringLength(20)]
+        [DisplayName("手机")]
+        [RegularExpression(@"((\+86)|(86))?1[3-9]\d{9}", ErrorMessage = "请输入手机号码")]
+        public string Phone { get; set; }
+
+        [StringLength(20)]
+        [DisplayName("座机")]
+        public string telPhone { get; set; }
+
+        [StringLength(200)]
+        [DisplayName("现在住址")]
+        public string Address { get; set; }
+
+        [StringLength(200)]
+        [DisplayName("家庭地址")]
+        public string HomeAddress { get; set; }
+
+        [DisplayName("生日")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]
+        public Nullable<DateTime> BirthDate { get; set; }
+
+        [DisplayName("入职日期")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]
+        public Nullable<DateTime> JoinInDate { get; set; }
+
+        [StringLength(20)]
+        [DisplayName("紧急联系人")]
+        public string EmergencyName { get; set; }
+
+        [StringLength(20)]
+        [DisplayName("紧急联系人电话")]
+        public string EmergencyPhone { get; set; }
+
+        [DisplayName("备注信息")]
+        public string Remarks { get; set; }
+
+    }
+    #endregion
 
     #region 施工单
     public class Schedules
@@ -244,7 +343,7 @@ namespace ZdflCount.Models
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        [DisplayName("机台")]
+        [DisplayName("机台ID")]
         public int ID { get; set; }
 
         [StringLength(50)]
@@ -445,6 +544,10 @@ namespace ZdflCount.Models
         /// 异常日志
         /// </summary>
         public DbSet<ErrorInfo> ErrorInfo { get; set; }
+        /// <summary>
+        /// 员工信息
+        /// </summary>
+        public DbSet<StaffInfo> StaffInfo { get; set; }
 
 
         /// <summary>

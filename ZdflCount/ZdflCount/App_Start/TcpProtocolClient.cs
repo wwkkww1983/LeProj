@@ -11,7 +11,7 @@ namespace ZdflCount.App_Start
 {
     public class TcpProtocolClient 
     {
-        private const int CLIENT_PORT_NUMBER = 5555, SERVER_PORT_NUMBER = 5556;
+        private const int CLIENT_PORT_NUMBER = 6000, SERVER_PORT_NUMBER = 5556;
         private const int BUFFER_SIZE = 1024,COMMUNICATION_TIME_OUT = 1000;
         private static bool keepListening = false;
         private static Stopwatch sw = new Stopwatch();

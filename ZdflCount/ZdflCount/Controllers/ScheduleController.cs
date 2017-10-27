@@ -66,7 +66,8 @@ namespace ZdflCount.Controllers
             }
             byte[] buff=null;
             App_Start.Coder.EncodeSchedule(schedules, out buff);
-            int result = App_Start.TcpProtocolClient.SendScheduleInfo("127.0.0.1", buff);
+            string ipAddress = db.Machines.Find(schedules.MachineId).IpAddress;
+            int result = App_Start.TcpProtocolClient.SendScheduleInfo(ipAddress, buff);
             if (result == 0)
             {
                 schedules.Status = enumStatus.Assigned;
@@ -181,6 +182,7 @@ namespace ZdflCount.Controllers
 
                 if (schedules.ProductCount > 0)
                 {
+                    //临时保存情况下，会应用施工单的数量
                     tempEntity.Property(item => item.ProductCount).IsModified = true;
                     tempEntity.Property(item => item.Status).IsModified = true;
                     schedules.Status = enumStatus.Unhandle;
@@ -194,7 +196,7 @@ namespace ZdflCount.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Details", new { id = schedules.ID });
             }
-            return Content("输入修改施工单数据无效");;
+            return Content("输入修改施工单数据无效");
         }
         #endregion
 
