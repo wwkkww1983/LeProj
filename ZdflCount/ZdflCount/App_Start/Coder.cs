@@ -4,77 +4,6 @@ using System.Collections.Generic;
 
 namespace ZdflCount.App_Start
 {
-    /// <summary>
-    /// 解码接口
-    /// </summary>
-    /// <typeparam name="T">解码结果类型</typeparam>
-    public interface interfaceDecoder<T>
-    {
-        T DecoderHandler(byte[] buff);
-    }
-
-    /// <summary>
-    /// 客户端返回消息解码
-    /// </summary>
-    public class DecodeRespInfo : interfaceDecoder<Int32>
-    {
-        public Int32 DecoderHandler(byte[] buff)
-        {
-            int result = -1;
-            if (buff != null && buff.Length > 0)
-                result = buff[0];
-            return result;
-        }
-    }
-
-    /// <summary>
-    /// 客户端返回消息解码
-    /// </summary>
-    public class DecodeProductInfo : interfaceDecoder<ProductInfo>
-    {
-        private void DecodeChannelInfo(byte[] buff, ref int locIdx, ref ChannelInfo channel)
-        {
-            channel.PlanCount = ConvertHelper.BytesToInt32(buff, locIdx, true);
-            locIdx += 4;
-            channel.Finish = ConvertHelper.BytesToInt32(buff, locIdx, true);
-            locIdx += 4;
-            channel.Exception = ConvertHelper.BytesToInt32(buff, locIdx, true);
-            locIdx += 4;
-        }
-
-        /// <summary>
-        /// 上传生产情况解码
-        /// </summary>
-        /// <param name="buff"></param>
-        /// <returns></returns>
-        public ProductInfo DecoderHandler(byte[] buff)
-        {
-            ProductInfo info = new ProductInfo();
-            byte[] tempData = buff;
-            //工号长度
-            int locIdx = 1, tempLen = tempData[0];
-            //工号
-            byte[] numberByte = new byte[tempLen];
-            Array.Copy(tempData, locIdx, numberByte, 0, tempLen);
-            info.StaffNumber = Encoding.ASCII.GetString(numberByte);
-            locIdx += tempLen;
-            //姓名长度
-            tempLen = tempData[locIdx++];
-            //工号
-            byte[] nameByte = new byte[tempLen];
-            Array.Copy(tempData, locIdx, nameByte, 0, tempLen);
-            info.StaffName = Encoding.ASCII.GetString(nameByte);
-            locIdx += tempLen;
-            //通道
-            DecodeChannelInfo(tempData, ref locIdx, ref info.Channel1);
-            DecodeChannelInfo(tempData, ref  locIdx, ref info.Channel2);
-            DecodeChannelInfo(tempData, ref locIdx, ref info.Channel2);
-            DecodeChannelInfo(tempData, ref  locIdx, ref info.Channel2);
-
-            return info;
-        }
-    }
-
     public class Coder 
     {
         public const int FACTORY_NORMAL = 0x5A44666C;
@@ -153,14 +82,14 @@ namespace ZdflCount.App_Start
             tempLen = schedule.DetailInfo.Length;
             content[locIdx++] = (byte)tempLen;
             //详细信息
-            byte[] detailBytes = Encoding.UTF8.GetBytes(schedule.DetailInfo);
+            byte[] detailBytes = Encoding.GetEncoding("GBK").GetBytes(schedule.DetailInfo);
             Array.Copy(detailBytes, content, tempLen);
             locIdx += tempLen;
             //注意事项数据长度
             tempLen = schedule.NoticeInfo.Length;
             content[locIdx++] = (byte)tempLen;
             //注意事项
-            byte[] noticeBytes = Encoding.UTF8.GetBytes(schedule.NoticeInfo);
+            byte[] noticeBytes = Encoding.GetEncoding("GBK").GetBytes(schedule.NoticeInfo);
             Array.Copy(detailBytes, content, tempLen);
             locIdx += tempLen;
 
@@ -177,19 +106,30 @@ namespace ZdflCount.App_Start
         /// 服务器返回结果编码
         /// </summary>
         /// <param name="cmd"></param>
-        /// <param name="status"></param>
+        /// <param name="byteResp"></param>
         /// <param name="buff"></param>
-        public static void EncodeResp(enumCommandType cmd, bool status, out byte[] buff)
+        public static void EncodeServerResp(enumCommandType cmd, byte[] byteResp, out byte[] buff)
         {
-            byte[] tempContent = { status ? (byte)1 : (byte)0 };
             NormalDataStruct data = new NormalDataStruct()
             {
                 Code = cmd,
                 FactoryNumber = FACTORY_NORMAL,
-                contentLen = 1,
-                Content = tempContent
+                contentLen = byteResp.Length,
+                Content = byteResp
             };
             EncodeData(data, out buff);
+        }
+
+        /// <summary>
+        /// 客户端返回结果解码
+        /// </summary>
+        /// <param name="buff"></param>
+        public static int DecodeClientResp(byte[] buff)
+        {
+            int result = -1;
+            if (buff != null && buff.Length > 0)
+                result = buff[0];
+            return result;
         }
     }
 

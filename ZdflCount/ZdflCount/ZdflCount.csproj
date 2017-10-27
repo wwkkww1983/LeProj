@@ -165,8 +165,9 @@
     <Compile Include="App_Start\Coder.cs" />
     <Compile Include="App_Start\Constants.cs" />
     <Compile Include="App_Start\ConvertHelper.cs" />
-    <Compile Include="App_Start\DbRecord.cs" />
+    <Compile Include="App_Start\ClientHanlder.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\NetDataStructure.cs" />
     <Compile Include="App_Start\SelfExtensions.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SelfAttribute.cs" />
@@ -176,10 +177,16 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ScheduleController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710261003117_Initial.cs" />
+    <Compile Include="Migrations\201710261003117_Initial.Designer.cs">
+      <DependentUpon>201710261003117_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\GeneralModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -307,13 +314,18 @@
     <Content Include="Views\Schedule\Delete.cshtml" />
     <Content Include="Views\Schedule\_OrderCountPartial.cshtml" />
     <Content Include="Views\Schedule\Discard.cshtml" />
+    <Content Include="Views\Manage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Migrations\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201710261003117_Initial.resx">
+      <DependentUpon>201710261003117_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

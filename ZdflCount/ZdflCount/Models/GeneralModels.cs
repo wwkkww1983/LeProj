@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
 
 namespace ZdflCount.Models
 {
@@ -242,8 +244,12 @@ namespace ZdflCount.Models
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        [DisplayName("机台编号")]
+        [DisplayName("机台")]
         public int ID { get; set; }
+
+        [StringLength(50)]
+        [DisplayName("机台编码")]
+        public string Number { get; set; }
 
         [DisplayName("机台名称")]
         [StringLength(50)]
@@ -252,17 +258,12 @@ namespace ZdflCount.Models
         [StringLength(50)]
         [DisplayName("IP地址")]
         public string IpAddress { get; set; }
-        
-        [DisplayName("Zigbee编号")]
-        public string ZigbeeNumber { get; set; }
 
         [DisplayName("备注信息")]
         public string RemarkInfo { get; set; }
-
         
         [DisplayName("设备状态")]
         public enumMachineStatus Status { get; set; }
-
     }
     #endregion
 
@@ -343,10 +344,8 @@ namespace ZdflCount.Models
         public int MachineId { get; set; }
 
         [DisplayName("机台")]
+        [StringLength(50)]
         public string MachineName { get; set; }
-
-        [DisplayName("机台网络地址")]
-        public string MachineIP { get; set; }
 
         public int ChannelInfo { get; set; }
 
@@ -415,6 +414,7 @@ namespace ZdflCount.Models
     #endregion
 
     #region 数据库操作
+
     public class DbTableDbContext : DbContext
     {
         public DbTableDbContext()
@@ -424,7 +424,7 @@ namespace ZdflCount.Models
         /// <summary>
         /// 生产记录
         /// </summary>
-        public DbSet<ProductInfo> ProductionInfo { get; set; }
+        public DbSet<ProductInfo> ProductInfo { get; set; }
         /// <summary>
         /// 施工单
         /// </summary>

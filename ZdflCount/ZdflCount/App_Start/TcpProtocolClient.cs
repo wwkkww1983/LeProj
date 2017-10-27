@@ -13,10 +13,14 @@ namespace ZdflCount.App_Start
     {
         private const int CLIENT_PORT_NUMBER = 5555, SERVER_PORT_NUMBER = 5556;
         private const int BUFFER_SIZE = 1024,COMMUNICATION_TIME_OUT = 1000;
-        private static bool KeepListening = false;
+        private static bool keepListening = false;
         private static Stopwatch sw = new Stopwatch();
         private static Models.DbTableDbContext db = new Models.DbTableDbContext();
 
+        public static bool KeepListening
+        {
+            get { return keepListening; }
+        }
         /// <summary>
         /// 下发施工单
         /// </summary>
@@ -27,7 +31,7 @@ namespace ZdflCount.App_Start
         {
             int recResult = -1;
             byte[] buffReceive = new byte[BUFFER_SIZE];
-            IPEndPoint IpPoint = new System.Net.IPEndPoint(IPAddress.Parse(deviceIP), SERVER_PORT_NUMBER);
+            IPEndPoint IpPoint = new System.Net.IPEndPoint(IPAddress.Parse(deviceIP), CLIENT_PORT_NUMBER);
             Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             try
             {
@@ -35,7 +39,7 @@ namespace ZdflCount.App_Start
                 serverSocket.Send(content);
                 int byteBuff = serverSocket.Receive(buffReceive);
                 NormalDataStruct dataInfo = Coder.DecodeData(buffReceive);
-                recResult = new DecodeRespInfo().DecoderHandler(dataInfo.Content);
+                recResult = Coder.DecodeClientResp(dataInfo.Content);
             }
             catch (Exception ex)
             {
@@ -51,18 +55,18 @@ namespace ZdflCount.App_Start
 
         public static void StartServer()
         {
-            KeepListening = true;
+            keepListening = true;
 
             Thread socketThread = new Thread(Listening);
             socketThread.Start();
         }
         
         private static void Listening()
-        {
+        {            
             TcpListener serverListen = new TcpListener(IPAddress.Any, SERVER_PORT_NUMBER);
             serverListen.Start();
 
-            while (KeepListening)
+            while (keepListening)
             {
                 TcpClient serverReceive = serverListen.AcceptTcpClient();
 
@@ -78,37 +82,22 @@ namespace ZdflCount.App_Start
             }
         }
 
-        private static interfaceDecoder<Type> GetDcoderByCommand(enumCommandType type)
+        private static interfaceClientHanlder  GetHandlerByCommand(enumCommandType type)
         {
-            interfaceDecoder<Type> typeResult = null;
+            interfaceClientHanlder typeResult = null;
 
             switch (type)
             {
                 case enumCommandType.UP_HEART_SEND:
-                    typeResult = (interfaceDecoder<Type>)new DecodeRespInfo();
+                    typeResult = new ClientHandlerHeartBreak();
                     break;
 
                 case enumCommandType.UP_PRODUCT_SEND:
-                    typeResult = (interfaceDecoder<Type>)new DecodeProductInfo();
+                    typeResult = new ClientHanlderProductInfo();
                     break;
 
-                default: break;
-            }
-            return typeResult;
-        }
-
-        private static interfaceDbRecord<Type> GetDbRecordByCommand(enumCommandType type)
-        {
-            interfaceDbRecord<Type> typeResult = null;
-
-            switch (type)
-            {
-                case enumCommandType.UP_HEART_SEND:
-                    typeResult = (interfaceDbRecord<Type>)new RecordHeart();
-                    break;
-
-                case enumCommandType.UP_PRODUCT_SEND:
-                    typeResult = (interfaceDbRecord<Type>)new RecordProductInfo();
+                case enumCommandType.UP_DEVICE_SETTING_RESP:
+                    typeResult = new ClientHandlerDeviceSetting();
                     break;
 
                 default: break;
@@ -150,24 +139,34 @@ namespace ZdflCount.App_Start
             {
                 if (!ReadBuffer(ns, Coder.PROTOCOL_HEAD_COUNT, byteHead))
                 {
-                    Console.WriteLine("数据头读取超时：", System.Text.Encoding.Default.GetString(byteHead));
+                    db.RecordErrorInfo(null, "数据头读取超时：" + strIP + System.Text.Encoding.Default.GetString(byteHead));
                     return;
                 }
                 NormalDataStruct dataInfo = Coder.DecodeData(byteHead);
-
                 if (!ReadBuffer(ns, dataInfo.contentLen, dataInfo.Content))
                 {
-                    Console.WriteLine("数据主体读取超时：", System.Text.Encoding.Default.GetString(dataInfo.Content));
+                    db.RecordErrorInfo(null, "数据主体读取超时：" + strIP+ System.Text.Encoding.Default.GetString(byteHead));
                     return;
                 }
-                interfaceDecoder<Type> decoder = GetDcoderByCommand(dataInfo.Code);
-                interfaceDbRecord<Type> record = GetDbRecordByCommand(dataInfo.Code);
-                Type infoDetail = decoder.DecoderHandler(dataInfo.Content);
-                record.RecordInfo(infoDetail, strIP);
+                //信息处理
+                interfaceClientHanlder clientHandler = GetHandlerByCommand(dataInfo.Code);
+                byte[] byteResult = clientHandler.HandlerClientData(dataInfo.Content);
+                if (clientHandler.ShouldResponse())
+                {
+                    byte[] buffResp = null;
+                    Coder.EncodeServerResp(dataInfo.Code + 1, byteResult, out buffResp);
+                    ns.Write(buffResp, 0, buffResp.Length);
+                }
             }
             catch (Exception ex)
             {
-                //Logger.WriteLog("接受数据失败", ex, "请检查网络链接");
+                db.RecordErrorInfo(ex, System.Text.Encoding.ASCII.GetString(byteHead));
+            }
+            finally
+            {
+                ns.Close();
+                ns.Dispose();
+                ns = null;
             }
         }
     }

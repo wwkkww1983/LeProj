@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+
+@if (!(bool)ViewData["ServerStatus"])
+{
+    using (Html.BeginForm("StartServer", "Manage"))
+    {
+        <input class="button-large button-pill button-highlight" value="打开服务器" type="submit"/>
+    }
+}

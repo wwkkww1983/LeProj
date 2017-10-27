@@ -18,24 +18,17 @@
 <ol class="round">
     <li class="one">
         <h5>订单信息</h5>
-         @Html.ActionLink("获取订单", "Index", "Order")
+         @Html.ActionLink("订单列表", "Index", "Order")
     </li>
-
+    
     <li class="two">
-        <h5>施工单信息</h5>
-        施工单创建<br />
-        施工单调整<br />
-        施工单下派<br />
-
+        <h5>信息管理</h5>
+        @Html.ActionLink("员工信息", "Index", "Manage")
+        <br />
+        @Html.ActionLink("机台信息", "Index", "Manage")
     </li>
     
     <li class="three">
-        <h5>数据录入</h5>
-        员工信息<br />
-        机台信息
-    </li>
-    
-    <li class="four">
         <h5>数据统计</h5>
         生产情况分析
     </li>
