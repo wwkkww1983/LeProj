@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.IO;
 using System.Web.Mvc;
 using ZdflCount.Models;
+using ZdflCount.App_Start;
 using System.Data.Entity;
 
 
@@ -14,8 +16,10 @@ namespace ZdflCount.Controllers
         private DbTableDbContext db = new DbTableDbContext();
 
         #region 列表
-        public ActionResult Index()
+        public ActionResult Index(enumErrorCode error = enumErrorCode.NONE)
         {
+            ViewData["error"] = Constants.GetErrorString(error);
+
             var itemList = from item in db.StaffInfo
                            where item.Status != enumStaffStatus.Deleted
                            orderby item.Status
@@ -49,7 +53,7 @@ namespace ZdflCount.Controllers
             if (ModelState.IsValid)
             {
                 IEnumerable<StaffInfo> tempStaff = from item in db.StaffInfo
-                                                   where item.Number == staffInfo.Number || item.Phone==staffInfo.Phone
+                                                   where item.Number == staffInfo.Number || item.Phone == staffInfo.Phone
                                                    select item;
                 if (tempStaff.Count() > 0)
                 {
@@ -57,10 +61,10 @@ namespace ZdflCount.Controllers
                     return View(staffInfo);
                 }
                 //存入数据库
-                db.StaffInfo.Add(staffInfo); 
+                db.StaffInfo.Add(staffInfo);
                 int a = db.SaveChanges();
             }
-            return View("Detail",staffInfo);
+            return View("Detail", staffInfo);
         }
 
         #endregion
@@ -93,7 +97,7 @@ namespace ZdflCount.Controllers
                 tempEntity.Property(item => item.EmergencyName).IsModified = true;
                 tempEntity.Property(item => item.EmergencyPhone).IsModified = true;
                 tempEntity.Property(item => item.Remarks).IsModified = true;
-                
+
                 db.SaveChanges();
                 return RedirectToAction("Detail", staff);
             }
@@ -124,6 +128,35 @@ namespace ZdflCount.Controllers
             staffInfo.Status = enumStaffStatus.Deleted;
 
             db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        #endregion
+
+        #region Excel文件
+        public ActionResult DownloadTemplate()
+        {
+            FilePathResult file = new FilePathResult("~/Downloads/员工信息.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            file.FileDownloadName = "员工信息.xlsx";
+            return file;
+        }
+
+        [HttpPost]
+        public ActionResult UploadStaffInfo(HttpPostedFileBase excelFileName)
+        {
+            if (excelFileName.ContentLength > 0)
+            {
+                string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + Path.GetFileName(excelFileName.FileName);
+                string extName = Path.GetExtension(excelFileName.FileName);
+                if (extName != ".xlsx")
+                {
+                    return RedirectToAction("Index", new { error = enumErrorCode.FileOnlyExcel });
+                }
+                string serverPath = Path.Combine(Server.MapPath("~/Uploads"), fileName);
+                excelFileName.SaveAs(serverPath);
+                enumErrorCode result= Excel.CheckAndSaveStaffInfo(serverPath);
+                object tempObj = result == enumErrorCode.NONE ? null : new { error = result };
+                return RedirectToAction("Index", tempObj);
+            }
             return RedirectToAction("Index");
         }
         #endregion

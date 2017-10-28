@@ -210,6 +210,7 @@ namespace ZdflCount.Models
         public string DeptName { get; set; }
 
         [StringLength(20)]
+        [Required]
         [DisplayName("手机")]
         [RegularExpression(@"((\+86)|(86))?1[3-9]\d{9}", ErrorMessage = "请输入手机号码")]
         public string Phone { get; set; }

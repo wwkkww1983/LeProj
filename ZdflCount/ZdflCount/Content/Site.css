@@ -426,6 +426,11 @@ fieldset .error-message-ur-fieldset {
     font-weight: bold;
 }
 
+.error-message {
+    color: red;
+    font-weight: bold;
+}
+
 /*表格外面模块样式*/
 .left-outof-table {
     margin:10px;
@@ -436,7 +441,10 @@ fieldset .error-message-ur-fieldset {
     margin:10px;
     float: right;
 }
-
+.beside-upload-file {
+    margin-top: 35px;
+    float:left
+}
 .normal-margin {
     margin:10px;
 }

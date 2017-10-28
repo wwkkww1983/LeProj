@@ -47,6 +47,11 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\codeSegment\Office\Excel\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -166,6 +171,7 @@
     <Compile Include="App_Start\Constants.cs" />
     <Compile Include="App_Start\ConvertHelper.cs" />
     <Compile Include="App_Start\ClientHanlder.cs" />
+    <Compile Include="App_Start\Excel.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\NetDataStructure.cs" />
     <Compile Include="App_Start\SelfExtensions.cs" />
@@ -183,9 +189,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201710270954096_Initial.cs" />
-    <Compile Include="Migrations\201710270954096_Initial.Designer.cs">
-      <DependentUpon>201710270954096_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201710280412078_Initial.cs" />
+    <Compile Include="Migrations\201710280412078_Initial.Designer.cs">
+      <DependentUpon>201710280412078_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
@@ -250,8 +256,10 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Downloads\员工信息.xlsx" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Images\logo.gif" />
+    <Content Include="Scripts\clientMsg.js" />
     <Content Include="Scripts\datepicker.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -326,13 +334,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201710270954096_Initial.resx">
-      <DependentUpon>201710270954096_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201710280412078_Initial.resx">
+      <DependentUpon>201710280412078_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

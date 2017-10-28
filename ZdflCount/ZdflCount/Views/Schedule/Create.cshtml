@@ -35,9 +35,7 @@
         @Html.Hidden("Schedules.OrderId", Model.Orders.OrderId)
         <input id="temporary" type="hidden" value="2">
 
-        <div class="error-message-ur-fieldset">
-            @errorMsg
-        </div>
+        <div class="error-message-ur-fieldset error-message">@errorMsg</div>
         <div class="editor-label">
             @Html.LabelFor(model => model.Schedules.CreatorName)
         </div>
@@ -85,4 +83,5 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/alertWarnning")
 }

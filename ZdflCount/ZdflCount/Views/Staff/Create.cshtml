@@ -9,7 +9,6 @@
     }
 }
 
-
 <h2>@ViewBag.Title</h2>
 
 @*<script src="~/Scripts/datepicker.js"></script>*@
@@ -19,9 +18,7 @@
     
     <fieldset>
         <legend>详细信息</legend>    
-        <div class="error-message-ur-fieldset">
-            @errorMsg
-        </div>
+        <div class="error-message-ur-fieldset error-message">@errorMsg</div>
 
        <div class="editor-label">
             @Html.LabelFor(model => model.Name)           
@@ -127,4 +124,5 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/alertWarnning")
 }

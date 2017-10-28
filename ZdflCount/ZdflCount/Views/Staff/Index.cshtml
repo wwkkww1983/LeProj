@@ -2,9 +2,27 @@
 
 @{
     ViewBag.Title = "员工列表";
+    var errorMsg = "";
+    if (ViewData["error"] != null)
+    {
+        errorMsg = ViewData["error"].ToString();
+    }
 }
 
-<h2>工厂员工信息列表</h2>      
+<h2>工厂员工信息列表</h2>   
+<div class="left-outof-table">
+    @using (Html.BeginForm("UploadStaffInfo", "Staff", FormMethod.Post, new { enctype="multipart/form-data"}))
+    {
+        <input type="file" value="上传员工信息" name="excelFileName",
+            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
+        <input type="submit" value="批量导入员工信息" />
+    }
+</div>
+<div class="beside-upload-file">
+    @Html.ActionLink("（下载模版）", "DownloadTemplate")
+</div>
+<div class="error-message">
+    @errorMsg</div>
 <div class="right-outof-table">
     @Html.ActionLink("新增员工", "Create")
 </div>
@@ -42,3 +60,7 @@
          </tr>   
     }                     
 </table>
+
+@section Scripts {
+    @Scripts.Render("~/alertWarnning")
+}
