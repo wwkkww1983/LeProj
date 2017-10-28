@@ -10,3 +10,6 @@ Release/
 *.tlog
 *.mdf
 *.ldf
+Migrations/
+Uploads/
+Downloads/
