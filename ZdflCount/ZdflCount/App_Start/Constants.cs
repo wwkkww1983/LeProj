@@ -12,7 +12,7 @@ namespace ZdflCount.App_Start
             errorKeyValue.Add(enumErrorCode.FileOnlyExcel, "仅允许提交Excel文件");
             errorKeyValue.Add(enumErrorCode.FileFormatError, "文件格式错误");
             errorKeyValue.Add(enumErrorCode.ExcelHeadError, "Excel表头校验失败");
-
+            errorKeyValue.Add(enumErrorCode.ExcelContentError, "Excel部分内容校验失败");
         }
         public static string GetErrorString(enumErrorCode code)
         {
@@ -70,7 +70,12 @@ namespace ZdflCount.App_Start
         /// <summary>
         /// Excel表头校验失败
         /// </summary>
-        ExcelHeadError
+        ExcelHeadError,
+
+        /// <summary>
+        /// Excel部分内容校验失败
+        /// </summary>
+        ExcelContentError
 
     }
 

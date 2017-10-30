@@ -143,21 +143,38 @@ namespace ZdflCount.Controllers
         [HttpPost]
         public ActionResult UploadStaffInfo(HttpPostedFileBase excelFileName)
         {
-            if (excelFileName.ContentLength > 0)
+            if (excelFileName.ContentLength <= 0)
             {
-                string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + Path.GetFileName(excelFileName.FileName);
-                string extName = Path.GetExtension(excelFileName.FileName);
-                if (extName != ".xlsx")
-                {
-                    return RedirectToAction("Index", new { error = enumErrorCode.FileOnlyExcel });
-                }
-                string serverPath = Path.Combine(Server.MapPath("~/Uploads"), fileName);
-                excelFileName.SaveAs(serverPath);
-                enumErrorCode result= Excel.CheckAndSaveStaffInfo(serverPath);
-                object tempObj = result == enumErrorCode.NONE ? null : new { error = result };
-                return RedirectToAction("Index", tempObj);
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + Path.GetFileName(excelFileName.FileName);
+            string extName = Path.GetExtension(excelFileName.FileName);
+            if (extName != ".xlsx")
+            {
+                return RedirectToAction("Index", new { error = enumErrorCode.FileOnlyExcel });
+            }
+            string serverPath = Path.Combine(Server.MapPath("~/Uploads"), fileName);
+            excelFileName.SaveAs(serverPath);
+            List<StaffInfo> staffList = new List<StaffInfo>();
+            enumErrorCode result = Excel.CheckAndReadStaffInfo(serverPath, staffList);
+
+            if (result == enumErrorCode.NONE)
+            {
+                foreach (StaffInfo staff in staffList)
+                {
+                    db.StaffInfo.Add(staff);
+                }
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch(Exception ex)
+                {
+                    result = enumErrorCode.ExcelContentError;
+                }
+            }
+            object tempObj = result == enumErrorCode.NONE ? null : new { error = result };
+            return RedirectToAction("Index", tempObj);
         }
         #endregion
     }
