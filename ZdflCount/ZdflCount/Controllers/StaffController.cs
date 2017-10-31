@@ -20,7 +20,7 @@ namespace ZdflCount.Controllers
         private UsersContext dbUser = new UsersContext();
 
         #region 列表
-        [Authorize(Roles = "员工信息管理员,员工权限管理员,批量导入员工,单个新增员工,修改员工信息,删除员工信息")]
+        [UserRoleAuthentication(Roles = "员工信息管理员,员工权限管理员,批量导入员工,单个新增员工,修改员工信息,删除员工信息")]
         public ActionResult Index(enumErrorCode error = enumErrorCode.NONE)
         {
             ViewData["error"] = Constants.GetErrorString(error);
@@ -34,7 +34,7 @@ namespace ZdflCount.Controllers
         #endregion
 
         #region 详情
-        [Authorize(Roles = "员工信息管理员,员工权限管理员,批量导入员工,单个新增员工,修改员工信息,删除员工信息")]
+        [UserRoleAuthentication(Roles = "员工信息管理员,员工权限管理员,批量导入员工,单个新增员工,修改员工信息,删除员工信息")]
         public ActionResult Detail(int id)
         {
             StaffInfo staffInfo = db.StaffInfo.Find(id);
@@ -48,14 +48,14 @@ namespace ZdflCount.Controllers
         #endregion
 
         #region 新建
-        [Authorize(Roles = "员工信息管理员,单个新增员工")]
+        [UserRoleAuthentication(Roles = "员工信息管理员,单个新增员工")]
         public ActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Roles = "员工信息管理员,单个新增员工")]
+        [UserRoleAuthentication(Roles = "员工信息管理员,单个新增员工")]
         public ActionResult Create(StaffInfo staffInfo)
         {
             if (ModelState.IsValid)
@@ -78,7 +78,7 @@ namespace ZdflCount.Controllers
         #endregion
 
         #region 修改
-        [Authorize(Roles = "员工信息管理员,修改员工信息")]
+        [UserRoleAuthentication(Roles = "员工信息管理员,修改员工信息")]
         public ActionResult Edit(int id = 0)
         {
             StaffInfo staffInfo = db.StaffInfo.Find(id);
@@ -90,7 +90,7 @@ namespace ZdflCount.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "员工信息管理员,修改员工信息")]
+        [UserRoleAuthentication(Roles = "员工信息管理员,修改员工信息")]
         public ActionResult Edit(StaffInfo staff)
         {
             if (ModelState.IsValid)
@@ -117,7 +117,7 @@ namespace ZdflCount.Controllers
         #endregion
 
         #region 删除
-        [Authorize(Roles = "员工信息管理员,删除员工信息")]
+        [UserRoleAuthentication(Roles = "员工信息管理员,删除员工信息")]
         public ActionResult Delete(int id = 0)
         {
             StaffInfo staffInfo = db.StaffInfo.Find(id);
@@ -129,7 +129,7 @@ namespace ZdflCount.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        [Authorize(Roles = "员工信息管理员,删除员工信息")]
+        [UserRoleAuthentication(Roles = "员工信息管理员,删除员工信息")]
         public ActionResult DeleteConfirmed(int id)
         {
             StaffInfo staffInfo = db.StaffInfo.Find(id);
@@ -145,7 +145,7 @@ namespace ZdflCount.Controllers
         #endregion
 
         #region Excel文件
-        [Authorize(Roles = "员工信息管理员,批量导入员工")]
+        [UserRoleAuthentication(Roles = "员工信息管理员,批量导入员工")]
         public ActionResult DownloadTemplate()
         {
             FilePathResult file = new FilePathResult("~/Downloads/员工信息.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
@@ -154,7 +154,7 @@ namespace ZdflCount.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "员工信息管理员,批量导入员工")]
+        [UserRoleAuthentication(Roles = "员工信息管理员,批量导入员工")]
         public ActionResult UploadStaffInfo(HttpPostedFileBase excelFileName)
         {
             if (excelFileName.ContentLength <= 0)
@@ -195,13 +195,13 @@ namespace ZdflCount.Controllers
         #region 角色管理
 
         [ChildActionOnly]
-        [Authorize(Roles = "员工权限管理员")]
+        [UserRoleAuthentication(Roles = "员工权限管理员")]
         public ActionResult GetStaff()
         {
             return PartialView("_DetailPartial");
         }
 
-        [Authorize(Roles = "员工权限管理员")]
+        [UserRoleAuthentication(Roles = "员工权限管理员")]
         public ActionResult RoleIndex()
         {
             string[] roleArray = Enum.GetNames(typeof(enumUserRole));
@@ -209,7 +209,7 @@ namespace ZdflCount.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "员工权限管理员")]
+        [UserRoleAuthentication(Roles = "员工权限管理员")]
         public string GetStaffInfo(string number)
         {
             StringBuilder strBuiler = new StringBuilder ();
@@ -247,7 +247,7 @@ namespace ZdflCount.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "员工权限管理员")]
+        [UserRoleAuthentication(Roles = "员工权限管理员")]
         public ActionResult SetStaffRole()
         {
             string[] roleArray = Enum.GetNames(typeof(enumUserRole));

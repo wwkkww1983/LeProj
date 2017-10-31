@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ZdflCount.Models;
+using ZdflCount.App_Start;
 
 namespace ZdflCount.Controllers
 {
@@ -15,7 +16,7 @@ namespace ZdflCount.Controllers
         //
         // GET: /Order/
 
-        [Authorize(Roles = "订单加载")]
+        [UserRoleAuthentication(Roles = "订单加载")]
         public ActionResult Index()
         {
             return View(db.Orders.ToList());

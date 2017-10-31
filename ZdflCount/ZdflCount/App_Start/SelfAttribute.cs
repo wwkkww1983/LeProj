@@ -16,4 +16,13 @@ namespace ZdflCount.App_Start
             }
         }  
     }
+
+    public class UserRoleAuthenticationAttribute : AuthorizeAttribute
+    {
+        public override void OnAuthorization(AuthorizationContext filterContext)
+        {
+            this.Roles = "超级管理员," + this.Roles;
+            base.OnAuthorization(filterContext);
+        }
+    }
 }

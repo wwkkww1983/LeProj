@@ -19,7 +19,7 @@ namespace ZdflCount.Controllers
         #region 列表页
         //
         // GET: /Schedule/
-        [Authorize(Roles = "施工单管理员,施工单查看,施工单创建,施工单修改,施工单下派,施工单关闭,施工单报废")]
+        [UserRoleAuthentication(Roles = "施工单管理员,施工单查看,施工单创建,施工单修改,施工单下派,施工单关闭,施工单报废")]
         public ActionResult Index(int id = 0)
         {
             var schedules = from item in db.Schedules
@@ -42,7 +42,7 @@ namespace ZdflCount.Controllers
 
         //
         // GET: /Schedule/Details/5
-        [Authorize(Roles = "施工单管理员,施工单查看,施工单创建,施工单修改,施工单下派,施工单关闭,施工单报废")]
+        [UserRoleAuthentication(Roles = "施工单管理员,施工单查看,施工单创建,施工单修改,施工单下派,施工单关闭,施工单报废")]
         public ActionResult Details(int id = 0)
         {
             Schedules schedules = db.Schedules.Find(id);
@@ -56,7 +56,7 @@ namespace ZdflCount.Controllers
 
         #region 下派施工单
         [HttpPost]
-        [Authorize(Roles = "施工单管理员,施工单下派")]
+        [UserRoleAuthentication(Roles = "施工单管理员,施工单下派")]
         public ActionResult Assign(int id = 0)
         {
             Schedules schedules = db.Schedules.Find(id);
@@ -82,7 +82,7 @@ namespace ZdflCount.Controllers
         #region 新建
         //
         // GET: /Schedule/Create/1
-        [Authorize(Roles = "施工单管理员,施工单创建")]
+        [UserRoleAuthentication(Roles = "施工单管理员,施工单创建")]
         public ActionResult Create(int id=0)
         {
             this.modelSchOrder.GetOrderById(id);
@@ -95,7 +95,7 @@ namespace ZdflCount.Controllers
         // POST: /Schedule/Create
 
         [HttpPost]
-        [Authorize(Roles = "施工单管理员,施工单创建")]
+        [UserRoleAuthentication(Roles = "施工单管理员,施工单创建")]
         public ActionResult Create(Schedules schedules,int machine,int temporary=0)
         {
             if (ModelState.IsValid)
@@ -141,7 +141,7 @@ namespace ZdflCount.Controllers
         #region 编辑
         //
         // GET: /Schedule/Edit/5
-        [Authorize(Roles = "施工单管理员,施工单修改")]
+        [UserRoleAuthentication(Roles = "施工单管理员,施工单修改")]
         public ActionResult Edit(int id = 0)
         {
             Schedules schedules = db.Schedules.Find(id);
@@ -161,7 +161,7 @@ namespace ZdflCount.Controllers
         // POST: /Schedule/Edit/5
 
         [HttpPost]
-        [Authorize(Roles = "施工单管理员,施工单修改")]
+        [UserRoleAuthentication(Roles = "施工单管理员,施工单修改")]
         public ActionResult Edit(Schedules schedules, int machine)
         {
             if (ModelState.IsValid)
@@ -207,7 +207,7 @@ namespace ZdflCount.Controllers
         #region 关闭
         //
         // GET: /Schedule/Delete/5
-        [Authorize(Roles = "施工单管理员,施工单关闭")]
+        [UserRoleAuthentication(Roles = "施工单管理员,施工单关闭")]
         public ActionResult Delete(int id = 0)
         {
             Schedules schedules = db.Schedules.Find(id);
@@ -222,7 +222,7 @@ namespace ZdflCount.Controllers
         // POST: /Schedule/Delete/5
 
         [HttpPost, ActionName("Delete")]
-        [Authorize(Roles = "施工单管理员,施工单关闭")]
+        [UserRoleAuthentication(Roles = "施工单管理员,施工单关闭")]
         public ActionResult DeleteConfirmed(int id)
         {
             Schedules schedules = db.Schedules.Find(id);
@@ -243,7 +243,7 @@ namespace ZdflCount.Controllers
         //
         // GET: /Schedule/Discard/5
 
-        [Authorize(Roles = "施工单管理员,施工单报废")]
+        [UserRoleAuthentication(Roles = "施工单管理员,施工单报废")]
         public ActionResult Discard(int id = 0)
         {
             Schedules schedules = db.Schedules.Find(id);
@@ -258,7 +258,7 @@ namespace ZdflCount.Controllers
         // POST: /Schedule/Delete/5
 
         [HttpPost, ActionName("Discard")]
-        [Authorize(Roles = "施工单管理员,施工单报废")]
+        [UserRoleAuthentication(Roles = "施工单管理员,施工单报废")]
         public ActionResult DiscardConfirmed(int id)
         {
             Schedules schedules = db.Schedules.Find(id);
