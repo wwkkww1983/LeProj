@@ -1,0 +1,79 @@
+﻿@model string[]
+
+@{
+    ViewBag.Title = "角色管理";
+    var name = "";
+}
+
+
+<h2>权限分配</h2>
+
+<div style="margin: 20px;">
+    @Html.TextBox("userNumber","", new {placeholder="请输入员工工号" })
+    <button id="btnSelectUser" type="submit" >选择员工</button>
+    <div class="alert-message">@ViewData["alert"]</div>
+    <div class="error-message">@ViewData["error"]</div>
+    @Html.Action("GetStaff")
+</div>
+
+@using (Html.BeginForm("SetStaffRole","Staff"))
+{
+    <fieldset>
+        <legend>权限信息</legend>
+        @Html.Hidden("number")
+        <table> 
+    @for (int idx = 1; idx < Model.Length;)
+    {
+        <tr class="hidden-table-line">
+        @for (int j = 0; j < 3 && idx < Model.Length; j++, idx++)
+        {
+            @:<td>
+                name = Model[idx];
+                @Html.CheckBox(name, false, new { value = idx, id = "checkbox-info-" + idx })    
+                @Html.Label(Model[idx], new { @for = Model[idx], @class = "checkbox-label" })
+            @:</td>
+        }
+      </tr>
+    }
+     </table>
+
+        <button type="submit" id="btn-save-roles" style="visibility:hidden">保存权限</button>
+        </fieldset>
+}
+
+<script>
+    $("#btnSelectUser").click(function () {
+        $.ajax({
+            url: "/Staff/GetStaffInfo",
+            type: "POST",
+            data: {
+                "number": document.getElementById("userNumber").value
+            },
+            success: function (data) {
+                var info = data.split(';');
+                if (info.length < 5) {
+                    alert("员工编码不存在");
+                    return;
+                };
+                document.getElementById("tbInfo-UserName").innerText = info[0];
+                document.getElementById("tbInfo-UserNumber").innerText = info[1];
+                document.getElementById("tbInfo-DeptName").innerText = info[2];
+                document.getElementById("tbInfo-PositionName").innerText = info[3];
+                document.getElementById("btn-save-roles").innerText = "保存【" + info[0] + "】的权限";
+                document.getElementById("btn-save-roles").style.visibility = "visible";
+                document.getElementById("number").value = info[1];
+                var iCount = parseInt(info[4]);
+                for(var i=1;i<info[4];i++)
+                {
+                    $("#checkbox-info-" + i.toString()).attr('checked', info[5].substr(i - 1, 1) == "1");
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("员工信息读取失败：" + errorThrown);
+            }
+        });
+
+    });
+    
+</script>
+<script src="~/Scripts/clientMsg.js"></script>

@@ -2,11 +2,6 @@
 
 @{
     ViewBag.Title = "新建施工单";
-    var errorMsg = "";
-    if (ViewData["error"] != null)
-    {
-        errorMsg = ViewData["error"].ToString();
-    }
 }
 
 <h2>@ViewBag.Title</h2>
@@ -35,7 +30,7 @@
         @Html.Hidden("Schedules.OrderId", Model.Orders.OrderId)
         <input id="temporary" type="hidden" value="2">
 
-        <div class="error-message-ur-fieldset error-message">@errorMsg</div>
+        <div class="error-message-ur-fieldset error-message">ViewData["error"]</div>
         <div class="editor-label">
             @Html.LabelFor(model => model.Schedules.CreatorName)
         </div>

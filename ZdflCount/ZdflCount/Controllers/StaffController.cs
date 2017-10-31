@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.IO;
+using System.Text;
 using System.Web.Mvc;
 using ZdflCount.Models;
 using ZdflCount.App_Start;
 using System.Data.Entity;
+using System.Web.Security;
+using WebMatrix.WebData;
 
 
 namespace ZdflCount.Controllers
@@ -14,8 +17,10 @@ namespace ZdflCount.Controllers
     public class StaffController : Controller
     {
         private DbTableDbContext db = new DbTableDbContext();
+        private UsersContext dbUser = new UsersContext();
 
         #region 列表
+        [Authorize(Roles = "员工信息管理员,员工权限管理员,批量导入员工,单个新增员工,修改员工信息,删除员工信息")]
         public ActionResult Index(enumErrorCode error = enumErrorCode.NONE)
         {
             ViewData["error"] = Constants.GetErrorString(error);
@@ -29,6 +34,7 @@ namespace ZdflCount.Controllers
         #endregion
 
         #region 详情
+        [Authorize(Roles = "员工信息管理员,员工权限管理员,批量导入员工,单个新增员工,修改员工信息,删除员工信息")]
         public ActionResult Detail(int id)
         {
             StaffInfo staffInfo = db.StaffInfo.Find(id);
@@ -42,12 +48,14 @@ namespace ZdflCount.Controllers
         #endregion
 
         #region 新建
+        [Authorize(Roles = "员工信息管理员,单个新增员工")]
         public ActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "员工信息管理员,单个新增员工")]
         public ActionResult Create(StaffInfo staffInfo)
         {
             if (ModelState.IsValid)
@@ -70,6 +78,7 @@ namespace ZdflCount.Controllers
         #endregion
 
         #region 修改
+        [Authorize(Roles = "员工信息管理员,修改员工信息")]
         public ActionResult Edit(int id = 0)
         {
             StaffInfo staffInfo = db.StaffInfo.Find(id);
@@ -81,6 +90,7 @@ namespace ZdflCount.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "员工信息管理员,修改员工信息")]
         public ActionResult Edit(StaffInfo staff)
         {
             if (ModelState.IsValid)
@@ -107,6 +117,7 @@ namespace ZdflCount.Controllers
         #endregion
 
         #region 删除
+        [Authorize(Roles = "员工信息管理员,删除员工信息")]
         public ActionResult Delete(int id = 0)
         {
             StaffInfo staffInfo = db.StaffInfo.Find(id);
@@ -118,6 +129,7 @@ namespace ZdflCount.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "员工信息管理员,删除员工信息")]
         public ActionResult DeleteConfirmed(int id)
         {
             StaffInfo staffInfo = db.StaffInfo.Find(id);
@@ -133,6 +145,7 @@ namespace ZdflCount.Controllers
         #endregion
 
         #region Excel文件
+        [Authorize(Roles = "员工信息管理员,批量导入员工")]
         public ActionResult DownloadTemplate()
         {
             FilePathResult file = new FilePathResult("~/Downloads/员工信息.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
@@ -141,6 +154,7 @@ namespace ZdflCount.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "员工信息管理员,批量导入员工")]
         public ActionResult UploadStaffInfo(HttpPostedFileBase excelFileName)
         {
             if (excelFileName.ContentLength <= 0)
@@ -176,6 +190,97 @@ namespace ZdflCount.Controllers
             object tempObj = result == enumErrorCode.NONE ? null : new { error = result };
             return RedirectToAction("Index", tempObj);
         }
+        #endregion
+
+        #region 角色管理
+
+        [ChildActionOnly]
+        [Authorize(Roles = "员工权限管理员")]
+        public ActionResult GetStaff()
+        {
+            return PartialView("_DetailPartial");
+        }
+
+        [Authorize(Roles = "员工权限管理员")]
+        public ActionResult RoleIndex()
+        {
+            string[] roleArray = Enum.GetNames(typeof(enumUserRole));
+            return View(roleArray);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "员工权限管理员")]
+        public string GetStaffInfo(string number)
+        {
+            StringBuilder strBuiler = new StringBuilder ();
+            //读取员工信息
+            IEnumerable<StaffInfo> staffList = from item in db.StaffInfo
+                              where item.Number == number && item.Status == enumStaffStatus.Normal
+                              select item;
+            if(staffList.Count() < 1){
+                return string.Empty;
+            }
+            StaffInfo staff = staffList.First();
+            strBuiler.Append(staff.Name); strBuiler.Append(";");
+            strBuiler.Append(staff.Number); strBuiler.Append(";");
+            strBuiler.Append(staff.DeptName); strBuiler.Append(";");
+            strBuiler.Append(staff.Position); strBuiler.Append(";");
+            //同步管理账户
+            IEnumerable<UserProfile> userList = from item in dbUser.UserProfiles
+                                                where item.UserName == staff.Number
+                                                select item;
+            if (userList.Count() < 1)
+            {
+                WebSecurity.CreateUserAndAccount(staff.Number, staff.Phone);
+            }
+            //读取管理权限
+            string[] roleArray = Enum.GetNames(typeof(enumUserRole));
+            strBuiler.Append(roleArray.Length); strBuiler.Append(";");
+            string tempRole = "0";
+            for (int i = 1; i < roleArray.Length; i++)
+            {
+                tempRole = Roles.IsUserInRole(staff.Number,roleArray[i])?"1":"0";
+                strBuiler.Append(tempRole);
+            }
+
+            return strBuiler.ToString();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "员工权限管理员")]
+        public ActionResult SetStaffRole()
+        {
+            string[] roleArray = Enum.GetNames(typeof(enumUserRole));
+            string tempStatus, userName = Request.Form["number"];
+            List<string> addRoles = new List<string>(), removeRoles = new List<string>();
+            foreach (string item in roleArray)
+            {
+                tempStatus = Request.Form[item];
+                if (tempStatus == null)
+                {
+                    continue;
+                }
+                else if (tempStatus.IndexOf(",false") > 0 && !Roles.IsUserInRole(userName, item))
+                {
+                    addRoles.Add(item);
+                }
+                else if (tempStatus == "false" && Roles.IsUserInRole(userName, item))
+                {
+                    removeRoles.Add(item);
+                }
+            }
+            if (addRoles.Count > 0)
+            {
+                Roles.AddUserToRoles(userName, addRoles.ToArray());
+            }
+            if (removeRoles.Count > 0)
+            {
+                Roles.RemoveUserFromRoles(userName, removeRoles.ToArray());
+            }
+            ViewData["alert"] = "授权成功";
+            return View("RoleIndex", roleArray);
+        }
+
         #endregion
     }
 }

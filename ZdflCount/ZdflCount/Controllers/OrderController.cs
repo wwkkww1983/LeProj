@@ -15,6 +15,7 @@ namespace ZdflCount.Controllers
         //
         // GET: /Order/
 
+        [Authorize(Roles = "订单加载")]
         public ActionResult Index()
         {
             return View(db.Orders.ToList());

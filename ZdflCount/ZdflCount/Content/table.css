@@ -15,6 +15,10 @@ border-style: solid;
 border-color: rgb(81, 130, 187);
 }
 
+tr.hidden-table-line {
+border-width: 0px;
+}
+
 /* Padding and font style */
 table td, table th {
 padding: 5px 10px;

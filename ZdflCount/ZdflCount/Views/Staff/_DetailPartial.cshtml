@@ -1,0 +1,31 @@
+﻿@model ZdflCount.Models.StaffInfo
+
+<table>
+<tr class="hidden-table-line">
+    <td align="right" width="150px">
+        @Html.DisplayNameFor(model => model.Name)：
+    </td><td width="200px">
+        <span id="tbInfo-UserName"></span>
+    </td>
+    
+    <td align="right" width="150px">
+        @Html.DisplayNameFor(model => model.Number)：
+    </td><td>
+        <span id="tbInfo-UserNumber"></span>
+    </td>
+
+</tr>
+<tr class="hidden-table-line">
+    <td align="right">
+        @Html.DisplayNameFor(model => model.DeptName)：
+    </td><td>
+        <span id="tbInfo-DeptName"></span>
+    </td>
+    
+    <td align="right">
+        @Html.DisplayNameFor(model => model.Position)：
+    </td><td>
+        <span id="tbInfo-PositionName"></span>
+    </td>
+</tr>
+</table>

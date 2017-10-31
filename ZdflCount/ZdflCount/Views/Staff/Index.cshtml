@@ -2,11 +2,6 @@
 
 @{
     ViewBag.Title = "员工列表";
-    var errorMsg = "";
-    if (ViewData["error"] != null)
-    {
-        errorMsg = ViewData["error"].ToString();
-    }
 }
 
 <h2>工厂员工信息列表</h2>   
@@ -21,8 +16,7 @@
 <div class="beside-upload-file">
     @Html.ActionLink("（下载模版）", "DownloadTemplate")
 </div>
-<div class="error-message">
-    @errorMsg</div>
+<div class="error-message">ViewData["error"]</div>
 <div class="right-outof-table">
     @Html.ActionLink("新增员工", "Create")
 </div>

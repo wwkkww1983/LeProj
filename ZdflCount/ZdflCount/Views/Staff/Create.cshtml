@@ -2,11 +2,6 @@
 
 @{
     ViewBag.Title = "修改员工资料";
-    var errorMsg = "";
-    if (ViewData["error"] != null)
-    {
-        errorMsg = ViewData["error"].ToString();
-    }
 }
 
 <h2>@ViewBag.Title</h2>
@@ -18,7 +13,7 @@
     
     <fieldset>
         <legend>详细信息</legend>    
-        <div class="error-message-ur-fieldset error-message">@errorMsg</div>
+        <div class="error-message-ur-fieldset error-message">ViewData["error"]</div>
 
        <div class="editor-label">
             @Html.LabelFor(model => model.Name)           
