@@ -1,0 +1,29 @@
+﻿@model IEnumerable<ZdflCount.Models.FactoryRoom>
+
+@{
+    ViewBag.Title = "车间列表";
+}
+
+<h2>工厂车间信息</h2>  
+<table id="tableOrder"  border="1"  width="100%" > 
+    <thead>   
+        <th>@Html.DisplayNameFor(model => model.RoomName)</th>
+        <th>@Html.DisplayNameFor(model => model.Phone)</th>  
+        <th>@Html.DisplayNameFor(model => model.ManagerName)</th> 
+        <th>@Html.DisplayNameFor(model => model.ManagerPhone)</th> 
+        <th>@Html.DisplayNameFor(model => model.Address)</th>  
+        <th>@Html.DisplayNameFor(model => model.Remarks)</th>
+
+    </thead>   
+    @foreach (var item in Model) 
+    {
+         <tr> 
+             <td>@Html.DisplayFor(modelItem => item.RoomName)</td> 
+             <td>@Html.DisplayFor(modelItem => item.Phone)</td> 
+             <td>@Html.DisplayFor(modelItem => item.ManagerName)</td> 
+             <td>@Html.DisplayFor(modelItem => item.ManagerPhone)</td> 
+             <td>@Html.DisplayFor(modelItem => item.Address)</td> 
+             <td>@Html.DisplayFor(modelItem => item.Remarks)</td>
+         </tr>   
+    }                     
+</table>

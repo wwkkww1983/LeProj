@@ -336,33 +336,42 @@ aside {
     width: 55%;
 }
 
-    #loginForm .validation-error {
-        display: block;
-        margin-left: 15px;
-    }
+#loginForm .validation-error {
+    display: block;
+    margin-left: 15px;
+}
 
-    #loginForm .validation-summary-errors ul {
-        margin: 0;
-        padding: 0;
-    }
+#loginForm .validation-summary-errors ul {
+    margin: 0;
+    padding: 0;
+}
 
-    #loginForm .validation-summary-errors li {
-        display: inline;
-        list-style: none;
-        margin: 0;
-    }
+#loginForm .validation-summary-errors li {
+    display: inline;
+    list-style: none;
+    margin: 0;
+}
 
-    #loginForm input {
-        width: 250px;
-    }
+#loginForm input {
+    width: 250px;
+}
 
-    #loginForm input[type="checkbox"],
-    #loginForm input[type="submit"],
-    #loginForm input[type="button"],
-    #loginForm button {
-        width: auto;
-    }
+#loginForm input[type="checkbox"],
+#loginForm input[type="submit"],
+#loginForm input[type="button"],
+#loginForm button {
+    width: auto;
+}
 
+.home-li-a-item {
+    display:block;
+    margin-bottom: 5px;
+    width:100px;
+}
+
+.home-li-head-item {
+    margin:20px 0 10px;
+}
 #socialLoginForm {
     margin-left: 40px;
     float: left;
@@ -416,6 +425,9 @@ fieldset {
             padding-bottom: 5px;
         }
 */
+fieldset {
+    border-radius: 10px;
+}
 
 /*显示在表单右上角的错误提示*/
 fieldset .error-message-ur-fieldset {
@@ -426,10 +438,16 @@ fieldset .error-message-ur-fieldset {
     font-weight: bold;
 }
 .block-structure-outline{
+    margin:20px;
     border-width: 2px;
     border-style: solid;
     border-color: rgb(81, 130, 187);
 }
+.chart-module {
+    width: 900px;
+    height:600px;
+}
+
 .error-message {
     color: red;
     font-weight: bold;
@@ -481,6 +499,16 @@ fieldset .error-message-ur-fieldset {
 
 .link-create-new-ur {
     float:right;
+}
+
+.block-status {
+    width:50%;
+    height:30px;
+    background-color:lightgreen;
+    color:darkgreen;    
+    letter-spacing: 5px;
+    text-align: center;
+    line-height: 30px;
 }
 
 label {
@@ -566,6 +594,13 @@ td button {
     margin: 20px 0 10px 0;
 }
 
+.statistic-btn-query {
+    float: right;
+    margin: 20px;
+    width: 100px;
+    height: 50px;
+}
+
 .error {
     color: #e80c4d;
 }
@@ -606,7 +641,6 @@ input[type="checkbox"].input-validation-error {
     float: left;
     line-height: 3em;
 }
-
 /********************
 *   Mobile Styles   *
 ********************/

@@ -1,14 +1,20 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "系统管理";
 }
 
-<h2>Index</h2>
+<h2>系统管理<font color="red">（慎用）</font></h2>
 
 
 @if (!(bool)ViewData["ServerStatus"])
 {
     using (Html.BeginForm("StartServer", "Manage"))
     {
-        <input class="button-large button-pill button-highlight" value="打开服务器" type="submit"/>
+        <input class="button-large button-pill button-highlight" value="启动服务器" type="submit"/>
     }
+}
+else
+{
+    <div class="block-status">
+        服务器正常
+    </div>   
 }

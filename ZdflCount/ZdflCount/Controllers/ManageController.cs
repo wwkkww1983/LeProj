@@ -11,9 +11,29 @@ namespace ZdflCount.Controllers
     public class ManageController : Controller
     {
         private DbTableDbContext db = new DbTableDbContext();
-        //
-        // GET: /Setting/
 
+        #region 设备
+        [UserRoleAuthentication(Roles = "系统管理员")]
+        public ActionResult Machines()
+        {
+            var itemList = from item in db.Machines
+                           orderby item.Status ascending, item.RoomID ascending
+                           select item;
+            return View(itemList);
+        }
+        #endregion
+
+        #region 工厂车间
+        [UserRoleAuthentication(Roles = "系统管理员")]
+        public ActionResult Rooms()
+        {
+            return View(db.FactoryRoom);
+        }
+        #endregion
+
+        #region 服务器操作
+
+        [UserRoleAuthentication(Roles = "系统管理员")]
         public ActionResult Index()
         {
             ViewData["ServerStatus"] = TcpProtocolClient.KeepListening;
@@ -21,27 +41,31 @@ namespace ZdflCount.Controllers
             return View();
         }
 
-        #region 设备
-        public ActionResult Machines()
-        {
-            var itemList = from item in db.Machines
-                           orderby item.Status
-                           select item;
-            return View(itemList);
-        }
-        #endregion
 
-
-        #region 服务器操作
         [HttpPost]
+        [UserRoleAuthentication(Roles = "系统管理员")]
         public ActionResult StartServer()
         {
             if (!TcpProtocolClient.KeepListening)
             {
                 TcpProtocolClient.StartServer();
             } 
-            ViewData["ServerStatus"] = TcpProtocolClient.KeepListening;
-            return View("Index");
+            return RedirectToAction("Index"); 
+        }
+        #endregion
+
+        #region 统计信息
+
+        [UserRoleAuthentication(Roles = "生产统计数据查看")]
+        public ActionResult Statistics()
+        {
+            return View();
+        }
+        
+        [UserRoleAuthentication(Roles = "生产统计数据查看")]
+        public ActionResult Statistics(DateTime startDate,DateTime endDate)
+        {
+            return View();
         }
         #endregion
     }

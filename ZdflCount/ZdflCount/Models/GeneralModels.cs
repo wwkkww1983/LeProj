@@ -356,6 +356,13 @@ namespace ZdflCount.Models
         [StringLength(50)]
         public string Name { get; set; }
 
+        [DisplayName("所在车间")]
+        public int RoomID{get;set;}
+        
+        [StringLength(50)]
+        [DisplayName("所在车间")]
+        public string RoomName{get;set;}
+
         [StringLength(50)]
         [DisplayName("IP地址")]
         public string IpAddress { get; set; }
@@ -446,6 +453,97 @@ namespace ZdflCount.Models
 
         public int ChannelInfo { get; set; }
 
+    }
+    #endregion
+
+    #region 车间
+    public class FactoryRoom
+    {
+        [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int RoomID { get; set; }
+
+        [DisplayName("车间")]
+        [StringLength(50)]
+        public string RoomName { get; set; }
+
+        [DisplayName("负责人")]
+        public string ManagerID { get; set; }
+
+        [DisplayName("负责人")]
+        [StringLength(50)]
+        public string ManagerName { get; set; }
+
+        [DisplayName("负责人电话")]
+        [StringLength(20)]
+        public string ManagerPhone { get; set; }
+
+        [DisplayName("车间电话")]
+        [StringLength(20)]
+        public string Phone { get; set; }
+
+        [DisplayName("车间位置")]
+        [StringLength(50)]
+        public string Address { get; set; }
+
+        [DisplayName("车间备注信息")]
+        public string Remarks { get; set; }
+    }
+    #endregion
+
+    #region 统计基础数据
+    public class StatisticInfo
+    {
+        [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int ID { get; set; }
+
+        [DisplayName("员工姓名")]
+        [StringLength(50)]
+        public string StaffName { get; set; }
+
+        [DisplayName("员工工号")]
+        [Required]
+        [StringLength(50)]
+        public string StaffNumber { get; set; }
+
+        [DisplayName("设备备注名")]
+        [StringLength(50)]
+        public string MachineName { get; set; }
+
+        [DisplayName("设备编码")]
+        [Required]
+        [StringLength(50)]
+        public string MachineNumber { get; set; }
+
+        [DisplayName("车间")]
+        [Required]
+        public int RoomID { get; set; }
+
+        [DisplayName("车间")]
+        [StringLength(50)]
+        public string RoomName { get; set; }
+
+        [DisplayName("订单编号")]
+        [Required]
+        [StringLength(50)]
+        public string OrderNumber { get; set; }
+
+        [DisplayName("工厂")]
+        [StringLength(50)]
+        public string Factory { get; set; }
+
+        [DisplayName("完成总数")]
+        [Required]
+        public int FinishCount { get; set; }
+
+        [DisplayName("异常总数")]
+        [Required]
+        public int ExceptionCount { get; set; }
+
+        [DisplayName("日期")]
+        [Required]
+        public DateTime Date { get; set; }
     }
     #endregion
 
@@ -550,7 +648,14 @@ namespace ZdflCount.Models
         /// 员工信息
         /// </summary>
         public DbSet<StaffInfo> StaffInfo { get; set; }
-
+        /// <summary>
+        /// 工厂车间
+        /// </summary>
+        public DbSet<FactoryRoom> FactoryRoom { get; set; }
+        /// <summary>
+        /// 统计资料库
+        /// </summary>
+        public DbSet<StatisticInfo> Statistics { get; set; }
 
         /// <summary>
         /// 根据设备IP获取设备信息

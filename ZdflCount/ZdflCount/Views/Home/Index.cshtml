@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "主页";
+    var itemClassName = "home-li-a-item";
 }
 @section featured {
     <section class="featured">
@@ -8,30 +9,31 @@
                 <h1>@ViewBag.Title - </h1>
                 <h2>@ViewBag.Message</h2>
             </hgroup>
-            <p>
-                左侧为订单信息，右侧为生产情况。
-            </p>
         </div>
     </section>
 }
-<h3>下面是系统基本功能:</h3>
+<h3>系统功能索引:</h3>
 <ol class="round">
     <li class="one">
-        <h5>订单信息</h5>
-         @Html.ActionLink("订单列表", "Index", "Order")
+        <h5 class="home-li-head-item">订单信息</h5>
+         @Html.ActionLink("订单列表", "Index", "Order",null, new {@class = itemClassName })
     </li>
     
     <li class="two">
-        <h5>信息管理</h5>
-        @Html.ActionLink("员工信息", "Index", "Staff")
-        <br />
-        @Html.ActionLink("员工角色", "RoleIndex", "Staff")
-        <br />
-        @Html.ActionLink("机台信息", "Machines", "Manage")
+        <h5 class="home-li-head-item">信息管理</h5>
+        @Html.ActionLink("员工信息管理", "Index", "Staff",null, new {@class = itemClassName })       
+        @Html.ActionLink("员工权限管理", "RoleIndex", "Staff",null, new {@class = itemClassName })
+        @Html.ActionLink("系统管理", "Index", "Manage",null, new {@class = itemClassName })
     </li>
     
     <li class="three">
-        <h5>数据统计</h5>
-        生产情况分析
+        <h5 class="home-li-head-item">数据统计</h5>
+        @Html.ActionLink("统计信息", "Statistics", "Manage",null, new {@class = itemClassName })
+    </li>
+
+    <li class="four">
+        <h5 class="home-li-head-item">工厂基础设施</h5>
+        @Html.ActionLink("设备信息", "Machines", "Manage",null, new {@class = itemClassName })
+        @Html.ActionLink("车间信息", "Rooms", "Manage",null, new {@class = itemClassName })
     </li>
 </ol>
