@@ -116,6 +116,7 @@ namespace ZdflCount.Models
         [Description("已删除")]
         Deleted
     }
+
     #endregion
 
     #region 数据结构类
@@ -400,33 +401,29 @@ namespace ZdflCount.Models
         [DisplayName("通道数")]
         public int ChannelCount { get; set; }
 
-        [DisplayName("通道1计划")]
-        public int PlanCount1 { get; set; }
+        [DisplayName("工作状态")]
+        public byte StaffStatus  { get; set; }
+
         [DisplayName("通道1已完成")]
-        public int Finish1 { get; set; }
-        [DisplayName("通道1异常")]
-        public int Exception1 { get; set; }
+        public int ChannelFinish1 { get; set; }
 
-        [DisplayName("通道2计划")]
-        public int PlanCount2 { get; set; }
         [DisplayName("通道2已完成")]
-        public int Finish2 { get; set; }
-        [DisplayName("通道2异常")]
-        public int Exception2 { get; set; }
+        public int ChannelFinish2 { get; set; }
 
-        [DisplayName("通道3计划")]
-        public int PlanCount3 { get; set; }
         [DisplayName("通道3已完成")]
-        public int Finish3 { get; set; }
-        [DisplayName("通道3异常")]
-        public int Exception3 { get; set; }
+        public int ChannelFinish3 { get; set; }
 
-        [DisplayName("通道4计划")]
-        public int PlanCount4 { get; set; }
         [DisplayName("通道4已完成")]
-        public int Finish4 { get; set; }
-        [DisplayName("通道4异常")]
-        public int Exception4 { get; set; }
+        public int ChannelFinish4 { get; set; }
+
+        [DisplayName("通道5已完成")]
+        public int ChannelFinish5 { get; set; }
+
+        [DisplayName("通道6已完成")]
+        public int ChannelFinish6 { get; set; }
+
+        [DisplayName("异常总数")]
+        public int ExceptionCount { get; set; }
     }
     #endregion
 
@@ -461,11 +458,15 @@ namespace ZdflCount.Models
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
+        public App_Start.enumSystemErrorCode ErrorType { get; set; }
+
         public DateTime HappenTime { get; set; }
 
         public int userID { get; set; }
 
         public string Remark { get; set; }
+
+        public byte[] RemarkBinary { get; set; }
 
         public string ErrorMsg { get; set; }
 
@@ -572,17 +573,40 @@ namespace ZdflCount.Models
         /// <summary>
         /// 记录错误日志
         /// </summary>
+        /// <param name="type">异常类型</param>
         /// <param name="ex">异常</param>
         /// <param name="remark">备注信息（参数值）</param>
-        public void RecordErrorInfo(Exception ex, string remark)
+        /// <param name="remarkBinary">备注信息（二进制形式）</param>
+        public void RecordErrorInfo(App_Start.enumSystemErrorCode type, Exception ex, string remark, byte[] remarkBinary)
         {
             ErrorInfo info = new ErrorInfo()
             {
                 HappenTime = DateTime.Now,
+                ErrorType = type,
                 Remark = remark,
                 ErrorMsg = ex.Message,
                 ErrorSource = ex.Source,
-                ErrorStack = ex.StackTrace
+                ErrorStack = ex.StackTrace,
+                RemarkBinary = remarkBinary
+            };
+            this.ErrorInfo.Add(info);
+            this.SaveChanges();
+        }
+
+        /// <summary>
+        /// 记录错误日志
+        /// </summary>
+        /// <param name="type">异常类型</param>
+        /// <param name="remark">备注信息（参数值）</param>
+        /// <param name="remarkBinary">备注信息（二进制形式）</param>
+        public void RecordErrorInfo(App_Start.enumSystemErrorCode type, string remark, byte[] remarkBinary)
+        {
+            ErrorInfo info = new ErrorInfo()
+            {
+                HappenTime = DateTime.Now,
+                ErrorType = type,
+                Remark = remark,
+                RemarkBinary = remarkBinary
             };
             this.ErrorInfo.Add(info);
             this.SaveChanges();

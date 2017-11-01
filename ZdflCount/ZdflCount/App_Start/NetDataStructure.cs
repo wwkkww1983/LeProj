@@ -13,15 +13,7 @@ namespace ZdflCount.App_Start
         public int FillField;
         public byte[] Content;
     }
-    /// <summary>
-    /// 各通道生产情况
-    /// </summary>
-    public struct ChannelInfo
-    {
-        public int PlanCount;
-        public int Finish;
-        public int Exception;
-    }
+
     /// <summary>
     /// 生产情况
     /// </summary>
@@ -32,10 +24,14 @@ namespace ZdflCount.App_Start
         public int ChannelCount;
         public string StaffNumber;
         public string StaffName;
-        public ChannelInfo Channel1;
-        public ChannelInfo Channel2;
-        public ChannelInfo Channel3;
-        public ChannelInfo Channel4;
+        public byte MsgStatus;
+        public int ChannelFinish1;
+        public int ChannelFinish2;
+        public int ChannelFinish3;
+        public int ChannelFinish4;
+        public int ChannelFinish5;
+        public int ChannelFinish6;
+        public int UnusualCount;
     }
 
     /// <summary>

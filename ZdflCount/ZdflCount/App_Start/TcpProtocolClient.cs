@@ -11,7 +11,7 @@ namespace ZdflCount.App_Start
 {
     public class TcpProtocolClient 
     {
-        private const int CLIENT_PORT_NUMBER = 6000, SERVER_PORT_NUMBER = 5556;
+        private const int CLIENT_PORT_NUMBER = 6000, SERVER_PORT_NUMBER = 55556;
         private const int BUFFER_SIZE = 1024,COMMUNICATION_TIME_OUT = 1000;
         private static bool keepListening = false;
         private static Stopwatch sw = new Stopwatch();
@@ -43,7 +43,7 @@ namespace ZdflCount.App_Start
             }
             catch (Exception ex)
             {
-                db.RecordErrorInfo(ex, System.Text.Encoding.ASCII.GetString(content));
+                db.RecordErrorInfo(enumSystemErrorCode.TcpSenderException, ex, System.Text.Encoding.ASCII.GetString(content), content);
             }
             finally
             {
@@ -62,23 +62,30 @@ namespace ZdflCount.App_Start
         }
         
         private static void Listening()
-        {            
-            TcpListener serverListen = new TcpListener(IPAddress.Any, SERVER_PORT_NUMBER);
-            serverListen.Start();
-
-            while (keepListening)
+        {
+            try
             {
-                TcpClient serverReceive = serverListen.AcceptTcpClient();
+                TcpListener serverListen = new TcpListener(IPAddress.Any, SERVER_PORT_NUMBER);
+                serverListen.Start();
 
-                string clientIP = serverReceive.Client.RemoteEndPoint.ToString();
-                clientIP = clientIP.Substring(0, clientIP.IndexOf(':'));
+                while (keepListening)
+                {
+                    TcpClient serverReceive = serverListen.AcceptTcpClient();
 
-                NetworkStream ns = serverReceive.GetStream();
-                string strIP = ((IPEndPoint)serverReceive.Client.RemoteEndPoint).Address.ToString ();
-                ReceiveByProtocol(ns,strIP);
-                //子线程读取数据
-                //Thread receiveThread = new Thread(new ParameterizedThreadStart(Receiving));
-                //receiveThread.Start(dtChild);
+                    string clientIP = serverReceive.Client.RemoteEndPoint.ToString();
+                    clientIP = clientIP.Substring(0, clientIP.IndexOf(':'));
+
+                    NetworkStream ns = serverReceive.GetStream();
+                    string strIP = ((IPEndPoint)serverReceive.Client.RemoteEndPoint).Address.ToString();
+                    ReceiveByProtocol(ns, strIP);
+                    //子线程读取数据
+                    //Thread receiveThread = new Thread(new ParameterizedThreadStart(Receiving));
+                    //receiveThread.Start(dtChild);
+                }
+            }
+            catch (Exception ex)
+            {
+                db.RecordErrorInfo(enumSystemErrorCode.TcpListenerException, ex, "监听异常", null);
             }
         }
 
@@ -100,7 +107,9 @@ namespace ZdflCount.App_Start
                     typeResult = new ClientHandlerDeviceSetting();
                     break;
 
-                default: break;
+                default:
+                    typeResult = new ClientHandlerNoneDefault();
+                    break;
             }
             return typeResult;
         }
@@ -139,13 +148,13 @@ namespace ZdflCount.App_Start
             {
                 if (!ReadBuffer(ns, Coder.PROTOCOL_HEAD_COUNT, byteHead))
                 {
-                    db.RecordErrorInfo(null, "数据头读取超时：" + strIP + System.Text.Encoding.Default.GetString(byteHead));
+                    db.RecordErrorInfo(enumSystemErrorCode.TcpRecieveErr, "数据头读取超时：" + strIP, byteHead);
                     return;
                 }
                 NormalDataStruct dataInfo = Coder.DecodeData(byteHead);
                 if (!ReadBuffer(ns, dataInfo.contentLen, dataInfo.Content))
                 {
-                    db.RecordErrorInfo(null, "数据主体读取超时：" + strIP+ System.Text.Encoding.Default.GetString(byteHead));
+                    db.RecordErrorInfo(enumSystemErrorCode.TcpRecieveErr, "数据主体读取超时：" + strIP, byteHead);
                     return;
                 }
                 //信息处理
@@ -160,7 +169,7 @@ namespace ZdflCount.App_Start
             }
             catch (Exception ex)
             {
-                db.RecordErrorInfo(ex, System.Text.Encoding.ASCII.GetString(byteHead));
+                db.RecordErrorInfo(enumSystemErrorCode.TcpHandlerException, ex, strIP, byteHead);
             }
             finally
             {

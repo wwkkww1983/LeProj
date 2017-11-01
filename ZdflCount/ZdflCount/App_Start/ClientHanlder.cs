@@ -18,22 +18,22 @@ namespace ZdflCount.App_Start
     /// </summary>
     public class ClientHanlderProductInfo : interfaceClientHanlder
     {
-        /// <summary>
-        /// 通道信息解码
-        /// </summary>
-        /// <param name="buff"></param>
-        /// <param name="locIdx"></param>
-        /// <param name="channel"></param>
-        private void DecodeChannelInfo(byte[] buff, ref int locIdx, ref ChannelInfo channel)
+        private int decodeByte2Int(byte[] buff,ref int startIdx,int length)
         {
-            channel.PlanCount = ConvertHelper.BytesToInt32(buff, locIdx, true);
-            locIdx += 4;
-            channel.Finish = ConvertHelper.BytesToInt32(buff, locIdx, true);
-            locIdx += 4;
-            channel.Exception = ConvertHelper.BytesToInt32(buff, locIdx, true);
-            locIdx += 4;
+            int result = 0;
+            byte[] tempByte = new byte[length];
+            Array.Copy(buff, startIdx, tempByte, 0, length);
+            if (length == 2)
+            {
+                result = ConvertHelper.BytesToInt16(tempByte, true);
+            }
+            else if (length == 4)
+            {
+                result = ConvertHelper.BytesToInt32(tempByte, true);
+            }
+            startIdx += length;
+            return result;
         }
-
         /// <summary>
         /// 上传生产情况解码
         /// </summary>
@@ -44,11 +44,10 @@ namespace ZdflCount.App_Start
             ProductInfo info = new ProductInfo();
             byte[] tempData = buff;
             //机器码
-            byte[] machineByte = new byte[2];
-            Array.Copy(tempData, machineByte, 2);
-            info.MachineId = ConvertHelper.BytesToInt16(machineByte, true);
+            int locIdx = 0;
+            info.MachineId = decodeByte2Int(buff,ref locIdx, 2);
             //施工单编码
-            int locIdx = 2, tempLen = tempData[locIdx++];
+            int tempLen = tempData[locIdx++];
             byte[] scheduleByte = new byte[tempLen];
             Array.Copy(tempData, locIdx, scheduleByte, 0, tempLen);
             info.ScheduleNumber = Encoding.ASCII.GetString(scheduleByte);
@@ -61,18 +60,23 @@ namespace ZdflCount.App_Start
             Array.Copy(tempData, locIdx, numberByte, 0, tempLen);
             info.StaffNumber = Encoding.ASCII.GetString(numberByte);
             locIdx += tempLen;
-            //姓名长度
-            tempLen = tempData[locIdx++];
             //姓名
+            tempLen = tempData[locIdx++];
             byte[] nameByte = new byte[tempLen];
             Array.Copy(tempData, locIdx, nameByte, 0, tempLen);
             info.StaffName = Encoding.GetEncoding("GBK").GetString(nameByte);
             locIdx += tempLen;
-            //通道
-            DecodeChannelInfo(tempData, ref locIdx, ref info.Channel1);
-            DecodeChannelInfo(tempData, ref  locIdx, ref info.Channel2);
-            DecodeChannelInfo(tempData, ref locIdx, ref info.Channel3);
-            DecodeChannelInfo(tempData, ref  locIdx, ref info.Channel4);
+            //状态标志位
+            info.MsgStatus = tempData[locIdx++];
+            //各通道已完成数
+            info.ChannelFinish1 = decodeByte2Int(buff,ref locIdx, 4);
+            info.ChannelFinish2 = decodeByte2Int(buff, ref locIdx, 4);
+            info.ChannelFinish3 = decodeByte2Int(buff, ref locIdx, 4);
+            info.ChannelFinish4 = decodeByte2Int(buff, ref locIdx, 4);
+            info.ChannelFinish5 = decodeByte2Int(buff, ref locIdx, 4);
+            info.ChannelFinish6 = decodeByte2Int(buff, ref locIdx, 4);
+            //异常数
+            info.UnusualCount = decodeByte2Int(buff, ref locIdx, 4);
 
             return info;
         }
@@ -87,30 +91,28 @@ namespace ZdflCount.App_Start
         {
 
             return new Models.ProductInfo()
-             {
-                 ChannelCount = info.ChannelCount,
-                 DateCreate = DateTime.Now,
-                 staffId = info.StaffNumber,
-                 StaffName = info.StaffName,
-                 MachineIP = machine.IpAddress,
-                 MachineId = machine.ID,
-                 MachineName = machine.Name,
+            {
+                DateCreate = DateTime.Now,
+                ChannelCount = info.ChannelCount,
 
-                 PlanCount1 = info.Channel1.PlanCount,
-                 PlanCount2 = info.Channel2.PlanCount,
-                 PlanCount3 = info.Channel3.PlanCount,
-                 PlanCount4 = info.Channel4.PlanCount,
+                staffId = info.StaffNumber,
+                StaffName = info.StaffName,
 
-                 Finish1 = info.Channel1.Finish,
-                 Finish2 = info.Channel2.Finish,
-                 Finish3 = info.Channel3.Finish,
-                 Finish4 = info.Channel4.Finish,
+                MachineIP = machine.IpAddress,
+                MachineId = machine.ID,
+                MachineName = machine.Name,
 
-                 Exception1 = info.Channel1.Exception,
-                 Exception2 = info.Channel2.Exception,
-                 Exception3 = info.Channel3.Exception,
-                 Exception4 = info.Channel4.Exception
-             };
+                StaffStatus = info.MsgStatus,
+
+                ChannelFinish1 = info.ChannelFinish1,
+                ChannelFinish2 = info.ChannelFinish2,
+                ChannelFinish3 = info.ChannelFinish3,
+                ChannelFinish4 = info.ChannelFinish4,
+                ChannelFinish5 = info.ChannelFinish5,
+                ChannelFinish6 = info.ChannelFinish6,
+
+                ExceptionCount = info.UnusualCount
+            };
         }
 
         public byte[] HandlerClientData(byte[] buff)
@@ -125,7 +127,7 @@ namespace ZdflCount.App_Start
             db.SaveChanges();
 
 
-            byte[] buffResp = { 1 };
+            byte[] buffResp = { 0 };
             return buffResp;
         }
 
@@ -194,6 +196,9 @@ namespace ZdflCount.App_Start
         }
     }
 
+    /// <summary>
+    /// 设备设置
+    /// </summary>
     public class ClientHandlerDeviceSetting : interfaceClientHanlder
     {
         /// <summary>
@@ -259,6 +264,26 @@ namespace ZdflCount.App_Start
             byteResp[0] = 1;
             Array.Copy(byteID, 0, byteResp, 1, 2);
             return byteResp;
+        }
+
+        public bool ShouldResponse()
+        {
+            return true;
+        }
+    }
+
+    /// <summary>
+    /// 命令错误，默认处理方式
+    /// </summary>
+    public class ClientHandlerNoneDefault : interfaceClientHanlder
+    {
+        public byte[] HandlerClientData(byte[] buff)
+        {
+            DbTableDbContext db = new DbTableDbContext();
+
+            db.RecordErrorInfo(enumSystemErrorCode.TcpDefaultHandlerErr, "", buff);
+
+            return new byte[] { 1 };
         }
 
         public bool ShouldResponse()

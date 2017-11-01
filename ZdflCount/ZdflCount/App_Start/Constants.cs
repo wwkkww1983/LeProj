@@ -51,7 +51,7 @@ namespace ZdflCount.App_Start
     }
 
     /// <summary>
-    /// 错误码
+    /// 返回给客户端的错误码
     /// </summary>
     public enum enumErrorCode
     {
@@ -77,6 +77,38 @@ namespace ZdflCount.App_Start
         /// </summary>
         ExcelContentError
 
+    }
+
+
+    /// <summary>
+    /// 系统自身错误码
+    /// </summary>
+    public enum enumSystemErrorCode
+    {
+        /// <summary>
+        /// 监听线程异常
+        /// </summary>
+        TcpListenerException = 0x00,
+
+        /// <summary>
+        /// TCP监听处理模块
+        /// </summary>
+        TcpRecieveErr,
+
+        /// <summary>
+        /// TCP接受后，处理程序
+        /// </summary>
+        TcpHandlerException,
+
+        /// <summary>
+        /// TCP接受编码找不到，使用了默认处理程序处理
+        /// </summary>
+        TcpDefaultHandlerErr,
+
+        /// <summary>
+        /// 给客户端发送模块
+        /// </summary>
+        TcpSenderException,
     }
 
     /// <summary>
