@@ -8,7 +8,7 @@ namespace System.Web.Mvc.Html
     {
         public static MvcHtmlString DisplayEnumDescription(this HtmlHelper htmlHelper, string enumTypeName, int value)
         {
-            Type enumType = Type.GetType("ZdflCount.Models." + enumTypeName);
+            Type enumType = Type.GetType("ZdflCount." + enumTypeName);
             if (!Enum.IsDefined(enumType, value))
             {
                 return MvcHtmlString.Empty;

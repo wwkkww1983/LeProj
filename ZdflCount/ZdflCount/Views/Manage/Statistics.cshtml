@@ -9,10 +9,11 @@
 
     @Html.TextBox("userNumber","", new {placeholder="请输入员工工号" })
     @Html.TextBox("userName","", new {placeholder="请输入员工姓名" })
-    @Html.TextBox("machine","", new {placeholder="请输入机器编号" })
+    @Html.TextBox("machine","", new {placeholder="请输入机器编号" })    
     @Html.TextBox("order","", new {placeholder="请输入订单号" })
-    @Html.TextBox("room","", new {placeholder="请选择车间" })
-    
+@*    @Html.TextBox("room","", new {placeholder="请选择车间" })*@
+    @Html.Action("RoomsDownList")
+
     <div>
         开始日期：<input type="date" id="startDate"  />
         结束日期：<input type="date" id="endDate"/>
@@ -33,7 +34,7 @@
             <option >已完成数量</option>
             <option >异常数量</option>
         </select>
-        图标形式：
+        图表形式：
         <select id="chart">
             <option value="bar">柱状图</option>
             <option value="line">折线图</option>

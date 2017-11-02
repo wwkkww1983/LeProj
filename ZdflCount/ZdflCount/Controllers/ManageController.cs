@@ -38,7 +38,7 @@ namespace ZdflCount.Controllers
         {
             ViewData["ServerStatus"] = TcpProtocolClient.KeepListening;
 
-            return View();
+            return View(db.ErrorInfo.OrderBy(item => item.ErrorType).OrderByDescending(item => item.ID));
         }
 
 
@@ -60,6 +60,28 @@ namespace ZdflCount.Controllers
         public ActionResult Statistics()
         {
             return View();
+        }
+
+        [UserRoleAuthentication(Roles = "生产统计数据查看")]
+        public ActionResult RoomsDownList()
+        {
+            List<SelectListItem> roomList = new List<SelectListItem>();
+            roomList.Add(new SelectListItem()
+            {
+                Text = "请选择车间",
+                Value = "",
+                Selected = true
+            });
+            foreach (FactoryRoom room in db.FactoryRoom)
+            {
+                roomList.Add(new SelectListItem()
+                {
+                    Selected = false,
+                    Text = room.RoomName,
+                    Value = room.RoomID.ToString()
+                });
+            }
+            return PartialView("_RoomsPartial", roomList);
         }
         
         [HttpPost]

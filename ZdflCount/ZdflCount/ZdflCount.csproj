@@ -338,6 +338,7 @@
     <Content Include="Views\Staff\_DetailPartial.cshtml" />
     <Content Include="Views\Manage\Rooms.cshtml" />
     <Content Include="Views\Manage\Statistics.cshtml" />
+    <Content Include="Views\Manage\_RoomsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

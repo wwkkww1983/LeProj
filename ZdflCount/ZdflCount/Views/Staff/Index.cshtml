@@ -45,7 +45,7 @@
              <td>@Html.DisplayFor(modelItem => item.telPhone)</td> 
              <td>@Html.DisplayFor(modelItem => item.Address)</td> 
              <td>@Html.DisplayFor(modelItem => item.JoinInDate)</td> 
-             <td>@Html.DisplayEnumDescription("enumStaffStatus",(int)item.Status)</td> 
+             <td>@Html.DisplayEnumDescription("Models.enumStaffStatus",(int)item.Status)</td> 
              <td>
                 @Html.ActionLink("查看详情", "Detail", new { id=item.ID }) |
                 @Html.ActionLink("修改", "Edit", new { id=item.ID }) |

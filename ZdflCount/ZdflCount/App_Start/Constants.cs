@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Collections.Generic;
 
 namespace ZdflCount.App_Start
@@ -88,31 +89,37 @@ namespace ZdflCount.App_Start
         /// <summary>
         /// 监听线程异常
         /// </summary>
+        [Description("监听线程异常")]
         TcpListenerException = 0x00,
 
         /// <summary>
-        /// TCP监听处理模块
+        /// TCP监听线程模块
         /// </summary>
+        [Description("监听线程错误")]
         TcpRecieveErr,
 
         /// <summary>
         /// TCP接受后，处理程序
         /// </summary>
+        [Description("监听处理异常")]
         TcpHandlerException,
 
         /// <summary>
         /// TCP接受编码找不到，使用了默认处理程序处理
         /// </summary>
+        [Description("命令码错误")]
         TcpDefaultHandlerErr,
 
         /// <summary>
         /// 给客户端发送模块
         /// </summary>
+        [Description("设备通信异常")]
         TcpSenderException,
 
         /// <summary>
         /// 生产信息退出登录员工不同
         /// </summary>
+        [Description("生产设备退出和登录员工不同")]
         ProductOutInDiff
     }
 

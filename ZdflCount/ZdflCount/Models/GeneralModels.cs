@@ -561,18 +561,24 @@ namespace ZdflCount.Models
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
+        [DisplayName("异常类型")]
         public App_Start.enumSystemErrorCode ErrorType { get; set; }
 
+        [DisplayName("时间")]
         public DateTime HappenTime { get; set; }
 
+        [DisplayName("帐号")]
         public int userID { get; set; }
 
+        [DisplayName("备注")]
         public string Remark { get; set; }
 
         public byte[] RemarkBinary { get; set; }
 
+        [DisplayName("错误信息")]
         public string ErrorMsg { get; set; }
 
+        [DisplayName("主体")]
         public string ErrorSource { get; set; }
 
         public string ErrorStack { get; set; }

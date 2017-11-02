@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<ZdflCount.Models.ErrorInfo>
+
+@{
     ViewBag.Title = "系统管理";
 }
 
@@ -19,3 +21,26 @@ else
     </div>   
 }
 
+<h2>异常日志</h2>  
+<table id="tableOrder"  border="1"  width="100%" > 
+    <thead>   
+        <th>@Html.DisplayNameFor(model => model.HappenTime)</th>
+        <th>@Html.DisplayNameFor(model => model.ErrorType)</th>
+        <th>@Html.DisplayNameFor(model => model.userID)</th>  
+        <th>@Html.DisplayNameFor(model => model.ErrorSource)</th>
+        <th>@Html.DisplayNameFor(model => model.ErrorMsg)</th>
+        <th>@Html.DisplayNameFor(model => model.Remark)</th>  
+
+    </thead>   
+    @foreach (var item in Model) 
+    {
+         <tr> 
+             <td>@Html.DisplayFor(modelItem => item.HappenTime)</td> 
+             <td>@Html.DisplayEnumDescription("App_Start.enumSystemErrorCode",(int)item.ErrorType)</td>  
+             <td>@Html.DisplayFor(modelItem => item.userID)</td> 
+             <td>@Html.DisplayFor(modelItem => item.ErrorSource)</td> 
+             <td>@Html.DisplayFor(modelItem => item.ErrorMsg)</td> 
+             <td>@Html.DisplayFor(modelItem => item.Remark)</td> 
+         </tr>   
+    }                     
+</table>
