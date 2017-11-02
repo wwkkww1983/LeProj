@@ -12,6 +12,8 @@ namespace ZdflCount.App_Start
         public int contentLen;
         public int FillField;
         public byte[] Content;
+        public string IpAddress;
+        public System.Net.Sockets.NetworkStream stream;
     }
 
     /// <summary>
@@ -24,7 +26,7 @@ namespace ZdflCount.App_Start
         public int ChannelCount;
         public string StaffNumber;
         public string StaffName;
-        public byte MsgStatus;
+        public enumProductType MsgStatus;
         public int ChannelFinish1;
         public int ChannelFinish2;
         public int ChannelFinish3;

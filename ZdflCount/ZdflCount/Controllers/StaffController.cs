@@ -182,7 +182,7 @@ namespace ZdflCount.Controllers
                 {
                     db.SaveChanges();
                 }
-                catch(Exception ex)
+                catch
                 {
                     result = enumErrorCode.ExcelContentError;
                 }

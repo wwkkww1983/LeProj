@@ -390,7 +390,7 @@ namespace ZdflCount.Models
 
         [StringLength(50)]
         [DisplayName("员工工号")]
-        public string staffId { get; set; }
+        public string staffNumber { get; set; }
 
         [StringLength(50)]
         [DisplayName("员工姓名")]
@@ -408,8 +408,8 @@ namespace ZdflCount.Models
         [DisplayName("通道数")]
         public int ChannelCount { get; set; }
 
-        [DisplayName("工作状态")]
-        public byte StaffStatus  { get; set; }
+        [DisplayName("信息类型")]
+        public byte MsgType  { get; set; }
 
         [DisplayName("通道1已完成")]
         public int ChannelFinish1 { get; set; }
@@ -431,6 +431,13 @@ namespace ZdflCount.Models
 
         [DisplayName("异常总数")]
         public int ExceptionCount { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("ID:{0};时间:{1};工号:{2};姓名:{3};机台ID:{4};机台:{5};机台网址:{6};通道数:{7};信息类型:{8};通道1:{9};通道2:{10};通道3:{11};通道4:{12};通道5:{13};通道6:{14};异常总数{15}",
+                this.ID, this.DateCreate, this.staffNumber, this.StaffName, this.MachineId, this.MachineName, this.MachineIP, this.ChannelCount, this.MsgType, this.ChannelFinish1, this.ChannelFinish2, this.ChannelFinish3,
+                this.ChannelFinish4, this.ChannelFinish5, this.ChannelFinish6, this.ExceptionCount);
+        }
     }
     #endregion
 
@@ -547,9 +554,7 @@ namespace ZdflCount.Models
     }
     #endregion
 
-    /// <summary>
-    /// 异常日志
-    /// </summary>
+    #region 异常日志
     public class ErrorInfo
     {
         [Key]
@@ -572,6 +577,7 @@ namespace ZdflCount.Models
 
         public string ErrorStack { get; set; }
     }
+    #endregion
     #endregion
 
     #region 前台页面显示模型

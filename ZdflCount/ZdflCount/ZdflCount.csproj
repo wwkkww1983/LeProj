@@ -189,17 +189,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201711010433598_Initial.cs" />
-    <Compile Include="Migrations\201711010433598_Initial.Designer.cs">
-      <DependentUpon>201711010433598_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711010634591_Initial1.cs" />
-    <Compile Include="Migrations\201711010634591_Initial1.Designer.cs">
-      <DependentUpon>201711010634591_Initial1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711010900593_Initial2.cs" />
-    <Compile Include="Migrations\201711010900593_Initial2.Designer.cs">
-      <DependentUpon>201711010900593_Initial2.cs</DependentUpon>
+    <Compile Include="Migrations\201711020712293_Initial3.cs" />
+    <Compile Include="Migrations\201711020712293_Initial3.Designer.cs">
+      <DependentUpon>201711020712293_Initial3.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
@@ -265,6 +257,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Downloads\员工信息.xlsx" />
+    <Content Include="Scripts\chart.js" />
     <Content Include="Scripts\echarts.js" />
     <Content Include="Scripts\echarts.min.js" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
@@ -354,14 +347,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201711010433598_Initial.resx">
-      <DependentUpon>201711010433598_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711010634591_Initial1.resx">
-      <DependentUpon>201711010634591_Initial1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711010900593_Initial2.resx">
-      <DependentUpon>201711010900593_Initial2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201711020712293_Initial3.resx">
+      <DependentUpon>201711020712293_Initial3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

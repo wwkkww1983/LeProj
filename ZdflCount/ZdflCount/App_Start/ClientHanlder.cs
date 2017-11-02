@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using ZdflCount.Models;
+using System.Linq;
 
 namespace ZdflCount.App_Start
 {
@@ -67,7 +68,7 @@ namespace ZdflCount.App_Start
             info.StaffName = Encoding.GetEncoding("GBK").GetString(nameByte);
             locIdx += tempLen;
             //状态标志位
-            info.MsgStatus = tempData[locIdx++];
+            info.MsgStatus = (enumProductType)tempData[locIdx++];
             //各通道已完成数
             info.ChannelFinish1 = decodeByte2Int(buff,ref locIdx, 4);
             info.ChannelFinish2 = decodeByte2Int(buff, ref locIdx, 4);
@@ -89,20 +90,19 @@ namespace ZdflCount.App_Start
         /// <returns></returns>
         private Models.ProductInfo exchangeData(ProductInfo info, Machines machine)
         {
-
             return new Models.ProductInfo()
             {
                 DateCreate = DateTime.Now,
                 ChannelCount = info.ChannelCount,
 
-                staffId = info.StaffNumber,
+                staffNumber = info.StaffNumber,
                 StaffName = info.StaffName,
 
                 MachineIP = machine.IpAddress,
                 MachineId = machine.ID,
                 MachineName = machine.Name,
 
-                StaffStatus = info.MsgStatus,
+                MsgType = (byte)info.MsgStatus,
 
                 ChannelFinish1 = info.ChannelFinish1,
                 ChannelFinish2 = info.ChannelFinish2,
@@ -117,17 +117,47 @@ namespace ZdflCount.App_Start
 
         public byte[] HandlerClientData(byte[] buff)
         {
+            byte[] buffResp = { 1 };
             DbTableDbContext db = new DbTableDbContext();
             ProductInfo outInfo = this.DecodeData(buff);
             Machines machine = db.Machines.Find(outInfo.MachineId);
             Models.ProductInfo innerInfo = this.exchangeData(outInfo, machine);
-
+            //记录统计表
+            if (outInfo.MsgStatus == enumProductType.LoginOut)
+            {
+                StatisticInfo statistics = new StatisticInfo()
+                {
+                    Date = DateTime.Now,
+                    ExceptionCount = outInfo.UnusualCount,
+                    MachineName = machine.Name,
+                    MachineNumber = machine.Number,
+                    StaffName = outInfo.StaffName,
+                    StaffNumber = outInfo.StaffNumber,
+                    RoomID = machine.RoomID,
+                    RoomName = machine.RoomName,
+                    Factory = "振德敷料"
+                };
+                //生产总数
+                Models.ProductInfo lastInfo = db.ProductInfo.OrderByDescending(tmpItem => tmpItem.ID).First(item => item.MachineId == outInfo.MachineId);
+                if (lastInfo.MsgType != (byte)enumProductType.LoginIn)
+                    return buffResp;
+                if (lastInfo.staffNumber != outInfo.StaffNumber)
+                {
+                    db.RecordErrorInfo(enumSystemErrorCode.ProductOutInDiff, lastInfo.ToString() + "\r\n" + innerInfo.ToString(), null);
+                }
+                statistics.FinishCount = (outInfo.ChannelFinish1 + outInfo.ChannelFinish2 + outInfo.ChannelFinish3 + 
+                    outInfo.ChannelFinish4 + outInfo.ChannelFinish5 + outInfo.ChannelFinish6 - lastInfo.ChannelFinish1 -
+                    lastInfo.ChannelFinish2 - lastInfo.ChannelFinish3 - lastInfo.ChannelFinish4 - lastInfo.ChannelFinish5-
+                    lastInfo.ChannelFinish6);
+                //订单信息
+                Schedules tempSchedule =  db.Schedules.First(item => item.Number == outInfo.ScheduleNumber);
+                statistics.OrderNumber = tempSchedule.OrderNumber;
+                db.Statistics.Add(statistics);
+            }
             //记录原始数据
             db.ProductInfo.Add(innerInfo);
             db.SaveChanges();
-
-
-            byte[] buffResp = { 0 };
+            buffResp[0] = 0;
             return buffResp;
         }
 

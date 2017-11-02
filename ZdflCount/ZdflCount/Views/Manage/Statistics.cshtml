@@ -12,12 +12,13 @@
     @Html.TextBox("machine","", new {placeholder="请输入机器编号" })
     @Html.TextBox("order","", new {placeholder="请输入订单号" })
     @Html.TextBox("room","", new {placeholder="请选择车间" })
-    <button class="statistic-btn-query"> 查询</button>
+    
     <div>
         开始日期：<input type="date" id="startDate"  />
         结束日期：<input type="date" id="endDate"/>
     </div>
-    <fieldset style="width: 450px; text-align: center;">
+    <button class="statistic-btn-query"> 查询</button>
+    <fieldset style="width: 770px; text-align: center;">
         <legend style="font-weight: bold;">显示设置</legend>
         水平坐标内容：
         <select id="horizon" style="margin-right: 70px;">
@@ -28,9 +29,15 @@
             <option value="factory">工厂</option>
         </select>
         纵向坐标：
-        <select id="vertical">
-            <option value="finish">已完成数量</option>
-            <option value="exception">异常数量</option>
+        <select id="vertical" style="margin-right: 70px;">
+            <option >已完成数量</option>
+            <option >异常数量</option>
+        </select>
+        图标形式：
+        <select id="chart">
+            <option value="bar">柱状图</option>
+            <option value="line">折线图</option>
+            <option value="pie">饼图</option>
         </select>
     </fieldset>
 </div>
@@ -39,106 +46,4 @@
 
 <script src="~/Scripts/echarts.min.js"></script>
 <script src="/Scripts/jquery-1.7.1.js"></script>
-<script type="text/javascript">
-
-    $(".statistic-btn-query").click(function () {
-        var startDate = document.getElementById("startDate").value;
-        var endDate = document.getElementById("endDate").value;
-        var horizon = document.getElementById("horizon").value;
-        var vertical = document.getElementById("vertical").value;
-        var userNumber = document.getElementById("endDate").value;
-        var userName = document.getElementById("userName").value;
-        var machine = document.getElementById("machine").value;
-        var order = document.getElementById("order").value;
-        var room = document.getElementById("room").value;
-        if (startDate == "" || endDate == "") {
-            alert("起止日期为必选项"); return;
-        }
-
-        $.ajax({
-            url: "/Manage/Statistics",
-            type: "POST",
-            data: {
-                "startDate": document.getElementById("startDate").value,
-                "endDate": document.getElementById("endDate").value,
-                "userName": userName
-            },
-            success: function (data) {
-                var info = data.split(';');
-                if (info.length < 5) {
-                    alert("员工编码不存在");
-                    return;
-                };
-                document.getElementById("tbInfo-UserName").innerText = info[0];
-                document.getElementById("tbInfo-UserNumber").innerText = info[1];
-                document.getElementById("tbInfo-DeptName").innerText = info[2];
-                document.getElementById("tbInfo-PositionName").innerText = info[3];
-                document.getElementById("btn-save-roles").innerText = "保存【" + info[0] + "】的权限";
-                document.getElementById("btn-save-roles").style.visibility = "visible";
-                document.getElementById("number").value = info[1];
-                var iCount = parseInt(info[4]);
-                for (var i = 1; i < info[4]; i++) {
-                    $("#checkbox-info-" + i.toString()).attr('checked', info[5].substr(i - 1, 1) == "1");
-                }
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("员工信息读取失败：" + errorThrown);
-            }
-        });
-
-    });
-
-
-
-
-
-    // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('mainChartBlock'));
-
-    // 指定图表的配置项和数据
-    var option = {
-        title: {
-            text: '2017年10月10日 至 2017年10月15日'
-        },
-        tooltip: {
-            trigger: 'item',
-            formatter: "{a} <br/>{b} : {c} ({d}%)"
-        },
-        legend: {
-            orient: 'vertical',
-            left: 'right',
-            data: ["孙", "钱", "赵", "李", "冯", "程"]
-        },
-        //legend: {
-        //    data: ["已完成数量"]
-        //},
-        //xAxis: {
-        //    data: ["孙", "钱", "赵", "李", "冯", "程"]
-        //},
-        //yAxis: {},
-        series: [{
-            name: '已完成数量',
-            type: 'pie',
-            //data: [5, 20, 36, 10, 10, 20]
-
-            radius: '55%',
-            center: ['50%', '60%'],
-            data: [{ value: 335, name: '孙' },
-                { value: 310, name: '钱' },
-                { value: 234, name: '赵' },
-                { value: 135, name: '李' },
-                { value: 1548, name: '冯' },
-                { value: 1548, name: '程' }],
-            itemStyle: {
-                emphasis: {
-                    shadowBlur: 10,
-                    shadowOffsetX: 0,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                }
-            }
-        }]
-    };
-
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
-</script>
+<script src="/Scripts/chart.js"></script>

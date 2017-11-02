@@ -12,7 +12,7 @@ namespace ZdflCount.App_Start
             errorKeyValue.Add(enumErrorCode.FileOnlyExcel, "仅允许提交Excel文件");
             errorKeyValue.Add(enumErrorCode.FileFormatError, "文件格式错误");
             errorKeyValue.Add(enumErrorCode.ExcelHeadError, "Excel表头校验失败");
-            errorKeyValue.Add(enumErrorCode.ExcelContentError, "Excel部分内容校验失败");
+            errorKeyValue.Add(enumErrorCode.ExcelContentError, "Excel部分内容校验失败");         
         }
         public static string GetErrorString(enumErrorCode code)
         {
@@ -109,6 +109,11 @@ namespace ZdflCount.App_Start
         /// 给客户端发送模块
         /// </summary>
         TcpSenderException,
+
+        /// <summary>
+        /// 生产信息退出登录员工不同
+        /// </summary>
+        ProductOutInDiff
     }
 
     /// <summary>
@@ -149,5 +154,15 @@ namespace ZdflCount.App_Start
         生产统计数据查看,
         
         系统管理员
+    }
+
+    /// <summary>
+    /// 生产数据类型
+    /// </summary>
+    public enum enumProductType
+    {
+        LoginIn = 0x00,
+
+        LoginOut
     }
 }

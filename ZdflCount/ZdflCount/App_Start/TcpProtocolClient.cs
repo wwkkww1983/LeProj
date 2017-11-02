@@ -78,9 +78,6 @@ namespace ZdflCount.App_Start
                     NetworkStream ns = serverReceive.GetStream();
                     string strIP = ((IPEndPoint)serverReceive.Client.RemoteEndPoint).Address.ToString();
                     ReceiveByProtocol(ns, strIP);
-                    //子线程读取数据
-                    //Thread receiveThread = new Thread(new ParameterizedThreadStart(Receiving));
-                    //receiveThread.Start(dtChild);
                 }
             }
             catch (Exception ex)
@@ -141,6 +138,32 @@ namespace ZdflCount.App_Start
             return nCount == already_read;
         }
 
+        private static void ThreadHandlerByProtocol(object objData)
+        {
+            NormalDataStruct dataInfo = (NormalDataStruct)objData;
+            try
+            {
+                interfaceClientHanlder clientHandler = GetHandlerByCommand(dataInfo.Code);
+                byte[] byteResult = clientHandler.HandlerClientData(dataInfo.Content);
+                if (clientHandler.ShouldResponse())
+                {
+                    byte[] buffResp = null;
+                    Coder.EncodeServerResp(dataInfo.Code + 1, byteResult, out buffResp);
+                    dataInfo.stream.Write(buffResp, 0, buffResp.Length);
+                }
+            }
+            catch (Exception ex)
+            {
+                db.RecordErrorInfo(enumSystemErrorCode.TcpHandlerException, ex, dataInfo.IpAddress, dataInfo.Content);
+            }
+            finally
+            {
+                dataInfo.stream.Close();
+                dataInfo.stream.Dispose();
+                dataInfo.stream = null;
+            }
+        }
+
         private static void ReceiveByProtocol(NetworkStream ns, string strIP)
         {
             byte[] byteHead = new byte[Coder.PROTOCOL_HEAD_COUNT];
@@ -157,25 +180,15 @@ namespace ZdflCount.App_Start
                     db.RecordErrorInfo(enumSystemErrorCode.TcpRecieveErr, "数据主体读取超时：" + strIP, byteHead);
                     return;
                 }
-                //信息处理
-                interfaceClientHanlder clientHandler = GetHandlerByCommand(dataInfo.Code);
-                byte[] byteResult = clientHandler.HandlerClientData(dataInfo.Content);
-                if (clientHandler.ShouldResponse())
-                {
-                    byte[] buffResp = null;
-                    Coder.EncodeServerResp(dataInfo.Code + 1, byteResult, out buffResp);
-                    ns.Write(buffResp, 0, buffResp.Length);
-                }
+                dataInfo.stream = ns;
+                dataInfo.IpAddress = strIP;
+                //子线程处理信息
+                Thread ThreadHanler = new Thread(new ParameterizedThreadStart(ThreadHandlerByProtocol));
+                ThreadHanler.Start(dataInfo); 
             }
             catch (Exception ex)
             {
-                db.RecordErrorInfo(enumSystemErrorCode.TcpHandlerException, ex, strIP, byteHead);
-            }
-            finally
-            {
-                ns.Close();
-                ns.Dispose();
-                ns = null;
+                db.RecordErrorInfo(enumSystemErrorCode.TcpRecieveErr, ex, strIP, byteHead);
             }
         }
     }

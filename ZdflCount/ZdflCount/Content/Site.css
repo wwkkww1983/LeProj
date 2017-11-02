@@ -366,7 +366,7 @@ aside {
 .home-li-a-item {
     display:block;
     margin-bottom: 5px;
-    width:100px;
+    width:150px;
 }
 
 .home-li-head-item {
@@ -596,7 +596,7 @@ td button {
 
 .statistic-btn-query {
     float: right;
-    margin: 20px;
+    margin: 10px 15px;
     width: 100px;
     height: 50px;
 }
