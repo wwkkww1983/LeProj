@@ -10,7 +10,7 @@ using ZdflCount.App_Start;
 
 namespace ZdflCount.Controllers
 {
-    //[App_Start.UserLoginAuthentication]
+    [App_Start.UserLoginAuthentication]
     public class ScheduleController : Controller
     {
         private DbTableDbContext db = new DbTableDbContext();

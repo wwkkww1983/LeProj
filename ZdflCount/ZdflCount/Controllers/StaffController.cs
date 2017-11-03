@@ -14,6 +14,7 @@ using WebMatrix.WebData;
 
 namespace ZdflCount.Controllers
 {
+    [App_Start.UserLoginAuthentication]
     public class StaffController : Controller
     {
         private DbTableDbContext db = new DbTableDbContext();

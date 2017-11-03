@@ -24,6 +24,12 @@ namespace ZdflCount.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
+
+            if (User.Identity.IsAuthenticated && User.Identity.Name!=string.Empty)
+            {
+                Session["UserID"] = WebSecurity.GetUserId(User.Identity.Name);
+                return RedirectToLocal(returnUrl);
+            }
             return View();
         }
 

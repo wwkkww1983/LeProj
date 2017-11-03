@@ -7,6 +7,7 @@ using System.Web.Mvc;
 namespace ZdflCount.Controllers
 {
     [ZdflCount.Filters.InitializeSimpleMembership]
+    [App_Start.UserLoginAuthentication]
     public class HomeController : Controller
     {
         public ActionResult Index()

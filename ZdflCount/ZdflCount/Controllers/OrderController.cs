@@ -8,7 +8,7 @@ using ZdflCount.App_Start;
 
 namespace ZdflCount.Controllers
 {
-    //[App_Start.UserLoginAuthentication]
+    [App_Start.UserLoginAuthentication]
     public class OrderController : Controller
     {
         private DbTableDbContext db = new DbTableDbContext();

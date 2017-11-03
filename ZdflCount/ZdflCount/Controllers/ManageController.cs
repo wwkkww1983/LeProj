@@ -8,6 +8,7 @@ using ZdflCount.Models;
 
 namespace ZdflCount.Controllers
 {
+    [App_Start.UserLoginAuthentication]
     public class ManageController : Controller
     {
         private DbTableDbContext db = new DbTableDbContext();
