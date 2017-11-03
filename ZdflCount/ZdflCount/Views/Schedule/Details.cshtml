@@ -21,6 +21,9 @@
     <div class="display-field">
         @Html.DisplayFor(model => model.OrderNumber)
     </div>
+    
+    <div class="error-message-ur-fieldset error-message">@ViewData["error"]</div>
+
     <div class="display-label">
          @Html.DisplayNameFor(model => model.Number)：
     </div>

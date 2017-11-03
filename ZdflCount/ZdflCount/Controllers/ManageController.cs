@@ -32,14 +32,14 @@ namespace ZdflCount.Controllers
         }
         #endregion
 
-        #region 服务器操作
+        #region 系统监控
 
         [UserRoleAuthentication(Roles = "系统管理员")]
         public ActionResult Index()
         {
             ViewData["ServerStatus"] = TcpProtocolClient.KeepListening;
 
-            return View(db.ErrorInfo.OrderBy(item => item.ErrorType).OrderByDescending(item => item.ID));
+            return View(db.ErrorInfo.OrderBy(item => item.ErrorType).OrderByDescending(item => item.ID).Take(20));
         }
 
 
@@ -128,6 +128,60 @@ namespace ZdflCount.Controllers
             string tempTitle = startDate.ToString("yyyy年MM月dd日") + " 至 " + endDate.ToString("yyyy年MM月dd日，") + vertical;
             result.Data = new { chartTitle = tempTitle, dataKey=tempDict.Keys.ToArray(),dataValue = tempDict.Values.ToArray() };
             return result;
+        }
+        #endregion
+
+        #region 设备状态
+
+        private bool CheckValidTime(DateTime lastTime)
+        {
+            //有效期：5分钟
+            return lastTime.AddMinutes(5) > DateTime.Now;
+        }
+
+        [UserRoleAuthentication(Roles = "系统管理员")]
+        public ActionResult MachineStatus(bool refresh=false)
+        {
+            if (!refresh)
+            {//数据自刷新
+                foreach (DeviceStatus device in GlobalVariable.deviceStatusList)
+                {
+                    foreach (KeyValuePair<string, DateTime> item in device.MachineList)
+                    {
+                        if (CheckValidTime(item.Value))
+                            continue;
+                        device.MachineList.Remove(item.Key);
+                    }
+                }
+            }
+            else
+            {//重新加载数据
+                GlobalVariable.deviceStatusList.Clear();
+                foreach (FactoryRoom room in db.FactoryRoom)
+                {
+                    DeviceStatus device = new DeviceStatus()
+                    {
+                        RoomID = room.RoomID,
+                        RoomName = room.RoomName,
+                        MachineCount = room.MachineCount,
+                        FactoryName = room.FactoryName,
+                        MachineList = new Dictionary<string, DateTime>()
+                    };
+                    GlobalVariable.deviceStatusList.Add(device);
+                }
+                foreach (DeviceStatus device in GlobalVariable.deviceStatusList)
+                {
+                    IEnumerable<LastHeartBreak> lastItemList = from tempMachine in db.LastHeartBreak
+                                                               where tempMachine.RoomID == device.RoomID
+                                                               select tempMachine;
+                    foreach (LastHeartBreak item in lastItemList)
+                    {
+                        if (CheckValidTime(item.DateRefresh))
+                            device.MachineList.Add(item.MachineName, item.DateRefresh);
+                    }
+                }
+            }
+            return View(GlobalVariable.deviceStatusList);
         }
         #endregion
     }

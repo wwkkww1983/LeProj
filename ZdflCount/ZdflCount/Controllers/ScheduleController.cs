@@ -43,13 +43,14 @@ namespace ZdflCount.Controllers
         //
         // GET: /Schedule/Details/5
         [UserRoleAuthentication(Roles = "施工单管理员,施工单查看,施工单创建,施工单修改,施工单下派,施工单关闭,施工单报废")]
-        public ActionResult Details(int id = 0)
+        public ActionResult Details(int id = 0, enumErrorCode error = enumErrorCode.NONE)
         {
             Schedules schedules = db.Schedules.Find(id);
             if (schedules == null)
             {
                 return HttpNotFound();
             }
+            ViewData["error"] = Constants.GetErrorString(error);
             return View(schedules);
         }
         #endregion
@@ -68,14 +69,13 @@ namespace ZdflCount.Controllers
             }
             byte[] buff=null;
             App_Start.Coder.EncodeSchedule(schedules, out buff);
-            string ipAddress = db.Machines.Find(schedules.MachineId).IpAddress;
-            int result = App_Start.TcpProtocolClient.SendScheduleInfo(ipAddress, buff);
-            if (result == 0)
+            enumErrorCode result = App_Start.TcpProtocolClient.SendScheduleInfo(schedules.MachineId, buff);
+            if (result == enumErrorCode.NONE)
             {
                 schedules.Status = enumStatus.Assigned;
                 db.SaveChanges();
             }
-            return View("Details",  schedules );
+            return RedirectToAction("Details", new { id = id, error = result });
         }
         #endregion 
 

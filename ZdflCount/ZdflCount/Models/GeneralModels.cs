@@ -474,6 +474,13 @@ namespace ZdflCount.Models
         [StringLength(50)]
         public string RoomName { get; set; }
 
+        [DisplayName("工厂")]
+        [StringLength(50)]
+        public string FactoryName { get; set; }
+
+        [DisplayName("设备总数量")]
+        public int MachineCount { get; set; }
+
         [DisplayName("负责人")]
         public string ManagerID { get; set; }
 
@@ -554,6 +561,34 @@ namespace ZdflCount.Models
     }
     #endregion
 
+    #region 最新心跳包记录
+    public class LastHeartBreak
+    {
+        [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int ID { get; set; }
+
+        public DateTime DateRefresh { get; set; }
+
+        public int MachineId { get; set; }
+        
+        [StringLength(50)]
+        public string MachineName { get; set; }
+
+        public int ChannelInfo { get; set; }
+
+        public int RoomID {get;set;}
+                
+        [StringLength(50)]
+        public string RoomName { get; set; }
+
+        public int MachineCount { get; set; }
+        
+        [StringLength(50)]
+        public string FactoryName { get; set; }
+    }
+    #endregion
+
     #region 异常日志
     public class ErrorInfo
     {
@@ -587,6 +622,9 @@ namespace ZdflCount.Models
     #endregion
 
     #region 前台页面显示模型
+    /// <summary>
+    /// 订单、施工单
+    /// </summary>
     public class ScheduleOrder
     {
         public Schedules Schedules { get; set; }
@@ -621,6 +659,22 @@ namespace ZdflCount.Models
         {
             this.Orders = this.db.Orders.Find(orderId);
         }
+    }
+
+    /// <summary>
+    /// 设备状态
+    /// </summary>
+    public class DeviceStatus
+    {
+        public string FactoryName { get; set; }
+
+        public string RoomName { get; set; }
+
+        public int RoomID { get; set; }
+
+        public int MachineCount { get; set; }
+
+        public Dictionary<string, DateTime> MachineList { get; set; }
     }
     #endregion
 
@@ -668,6 +722,10 @@ namespace ZdflCount.Models
         /// 统计资料库
         /// </summary>
         public DbSet<StatisticInfo> Statistics { get; set; }
+        /// <summary>
+        /// 最新的心跳记录
+        /// </summary>
+        public DbSet<LastHeartBreak> LastHeartBreak { get; set; }
 
         /// <summary>
         /// 根据设备IP获取设备信息

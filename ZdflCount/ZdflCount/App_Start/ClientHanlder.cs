@@ -181,10 +181,8 @@ namespace ZdflCount.App_Start
         {
             HeartBreak info = new HeartBreak();
             byte[] tempData = buff;
-            byte[] machineByte = new byte[2];
-            Array.Copy(tempData, machineByte, 2);
-            info.MachineId = ConvertHelper.BytesToInt16(machineByte, true);
-            info.ChannelInfo = buff[2];
+            info.MachineId = ConvertHelper.BytesToInt16(tempData, true);
+            info.ChannelInfo = tempData[2];
 
             return info;
         }
@@ -206,17 +204,48 @@ namespace ZdflCount.App_Start
             };
         }
 
+        private void RefreshOnlineInfo(Machines machine, DbTableDbContext db)
+        {
+            DeviceStatus roomStatus = GlobalVariable.deviceStatusList.Find(item => item.RoomID == machine.RoomID);
+            if (roomStatus == null)
+            {
+                FactoryRoom tempRoom = db.FactoryRoom.Find(machine.RoomID);
+                roomStatus = new DeviceStatus()
+                {
+                    FactoryName = tempRoom.FactoryName,
+                    MachineCount = tempRoom.MachineCount,
+                    RoomID = machine.RoomID,
+                    RoomName = machine.RoomName,
+                    MachineList = new System.Collections.Generic.Dictionary<string, DateTime>()
+                };
+                roomStatus.MachineList.Add(machine.Number, DateTime.Now);
+                GlobalVariable.deviceStatusList.Add(roomStatus);
+            }
+            else
+            {
+                if (roomStatus.MachineList.ContainsKey(machine.Number))
+                {
+                    roomStatus.MachineList[machine.Number] = DateTime.Now;
+                }
+                else
+                {
+                    roomStatus.MachineList.Add(machine.Number, DateTime.Now);
+                }
+            }
+        }
+
         public byte[] HandlerClientData(byte[] buff)
         {
             DbTableDbContext db = new DbTableDbContext();
             HeartBreak outInfo = this.DecodeData(buff);
             Machines machine = db.Machines.Find(outInfo.MachineId);
             Models.HeartBreak innerInfo = this.exchangeData(outInfo, machine);
-
             //记录原始数据
             db.HeartBreak.Add(innerInfo);
-            db.SaveChanges();
-            
+            //记录设备状态
+            RefreshOnlineInfo(machine, db);
+
+            db.SaveChanges();            
             return null;
         }
 

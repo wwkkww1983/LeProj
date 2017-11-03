@@ -173,6 +173,7 @@
     <Compile Include="App_Start\ClientHanlder.cs" />
     <Compile Include="App_Start\Excel.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\GlobalVariable.cs" />
     <Compile Include="App_Start\NetDataStructure.cs" />
     <Compile Include="App_Start\SelfExtensions.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -189,9 +190,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201711020712293_Initial3.cs" />
-    <Compile Include="Migrations\201711020712293_Initial3.Designer.cs">
-      <DependentUpon>201711020712293_Initial3.cs</DependentUpon>
+    <Compile Include="Migrations\201711031027009_Initial.cs" />
+    <Compile Include="Migrations\201711031027009_Initial.Designer.cs">
+      <DependentUpon>201711031027009_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
@@ -339,6 +340,7 @@
     <Content Include="Views\Manage\Rooms.cshtml" />
     <Content Include="Views\Manage\Statistics.cshtml" />
     <Content Include="Views\Manage\_RoomsPartial.cshtml" />
+    <Content Include="Views\Manage\MachineStatus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -348,8 +350,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201711020712293_Initial3.resx">
-      <DependentUpon>201711020712293_Initial3.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201711031027009_Initial.resx">
+      <DependentUpon>201711031027009_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

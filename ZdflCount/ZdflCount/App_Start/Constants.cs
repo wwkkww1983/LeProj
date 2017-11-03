@@ -10,10 +10,13 @@ namespace ZdflCount.App_Start
         static Constants()
         {
             errorKeyValue.Add(enumErrorCode.NONE, string.Empty);
+            errorKeyValue.Add(enumErrorCode.HandlerSuccess, "操作成功");
             errorKeyValue.Add(enumErrorCode.FileOnlyExcel, "仅允许提交Excel文件");
             errorKeyValue.Add(enumErrorCode.FileFormatError, "文件格式错误");
             errorKeyValue.Add(enumErrorCode.ExcelHeadError, "Excel表头校验失败");
-            errorKeyValue.Add(enumErrorCode.ExcelContentError, "Excel部分内容校验失败");         
+            errorKeyValue.Add(enumErrorCode.ExcelContentError, "Excel部分内容校验失败");
+            errorKeyValue.Add(enumErrorCode.DeviceNotWork, "设备没在工作中，不能下发信息");
+            errorKeyValue.Add(enumErrorCode.DeviceRespFailInfo, "设备处理失败，请重新下派");
         }
         public static string GetErrorString(enumErrorCode code)
         {
@@ -59,6 +62,11 @@ namespace ZdflCount.App_Start
         NONE = 0x00,
 
         /// <summary>
+        /// 操作成功
+        /// </summary>
+        HandlerSuccess,
+
+        /// <summary>
         /// 仅可以提交Excel文件
         /// </summary>
         FileOnlyExcel,
@@ -76,7 +84,17 @@ namespace ZdflCount.App_Start
         /// <summary>
         /// Excel部分内容校验失败
         /// </summary>
-        ExcelContentError
+        ExcelContentError,
+
+        /// <summary>
+        /// 设备没在工作中，不能下发信息
+        /// </summary>
+        DeviceNotWork,
+
+        /// <summary>
+        /// 设备处理失败，请重新下派
+        /// </summary>
+        DeviceRespFailInfo
 
     }
 
@@ -86,11 +104,14 @@ namespace ZdflCount.App_Start
     /// </summary>
     public enum enumSystemErrorCode
     {
+        [Description("操作成功")]
+        NONE  = 0x00,
+
         /// <summary>
         /// 监听线程异常
         /// </summary>
         [Description("监听线程异常")]
-        TcpListenerException = 0x00,
+        TcpListenerException,
 
         /// <summary>
         /// TCP监听线程模块
@@ -103,6 +124,12 @@ namespace ZdflCount.App_Start
         /// </summary>
         [Description("监听处理异常")]
         TcpHandlerException,
+
+        /// <summary>
+        /// 设备连接处理异常
+        /// </summary>
+        [Description("设备连接处理异常")]
+        TcpMachineStreamException,
 
         /// <summary>
         /// TCP接受编码找不到，使用了默认处理程序处理

@@ -37,8 +37,6 @@ namespace ZdflCount
 
         public static enumErrorCode CheckAndReadStaffInfo(string filePath,List<StaffInfo> staffList)
         {
-            enumErrorCode result = enumErrorCode.NONE;
-
             excel.Visible = false;
             excel.UserControl = false;
 
@@ -51,8 +49,7 @@ namespace ZdflCount
                 ws.Cells[1, 3].Text.ToString() == "工号" && 
                 ws.Cells[1, 6].Text.ToString() == "手机"))
             {
-                result = enumErrorCode.ExcelHeadError;
-                return result;
+                return enumErrorCode.ExcelHeadError;
             }
             for (int i = 2; i <= rowCount; i++)
             {
@@ -60,7 +57,7 @@ namespace ZdflCount
                 ReadStaffInfo(ws.Cells,i,staff);
                 staffList.Add(staff);
             }
-            return enumErrorCode.NONE;
+            return enumErrorCode.HandlerSuccess;
         }
     }
 }

@@ -39,10 +39,8 @@ namespace ZdflCount.App_Start
         /// </summary>
         /// <param name="buff"></param>
         /// <returns></returns>
-        public static NormalDataStruct DecodeData(byte[] buff)
+        public static NormalDataStruct DecodeData(byte[] buff,ref  NormalDataStruct data)
         {
-            NormalDataStruct data = new NormalDataStruct();
-
             int locIdx = 4;
             data.FactoryNumber = ConvertHelper.BytesToInt32(buff, 0, true);
             data.Code = (enumCommandType)ConvertHelper.BytesToInt16(buff, locIdx, true);
@@ -66,30 +64,35 @@ namespace ZdflCount.App_Start
         public static void EncodeSchedule(ZdflCount.Models.Schedules schedule, out byte[] buff)
         {
             byte[] content = new  byte[1024];
-            int locIdx=0, tempLen;
-            //施工单编号长度
-            tempLen = schedule.Number.Length;
-            content[locIdx++] = (byte)tempLen;
+            int locIdx=0, tempLen = 2;
+            //机器码
+            byte[] machineBytes = ConvertHelper.Int16ToBytes(schedule.MachineId, true);
+            Array.Copy(machineBytes, content, tempLen);
+            locIdx += tempLen;
             //施工单编号
             byte[] numberBytes = Encoding.ASCII.GetBytes(schedule.Number);
+            tempLen = numberBytes.Length;
+            content[locIdx++] = (byte)tempLen;
             Array.Copy(numberBytes, 0, content, locIdx, tempLen);
             locIdx += tempLen;
             //施工单商品总数量
             byte[] countByte = ConvertHelper.Int32ToBytes(schedule.ProductCount, true);
             Array.Copy(countByte, 0, content, locIdx, 4);
             locIdx += 4 ;
-            //详细信息数据长度
-            tempLen = schedule.DetailInfo.Length;
-            content[locIdx++] = (byte)tempLen;
             //详细信息
             byte[] detailBytes = Encoding.GetEncoding("GBK").GetBytes(schedule.DetailInfo);
+            tempLen = detailBytes.Length;
+            byte[] lengthByte = ConvertHelper.Int16ToBytes(tempLen, true);
+            Array.Copy(lengthByte, 0, content, locIdx, 2);
+            locIdx += 2;
             Array.Copy(detailBytes,0, content,locIdx, tempLen);
             locIdx += tempLen;
-            //注意事项数据长度
-            tempLen = schedule.NoticeInfo.Length;
-            content[locIdx++] = (byte)tempLen;
             //注意事项
             byte[] noticeBytes = Encoding.GetEncoding("GBK").GetBytes(schedule.NoticeInfo);
+            tempLen = noticeBytes.Length; 
+            lengthByte = ConvertHelper.Int16ToBytes(tempLen, true);
+            Array.Copy(lengthByte, 0, content, locIdx, 2);
+            locIdx += 2;
             Array.Copy(noticeBytes, 0, content, locIdx, tempLen);
             locIdx += tempLen;
 

@@ -173,7 +173,7 @@ namespace ZdflCount.Controllers
             List<StaffInfo> staffList = new List<StaffInfo>();
             enumErrorCode result = Excel.CheckAndReadStaffInfo(serverPath, staffList);
 
-            if (result == enumErrorCode.NONE)
+            if (result == enumErrorCode.HandlerSuccess)
             {
                 foreach (StaffInfo staff in staffList)
                 {
@@ -188,8 +188,7 @@ namespace ZdflCount.Controllers
                     result = enumErrorCode.ExcelContentError;
                 }
             }
-            object tempObj = result == enumErrorCode.NONE ? null : new { error = result };
-            return RedirectToAction("Index", tempObj);
+            return RedirectToAction("Index", new { error = result });
         }
         #endregion
 

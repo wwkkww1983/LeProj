@@ -16,6 +16,7 @@ namespace ZdflCount.App_Start
         private static bool keepListening = false;
         private static Stopwatch sw = new Stopwatch();
         private static Models.DbTableDbContext db = new Models.DbTableDbContext();
+        private static Dictionary<int, NetworkStream> netConnection = new Dictionary<int, NetworkStream>();
 
         public static bool KeepListening
         {
@@ -24,33 +25,33 @@ namespace ZdflCount.App_Start
         /// <summary>
         /// 下发施工单
         /// </summary>
-        /// <param name="deviceIP"></param>
+        /// <param name="machineId"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        public static int SendScheduleInfo(string deviceIP, byte[] content)
+        public static enumErrorCode SendScheduleInfo(int machineId, byte[] content)
         {
-            int recResult = -1;
+            enumErrorCode sendResult = enumErrorCode.HandlerSuccess;
             byte[] buffReceive = new byte[BUFFER_SIZE];
-            IPEndPoint IpPoint = new System.Net.IPEndPoint(IPAddress.Parse(deviceIP), CLIENT_PORT_NUMBER);
-            Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            if(!netConnection.ContainsKey(machineId))
+            {
+                db.RecordErrorInfo(enumSystemErrorCode.TcpSenderException, machineId.ToString(), content);
+                return enumErrorCode.DeviceNotWork;
+            }
+            NetworkStream ns = netConnection[machineId];
             try
             {
-                serverSocket.Connect(IpPoint);
-                serverSocket.Send(content);
-                int byteBuff = serverSocket.Receive(buffReceive);
-                NormalDataStruct dataInfo = Coder.DecodeData(buffReceive);
-                recResult = Coder.DecodeClientResp(dataInfo.Content);
+                ns.Write(content,0,content.Length);
+                NormalDataStruct dataInfo = new NormalDataStruct();
+                ReceiveByProtocol(ns, ref dataInfo);
+                int recResult = Coder.DecodeClientResp(dataInfo.Content);
+                if (recResult != 0)
+                    sendResult = enumErrorCode.DeviceRespFailInfo;
             }
             catch (Exception ex)
             {
                 db.RecordErrorInfo(enumSystemErrorCode.TcpSenderException, ex, System.Text.Encoding.ASCII.GetString(content), content);
             }
-            finally
-            {
-                serverSocket.Close();
-                serverSocket = null;
-            }
-            return recResult;
+            return sendResult;
         }
 
         public static void StartServer()
@@ -110,8 +111,7 @@ namespace ZdflCount.App_Start
             }
             return typeResult;
         }
-
-
+        
         /// <summary>
         /// 读取数据流
         /// </summary>
@@ -138,30 +138,79 @@ namespace ZdflCount.App_Start
             return nCount == already_read;
         }
 
-        private static void ThreadHandlerByProtocol(object objData)
+        /// <summary>
+        /// 子线程主体
+        /// </summary>
+        /// <param name="objData"></param>
+        private static void ThreadHandler(object objData)
         {
             NormalDataStruct dataInfo = (NormalDataStruct)objData;
+            HandlerByProtocol(dataInfo);
+            while (true)
+            {
+                try
+                {
+                    ReceiveByProtocol(dataInfo.stream, ref dataInfo);
+                    HandlerByProtocol(dataInfo);
+                }
+                catch (Exception ex)
+                {
+                    db.RecordErrorInfo(enumSystemErrorCode.TcpMachineStreamException, ex, dataInfo.IpAddress, dataInfo.Content);
+                }
+            }
+        }
+
+        private static void HandlerByProtocol(NormalDataStruct dataInfo)
+        {
             try
             {
                 interfaceClientHanlder clientHandler = GetHandlerByCommand(dataInfo.Code);
                 byte[] byteResult = clientHandler.HandlerClientData(dataInfo.Content);
+                //返回信息
                 if (clientHandler.ShouldResponse())
                 {
                     byte[] buffResp = null;
                     Coder.EncodeServerResp(dataInfo.Code + 1, byteResult, out buffResp);
                     dataInfo.stream.Write(buffResp, 0, buffResp.Length);
                 }
+                //设置协议没有设备ID，所以不用于存储长连接
+                if (dataInfo.Code == enumCommandType.UP_DEVICE_SETTING_SEND)
+                    return;
+                //存储长连接
+                int tempMachineId = ConvertHelper.BytesToInt16(dataInfo.Content, true);
+                if (netConnection.ContainsKey(tempMachineId))
+                {
+                    netConnection[tempMachineId] = dataInfo.stream;
+                }
+                else
+                {
+                    netConnection.Add(tempMachineId, dataInfo.stream);
+                }
             }
             catch (Exception ex)
             {
                 db.RecordErrorInfo(enumSystemErrorCode.TcpHandlerException, ex, dataInfo.IpAddress, dataInfo.Content);
             }
-            finally
+        }
+
+        private static bool ReceiveByProtocol(NetworkStream ns, ref NormalDataStruct dataInfo)
+        {
+            bool result = false;
+            byte[] byteHead = new byte[Coder.PROTOCOL_HEAD_COUNT];
+
+            if (!ReadBuffer(ns, Coder.PROTOCOL_HEAD_COUNT, byteHead))
             {
-                dataInfo.stream.Close();
-                dataInfo.stream.Dispose();
-                dataInfo.stream = null;
+                db.RecordErrorInfo(enumSystemErrorCode.TcpRecieveErr, "数据头读取超时", byteHead);
+                return result;
             }
+            Coder.DecodeData(byteHead, ref dataInfo);
+            if (!ReadBuffer(ns, dataInfo.contentLen, dataInfo.Content))
+            {
+                db.RecordErrorInfo(enumSystemErrorCode.TcpRecieveErr, "数据主体读取超时", byteHead);
+                return result;
+            }
+            result = true;
+            return result;
         }
 
         private static void ReceiveByProtocol(NetworkStream ns, string strIP)
@@ -169,21 +218,14 @@ namespace ZdflCount.App_Start
             byte[] byteHead = new byte[Coder.PROTOCOL_HEAD_COUNT];
             try
             {
-                if (!ReadBuffer(ns, Coder.PROTOCOL_HEAD_COUNT, byteHead))
-                {
-                    db.RecordErrorInfo(enumSystemErrorCode.TcpRecieveErr, "数据头读取超时：" + strIP, byteHead);
+                NormalDataStruct dataInfo = new NormalDataStruct ();
+                if(!ReceiveByProtocol(ns, ref dataInfo))
                     return;
-                }
-                NormalDataStruct dataInfo = Coder.DecodeData(byteHead);
-                if (!ReadBuffer(ns, dataInfo.contentLen, dataInfo.Content))
-                {
-                    db.RecordErrorInfo(enumSystemErrorCode.TcpRecieveErr, "数据主体读取超时：" + strIP, byteHead);
-                    return;
-                }
+                
                 dataInfo.stream = ns;
                 dataInfo.IpAddress = strIP;
                 //子线程处理信息
-                Thread ThreadHanler = new Thread(new ParameterizedThreadStart(ThreadHandlerByProtocol));
+                Thread ThreadHanler = new Thread(new ParameterizedThreadStart(ThreadHandler));
                 ThreadHanler.Start(dataInfo); 
             }
             catch (Exception ex)
@@ -191,5 +233,7 @@ namespace ZdflCount.App_Start
                 db.RecordErrorInfo(enumSystemErrorCode.TcpRecieveErr, ex, strIP, byteHead);
             }
         }
+
+        
     }
 }
