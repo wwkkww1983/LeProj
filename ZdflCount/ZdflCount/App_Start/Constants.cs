@@ -17,7 +17,9 @@ namespace ZdflCount.App_Start
             errorKeyValue.Add(enumErrorCode.ExcelContentError, "Excel部分内容校验失败");
             errorKeyValue.Add(enumErrorCode.DeviceNotWork, "设备没在工作中，不能下发信息");
             errorKeyValue.Add(enumErrorCode.DeviceRespFailInfo, "设备处理失败，请重新下派");
+            errorKeyValue.Add(enumErrorCode.DeviceReciveTimeOut, "设备接受超时，请重新下派");
         }
+
         public static string GetErrorString(enumErrorCode code)
         {
             return errorKeyValue[code];
@@ -94,7 +96,12 @@ namespace ZdflCount.App_Start
         /// <summary>
         /// 设备处理失败，请重新下派
         /// </summary>
-        DeviceRespFailInfo
+        DeviceRespFailInfo,
+
+        /// <summary>
+        /// 设备接受超时
+        /// </summary>
+        DeviceReciveTimeOut
 
     }
 
@@ -110,7 +117,7 @@ namespace ZdflCount.App_Start
         /// <summary>
         /// 监听线程异常
         /// </summary>
-        [Description("监听线程异常")]
+        [Description("服务器监听程序启动失败")]
         TcpListenerException,
 
         /// <summary>

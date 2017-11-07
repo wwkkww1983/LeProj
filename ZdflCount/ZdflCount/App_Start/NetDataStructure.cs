@@ -46,6 +46,15 @@ namespace ZdflCount.App_Start
     }
 
     /// <summary>
+    /// 下派信息返回包
+    /// </summary>
+    public struct ClientResp
+    {
+        public int MachineId;
+        public int RespResult;
+    }
+
+    /// <summary>
     /// 设备设置
     /// </summary>
     public struct DeviceSetting

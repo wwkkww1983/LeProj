@@ -35,9 +35,10 @@ namespace ZdflCount.Controllers
         #region 系统监控
 
         [UserRoleAuthentication(Roles = "系统管理员")]
-        public ActionResult Index()
+        public ActionResult Index(string error)
         {
             ViewData["ServerStatus"] = TcpProtocolClient.KeepListening;
+            ViewData["error"] = error;
 
             return View(db.ErrorInfo.OrderBy(item => item.ErrorType).OrderByDescending(item => item.ID).Take(20));
         }
@@ -47,11 +48,23 @@ namespace ZdflCount.Controllers
         [UserRoleAuthentication(Roles = "系统管理员")]
         public ActionResult StartServer()
         {
+            string strError = null;
             if (!TcpProtocolClient.KeepListening)
             {
-                TcpProtocolClient.StartServer();
-            } 
-            return RedirectToAction("Index"); 
+                strError = TcpProtocolClient.StartServer();
+            }
+            return RedirectToAction("Index", new { error = strError });
+        }
+
+        [HttpPost]
+        [UserRoleAuthentication(Roles = "系统管理员")]
+        public ActionResult StopServer()
+        {
+            if (TcpProtocolClient.KeepListening)
+            {
+                TcpProtocolClient.StopListen();
+            }
+            return RedirectToAction("Index");
         }
         #endregion
 

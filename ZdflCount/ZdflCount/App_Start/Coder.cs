@@ -123,17 +123,6 @@ namespace ZdflCount.App_Start
             EncodeData(data, out buff);
         }
 
-        /// <summary>
-        /// 客户端返回结果解码
-        /// </summary>
-        /// <param name="buff"></param>
-        public static int DecodeClientResp(byte[] buff)
-        {
-            int result = -1;
-            if (buff != null && buff.Length > 0)
-                result = buff[0];
-            return result;
-        }
     }
 
 

@@ -12,7 +12,7 @@ namespace ZdflCount.App_Start
         {
             if (filterContext.HttpContext.Session["UserID"] == null)
             {
-                filterContext.HttpContext.Response.Redirect("/Account/Login");
+                filterContext.HttpContext.Response.Redirect("/Account/Login?auto=true");
             }
         }  
     }

@@ -177,7 +177,7 @@ namespace ZdflCount.App_Start
         /// </summary>
         /// <param name="buff"></param>
         /// <returns></returns>
-        public HeartBreak DecodeData(byte[] buff)
+        private HeartBreak DecodeData(byte[] buff)
         {
             HeartBreak info = new HeartBreak();
             byte[] tempData = buff;
@@ -206,6 +206,7 @@ namespace ZdflCount.App_Start
 
         private void RefreshOnlineInfo(Machines machine, DbTableDbContext db)
         {
+            DateTime now = DateTime.Now;
             DeviceStatus roomStatus = GlobalVariable.deviceStatusList.Find(item => item.RoomID == machine.RoomID);
             if (roomStatus == null)
             {
@@ -218,19 +219,23 @@ namespace ZdflCount.App_Start
                     RoomName = machine.RoomName,
                     MachineList = new System.Collections.Generic.Dictionary<string, DateTime>()
                 };
-                roomStatus.MachineList.Add(machine.Number, DateTime.Now);
+                roomStatus.MachineList.Add(machine.Number, now);
                 GlobalVariable.deviceStatusList.Add(roomStatus);
             }
             else
             {
                 if (roomStatus.MachineList.ContainsKey(machine.Number))
                 {
-                    roomStatus.MachineList[machine.Number] = DateTime.Now;
+                    roomStatus.MachineList[machine.Number] = now;
                 }
                 else
                 {
-                    roomStatus.MachineList.Add(machine.Number, DateTime.Now);
+                    roomStatus.MachineList.Add(machine.Number, now);
                 }
+                LastHeartBreak tempHeart = db.LastHeartBreak.Find(machine.ID);
+                db.LastHeartBreak.Attach(tempHeart);
+                tempHeart.DateRefresh = now;
+                db.SaveChanges();
             }
         }
 
@@ -265,7 +270,7 @@ namespace ZdflCount.App_Start
         /// </summary>
         /// <param name="buff"></param>
         /// <returns></returns>
-        public DeviceSetting DecodeData(byte[] buff)
+        private DeviceSetting DecodeData(byte[] buff)
         {
             DeviceSetting info = new DeviceSetting();
             byte[] tempData = buff;
@@ -328,6 +333,42 @@ namespace ZdflCount.App_Start
         public bool ShouldResponse()
         {
             return true;
+        }
+    }
+
+    public class ClientHandlerDownScheduleResp : interfaceClientHanlder
+    {
+
+        /// <summary>
+        /// 客户端返回结果解码
+        /// </summary>
+        /// <param name="buff"></param>
+        private ClientResp DecodeData(byte[] buff)
+        {
+            ClientResp info = new ClientResp();
+            byte[] tempData = buff;
+            info.MachineId = ConvertHelper.BytesToInt16(tempData, true);
+            info.RespResult = tempData[2];
+
+            return info;
+        }
+
+        public byte[] HandlerClientData(byte[] buff)
+        {
+            ClientResp outInfo = this.DecodeData(buff);
+
+            GlobalVariable.DownScheduleWaitStatus[outInfo.MachineId] = false;
+            if (!GlobalVariable.DownScheduleRespResult.Keys.Contains(outInfo.MachineId))
+                GlobalVariable.DownScheduleRespResult.Add(outInfo.MachineId, outInfo.RespResult);
+            else
+                GlobalVariable.DownScheduleRespResult[outInfo.MachineId] = outInfo.RespResult;
+            
+            return null;
+        }
+
+        public bool ShouldResponse()
+        {
+            return false;
         }
     }
 

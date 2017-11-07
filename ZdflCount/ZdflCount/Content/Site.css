@@ -511,6 +511,17 @@ fieldset .error-message-ur-fieldset {
     line-height: 30px;
 }
 
+.block-green-status {
+    margin: 20px;
+    background-color: green;
+    width: auto;
+    max-width: 10%;
+    height: 40px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 40px;
+}
+
 label {
     display: block;
     font-size: 1.2em;

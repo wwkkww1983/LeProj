@@ -21,11 +21,11 @@ namespace ZdflCount.Controllers
         // GET: /Account/Login
 
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        public ActionResult Login(string returnUrl, bool auto = false)
         {
             ViewBag.ReturnUrl = returnUrl;
-
-            if (User.Identity.IsAuthenticated && User.Identity.Name!=string.Empty)
+            ViewData["error"] = returnUrl == null ? "" : "未登录 或 【帐号无操作权限】。";
+            if (auto && User.Identity.IsAuthenticated && User.Identity.Name != string.Empty)
             {
                 Session["UserID"] = WebSecurity.GetUserId(User.Identity.Name);
                 return RedirectToLocal(returnUrl);

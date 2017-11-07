@@ -6,6 +6,7 @@
 
 <h2>系统管理<font color="red">（慎用）</font></h2>
 
+ <div class="error-message">@ViewData["error"]</div>
 
 @if (!(bool)ViewData["ServerStatus"])
 {
@@ -16,6 +17,10 @@
 }
 else
 {
+    using (Html.BeginForm("StopServer", "Manage"))
+    {
+        <input class="button-large button-pill button-highlight" value="关闭服务器" type="submit"/>
+    }
     <div class="block-status">
         服务器正常
     </div>   

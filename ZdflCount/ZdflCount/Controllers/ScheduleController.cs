@@ -61,6 +61,7 @@ namespace ZdflCount.Controllers
         public ActionResult Assign(int id = 0)
         {
             Schedules schedules = db.Schedules.Find(id);
+            db.Schedules.Attach(schedules);
             schedules.DetailInfo = schedules.DetailInfo == null ? string.Empty : schedules.DetailInfo;
             schedules.NoticeInfo = schedules.NoticeInfo == null ? string.Empty : schedules.NoticeInfo;
             if (schedules == null)
@@ -70,7 +71,7 @@ namespace ZdflCount.Controllers
             byte[] buff=null;
             App_Start.Coder.EncodeSchedule(schedules, out buff);
             enumErrorCode result = App_Start.TcpProtocolClient.SendScheduleInfo(schedules.MachineId, buff);
-            if (result == enumErrorCode.NONE)
+            if (result == enumErrorCode.HandlerSuccess)
             {
                 schedules.Status = enumStatus.Assigned;
                 db.SaveChanges();

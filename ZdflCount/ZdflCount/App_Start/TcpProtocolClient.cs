@@ -16,6 +16,7 @@ namespace ZdflCount.App_Start
         private static bool keepListening = false;
         private static Stopwatch sw = new Stopwatch();
         private static Models.DbTableDbContext db = new Models.DbTableDbContext();
+        private static TcpListener serverListen = null;
         private static Dictionary<int, NetworkStream> netConnection = new Dictionary<int, NetworkStream>();
 
         public static bool KeepListening
@@ -41,11 +42,31 @@ namespace ZdflCount.App_Start
             try
             {
                 ns.Write(content,0,content.Length);
-                NormalDataStruct dataInfo = new NormalDataStruct();
-                ReceiveByProtocol(ns, ref dataInfo);
-                int recResult = Coder.DecodeClientResp(dataInfo.Content);
-                if (recResult != 0)
+                if (GlobalVariable.DownScheduleWaitStatus.Keys.Contains(machineId))
+                    GlobalVariable.DownScheduleWaitStatus[machineId] = true;
+                else
+                    GlobalVariable.DownScheduleWaitStatus.Add(machineId, true);
+                int i = 0, iMax = 10;
+                for (; i < iMax; i++)
+                {
+                    if (GlobalVariable.DownScheduleWaitStatus[machineId])
+                    {
+                        Thread.Sleep(200);
+                        continue;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                if (GlobalVariable.DownScheduleWaitStatus[machineId])
+                {
+                    sendResult = enumErrorCode.DeviceReciveTimeOut;
+                }
+                else if (GlobalVariable.DownScheduleRespResult[machineId] != 0)
+                {
                     sendResult = enumErrorCode.DeviceRespFailInfo;
+                }
             }
             catch (Exception ex)
             {
@@ -54,21 +75,44 @@ namespace ZdflCount.App_Start
             return sendResult;
         }
 
-        public static void StartServer()
+        public static string StartServer()
         {
-            keepListening = true;
+            string strError = null;
+            try
+            {
+                serverListen = new TcpListener(IPAddress.Any, SERVER_PORT_NUMBER);
+                serverListen.Start();
+                keepListening = true;
 
-            Thread socketThread = new Thread(Listening);
-            socketThread.Start();
+                Thread socketThread = new Thread(Listening);
+                socketThread.Start();
+            }
+            catch (Exception ex)
+            {
+                System.Net.NetworkInformation.IPGlobalProperties ipProperties = System.Net.NetworkInformation.IPGlobalProperties.GetIPGlobalProperties();
+                IPEndPoint[] ipEndPoints = ipProperties.GetActiveTcpListeners();
+                foreach (IPEndPoint endPoint in ipEndPoints)
+                {
+                    if (endPoint.Port == SERVER_PORT_NUMBER)
+                    {
+                        keepListening = true;
+                        strError = "操作成功";
+                        break;
+                    }
+                }
+                if (!keepListening)
+                {
+                    strError = ex.Message;
+                    db.RecordErrorInfo(enumSystemErrorCode.TcpListenerException, ex, "监听异常", null);
+                }
+            }
+            return strError;
         }
         
         private static void Listening()
         {
             try
             {
-                TcpListener serverListen = new TcpListener(IPAddress.Any, SERVER_PORT_NUMBER);
-                serverListen.Start();
-
                 while (keepListening)
                 {
                     TcpClient serverReceive = serverListen.AcceptTcpClient();
@@ -81,9 +125,26 @@ namespace ZdflCount.App_Start
                     ReceiveByProtocol(ns, strIP);
                 }
             }
+            catch (SocketException socketEx)
+            {
+                db.RecordErrorInfo(enumSystemErrorCode.TcpListenerException, socketEx, "正常捕获的可识别异常", null);
+            }
             catch (Exception ex)
             {
                 db.RecordErrorInfo(enumSystemErrorCode.TcpListenerException, ex, "监听异常", null);
+            }
+        }
+
+        public static void StopListen()
+        {
+            try
+            {
+                serverListen.Stop();
+                keepListening = false;
+            }
+            catch (Exception ex)
+            {
+                db.RecordErrorInfo(enumSystemErrorCode.TcpListenerException, ex, "结束监听错误", null);
             }
         }
 
@@ -103,6 +164,10 @@ namespace ZdflCount.App_Start
 
                 case enumCommandType.UP_DEVICE_SETTING_RESP:
                     typeResult = new ClientHandlerDeviceSetting();
+                    break;
+
+                case enumCommandType.DOWN_SHEDULE_RESP:
+                    typeResult = new ClientHandlerDownScheduleResp();
                     break;
 
                 default:
