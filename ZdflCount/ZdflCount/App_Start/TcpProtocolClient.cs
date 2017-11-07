@@ -23,6 +23,38 @@ namespace ZdflCount.App_Start
         {
             get { return keepListening; }
         }
+
+        private static enumErrorCode waittingSendForResp(int machineId)
+        {
+            enumErrorCode sendResult;
+            int i = 0, iMax = 10;
+            for (; i < iMax; i++)
+            {
+                if (GlobalVariable.DownScheduleWaitStatus[machineId])
+                {
+                    Thread.Sleep(200);
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            if (GlobalVariable.DownScheduleWaitStatus[machineId])
+            {
+                sendResult = enumErrorCode.DeviceReciveTimeOut;
+            }
+            else
+            {
+                switch (GlobalVariable.DownScheduleRespResult[machineId])
+                {
+                    case 1: sendResult = enumErrorCode.DeviceRespFailInfo; break;
+                    case 2: sendResult = enumErrorCode.DeviceScheduleFull; break;
+                    default: sendResult = enumErrorCode.HandlerSuccess; break;
+                }
+            }
+            return sendResult;
+        }
         /// <summary>
         /// 下发施工单
         /// </summary>
@@ -47,32 +79,7 @@ namespace ZdflCount.App_Start
                     GlobalVariable.DownScheduleWaitStatus[machineId] = true;
                 else
                     GlobalVariable.DownScheduleWaitStatus.Add(machineId, true);
-                int i = 0, iMax = 10;
-                for (; i < iMax; i++)
-                {
-                    if (GlobalVariable.DownScheduleWaitStatus[machineId])
-                    {
-                        Thread.Sleep(200);
-                        continue;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-                if (GlobalVariable.DownScheduleWaitStatus[machineId])
-                {
-                    sendResult = enumErrorCode.DeviceReciveTimeOut;
-                }
-                else
-                {
-                    switch (GlobalVariable.DownScheduleRespResult[machineId])
-                    {
-                        case 1: sendResult = enumErrorCode.DeviceRespFailInfo; break;
-                        case 2: sendResult = enumErrorCode.DeviceScheduleFull; break;
-                        default: break;
-                    }
-                }
+                sendResult = waittingSendForResp(machineId);
             }
             catch (Exception ex)
             {
