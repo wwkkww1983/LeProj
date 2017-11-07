@@ -39,7 +39,7 @@ namespace ZdflCount.Controllers
         {
             ViewData["ServerStatus"] = TcpProtocolClient.KeepListening;
             ViewData["error"] = error;
-
+            
             return View(db.ErrorInfo.OrderBy(item => item.ErrorType).OrderByDescending(item => item.ID).Take(20));
         }
 
@@ -51,7 +51,7 @@ namespace ZdflCount.Controllers
             string strError = null;
             if (!TcpProtocolClient.KeepListening)
             {
-                strError = TcpProtocolClient.StartServer();
+                strError = TcpProtocolClient.StartServer(Convert.ToInt32(Session["UserID"]));
             }
             return RedirectToAction("Index", new { error = strError });
         }

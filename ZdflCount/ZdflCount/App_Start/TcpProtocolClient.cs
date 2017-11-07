@@ -28,14 +28,15 @@ namespace ZdflCount.App_Start
         /// </summary>
         /// <param name="machineId"></param>
         /// <param name="content"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
-        public static enumErrorCode SendScheduleInfo(int machineId, byte[] content)
+        public static enumErrorCode SendScheduleInfo(int machineId, byte[] content,int userId)
         {
             enumErrorCode sendResult = enumErrorCode.HandlerSuccess;
             byte[] buffReceive = new byte[BUFFER_SIZE];
             if(!netConnection.ContainsKey(machineId))
             {
-                db.RecordErrorInfo(enumSystemErrorCode.TcpSenderException, machineId.ToString(), content);
+                db.RecordErrorInfo(enumSystemErrorCode.TcpSenderException, machineId.ToString(), content, userId);
                 return enumErrorCode.DeviceNotWork;
             }
             NetworkStream ns = netConnection[machineId];
@@ -63,19 +64,24 @@ namespace ZdflCount.App_Start
                 {
                     sendResult = enumErrorCode.DeviceReciveTimeOut;
                 }
-                else if (GlobalVariable.DownScheduleRespResult[machineId] != 0)
+                else
                 {
-                    sendResult = enumErrorCode.DeviceRespFailInfo;
+                    switch (GlobalVariable.DownScheduleRespResult[machineId])
+                    {
+                        case 1: sendResult = enumErrorCode.DeviceRespFailInfo; break;
+                        case 2: sendResult = enumErrorCode.DeviceScheduleFull; break;
+                        default: break;
+                    }
                 }
             }
             catch (Exception ex)
             {
-                db.RecordErrorInfo(enumSystemErrorCode.TcpSenderException, ex, System.Text.Encoding.ASCII.GetString(content), content);
+                db.RecordErrorInfo(enumSystemErrorCode.TcpSenderException, ex, System.Text.Encoding.ASCII.GetString(content), content, userId);
             }
             return sendResult;
         }
 
-        public static string StartServer()
+        public static string StartServer(int userId)
         {
             string strError = null;
             try
@@ -87,7 +93,7 @@ namespace ZdflCount.App_Start
                 Thread socketThread = new Thread(Listening);
                 socketThread.Start();
             }
-            catch (Exception ex)
+            catch (SocketException socketEx)
             {
                 System.Net.NetworkInformation.IPGlobalProperties ipProperties = System.Net.NetworkInformation.IPGlobalProperties.GetIPGlobalProperties();
                 IPEndPoint[] ipEndPoints = ipProperties.GetActiveTcpListeners();
@@ -102,9 +108,14 @@ namespace ZdflCount.App_Start
                 }
                 if (!keepListening)
                 {
-                    strError = ex.Message;
-                    db.RecordErrorInfo(enumSystemErrorCode.TcpListenerException, ex, "监听异常", null);
+                    strError = socketEx.Message;
+                    db.RecordErrorInfo(enumSystemErrorCode.TcpListenerException, socketEx, "监听异常", null, userId);
                 }
+            }
+            catch (Exception ex)
+            {
+                strError = ex.Message;
+                db.RecordErrorInfo(enumSystemErrorCode.TcpListenerException, ex, "监听异常", null, userId);
             }
             return strError;
         }
@@ -217,6 +228,11 @@ namespace ZdflCount.App_Start
                 {
                     ReceiveByProtocol(dataInfo.stream, ref dataInfo);
                     HandlerByProtocol(dataInfo);
+                }
+                catch (System.IO.IOException ioEx)
+                {
+                    db.RecordErrorInfo(enumSystemErrorCode.TcpMachineStreamException, ioEx, dataInfo.IpAddress, dataInfo.Content);
+                    break;
                 }
                 catch (Exception ex)
                 {

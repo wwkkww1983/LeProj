@@ -749,13 +749,15 @@ namespace ZdflCount.Models
         /// <param name="ex">异常</param>
         /// <param name="remark">备注信息（参数值）</param>
         /// <param name="remarkBinary">备注信息（二进制形式）</param>
-        public void RecordErrorInfo(App_Start.enumSystemErrorCode type, Exception ex, string remark, byte[] remarkBinary)
+        /// <param name="userId"></param>
+        public void RecordErrorInfo(App_Start.enumSystemErrorCode type, Exception ex, string remark, byte[] remarkBinary,int userId=0)
         {
             ErrorInfo info = new ErrorInfo()
             {
                 HappenTime = DateTime.Now,
                 ErrorType = type,
                 Remark = remark,
+                userID = userId,
                 ErrorMsg = ex.Message,
                 ErrorSource = ex.Source,
                 ErrorStack = ex.StackTrace,
@@ -771,12 +773,13 @@ namespace ZdflCount.Models
         /// <param name="type">异常类型</param>
         /// <param name="remark">备注信息（参数值）</param>
         /// <param name="remarkBinary">备注信息（二进制形式）</param>
-        public void RecordErrorInfo(App_Start.enumSystemErrorCode type, string remark, byte[] remarkBinary)
+        public void RecordErrorInfo(App_Start.enumSystemErrorCode type, string remark, byte[] remarkBinary, int userId = 0)
         {
             ErrorInfo info = new ErrorInfo()
             {
                 HappenTime = DateTime.Now,
                 ErrorType = type,
+                userID = userId,
                 Remark = remark,
                 RemarkBinary = remarkBinary
             };

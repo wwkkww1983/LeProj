@@ -18,6 +18,7 @@ namespace ZdflCount.App_Start
             errorKeyValue.Add(enumErrorCode.DeviceNotWork, "设备没在工作中，不能下发信息");
             errorKeyValue.Add(enumErrorCode.DeviceRespFailInfo, "设备处理失败，请重新下派");
             errorKeyValue.Add(enumErrorCode.DeviceReciveTimeOut, "设备接受超时，请重新下派");
+            errorKeyValue.Add(enumErrorCode.DeviceScheduleFull, "设备已有的施工单达到最大数量（10个）");        
         }
 
         public static string GetErrorString(enumErrorCode code)
@@ -101,7 +102,12 @@ namespace ZdflCount.App_Start
         /// <summary>
         /// 设备接受超时
         /// </summary>
-        DeviceReciveTimeOut
+        DeviceReciveTimeOut,
+
+        /// <summary>
+        /// 设备已有的施工单达到最大数量
+        /// </summary>
+        DeviceScheduleFull
 
     }
 

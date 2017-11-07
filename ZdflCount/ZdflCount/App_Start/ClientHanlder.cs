@@ -153,6 +153,7 @@ namespace ZdflCount.App_Start
                 Schedules tempSchedule =  db.Schedules.First(item => item.Number == outInfo.ScheduleNumber);
                 statistics.OrderNumber = tempSchedule.OrderNumber;
                 db.Statistics.Add(statistics);
+                db.SaveChanges();
             }
             //记录原始数据
             db.ProductInfo.Add(innerInfo);
@@ -336,6 +337,9 @@ namespace ZdflCount.App_Start
         }
     }
 
+    /// <summary>
+    /// 下派施工单返回消息
+    /// </summary>
     public class ClientHandlerDownScheduleResp : interfaceClientHanlder
     {
 

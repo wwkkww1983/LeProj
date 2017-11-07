@@ -70,7 +70,7 @@ namespace ZdflCount.Controllers
             }
             byte[] buff=null;
             App_Start.Coder.EncodeSchedule(schedules, out buff);
-            enumErrorCode result = App_Start.TcpProtocolClient.SendScheduleInfo(schedules.MachineId, buff);
+            enumErrorCode result = App_Start.TcpProtocolClient.SendScheduleInfo(schedules.MachineId, buff, Convert.ToInt32(Session["UserID"]));
             if (result == enumErrorCode.HandlerSuccess)
             {
                 schedules.Status = enumStatus.Assigned;
