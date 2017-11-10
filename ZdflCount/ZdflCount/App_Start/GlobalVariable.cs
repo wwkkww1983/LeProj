@@ -19,6 +19,26 @@ namespace ZdflCount.App_Start
         /// <summary>
         /// 当前下派施工单的信息返回结果
         /// </summary>
-        public static Dictionary<int, int> DownScheduleRespResult = new Dictionary<int, int>();
+        public static Dictionary<int, enumErrorCode> DownScheduleRespResult = new Dictionary<int, enumErrorCode>();
+
+        /// <summary>
+        /// 当前关闭施工单的信息返回状态
+        /// </summary>
+        public static Dictionary<int, bool> DownScheCloseWaitStatus = new Dictionary<int, bool>();
+
+        /// <summary>
+        /// 当前关闭施工单的信息返回结果
+        /// </summary>
+        public static Dictionary<int, enumErrorCode> DownScheCloseRespResult = new Dictionary<int, enumErrorCode>();
+
+        /// <summary>
+        /// 当前报废施工单的信息返回状态
+        /// </summary>
+        public static Dictionary<int, bool> DownScheDiscardWaitStatus = new Dictionary<int, bool>();
+
+        /// <summary>
+        /// 当前报废施工单的信息返回结果
+        /// </summary>
+        public static Dictionary<int, enumErrorCode> DownScheDiscardRespResult = new Dictionary<int, enumErrorCode>();
     }
 }

@@ -13,12 +13,14 @@ namespace ZdflCount.App_Start
             errorKeyValue.Add(enumErrorCode.HandlerSuccess, "操作成功");
             errorKeyValue.Add(enumErrorCode.FileOnlyExcel, "仅允许提交Excel文件");
             errorKeyValue.Add(enumErrorCode.FileFormatError, "文件格式错误");
-            errorKeyValue.Add(enumErrorCode.ExcelHeadError, "Excel表头校验失败");
-            errorKeyValue.Add(enumErrorCode.ExcelContentError, "Excel部分内容校验失败");
+            errorKeyValue.Add(enumErrorCode.ExcelHeadError, "Excel表头校验失败，请不要调整模版顺序");
+            errorKeyValue.Add(enumErrorCode.ExcelContentError, "Excel部分内容校验失败，请检测数据格式");
             errorKeyValue.Add(enumErrorCode.DeviceNotWork, "设备没在工作中，不能下发信息");
             errorKeyValue.Add(enumErrorCode.DeviceRespFailInfo, "设备处理失败，请重新下派");
             errorKeyValue.Add(enumErrorCode.DeviceReciveTimeOut, "设备接受超时，请重新下派");
-            errorKeyValue.Add(enumErrorCode.DeviceScheduleFull, "设备已有的施工单达到最大数量（10个）");        
+            errorKeyValue.Add(enumErrorCode.DeviceScheduleFull, "设备已有的施工单达到最大数量（10个）");
+            errorKeyValue.Add(enumErrorCode.DeviceScheduleWorking, "设备正在为该施工单生产，无法进行操作");
+            errorKeyValue.Add(enumErrorCode.DeviceCommunicateError, "设备通信失败，请联系信息部沟通");        
         }
 
         public static string GetErrorString(enumErrorCode code)
@@ -33,10 +35,22 @@ namespace ZdflCount.App_Start
     public enum enumCommandType
     {
         /// <summary>
-        /// 施工单
+        /// 下派施工单
         /// </summary>
         DOWN_SHEDULE_SEND = 601,
         DOWN_SHEDULE_RESP = 602,
+
+        /// <summary>
+        /// 关闭施工单
+        /// </summary>
+        DOWN_SHEDULE_CLOSE_SEND = 611,
+        DOWN_SHEDULE_CLOSE_RESP = 612,
+
+        /// <summary>
+        /// 报废施工单
+        /// </summary>
+        DOWN_SHEDULE_DISCARD_SEND = 621,
+        DOWN_SHEDULE_DISCARD_RESP = 622,
 
         /// <summary>
         /// 心跳
@@ -107,8 +121,17 @@ namespace ZdflCount.App_Start
         /// <summary>
         /// 设备已有的施工单达到最大数量
         /// </summary>
-        DeviceScheduleFull
+        DeviceScheduleFull,
 
+        /// <summary>
+        /// 设备正在为该施工单生产，无法进行操作
+        /// </summary>
+        DeviceScheduleWorking,
+
+        /// <summary>
+        /// 设备通信失败
+        /// </summary>
+        DeviceCommunicateError
     }
 
 

@@ -124,14 +124,15 @@ namespace ZdflCount.Controllers
                 schedules.Number = string.Format("gd{0}{1}", schedules.CreatorID,DateTime.Now.ToString("yyyyMMddHHmmssffff"));
                 schedules.Status = temporary > 0 ? enumStatus.Temporary : enumStatus.Unhandle;
                 db.Schedules.Add(schedules);
-                db.SaveChanges();
 
                 if (temporary == 0)
                 {
                     orderInfo.ProductFreeCount -= schedules.ProductCount;
+                    orderInfo.ProductAssignedCount += schedules.ProductCount;
+                    orderInfo.AssignedCount += 1;
                     db.Entry(orderInfo).State = EntityState.Modified;
-                    db.SaveChanges();
-                }
+                } 
+                db.SaveChanges();
                 return RedirectToAction("Index", new { id = schedules.OrderId });
             }
 
@@ -194,8 +195,10 @@ namespace ZdflCount.Controllers
 
                     Orders orderInfo = db.Orders.Find(schedules.OrderId);
                     orderInfo.ProductFreeCount -= schedules.ProductCount;
+                    orderInfo.ProductAssignedCount += schedules.ProductCount;
+                    orderInfo.AssignedCount += 1;
+
                     db.Entry(orderInfo).State = EntityState.Modified;
-                    db.SaveChanges();
                 }
 
                 db.SaveChanges();
@@ -209,13 +212,15 @@ namespace ZdflCount.Controllers
         //
         // GET: /Schedule/Delete/5
         [UserRoleAuthentication(Roles = "施工单管理员,施工单关闭")]
-        public ActionResult Delete(int id = 0)
+        public ActionResult Delete(int id = 0, enumErrorCode error = enumErrorCode.NONE)
         {
             Schedules schedules = db.Schedules.Find(id);
             if (schedules == null)
             {
                 return HttpNotFound();
             }
+            ViewData["error"] = Constants.GetErrorString(error);
+
             return View(schedules);
         }
 
@@ -229,14 +234,30 @@ namespace ZdflCount.Controllers
             Schedules schedules = db.Schedules.Find(id);
             //db.Schedules.Remove(schedules);
 
-            db.Schedules.Attach(schedules);
-            var tempEntity = db.Entry(schedules);
-            schedules.Status = enumStatus.Closed;
-            schedules.LastUpdatePersonID = Convert.ToInt32(Session["UserID"]);
-            schedules.LastUpdatePersonName = User.Identity.Name;
+            enumErrorCode result = enumErrorCode.HandlerSuccess;
+            if (schedules.Status == enumStatus.Assigned || schedules.Status == enumStatus.Working)
+            {
+                byte[] buff = null;
+                App_Start.Coder.EncodeScheHandler(schedules, enumCommandType.DOWN_SHEDULE_CLOSE_SEND, out buff);
+                result = App_Start.TcpProtocolClient.SendScheduleClose(schedules.MachineId, buff, Convert.ToInt32(Session["UserID"]));
+            }
+            if (result == enumErrorCode.HandlerSuccess)
+            {
+                db.Schedules.Attach(schedules);
+                var tempEntity = db.Entry(schedules);
+                schedules.Status = enumStatus.Closed;
+                schedules.LastUpdatePersonID = Convert.ToInt32(Session["UserID"]);
+                schedules.LastUpdatePersonName = User.Identity.Name;
+                schedules.DateLastUpdate = DateTime.Now;
 
-            db.SaveChanges();
-            return RedirectToAction("Index", new { id = schedules.OrderId });
+                Orders orderInfo = db.Orders.Find(schedules.OrderId);
+                orderInfo.ProductFreeCount += (schedules.ProductCount - schedules.FinishCount);
+                db.Entry(orderInfo).State = EntityState.Modified;
+                
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Delete", new { id = id, error = result });
         }
         #endregion
 
@@ -245,13 +266,15 @@ namespace ZdflCount.Controllers
         // GET: /Schedule/Discard/5
 
         [UserRoleAuthentication(Roles = "施工单管理员,施工单报废")]
-        public ActionResult Discard(int id = 0)
+        public ActionResult Discard(int id = 0, enumErrorCode error = enumErrorCode.NONE)
         {
             Schedules schedules = db.Schedules.Find(id);
             if (schedules == null)
             {
                 return HttpNotFound();
             }
+            ViewData["error"] = Constants.GetErrorString(error);
+
             return View(schedules);
         }
 
@@ -263,22 +286,29 @@ namespace ZdflCount.Controllers
         public ActionResult DiscardConfirmed(int id)
         {
             Schedules schedules = db.Schedules.Find(id);
-            //db.Schedules.Remove(schedules);
+            
+            enumErrorCode result = enumErrorCode.HandlerSuccess;
+            if (schedules.Status == enumStatus.Assigned || schedules.Status == enumStatus.Working)
+            {
+                byte[] buff = null;
+                App_Start.Coder.EncodeScheHandler(schedules, enumCommandType.DOWN_SHEDULE_DISCARD_SEND, out buff);
+                result = App_Start.TcpProtocolClient.SendScheduleDiscard(schedules.MachineId, buff, Convert.ToInt32(Session["UserID"]));
+            }
+            if (result == enumErrorCode.HandlerSuccess)
+            {
+                db.Schedules.Attach(schedules);
+                var tempEntity = db.Entry(schedules);
+                schedules.Status = enumStatus.Discard;
+                schedules.LastUpdatePersonID = Convert.ToInt32(Session["UserID"]);
+                schedules.LastUpdatePersonName = User.Identity.Name;
+                schedules.DateLastUpdate = DateTime.Now;
 
-            db.Schedules.Attach(schedules);
-            var tempEntity = db.Entry(schedules);
-            schedules.Status = enumStatus.Discard;
-            schedules.LastUpdatePersonID = Convert.ToInt32(Session["UserID"]);
-            schedules.LastUpdatePersonName = User.Identity.Name;
-
-            db.SaveChanges();
-
-            Orders orderInfo = db.Orders.Find(schedules.OrderId);
-            orderInfo.ProductFreeCount += schedules.ProductCount;
-            db.Entry(orderInfo).State = EntityState.Modified;
-            db.SaveChanges();
-
-            return RedirectToAction("Index", new { id = schedules.OrderId });
+                Orders orderInfo = db.Orders.Find(schedules.OrderId);
+                orderInfo.ProductFreeCount += schedules.ProductCount;
+                db.Entry(orderInfo).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Discard", new { id = id, error = result });
         }
         #endregion 
 

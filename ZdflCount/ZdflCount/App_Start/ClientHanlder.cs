@@ -115,6 +115,36 @@ namespace ZdflCount.App_Start
             };
         }
 
+        private void RecordStatisticsInfo(ProductInfo outInfo, Machines machine, int finishCount, DbTableDbContext db)
+        {
+            StatisticInfo statistics = new StatisticInfo()
+            {
+                Date = DateTime.Now,
+                ExceptionCount = outInfo.UnusualCount,
+                FinishCount = finishCount,
+                MachineName = machine.Name,
+                MachineNumber = machine.Number,
+                StaffName = outInfo.StaffName,
+                StaffNumber = outInfo.StaffNumber,
+                RoomID = machine.RoomID,
+                RoomName = machine.RoomName,
+                Factory = "振德敷料"
+            };
+            //订单信息
+            Schedules tempSchedule = db.Schedules.First(item => item.Number == outInfo.ScheduleNumber);
+            statistics.OrderNumber = tempSchedule.OrderNumber;
+            db.Statistics.Add(statistics);
+            //施工单生产记录
+            db.Schedules.Attach(tempSchedule);
+            tempSchedule.FinishCount += finishCount;
+            tempSchedule.Status =tempSchedule.FinishCount>=tempSchedule.ProductCount? enumStatus.Finished: enumStatus.Working;
+            //订单生产记录
+            Orders tempOrder = db.Orders.Find(tempSchedule.OrderId);
+            db.Orders.Attach(tempOrder);
+            tempOrder.ProductFinishedCount += finishCount;
+            tempOrder.Status =tempOrder.ProductFinishedCount>= tempOrder.ProductCount? enumStatus.Finished: enumStatus.Working;
+        }
+
         public byte[] HandlerClientData(byte[] buff)
         {
             byte[] buffResp = { 1 };
@@ -125,19 +155,6 @@ namespace ZdflCount.App_Start
             //记录统计表
             if (outInfo.MsgStatus == enumProductType.LoginOut)
             {
-                StatisticInfo statistics = new StatisticInfo()
-                {
-                    Date = DateTime.Now,
-                    ExceptionCount = outInfo.UnusualCount,
-                    MachineName = machine.Name,
-                    MachineNumber = machine.Number,
-                    StaffName = outInfo.StaffName,
-                    StaffNumber = outInfo.StaffNumber,
-                    RoomID = machine.RoomID,
-                    RoomName = machine.RoomName,
-                    Factory = "振德敷料"
-                };
-                //生产总数
                 Models.ProductInfo lastInfo = db.ProductInfo.OrderByDescending(tmpItem => tmpItem.ID).First(item => item.MachineId == outInfo.MachineId);
                 if (lastInfo.MsgType != (byte)enumProductType.LoginIn)
                     return buffResp;
@@ -145,15 +162,11 @@ namespace ZdflCount.App_Start
                 {
                     db.RecordErrorInfo(enumSystemErrorCode.ProductOutInDiff, lastInfo.ToString() + "\r\n" + innerInfo.ToString(), null);
                 }
-                statistics.FinishCount = (outInfo.ChannelFinish1 + outInfo.ChannelFinish2 + outInfo.ChannelFinish3 + 
+                int currentFinishCount = (outInfo.ChannelFinish1 + outInfo.ChannelFinish2 + outInfo.ChannelFinish3 +
                     outInfo.ChannelFinish4 + outInfo.ChannelFinish5 + outInfo.ChannelFinish6 - lastInfo.ChannelFinish1 -
-                    lastInfo.ChannelFinish2 - lastInfo.ChannelFinish3 - lastInfo.ChannelFinish4 - lastInfo.ChannelFinish5-
+                    lastInfo.ChannelFinish2 - lastInfo.ChannelFinish3 - lastInfo.ChannelFinish4 - lastInfo.ChannelFinish5 -
                     lastInfo.ChannelFinish6);
-                //订单信息
-                Schedules tempSchedule =  db.Schedules.First(item => item.Number == outInfo.ScheduleNumber);
-                statistics.OrderNumber = tempSchedule.OrderNumber;
-                db.Statistics.Add(statistics);
-                db.SaveChanges();
+                RecordStatisticsInfo(outInfo,machine,currentFinishCount,db);
             }
             //记录原始数据
             db.ProductInfo.Add(innerInfo);
@@ -276,24 +289,27 @@ namespace ZdflCount.App_Start
             DeviceSetting info = new DeviceSetting();
             byte[] tempData = buff;
 
-            info.OperateType = buff[0];
-            int locIdx = 2, tempLen = buff[1];
+            info.OperateType = tempData[0];
+            int locIdx = 2, tempLen = tempData[1];
             //设备编码
             byte[] numberByte = new byte[tempLen];
             Array.Copy(tempData,locIdx, numberByte,0, tempLen);
             info.DeviceNumber = System.Text.Encoding.GetEncoding("GBK").GetString(numberByte);
             locIdx += tempLen;
-            //设备备注名
-            tempLen = buff[locIdx++];
-            numberByte = new byte[tempLen];
-            Array.Copy(tempData, locIdx, numberByte, 0, tempLen);
-            info.DeviceName = System.Text.Encoding.GetEncoding("GBK").GetString(numberByte);
+            //车间号
+            tempLen = 4;
+            byte[] roomByte = new byte[tempLen];
+            Array.Copy(tempData, locIdx, roomByte, 0, tempLen);
+            info.RoomID = ConvertHelper.BytesToInt32(roomByte);
             locIdx += tempLen;
             //IP地址
-            tempLen = 15;
-            numberByte = new byte[tempLen];
-            Array.Copy(tempData, locIdx, numberByte, 0, tempLen);
-            info.IPAddress = System.Text.Encoding.ASCII.GetString(numberByte);
+            StringBuilder builderIP = new StringBuilder();
+            for (int i = 0; i < 4; i++)
+            {
+                builderIP.Append(tempData[locIdx++]);
+                builderIP.Append('.');
+            }
+            info.IPAddress = builderIP.ToString().Substring(0, builderIP.Length - 1);
 
             return info;
         }
@@ -303,10 +319,12 @@ namespace ZdflCount.App_Start
         /// </summary>
         /// <param name="info"></param>
         /// <returns></returns>
-        private Machines exchangeData(DeviceSetting info)
+        private Machines exchangeData(FactoryRoom room, DeviceSetting info)
         {
             return new Machines()
             {
+                RoomID = room.RoomID,
+                RoomName = room.RoomName,
                 IpAddress = info.IPAddress,
                 Number = info.DeviceNumber,
                 Name = info.DeviceName,
@@ -318,15 +336,18 @@ namespace ZdflCount.App_Start
         {
             DbTableDbContext db = new DbTableDbContext();
             DeviceSetting outInfo = this.DecodeData(buff);
-            Machines innerInfo = this.exchangeData(outInfo);
+            FactoryRoom tempRoom = db.FactoryRoom.Find(outInfo.RoomID);
+            Machines innerInfo = this.exchangeData(tempRoom,outInfo);
+
+            db.FactoryRoom.Attach(tempRoom);
+            tempRoom.MachineCount += 1;
 
             //记录原始数据
             db.Machines.Add(innerInfo);
             db.SaveChanges();
             //生成返回结果
             byte[] byteID = ConvertHelper.Int16ToBytes(innerInfo.ID, true);
-            byte[] byteResp = new byte[3];
-            byteResp[0] = 1;
+            byte[] byteResp = { 0, 0, 0 };
             Array.Copy(byteID, 0, byteResp, 1, 2);
             return byteResp;
         }
@@ -352,8 +373,13 @@ namespace ZdflCount.App_Start
             ClientResp info = new ClientResp();
             byte[] tempData = buff;
             info.MachineId = ConvertHelper.BytesToInt16(tempData, true);
-            info.RespResult = tempData[2];
-
+          
+            switch (tempData[2])
+            {
+                case 1: info.RespResult = enumErrorCode.DeviceRespFailInfo; break;
+                case 2: info.RespResult = enumErrorCode.DeviceScheduleFull; break;
+                default: info.RespResult = enumErrorCode.HandlerSuccess; break;
+            }
             return info;
         }
 
@@ -377,6 +403,94 @@ namespace ZdflCount.App_Start
     }
 
     /// <summary>
+    /// 关闭施工单返回信息
+    /// </summary>
+    public class ClientHandlerDownScheCloseResp : interfaceClientHanlder
+    {
+
+        /// <summary>
+        /// 客户端返回结果解码
+        /// </summary>
+        /// <param name="buff"></param>
+        private ClientResp DecodeData(byte[] buff)
+        {
+            ClientResp info = new ClientResp();
+            byte[] tempData = buff;
+            info.MachineId = ConvertHelper.BytesToInt16(tempData, true);
+
+            switch (tempData[2])
+            {
+                case 1: info.RespResult = enumErrorCode.DeviceRespFailInfo; break;
+                case 2: info.RespResult = enumErrorCode.DeviceScheduleWorking; break;
+                default: info.RespResult = enumErrorCode.HandlerSuccess; break;
+            }
+            return info;
+        }
+
+        public byte[] HandlerClientData(byte[] buff)
+        {
+            ClientResp outInfo = this.DecodeData(buff);
+
+            GlobalVariable.DownScheCloseWaitStatus[outInfo.MachineId] = false;
+            if (!GlobalVariable.DownScheCloseRespResult.Keys.Contains(outInfo.MachineId))
+                GlobalVariable.DownScheCloseRespResult.Add(outInfo.MachineId, outInfo.RespResult);
+            else
+                GlobalVariable.DownScheCloseRespResult[outInfo.MachineId] = outInfo.RespResult;
+
+            return null;
+        }
+
+        public bool ShouldResponse()
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// 报废施工单返回信息
+    /// </summary>
+    public class ClientHandlerDownScheDiscardResp : interfaceClientHanlder
+    {
+
+        /// <summary>
+        /// 客户端返回结果解码
+        /// </summary>
+        /// <param name="buff"></param>
+        private ClientResp DecodeData(byte[] buff)
+        {
+            ClientResp info = new ClientResp();
+            byte[] tempData = buff;
+            info.MachineId = ConvertHelper.BytesToInt16(tempData, true);
+
+            switch (tempData[2])
+            {
+                case 1: info.RespResult = enumErrorCode.DeviceRespFailInfo; break;
+                case 2: info.RespResult = enumErrorCode.DeviceScheduleWorking; break;
+                default: info.RespResult = enumErrorCode.HandlerSuccess; break;
+            }
+            return info;
+        }
+
+        public byte[] HandlerClientData(byte[] buff)
+        {
+            ClientResp outInfo = this.DecodeData(buff);
+
+            GlobalVariable.DownScheDiscardWaitStatus[outInfo.MachineId] = false;
+            if (!GlobalVariable.DownScheDiscardRespResult.Keys.Contains(outInfo.MachineId))
+                GlobalVariable.DownScheDiscardRespResult.Add(outInfo.MachineId, outInfo.RespResult);
+            else
+                GlobalVariable.DownScheDiscardRespResult[outInfo.MachineId] = outInfo.RespResult;
+
+            return null;
+        }
+
+        public bool ShouldResponse()
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
     /// 命令错误，默认处理方式
     /// </summary>
     public class ClientHandlerNoneDefault : interfaceClientHanlder
@@ -387,12 +501,12 @@ namespace ZdflCount.App_Start
 
             db.RecordErrorInfo(enumSystemErrorCode.TcpDefaultHandlerErr, "", buff);
 
-            return new byte[] { 1 };
+            return null;
         }
 
         public bool ShouldResponse()
         {
-            return true;
+            return false;
         }
     }
 }

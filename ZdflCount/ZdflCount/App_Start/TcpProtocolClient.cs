@@ -24,13 +24,13 @@ namespace ZdflCount.App_Start
             get { return keepListening; }
         }
 
-        private static enumErrorCode waittingSendForResp(int machineId)
+        private static enumErrorCode waittingSendForResp(int machineId, Dictionary<int, bool> downStatus, Dictionary<int, enumErrorCode> downResult)
         {
             enumErrorCode sendResult;
             int i = 0, iMax = 10;
             for (; i < iMax; i++)
             {
-                if (GlobalVariable.DownScheduleWaitStatus[machineId])
+                if (downStatus[machineId])
                 {
                     Thread.Sleep(200);
                     continue;
@@ -40,33 +40,20 @@ namespace ZdflCount.App_Start
                     break;
                 }
             }
-            if (GlobalVariable.DownScheduleWaitStatus[machineId])
-            {
-                sendResult = enumErrorCode.DeviceReciveTimeOut;
-            }
-            else
-            {
-                switch (GlobalVariable.DownScheduleRespResult[machineId])
-                {
-                    case 1: sendResult = enumErrorCode.DeviceRespFailInfo; break;
-                    case 2: sendResult = enumErrorCode.DeviceScheduleFull; break;
-                    default: sendResult = enumErrorCode.HandlerSuccess; break;
-                }
-            }
+            sendResult = downStatus[machineId] ? enumErrorCode.DeviceReciveTimeOut : downResult[machineId];
+
             return sendResult;
         }
+
         /// <summary>
-        /// 下发施工单
+        /// 主动给设备下发信息
         /// </summary>
-        /// <param name="machineId"></param>
-        /// <param name="content"></param>
-        /// <param name="userId"></param>
         /// <returns></returns>
-        public static enumErrorCode SendScheduleInfo(int machineId, byte[] content,int userId)
+        private static enumErrorCode CommunicateWithClient(int machineId, byte[] content, int userId, Dictionary<int, bool> downStatus, Dictionary<int, enumErrorCode> downResult)
         {
             enumErrorCode sendResult = enumErrorCode.HandlerSuccess;
             byte[] buffReceive = new byte[BUFFER_SIZE];
-            if(!netConnection.ContainsKey(machineId))
+            if (!netConnection.ContainsKey(machineId))
             {
                 db.RecordErrorInfo(enumSystemErrorCode.TcpSenderException, machineId.ToString(), content, userId);
                 return enumErrorCode.DeviceNotWork;
@@ -74,18 +61,55 @@ namespace ZdflCount.App_Start
             NetworkStream ns = netConnection[machineId];
             try
             {
-                ns.Write(content,0,content.Length);
-                if (GlobalVariable.DownScheduleWaitStatus.Keys.Contains(machineId))
-                    GlobalVariable.DownScheduleWaitStatus[machineId] = true;
+                ns.Write(content, 0, content.Length);
+                if (downStatus.Keys.Contains(machineId))
+                    downStatus[machineId] = true;
                 else
-                    GlobalVariable.DownScheduleWaitStatus.Add(machineId, true);
-                sendResult = waittingSendForResp(machineId);
+                    downStatus.Add(machineId, true);
+                sendResult = waittingSendForResp(machineId, downStatus, downResult);
             }
             catch (Exception ex)
             {
-                db.RecordErrorInfo(enumSystemErrorCode.TcpSenderException, ex, System.Text.Encoding.ASCII.GetString(content), content, userId);
+                db.RecordErrorInfo(enumSystemErrorCode.TcpSenderException, ex, machineId.ToString (), content, userId);
+                sendResult = enumErrorCode.DeviceCommunicateError;
             }
             return sendResult;
+        }
+
+        /// <summary>
+        /// 下发施工单
+        /// </summary>
+        /// <param name="machineId"></param>
+        /// <param name="content"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public static enumErrorCode SendScheduleInfo(int machineId, byte[] content, int userId)
+        {
+            return CommunicateWithClient(machineId, content, userId, GlobalVariable.DownScheduleWaitStatus, GlobalVariable.DownScheduleRespResult);
+        }
+
+        /// <summary>
+        /// 关闭施工单
+        /// </summary>
+        /// <param name="machineId"></param>
+        /// <param name="content"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public static enumErrorCode SendScheduleClose(int machineId, byte[] content, int userId)
+        {
+            return CommunicateWithClient(machineId, content, userId, GlobalVariable.DownScheCloseWaitStatus, GlobalVariable.DownScheCloseRespResult);
+        }
+
+        /// <summary>
+        /// 报废施工单
+        /// </summary>
+        /// <param name="machineId"></param>
+        /// <param name="content"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public static enumErrorCode SendScheduleDiscard(int machineId, byte[] content, int userId)
+        {
+            return CommunicateWithClient(machineId, content, userId, GlobalVariable.DownScheDiscardWaitStatus, GlobalVariable.DownScheDiscardRespResult);
         }
 
         public static string StartServer(int userId)
@@ -180,12 +204,20 @@ namespace ZdflCount.App_Start
                     typeResult = new ClientHanlderProductInfo();
                     break;
 
-                case enumCommandType.UP_DEVICE_SETTING_RESP:
+                case enumCommandType.UP_DEVICE_SETTING_SEND:
                     typeResult = new ClientHandlerDeviceSetting();
                     break;
 
                 case enumCommandType.DOWN_SHEDULE_RESP:
                     typeResult = new ClientHandlerDownScheduleResp();
+                    break;
+
+                case enumCommandType.DOWN_SHEDULE_CLOSE_RESP:
+                    typeResult = new ClientHandlerDownScheCloseResp();
+                    break;
+
+                case enumCommandType.DOWN_SHEDULE_DISCARD_RESP:
+                    typeResult = new ClientHandlerDownScheDiscardResp();
                     break;
 
                 default:
@@ -255,17 +287,16 @@ namespace ZdflCount.App_Start
                 interfaceClientHanlder clientHandler = GetHandlerByCommand(dataInfo.Code);
                 byte[] byteResult = clientHandler.HandlerClientData(dataInfo.Content);
                 //返回信息
+                byte[] buffResp = null;
                 if (clientHandler.ShouldResponse())
                 {
-                    byte[] buffResp = null;
                     Coder.EncodeServerResp(dataInfo.Code + 1, byteResult, out buffResp);
                     dataInfo.stream.Write(buffResp, 0, buffResp.Length);
                 }
-                //设置协议没有设备ID，所以不用于存储长连接
-                if (dataInfo.Code == enumCommandType.UP_DEVICE_SETTING_SEND)
-                    return;
-                //存储长连接
-                int tempMachineId = ConvertHelper.BytesToInt16(dataInfo.Content, true);
+                int tempMachineId = dataInfo.Code == enumCommandType.UP_DEVICE_SETTING_SEND ?
+                    ConvertHelper.BytesToInt16(buffResp, 1, true) ://设置协议没有设备ID，所以用返回回去的ID
+                    ConvertHelper.BytesToInt16(dataInfo.Content, true);//其它协议以设备ID开头
+
                 if (netConnection.ContainsKey(tempMachineId))
                 {
                     netConnection[tempMachineId] = dataInfo.stream;

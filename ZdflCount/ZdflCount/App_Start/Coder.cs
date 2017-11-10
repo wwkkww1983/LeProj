@@ -106,6 +106,35 @@ namespace ZdflCount.App_Start
         }
 
         /// <summary>
+        /// 施工单操作编码
+        /// </summary>
+        /// <param name="schedule"></param>
+        /// <param name="buff"></param>
+        public static void EncodeScheHandler(ZdflCount.Models.Schedules schedule,enumCommandType command, out byte[] buff)
+        {
+            byte[] content = new byte[1024];
+            int locIdx = 0, tempLen = 2;
+            //机器码
+            byte[] machineBytes = ConvertHelper.Int16ToBytes(schedule.MachineId, true);
+            Array.Copy(machineBytes, content, tempLen);
+            locIdx += tempLen;
+            //施工单编号
+            byte[] numberBytes = Encoding.ASCII.GetBytes(schedule.Number);
+            tempLen = numberBytes.Length;
+            content[locIdx++] = (byte)tempLen;
+            Array.Copy(numberBytes, 0, content, locIdx, tempLen);
+            locIdx += tempLen;
+
+            NormalDataStruct data = new NormalDataStruct()
+            {
+                Code = command,
+                contentLen = locIdx,
+                Content = content
+            };
+            EncodeData(data, out buff);
+        }
+
+        /// <summary>
         /// 服务器返回结果编码
         /// </summary>
         /// <param name="cmd"></param>

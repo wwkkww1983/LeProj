@@ -51,7 +51,7 @@ namespace ZdflCount.App_Start
     public struct ClientResp
     {
         public int MachineId;
-        public int RespResult;
+        public enumErrorCode RespResult;
     }
 
     /// <summary>
@@ -60,6 +60,7 @@ namespace ZdflCount.App_Start
     public struct DeviceSetting
     {
         public int OperateType;
+        public int RoomID;
         public string DeviceNumber;
         public string DeviceName;
         public string IPAddress;
