@@ -294,7 +294,7 @@ namespace ZdflCount.App_Start
                     dataInfo.stream.Write(buffResp, 0, buffResp.Length);
                 }
                 int tempMachineId = dataInfo.Code == enumCommandType.UP_DEVICE_SETTING_SEND ?
-                    ConvertHelper.BytesToInt16(buffResp, 1, true) ://设置协议没有设备ID，所以用返回回去的ID
+                    ConvertHelper.BytesToInt16(buffResp, buffResp.Length - 2, true) ://设置协议没有设备ID，所以用返回回去的ID
                     ConvertHelper.BytesToInt16(dataInfo.Content, true);//其它协议以设备ID开头
 
                 if (netConnection.ContainsKey(tempMachineId))

@@ -638,7 +638,7 @@ namespace ZdflCount.Models
             this.MachineList = new List<SelectListItem>(allMachines.Count<Machines>());
             foreach (Machines item in allMachines)
             {
-                this.MachineList.Add(new SelectListItem { Text = item.Name, Value = item.ID.ToString () });
+                this.MachineList.Add(new SelectListItem { Text = item.Number, Value = item.ID.ToString () });
             }
         }
 
