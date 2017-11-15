@@ -246,7 +246,7 @@ namespace ZdflCount.App_Start
                 {
                     roomStatus.MachineList.Add(machine.Number, now);
                 }
-                LastHeartBreak tempHeart = db.LastHeartBreak.Find(machine.ID);
+                LastHeartBreak tempHeart = db.LastHeartBreak.FirstOrDefault(item => item.MachineId == machine.ID);
                 db.LastHeartBreak.Attach(tempHeart);
                 tempHeart.DateRefresh = now;
                 db.SaveChanges();
@@ -264,7 +264,7 @@ namespace ZdflCount.App_Start
             //记录设备状态
             RefreshOnlineInfo(machine, db);
 
-            db.SaveChanges();            
+            db.SaveChanges();
             return null;
         }
 
@@ -338,12 +338,22 @@ namespace ZdflCount.App_Start
             DeviceSetting outInfo = this.DecodeData(buff);
             FactoryRoom tempRoom = db.FactoryRoom.Find(outInfo.RoomID);
             Machines innerInfo = this.exchangeData(tempRoom,outInfo);
-
+            //车间中的设备数加1
             db.FactoryRoom.Attach(tempRoom);
             tempRoom.MachineCount += 1;
-
             //记录原始数据
             db.Machines.Add(innerInfo);
+            db.SaveChanges();
+            //最近心跳设备记录
+            db.LastHeartBreak.Add(new LastHeartBreak()
+            {
+                DateRefresh = DateTime.Now,
+                FactoryName = tempRoom.FactoryName,
+                MachineId = innerInfo.ID,
+                RoomID = tempRoom.RoomID,
+                RoomName = tempRoom.RoomName,
+                MachineName = outInfo.DeviceNumber
+            });
             db.SaveChanges();
             //生成返回结果
             byte[] byteID = ConvertHelper.Int16ToBytes(innerInfo.ID, true);

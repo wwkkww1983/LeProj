@@ -564,22 +564,23 @@ namespace ZdflCount.Models
     #region 最新心跳包记录
     public class LastHeartBreak
     {
-        public DateTime DateRefresh { get; set; }
 
         [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int ID { get; set; }
+
+        public DateTime DateRefresh { get; set; }
+
+        //[Key]
         public int MachineId { get; set; }
         
         [StringLength(50)]
         public string MachineName { get; set; }
 
-        public int ChannelInfo { get; set; }
-
         public int RoomID {get;set;}
                 
         [StringLength(50)]
         public string RoomName { get; set; }
-
-        public int MachineCount { get; set; }
         
         [StringLength(50)]
         public string FactoryName { get; set; }

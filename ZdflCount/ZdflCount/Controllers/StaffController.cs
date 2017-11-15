@@ -71,7 +71,7 @@ namespace ZdflCount.Controllers
                 }
                 //存入数据库
                 db.StaffInfo.Add(staffInfo);
-                int a = db.SaveChanges();
+                db.SaveChanges();
             }
             return View("Detail", staffInfo);
         }
