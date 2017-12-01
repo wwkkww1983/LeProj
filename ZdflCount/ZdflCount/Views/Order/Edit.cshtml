@@ -1,0 +1,142 @@
+﻿@model ZdflCount.Models.Orders
+
+@{
+    ViewBag.Title = "修改订单";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>详细信息</legend>
+
+        @Html.HiddenFor(model => model.OrderId)
+        <div class="display-label">
+                @Html.LabelFor(model => model.OrderNumber)
+        </div>
+        <div class="display-field">
+            ： @Html.DisplayFor(model => model.OrderNumber)
+        </div>
+    
+        <div class="error-message-ur-fieldset error-message">@ViewData["error"]</div>
+
+        <div class="display-label">
+                @Html.LabelFor(model => model.Status)
+        </div>
+        <div class="display-field">
+            ： @Html.DisplayEnumDescription("Models.enumStatus",(int)@Model.Status)
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.RoomName)
+        </div>
+        <div class="display-field">
+            ： @Html.DisplayFor(model => model.RoomName)（@Html.DisplayFor(model => model.RoomNumber)）
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.DateNeedFinish)
+        </div>
+        <div class="display-field">
+            ：@Html.DisplayFor(model => model.DateNeedFinish)
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.DateAssign)
+        </div>
+        <div class="display-field">
+            ： @Html.DisplayFor(model => model.DateAssign)
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.ProductCode)
+        </div>
+        <div class="display-field">
+            ：@Html.DisplayFor(model => model.ProductCode)
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.ProductUnit)
+        </div>
+        <div class="display-field">
+            ： @Html.DisplayFor(model => model.ProductUnit)
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.ProductInfo)
+        </div>
+        <div class="display-field">
+            ： @Html.DisplayFor(model => model.ProductInfo)
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.AssignedCount)
+        </div>
+        <div class="display-field">
+            ： @Html.DisplayFor(model => model.AssignedCount)
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.ProductCount)
+        </div>
+        <div class="display-field">
+            ： @Html.DisplayFor(model => model.ProductCount)
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.ProductAssignedCount)
+        </div>
+        <div class="display-field">
+            ： @Html.DisplayFor(model => model.ProductAssignedCount)
+        </div>    
+        <div class="display-label">
+                @Html.LabelFor(model => model.ProductFinishedCount)
+        </div>
+        <div class="display-field">
+            ： @Html.DisplayFor(model => model.ProductFinishedCount)
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.ProductFreeCount)
+        </div>
+        <div class="display-field">
+            ：  @Html.DisplayFor(model => model.ProductFreeCount)
+        </div>
+    
+        <div class="display-label">
+                @Html.LabelFor(model => model.MaterialInfo)
+        </div>
+        <div class="display-field">
+            ： 
+            @{
+                string[] materials = (string[])ViewData["materials"];
+                foreach(string item in materials)
+                {
+                 @:<div class="child-indent">
+                     @item
+                 @:</div>            
+                }
+            }
+            新增物料：@Html.DropDownList("material", (List<SelectListItem>)@ViewData["materialInfos"])
+        </div>       
+        <div class="display-label">
+                @Html.LabelFor(model => model.UpContinueCount)
+        </div>
+        <div class="display-field">
+            ：@Html.EditorFor(model => model.UpContinueCount)
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.DownContinueCount)
+        </div>
+        <div class="display-field">
+            ：@Html.EditorFor(model => model.DownContinueCount)
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.DetailInfo)
+        </div>
+        <div class="display-field">
+            ： @Html.TextAreaFor(model => model.DetailInfo, new { rows = "8", style = "width:99%" })
+        </div>
+    
+        <div class="display-label">
+                @Html.LabelFor(model => model.NoticeInfo)
+        </div>
+        <div class="display-field">
+            ： @Html.TextAreaFor(model => model.NoticeInfo, new { rows = "8", style = "width:99%"})
+        </div>
+
+        <input type="submit" value="保存修改"/>
+    </fieldset>
+}

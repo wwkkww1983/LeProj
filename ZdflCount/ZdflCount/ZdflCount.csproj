@@ -52,6 +52,15 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>..\..\..\codeSegment\Office\Excel\Microsoft.Office.Interop.Excel.dll</HintPath>
     </Reference>
+    <Reference Include="ServiceStack">
+      <HintPath>..\..\ConsoleApplication1\dll1\ServiceStack.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>..\..\ConsoleApplication1\dll1\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.ServiceInterface">
+      <HintPath>..\..\ConsoleApplication1\dll1\ServiceStack.ServiceInterface.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -180,7 +189,9 @@
     <Compile Include="App_Start\SelfAttribute.cs" />
     <Compile Include="App_Start\TcpProtocolClient.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="App_Start\WebInfo.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
@@ -190,21 +201,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201711031027009_Initial.cs" />
-    <Compile Include="Migrations\201711031027009_Initial.Designer.cs">
-      <DependentUpon>201711031027009_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711060254033_Initial1.cs" />
-    <Compile Include="Migrations\201711060254033_Initial1.Designer.cs">
-      <DependentUpon>201711060254033_Initial1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711151601511_Initial2.cs" />
-    <Compile Include="Migrations\201711151601511_Initial2.Designer.cs">
-      <DependentUpon>201711151601511_Initial2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711151625054_Initial3.cs" />
-    <Compile Include="Migrations\201711151625054_Initial3.Designer.cs">
-      <DependentUpon>201711151625054_Initial3.cs</DependentUpon>
+    <Compile Include="Migrations\201711280625342_Initial.cs" />
+    <Compile Include="Migrations\201711280625342_Initial.Designer.cs">
+      <DependentUpon>201711280625342_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
@@ -271,6 +270,7 @@
     <Content Include="Global.asax" />
     <Content Include="Downloads\员工信息.xlsx" />
     <Content Include="Scripts\chart.js" />
+    <Content Include="Scripts\dateReload.js" />
     <Content Include="Scripts\echarts.js" />
     <Content Include="Scripts\echarts.min.js" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
@@ -333,7 +333,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Order\Index.cshtml" />
-    <Content Include="Views\Schedule\Index.cshtml" />
+    <Content Include="Views\Schedule\OrderIndex.cshtml" />
     <Content Include="Views\Schedule\Details.cshtml" />
     <Content Include="Views\Schedule\Create.cshtml" />
     <Content Include="Views\Schedule\Edit.cshtml" />
@@ -351,28 +351,36 @@
     <Content Include="Views\Staff\_DetailPartial.cshtml" />
     <Content Include="Views\Manage\Rooms.cshtml" />
     <Content Include="Views\Manage\Statistics.cshtml" />
-    <Content Include="Views\Manage\_RoomsPartial.cshtml" />
+    <Content Include="Views\Shared\_RoomsPartial.cshtml" />
     <Content Include="Views\Manage\MachineStatus.cshtml" />
+    <Content Include="Views\Manage\MachineMaterial.cshtml" />
+    <Content Include="Views\Manage\_MaterialPartial.cshtml" />
+    <Content Include="Views\Schedule\_DetailPartial.cshtml" />
+    <Content Include="Views\Order\Detail.cshtml" />
+    <Content Include="Views\Order\Edit.cshtml" />
+    <Content Include="Views\Order\Create.cshtml" />
+    <Content Include="Views\Manage\_ReportPartial.cshtml" />
+    <Content Include="Views\Manage\MachineReport.cshtml" />
+    <Content Include="Views\Manage\_StatusPartial.cshtml" />
+    <Content Include="Views\Manage\ProductRecord.cshtml" />
+    <Content Include="Views\Manage\StatisticRecord.cshtml" />
+    <Content Include="Views\Manage\MachineEdit.cshtml" />
+    <Content Include="Views\Manage\MachineStartEnd.cshtml" />
+    <Content Include="Views\Manage\_StartEndPartial.cshtml" />
+    <Content Include="Views\Schedule\Index.cshtml" />
+    <Content Include="Views\Manage\RoomEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Statis\" />
     <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201711031027009_Initial.resx">
-      <DependentUpon>201711031027009_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711060254033_Initial1.resx">
-      <DependentUpon>201711060254033_Initial1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711151601511_Initial2.resx">
-      <DependentUpon>201711151601511_Initial2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711151625054_Initial3.resx">
-      <DependentUpon>201711151625054_Initial3.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201711280625342_Initial.resx">
+      <DependentUpon>201711280625342_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

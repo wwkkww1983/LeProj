@@ -9,86 +9,9 @@
 <h3 class="normal-margin">确定要报废当前施工单吗?</h3>
 <fieldset>
     <legend>施工单详细信息（报废后，原生产数据将无效）</legend>
+        
+    @Html.Partial("_DetailPartial")
 
-    
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.OrderNumber)：
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.OrderNumber)
-    </div>
-    
-    <div class="error-message-ur-fieldset error-message">@ViewData["error"]</div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Number)：
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Number)
-    </div>
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Status)：
-    </div>
-    <div class="display-field">
-        @Html.DisplayEnumDescription("Models.enumStatus",(int)@Model.Status)
-    </div>
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.MachineName)：
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.MachineName)
-    </div>
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.DateCreate)：
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.DateCreate)
-    </div>
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.DateLastUpdate)：
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.DateLastUpdate)
-    </div>
-    
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.CreatorName)：
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.CreatorName)
-    </div>
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.LastUpdatePersonName)：
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.LastUpdatePersonName)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.ProductCount)：
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.ProductCount)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.FinishCount)：
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.FinishCount)
-    </div>
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.DetailInfo)：
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.DetailInfo)
-    </div>
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.NoticeInfo)：
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.NoticeInfo)
-    </div>
 </fieldset>
 @using (Html.BeginForm()) {
     <div class="left-outof-table">

@@ -59,10 +59,28 @@ namespace ZdflCount.App_Start
     /// </summary>
     public struct DeviceSetting
     {
+        public int DeviceId;
         public int OperateType;
-        public int RoomID;
+        public string RoomNumber;
         public string DeviceNumber;
         public string DeviceName;
         public string IPAddress;
+    }
+
+    /// <summary>
+    /// 设备叫料
+    /// </summary>
+    public struct DeviceMaterial
+    {
+        public int MachineId;
+        public string ScheduleNumber;
+    }
+
+    public struct DeviceStartEnd
+    {
+        public int MachineId;
+        public string UserNumber;
+        public string ScheduleNumber;
+        public Models.enumDeviceWorkStatus Status;
     }
 }

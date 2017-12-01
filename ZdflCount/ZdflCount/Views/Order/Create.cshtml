@@ -1,0 +1,141 @@
+﻿@model ZdflCount.Models.Orders
+
+@{
+    ViewBag.Title = "加载订单";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+<div style="margin: 20px;">
+    @Html.TextBox("orderCode","", new {placeholder="请输入订单号" })
+    <button id="btnSelectOrder" type="submit" >提取订单信息</button>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>详细信息</legend>
+
+        <div class="display-label">
+                @Html.LabelFor(model => model.OrderNumber)
+        </div>
+        <div class="display-field" id="field-order-code">
+            ： @Html.DisplayFor(model => model.OrderNumber)
+        </div>
+        @Html.HiddenFor(model => model.OrderNumber)
+    
+        <div class="error-message-ur-fieldset error-message">@ViewData["error"]</div>
+
+        <div class="display-label">
+                @Html.LabelFor(model => model.RoomName)
+        </div>
+        <div class="display-field" id="field-order-room">
+            ： @Html.DisplayFor(model => model.RoomNumber)
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.DateNeedFinish)
+        </div>
+        <div class="display-field" id="field-order-date-finish">
+            ：@Html.DisplayFor(model => model.DateNeedFinish)
+        </div>
+        
+        
+        <div class="display-label">
+                @Html.LabelFor(model => model.ProductCode)
+        </div>
+        <div class="display-field" id="field-order-product-code">
+            ：@Html.DisplayFor(model => model.ProductCode)
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.ProductUnit)
+        </div>
+        <div class="display-field" id="field-order-product-unit">
+            ： @Html.DisplayFor(model => model.ProductUnit)
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.ProductInfo)
+        </div>
+        <div class="display-field" id="field-order-product-info">
+            ： @Html.DisplayFor(model => model.ProductInfo)
+        </div>
+
+        <div class="display-label">
+                @Html.LabelFor(model => model.MaterialInfo)
+        </div>
+        <div class="display-field" id="field-order-material-info">
+           ：
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.UpContinueCount)
+        </div>
+        <div class="display-field">
+            ：@Html.EditorFor(model => model.UpContinueCount)
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.DownContinueCount)
+        </div>
+        <div class="display-field">
+            ：@Html.EditorFor(model => model.DownContinueCount)
+        </div>
+
+        <div class="display-label">
+                @Html.LabelFor(model => model.DetailInfo)
+        </div>
+        <div class="display-field">
+            ： @Html.TextAreaFor(model => model.DetailInfo, new { rows = "8", style = "width:99%" })
+        </div>
+    
+        <div class="display-label">
+                @Html.LabelFor(model => model.NoticeInfo)
+        </div>
+        <div class="display-field">
+            ： @Html.TextAreaFor(model => model.NoticeInfo, new { rows = "8", style = "width:99%"})
+        </div>
+
+        <input type="submit" value="保存订单" onclick="return CheckLoadOrder(this.form)" />
+    </fieldset>
+}
+
+<script src="/Scripts/jquery-1.7.1.js"></script>
+<script>
+    function CheckLoadOrder(createForm) {
+        if (createForm.OrderNumber.value == "") {
+            window.alert("请先加载订单再添加");
+            return false;
+        }
+        return true;
+    }
+    $("#btnSelectOrder").click(function () {
+        var strSplit = "：";
+        $.ajax({
+            url: "/Order/GetOrderInfo",
+            type: "POST",
+            data: {
+                "order": document.getElementById("orderCode").value
+            },
+            success: function (data) {
+                if (data.error != null) {
+                    alert(data.error);
+                    return;
+                };                
+                document.getElementById("field-order-code").innerText = strSplit + data.orderCode;
+                document.getElementById("OrderNumber").value = data.orderCode;
+                document.getElementById("field-order-room").innerText = strSplit + data.roomName + "（" + data.roomNumber + "）";
+                document.getElementById("field-order-date-finish").innerText = strSplit + data.dateFinish;
+                document.getElementById("field-order-product-code").innerText = strSplit + data.productCode;
+                document.getElementById("field-order-product-unit").innerText = strSplit + data.productUnit;
+                document.getElementById("field-order-product-info").innerText = strSplit + data.productInfo;
+                document.getElementById("field-order-material-info").innerText = strSplit + data.materialInfo;
+                document.getElementById("DetailInfo").value = data.detail;
+                document.getElementById("NoticeInfo").value = data.notice;
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("员工信息读取失败：" + errorThrown);
+            }
+        });
+
+    });
+    
+</script>

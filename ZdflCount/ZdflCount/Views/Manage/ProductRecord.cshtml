@@ -1,0 +1,59 @@
+﻿@model IEnumerable<ZdflCount.Models.ProductInfo>
+
+@{
+    ViewBag.Title = "生产流水记录";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    开始日期：<input type="date" id="startDate"  />
+    结束日期：<input type="date" id="endDate"/>
+
+    <button class="date-btn-query"> 查询</button>
+</div>
+
+<table id="tableOrder"  border="1"  width="100%" > 
+    <thead>   
+        <th>@Html.DisplayNameFor(model => model.MsgType)</th>  
+        <th>@Html.DisplayNameFor(model => model.staffNumber)</th>
+        <th>@Html.DisplayNameFor(model => model.StaffName)</th>
+        <th>@Html.DisplayNameFor(model => model.ScheduleNumber)</th>  
+        <th>@Html.DisplayNameFor(model => model.MachineName)</th>
+        <th>@Html.DisplayNameFor(model => model.ChannelCount)</th>
+        <th>各通道完成数</th>  
+        <th>@Html.DisplayNameFor(model => model.ExceptionCount)</th>  
+        <th>@Html.DisplayNameFor(model => model.DateCreate)</th>  
+
+    </thead>   
+    @foreach (var item in Model) 
+    {
+         <tr> 
+             <td>
+                 @if(item.MsgType==0)
+                 {
+                     @:登录
+                 }else
+                 {
+                     @:退出
+                 }</td> 
+             <td>@Html.DisplayFor(modelItem => item.staffNumber)</td> 
+             <td>@Html.DisplayFor(modelItem => item.StaffName)</td> 
+             <td>@Html.DisplayFor(modelItem => item.ScheduleNumber)</td> 
+             <td>@Html.DisplayFor(modelItem => item.MachineName)</td> 
+             <td>@Html.DisplayFor(modelItem => item.ChannelCount)</td> 
+             <td>@Html.DisplayFor(modelItem => item.ChannelFinish1) ,
+                 @Html.DisplayFor(modelItem => item.ChannelFinish2) ,
+                 @Html.DisplayFor(modelItem => item.ChannelFinish3) ,
+                 @Html.DisplayFor(modelItem => item.ChannelFinish4) ,
+                 @Html.DisplayFor(modelItem => item.ChannelFinish5) ,
+                 @Html.DisplayFor(modelItem => item.ChannelFinish6)
+             </td> 
+             <td>@Html.DisplayFor(modelItem => item.ExceptionCount)</td> 
+             <td>@Html.DisplayFor(modelItem => item.DateCreate)</td> 
+         </tr>   
+    }                     
+</table>
+
+<script src="/Scripts/jquery-1.7.1.js"></script>
+<script src="/Scripts/dateReload.js"></script>

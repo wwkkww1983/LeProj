@@ -8,12 +8,16 @@
             <th>@Html.DisplayNameFor(model => model.Orders.OrderNumber)</th>
             <th>@Html.DisplayNameFor(model => model.Orders.ProductCount)</th>
             <th>@Html.DisplayNameFor(model => model.Orders.ProductFreeCount)</th>
+            <th>@Html.DisplayNameFor(model => model.Orders.ProductCode)</th>
+            <th>@Html.DisplayNameFor(model => model.Orders.ProductUnit)</th>
         </tr>
     </thead>
     <tr>
         <td>@Html.DisplayFor(model => model.Orders.OrderNumber)</td>
         <td>@Html.DisplayFor(model => model.Orders.ProductCount)</td>
         <td id="orderCount">@Html.DisplayFor(model => model.Orders.ProductFreeCount)</td>
+        <td>@Html.DisplayFor(model => model.Orders.ProductCode)</td>
+        <td>@Html.DisplayFor(model => model.Orders.ProductUnit)</td>
     </tr>
 
 </table>

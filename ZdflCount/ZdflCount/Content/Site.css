@@ -404,6 +404,11 @@ aside {
     margin: 5px 0 0 10px;
 }
 
+.child-indent {
+    display:block;
+    text-indent: 2em;
+    margin-left:5px;
+}
 /*
 
 fieldset {
@@ -456,6 +461,10 @@ fieldset .error-message-ur-fieldset {
 .alert-message {
     color:darkgreen;
     font-weight: bold;
+}
+
+.required-message {
+    color:red
 }
 
 /*表格外面模块样式*/
@@ -512,9 +521,19 @@ fieldset .error-message-ur-fieldset {
 }
 
 .block-green-status {
-    margin: 20px;
     background-color: green;
-    width: auto;
+    color:wheat;
+}
+
+.block-gray-status {
+    background-color:gray;
+    color:darkgray;
+}
+
+.device-block-status{
+    display:inline-block;
+    margin: 20px;
+    width: 90px;
     max-width: 10%;
     height: 40px;
     text-align: center;
@@ -603,6 +622,11 @@ td button {
     font-size: 1.3em;
     font-weight: bold;
     margin: 20px 0 10px 0;
+}
+
+.statistic-btn-excel {
+    float:right;
+    margin-right:15px;
 }
 
 .statistic-btn-query {

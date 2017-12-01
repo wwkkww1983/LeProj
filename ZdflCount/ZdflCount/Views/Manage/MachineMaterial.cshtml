@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "设备报料记录";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div id="material-content-detail">
+    @Html.Partial("_MaterialPartial")
+</div>
+
+<script>
+    //function myrefresh() {
+    //    window.location.reload();//重新加载页面
+    //}
+    //setTimeout('myrefresh()', 30000); //每30秒刷新一次
+    setInterval(function () {
+        $.ajax({
+            url: 'MachineMaterialContent', //异步请求Action
+            success: function (result) {
+                $("#material-content-detail").html(result);
+            }
+            });
+    }
+            , 30000); //每30秒刷新一次
+</script>

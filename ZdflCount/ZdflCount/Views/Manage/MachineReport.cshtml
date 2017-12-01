@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "设备报修记录";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div id="report-content-detail">
+    @Html.Partial("_ReportPartial")
+</div>
+
+<script>
+    setInterval(function () {
+        $.ajax({
+            url: 'MachineReportContent', //异步请求Action
+            success: function (result) {
+                $("#report-content-detail").html(result);
+            }
+            });
+    }
+            , 30000); //每30秒刷新一次
+</script>

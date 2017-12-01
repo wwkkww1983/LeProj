@@ -1,0 +1,122 @@
+﻿@model ZdflCount.Models.Schedules
+
+<div class="display-label">
+        @Html.LabelFor(model => model.OrderNumber)
+</div>
+<div class="display-field">
+    ： @Html.DisplayFor(model => model.OrderNumber)
+</div>
+    
+<div class="error-message-ur-fieldset error-message">@ViewData["error"]</div>
+
+<div class="display-label">
+        @Html.LabelFor(model => model.Number)
+</div>
+<div class="display-field">
+    ： @Html.DisplayFor(model => model.Number)
+</div>
+<div class="display-label">
+        @Html.LabelFor(model => model.Status)
+</div>
+<div class="display-field">
+    ： @Html.DisplayEnumDescription("Models.enumStatus",(int)@Model.Status)
+</div>
+<div class="display-label">
+        @Html.LabelFor(model => model.ProductCode)
+</div>
+<div class="display-field">
+    ：@Html.DisplayFor(model => model.ProductCode)
+</div>
+<div class="display-label">
+        @Html.LabelFor(model => model.ProductUnit)
+</div>
+<div class="display-field">
+    ： @Html.DisplayFor(model => model.ProductUnit)
+</div>
+<div class="display-label">
+        @Html.LabelFor(model => model.ProductInfo)
+</div>
+<div class="display-field">
+    ： @Html.DisplayFor(model => model.ProductInfo)
+</div>
+<div class="display-label">
+        @Html.LabelFor(model => model.MaterialInfo)
+</div>
+<div class="display-field">
+    ： @Html.DisplayFor(model => model.MaterialDetail)
+</div>
+<div class="display-label">
+        @Html.LabelFor(model => model.MachineName)
+</div>
+<div class="display-field">
+    ： @Html.DisplayFor(model => model.MachineName)
+</div>
+<div class="display-label">
+        @Html.LabelFor(model => model.RoomNumber)
+</div>
+<div class="display-field">
+    ： @Html.DisplayFor(model => model.RoomNumber)
+</div>
+<div class="display-label">
+        @Html.LabelFor(model => model.DateCreate)
+</div>
+<div class="display-field">
+    ： @Html.DisplayFor(model => model.DateCreate)
+</div>
+<div class="display-label">
+        @Html.LabelFor(model => model.DateLastUpdate)
+</div>
+<div class="display-field">
+    ： @Html.DisplayFor(model => model.DateLastUpdate)
+</div>
+    
+<div class="display-label">
+        @Html.LabelFor(model => model.CreatorName)
+</div>
+<div class="display-field">
+    ： @Html.DisplayFor(model => model.CreatorName)
+</div>
+<div class="display-label">
+        @Html.LabelFor(model => model.LastUpdatePersonName)
+</div>
+<div class="display-field">
+    ：  @Html.DisplayFor(model => model.LastUpdatePersonName)
+</div>
+
+<div class="display-label">
+        @Html.LabelFor(model => model.ProductCount)
+</div>
+<div class="display-field">
+    ： @Html.DisplayFor(model => model.ProductCount)
+</div>
+    
+<div class="display-label">
+        @Html.LabelFor(model => model.UpContinueCount)
+</div>
+<div class="display-field">
+    ： @Html.DisplayFor(model => model.UpContinueCount)
+</div>
+<div class="display-label">
+        @Html.LabelFor(model => model.DownContinueCount)
+</div>
+<div class="display-field">
+    ： @Html.DisplayFor(model => model.DownContinueCount)
+</div>
+<div class="display-label">
+        @Html.LabelFor(model => model.FinishCount)
+</div>
+<div class="display-field">
+    ： @Html.DisplayFor(model => model.FinishCount)
+</div>
+<div class="display-label">
+        @Html.LabelFor(model => model.DetailInfo)
+</div>
+<div class="display-field">
+    ： @Html.DisplayFor(model => model.DetailInfo)
+</div>
+<div class="display-label">
+        @Html.LabelFor(model => model.NoticeInfo)
+</div>
+<div class="display-field">
+    ： @Html.DisplayFor(model => model.NoticeInfo)
+</div>

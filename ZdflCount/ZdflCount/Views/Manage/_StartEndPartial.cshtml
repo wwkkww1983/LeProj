@@ -1,0 +1,31 @@
+﻿@model IEnumerable<ZdflCount.Models.MachineStartEnd>
+
+
+<table>
+    <thead>
+        <th>@Html.DisplayNameFor(model => model.MachineNumber)</th>
+        <th>@Html.DisplayNameFor(model => model.MachineName)</th>
+        <th>@Html.DisplayNameFor(model => model.Status)</th>
+        <th>@Html.DisplayNameFor(model => model.DateStart)</th>
+        <th>@Html.DisplayNameFor(model => model.DateEnd)</th>
+       <th>@Html.DisplayNameFor(model => model.RoomNumber)</th>
+        <th>@Html.DisplayNameFor(model => model.OrderNumber)</th>
+        <th>@Html.DisplayNameFor(model => model.SchueduleNumber)</th>
+        <th>@Html.DisplayNameFor(model => model.UserNumber)</th>
+    </thead>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>@Html.DisplayFor(modelItem => item.MachineNumber)</td>
+        <td>@Html.DisplayFor(modelItem => item.MachineName)</td>
+        <td>@Html.DisplayEnumDescription("Models.enumDeviceWorkStatus",(int)item.Status)</td>
+        <td>@Html.DisplayFor(modelItem => item.DateStart)</td>
+        <td>@Html.DisplayFor(modelItem => item.DateEnd)</td>
+        <td>@Html.DisplayFor(modelItem => item.RoomNumber)</td>
+        <td>@Html.DisplayFor(modelItem => item.OrderNumber)</td>
+        <td>@Html.DisplayFor(modelItem => item.SchueduleNumber)</td>
+        <td>@Html.DisplayFor(modelItem => item.UserNumber)</td>
+    </tr>
+}
+
+</table>

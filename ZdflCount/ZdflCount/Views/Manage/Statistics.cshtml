@@ -13,10 +13,11 @@
     @Html.TextBox("order","", new {placeholder="请输入订单号" })
 @*    @Html.TextBox("room","", new {placeholder="请选择车间" })*@
     @Html.Action("RoomsDownList")
-
     <div>
         开始日期：<input type="date" id="startDate"  />
         结束日期：<input type="date" id="endDate"/>
+        
+@*        <button class="statistic-btn-excel"> 下载Excel</button>*@
     </div>
     <button class="statistic-btn-query"> 查询</button>
     <fieldset style="width: 770px; text-align: center;">

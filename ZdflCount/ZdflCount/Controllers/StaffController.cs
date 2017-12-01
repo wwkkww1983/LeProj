@@ -52,6 +52,19 @@ namespace ZdflCount.Controllers
         [UserRoleAuthentication(Roles = "员工信息管理员,单个新增员工")]
         public ActionResult Create()
         {
+            int userId = Convert.ToInt32(Session["UserID"]);
+            RoomController roomControl = new RoomController ();
+            int[] roomIds = roomControl.GetRoomsForUser(userId);
+            IEnumerable<FactoryRoom> roomList = from item in db.FactoryRoom
+                                                 where roomIds.Contains(item.RoomID)
+                                                 select item;
+            List<SelectListItem> roomInfos = new List<SelectListItem>();
+            foreach (FactoryRoom item in roomList)
+            {
+                roomInfos.Add(new SelectListItem { Text = string.Format("{0}（{1}）", item.RoomName, item.RoomNumber), Value = item.RoomID.ToString() });
+            }
+            ViewData["roomList"] = roomInfos;
+
             return View();
         }
 
@@ -62,15 +75,22 @@ namespace ZdflCount.Controllers
             if (ModelState.IsValid)
             {
                 IEnumerable<StaffInfo> tempStaff = from item in db.StaffInfo
-                                                   where item.Number == staffInfo.Number || item.Phone == staffInfo.Phone
+                                                   where item.Number == staffInfo.Number
                                                    select item;
                 if (tempStaff.Count() > 0)
                 {
-                    ViewData["error"] = "【工号】 或【手机号码】重复";
+                    ViewData["error"] = "【工号】 重复";
                     return View(staffInfo);
                 }
-                //存入数据库
+                FactoryRoom roomItem = db.FactoryRoom.Single(item => item.RoomID == staffInfo.DeptId);
+                staffInfo.DeptName = roomItem.RoomName;
+                staffInfo.DeptNumber = roomItem.RoomNumber;
+                //用户资料库
                 db.StaffInfo.Add(staffInfo);
+
+                //同步管理账户
+                WebSecurity.CreateUserAndAccount(staffInfo.Number, staffInfo.Password);
+
                 db.SaveChanges();
             }
             return View("Detail", staffInfo);
@@ -106,7 +126,7 @@ namespace ZdflCount.Controllers
                 tempEntity.Property(item => item.BirthDate).IsModified = true;
                 tempEntity.Property(item => item.JoinInDate).IsModified = true;
                 tempEntity.Property(item => item.EmergencyName).IsModified = true;
-                tempEntity.Property(item => item.EmergencyPhone).IsModified = true;
+                tempEntity.Property(item => item.Password).IsModified = true;
                 tempEntity.Property(item => item.Remarks).IsModified = true;
 
                 db.SaveChanges();
@@ -174,13 +194,18 @@ namespace ZdflCount.Controllers
             enumErrorCode result = Excel.CheckAndReadStaffInfo(serverPath, staffList);
 
             if (result == enumErrorCode.HandlerSuccess)
-            {
-                foreach (StaffInfo staff in staffList)
-                {
-                    db.StaffInfo.Add(staff);
-                }
+            {                
                 try
                 {
+                    foreach (StaffInfo staff in staffList)
+                    {
+                        FactoryRoom tempRoom = db.FactoryRoom.FirstOrDefault(item => item.RoomNumber == staff.DeptNumber);
+                        staff.DeptId = tempRoom.RoomID;
+                        staff.DeptName = tempRoom.RoomName;
+                        db.StaffInfo.Add(staff);
+                        //同步管理账户
+                        WebSecurity.CreateUserAndAccount(staff.Number, staff.Phone);
+                    }
                     db.SaveChanges();
                 }
                 catch
@@ -202,9 +227,16 @@ namespace ZdflCount.Controllers
         }
 
         [UserRoleAuthentication(Roles = "员工权限管理员")]
-        public ActionResult RoleIndex()
+        public ActionResult RoleIndex(string alert=null)
         {
             string[] roleArray = Enum.GetNames(typeof(enumUserRole));
+            Dictionary<int,string> roomList = new Dictionary<int,string> ();
+            foreach (FactoryRoom item in db.FactoryRoom)
+            {
+                roomList.Add(item.RoomID, item.RoomName);
+            }
+            ViewData["room"] = roomList;
+            ViewData["alert"] = alert;
             return View(roleArray);
         }
 
@@ -225,23 +257,34 @@ namespace ZdflCount.Controllers
             strBuiler.Append(staff.Number); strBuiler.Append(";");
             strBuiler.Append(staff.DeptName); strBuiler.Append(";");
             strBuiler.Append(staff.Position); strBuiler.Append(";");
-            //同步管理账户
-            IEnumerable<UserProfile> userList = from item in dbUser.UserProfiles
-                                                where item.UserName == staff.Number
-                                                select item;
-            if (userList.Count() < 1)
-            {
-                WebSecurity.CreateUserAndAccount(staff.Number, staff.Phone);
-            }
             //读取管理权限
             string[] roleArray = Enum.GetNames(typeof(enumUserRole));
-            strBuiler.Append(roleArray.Length); strBuiler.Append(";");
             string tempRole = "0";
             for (int i = 1; i < roleArray.Length; i++)
             {
                 tempRole = Roles.IsUserInRole(staff.Number,roleArray[i])?"1":"0";
                 strBuiler.Append(tempRole);
             }
+            strBuiler.Append(";");
+            //读取车间权限
+            int userId = WebSecurity.GetUserId(staff.Number);
+            IEnumerable<UsersInRooms> userRooms = from item in db.UsersInRooms
+                                                  where item.UserId == userId
+                                                  select item;
+            List<int> roomList = new List<int>();
+            foreach (UsersInRooms item in userRooms)
+            {
+                roomList.Add(item.RoomId);
+            }
+            StringBuilder strBuiRooms = new StringBuilder ();
+            foreach (FactoryRoom item in db.FactoryRoom)
+            {
+                strBuiRooms.Append(item.RoomID);
+                strBuiRooms.Append(roomList.Contains(item.RoomID)?"1":"0");
+                strBuiRooms.Append(",");
+            }
+            strBuiRooms.Remove(strBuiRooms.Length - 1, 1);
+            strBuiler.Append(strBuiRooms.ToString());
 
             return strBuiler.ToString();
         }
@@ -253,6 +296,10 @@ namespace ZdflCount.Controllers
             string[] roleArray = Enum.GetNames(typeof(enumUserRole));
             string tempStatus, userName = Request.Form["number"];
             List<string> addRoles = new List<string>(), removeRoles = new List<string>();
+            List<int> addRooms = new List<int> (), removeRooms = new List<int> ();
+            string roomStart = "roomInfo-";
+            int roomStartLen = roomStart.Length;
+            int userId = WebSecurity.GetUserId(userName);
             foreach (string item in roleArray)
             {
                 tempStatus = Request.Form[item];
@@ -260,7 +307,7 @@ namespace ZdflCount.Controllers
                 {
                     continue;
                 }
-                else if (tempStatus.IndexOf(",false") > 0 && !Roles.IsUserInRole(userName, item))
+                else if (tempStatus.IndexOf(",") > 0 && !Roles.IsUserInRole(userName, item))
                 {
                     addRoles.Add(item);
                 }
@@ -277,8 +324,51 @@ namespace ZdflCount.Controllers
             {
                 Roles.RemoveUserFromRoles(userName, removeRoles.ToArray());
             }
-            ViewData["alert"] = "授权成功";
-            return View("RoleIndex", roleArray);
+            //车间权限
+            IEnumerable<UsersInRooms> userRooms = from item in db.UsersInRooms
+                                                  where item.UserId == userId
+                                                  select item;
+
+            List<int> roomList = new List<int> ();
+            foreach (UsersInRooms item in userRooms)
+            {
+                roomList.Add(item.RoomId);
+            }
+            foreach (string item in Request.Form.Keys)
+            {
+                if (!item.StartsWith(roomStart))
+                    continue;
+                else
+                {
+                    int roomId = int.Parse(item.Substring(roomStartLen));
+                    if (Request.Form[item].IndexOf(",") > 0 && !roomList.Contains(roomId))
+                    {
+                        addRooms.Add(roomId);
+                    }
+                    else if (Request.Form[item] == "false" && roomList.Contains(roomId))
+                    {
+                        removeRooms.Add(roomId);
+                    }
+                }
+            }
+            if (addRooms.Count > 0)
+            {
+                foreach (int item in addRooms)
+                {
+                    db.UsersInRooms.Add(new UsersInRooms() { RoomId = item, UserId = userId });
+                }
+            }
+            if (removeRooms.Count > 0)
+            {
+                foreach (int item in removeRooms)
+                {
+                    UsersInRooms tempUserRoom = db.UsersInRooms.Single(tempR => tempR.RoomId == item && tempR.UserId == userId);
+                    db.UsersInRooms.Remove(tempUserRoom);
+                }
+            }
+            db.SaveChanges();
+
+            return RedirectToAction("RoleIndex", new { alert = "授权成功" });
         }
 
         #endregion

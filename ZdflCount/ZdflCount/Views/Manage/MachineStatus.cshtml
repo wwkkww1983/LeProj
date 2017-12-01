@@ -1,29 +1,30 @@
-﻿@model List<ZdflCount.Models.DeviceStatus>
-
-@{
+﻿@{
     ViewBag.Title = "设备状态";
 }
 
 <h2 style="width:200px;float:left;">当前设备运行状态</h2>
 <div style="height:70px;line-height:70px;">
-    @Html.ActionLink("(刷新)", "MachineStatus",null,new { style="text-decoration: none;"})
+    @Html.ActionLink("(立即刷新)", "MachineStatus",null,new { style="text-decoration: none;"})
     @Html.ActionLink("清空重载", "MachineStatus", new { refresh=true}, new { style="float: right; text-decoration: none;"})
 </div>
 
-@foreach (ZdflCount.Models.DeviceStatus item in Model)
-{
-    <div>
-        <span>@item.FactoryName</span>
-        <span> - </span>
-        <span>@item.RoomName </span>
-        （@item.MachineList.Count/@item.MachineCount）
-        <div class="block-structure-outline">
-       @foreach (System.Collections.Generic.KeyValuePair<string, DateTime> device in item.MachineList)
-       {
-           <div class="block-green-status">
-               @device.Key
-           </div>
-       }
-        </div>
-    </div>
-}
+
+<div id="status-content-detail">
+    @Html.Partial("_StatusPartial")
+</div>
+
+<script>
+    //function myrefresh() {
+    //    window.location.reload();//重新加载页面
+    //}
+    //setTimeout('myrefresh()', 30000); //每30秒刷新一次
+    setInterval(function () {
+        $.ajax({
+            url: 'MachineStatusContent', //异步请求Action
+            success: function (result) {
+                $("#status-content-detail").html(result);
+            }
+            });
+    }
+            , 30000); //每30秒刷新一次
+</script>

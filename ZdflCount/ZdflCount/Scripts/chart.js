@@ -38,12 +38,24 @@
                 default: break;
             }
             myChart.setOption(option);
+            document.getElementsByClassName("statistic-btn-excel").value = data.fileName;
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             alert("统计数据读取失败：" + errorThrown);
         }
     });
 
+});
+
+$(".statistic-btn-excel").click(function () {
+    var fileName = document.getElementsByClassName("statistic-btn-excel").value;
+    if (fileName == null || fileName == undefined) {
+        alert("请先查询再下载");
+        return;
+    }
+    var urlPath = location.href;
+    var excelPath = urlPath.substr(0, urlPath.indexOf("Statistics"));
+    window.open(excelPath + "DownloadExcel?excel=" + fileName);
 });
 
 function barChart(data) {

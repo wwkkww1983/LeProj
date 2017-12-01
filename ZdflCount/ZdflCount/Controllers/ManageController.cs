@@ -11,7 +11,10 @@ namespace ZdflCount.Controllers
     [App_Start.UserLoginAuthentication]
     public class ManageController : Controller
     {
-        private DbTableDbContext db = new DbTableDbContext();
+        private const string ONLINE_FACTRORY_ROOM = "ONLINEFACTRORYROOM", PRE_ONLINE_MACHINE = "PREONLINEMACHINE",
+                            PRE_MACHINE_NAME_NUMBER = "PREMACHINENAMENUMBER", PRE_ONLINE_TIME = "PREONLINETIME";
+        private DbTableDbContext db = new DbTableDbContext(); 
+        private static ServiceStack.Redis.RedisClient client = Constants.RedisClient;
 
         #region 设备
         [UserRoleAuthentication(Roles = "系统管理员")]
@@ -22,6 +25,28 @@ namespace ZdflCount.Controllers
                            select item;
             return View(itemList);
         }
+
+
+        [UserRoleAuthentication(Roles = "系统管理员")]
+        public ActionResult MachineEdit(int id)
+        {
+            return View(db.Machines.Find(id));
+        }
+
+        [HttpPost]
+        [UserRoleAuthentication(Roles = "系统管理员")]
+        public ActionResult MachineEdit(int id, string Name, string RemarkInfo)
+        {
+            Machines machine = db.Machines.Find(id);
+            db.Machines.Attach(machine);
+            machine.Name = Name;
+            machine.RemarkInfo = RemarkInfo;
+            db.SaveChanges();
+
+            return RedirectToAction("Machines");
+        }
+
+
         #endregion
 
         #region 工厂车间
@@ -29,6 +54,63 @@ namespace ZdflCount.Controllers
         public ActionResult Rooms()
         {
             return View(db.FactoryRoom);
+        }
+
+        [UserRoleAuthentication(Roles = "系统管理员")]
+        public ActionResult RoomEdit(int id)
+        {
+            return View(db.FactoryRoom.Find(id));
+        }
+
+        [HttpPost]
+        [UserRoleAuthentication(Roles = "系统管理员")]
+        public ActionResult RoomEdit(FactoryRoom room)
+        {
+            FactoryRoom dbRoom = db.FactoryRoom.Find(room.RoomID);
+            string oldRoomName = dbRoom.RoomName;
+            dbRoom.ManagerName = room.ManagerName;
+            dbRoom.ManagerPhone = room.ManagerPhone;
+            dbRoom.Phone = room.Phone;
+            dbRoom.Remarks = room.Remarks;
+            dbRoom.RepairNumber = room.RepairNumber;
+            dbRoom.Address = room.Address;
+            if (dbRoom.RoomNumber != room.RoomNumber || dbRoom.RoomName != room.RoomName)
+            {
+                IEnumerable<Machines> machineList = from item in db.Machines
+                                                    where item.RoomID == dbRoom.RoomID
+                                                    select item;
+                foreach (Machines machine in machineList)
+                {
+                    db.Machines.Attach(machine);
+                    machine.RoomName = room.RoomName;
+                    machine.RoomNumber = room.RoomNumber;
+                }
+                IEnumerable<StaffInfo> staffList = from item in db.StaffInfo
+                                                   where item.DeptId == dbRoom.RoomID
+                                                   select item;
+                foreach (StaffInfo staff in staffList)
+                {
+                    db.StaffInfo.Attach(staff);
+                    staff.DeptName = room.RoomName;
+                    staff.DeptNumber = room.RoomNumber;
+                }
+                //移除原来车间名称的心跳包，新车间名称会在新的心跳包过来时
+                dbRoom.RoomName = room.RoomName;
+                dbRoom.RoomNumber = room.RoomNumber;                
+            }
+            db.SaveChanges(); 
+            if (oldRoomName != room.RoomName)
+            {
+                client.RemoveItemFromSet(ONLINE_FACTRORY_ROOM, dbRoom.RoomName);
+                HashSet<string> redisMachineList = client.GetAllItemsFromSet(PRE_ONLINE_MACHINE + dbRoom.RoomName);
+                foreach (string machine in redisMachineList)
+                {
+                    client.Remove(PRE_ONLINE_TIME + machine);
+                    client.RemoveItemFromSet(PRE_ONLINE_MACHINE + room, machine);
+                }
+            }
+
+            return RedirectToAction("Rooms");
         }
         #endregion
 
@@ -108,7 +190,7 @@ namespace ZdflCount.Controllers
             int roomId = room == null ? 0 : int.Parse(room);
             DateTime endDateQuery = endDate.Date.AddDays(1);
             IEnumerable<StatisticInfo> infoList = from item in db.Statistics
-                                                  where item.Date >= startDate.Date && item.Date <= endDateQuery &&
+                                                  where item.DateOut >= startDate.Date && item.DateOut <= endDateQuery &&
                                                           (string.IsNullOrEmpty(userNumber) || item.StaffNumber == userNumber) &&
                                                           (string.IsNullOrEmpty(userName) || item.StaffName == userName) &&
                                                           (string.IsNullOrEmpty(machine) || item.MachineNumber == machine) &&
@@ -139,10 +221,69 @@ namespace ZdflCount.Controllers
             }
 
             string tempTitle = startDate.ToString("yyyy年MM月dd日") + " 至 " + endDate.ToString("yyyy年MM月dd日，") + vertical;
-            result.Data = new { chartTitle = tempTitle, dataKey=tempDict.Keys.ToArray(),dataValue = tempDict.Values.ToArray() };
+            string fileName = string.Format("{0}-{1}-{2}", vertical, DateTime.Now.ToString("yyyyMMdd"),DateTime.Now.Millisecond);
+            //Excel.CreateExcelFile(fileName, tempTitle, tempDict.Keys.ToArray(), tempDict.Values.ToArray());
+            result.Data = new { chartTitle = tempTitle,fileName=fileName, dataKey = tempDict.Keys.ToArray(), dataValue = tempDict.Values.ToArray() };
+
             return result;
         }
+
+        [UserRoleAuthentication(Roles = "生产统计数据查看")]
+        public ActionResult DownloadExcel()
+        {
+            string fileName = Request["excel"]+ ".xlsx";
+            string filePath = "/Statis/" + fileName;
+            if (!System.IO.File.Exists(filePath))
+            {
+                return Content("无数据");
+            }
+
+            FilePathResult file = new FilePathResult("~/Statis/" + fileName , "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            file.FileDownloadName = fileName + ".xlsx";
+
+            return file;
+        }
         #endregion
+
+        #region 生产流水记录
+        public ActionResult ProductRecord()
+        {
+            object model = null;
+            string strStartDate = Request["startDate"], strEndDate = Request["endDate"];
+            if (strStartDate != null && strEndDate != null)
+            {
+                DateTime startDate = DateTime.Parse(strStartDate), endDate = DateTime.Parse(strEndDate).AddDays(1);
+                model = from item in db.ProductInfo
+                        where item.DateCreate >= startDate && item.DateCreate <= endDate
+                        select item;
+            }
+            else
+            {
+                model = db.ProductInfo.OrderByDescending(item => item.ID).Take(50);
+            }
+            return View(model);
+        }
+        #endregion
+
+        #region 统计基础数据
+        public ActionResult StatisticRecord()
+        {
+            object model = null;
+            string strStartDate = Request["startDate"], strEndDate = Request["endDate"];
+            if (strStartDate != null && strEndDate != null)
+            {
+                DateTime startDate = DateTime.Parse(strStartDate), endDate = DateTime.Parse(strEndDate).AddDays(1);
+                model = from item in db.Statistics
+                        where item.DateOut >= startDate && item.DateOut <= endDate
+                        select item;
+            }
+            else
+            {
+                model = db.Statistics.OrderByDescending(item => item.ID).Take(50);
+            }
+            return View(db.Statistics.OrderByDescending(item => item.ID).Take(50));
+        }
+        #endregion 
 
         #region 设备状态
 
@@ -152,24 +293,55 @@ namespace ZdflCount.Controllers
             return lastTime.AddMinutes(5) > DateTime.Now;
         }
 
-        [UserRoleAuthentication(Roles = "系统管理员")]
-        public ActionResult MachineStatus(bool refresh=false)
-        {
+        private List<DeviceStatus> RefreshMachineStatus(bool refresh = false)
+        {            
+            List<DeviceStatus> deviceStatusList = new List<DeviceStatus>();            
             if (!refresh)
             {//数据自刷新
-                foreach (DeviceStatus device in GlobalVariable.deviceStatusList)
+                HashSet<string> roomList = client.GetAllItemsFromSet(ONLINE_FACTRORY_ROOM);
+                foreach (string room in roomList)
                 {
-                    foreach (KeyValuePair<string, DateTime> item in device.MachineList)
+                    FactoryRoom roomItem = db.FactoryRoom.FirstOrDefault(item => item.RoomName == room);
+                    DeviceStatus tempStatus = new DeviceStatus()
                     {
-                        if (CheckValidTime(item.Value))
-                            continue;
-                        device.MachineList.Remove(item.Key);
+                        RoomName = room,
+                        MachineList = new Dictionary<string, DateTime>()
+                    };
+                    HashSet<string> machineList = client.GetAllItemsFromSet(PRE_ONLINE_MACHINE + room);
+                    foreach (string machine in machineList)
+                    {                        
+                        DateTime lastTime = new DateTime(client.Get<long>(PRE_ONLINE_TIME + machine));
+                        if (CheckValidTime(lastTime))
+                        {
+                            string strName = client.Get<string>(PRE_MACHINE_NAME_NUMBER + machine);
+                            tempStatus.MachineList.Add(strName??machine, lastTime);
+                        }
+                        else
+                        {
+                            client.Remove(PRE_ONLINE_TIME + machine);
+                            client.RemoveItemFromSet(PRE_ONLINE_MACHINE + room, machine);
+                        }
                     }
+                    if (machineList.Count < 1)
+                    {
+                        client.RemoveItemFromSet(ONLINE_FACTRORY_ROOM, room);
+                    }
+                    IEnumerable<Machines> roomMachines = from item in db.Machines
+                                                         where item.RoomID == roomItem.RoomID
+                                                         select item;
+                    List<string> freeMachineList = new List<string> ();
+                    foreach (Machines item in roomMachines)
+                    {
+                        if (!machineList.Contains(item.Name))
+                            freeMachineList.Add(item.Name);
+                    }
+                    tempStatus.OfflineMachines = freeMachineList.ToArray();
+                    tempStatus.MachineCount = tempStatus.OfflineMachines.Count() + tempStatus.MachineList.Count;
+                    deviceStatusList.Add(tempStatus);
                 }
             }
             else
             {//重新加载数据
-                GlobalVariable.deviceStatusList.Clear();
                 foreach (FactoryRoom room in db.FactoryRoom)
                 {
                     DeviceStatus device = new DeviceStatus()
@@ -180,7 +352,7 @@ namespace ZdflCount.Controllers
                         FactoryName = room.FactoryName,
                         MachineList = new Dictionary<string, DateTime>()
                     };
-                    GlobalVariable.deviceStatusList.Add(device);
+                    deviceStatusList.Add(device);
                 }
                 foreach (DeviceStatus device in GlobalVariable.deviceStatusList)
                 {
@@ -194,7 +366,132 @@ namespace ZdflCount.Controllers
                     }
                 }
             }
-            return View(GlobalVariable.deviceStatusList);
+            return deviceStatusList;
+        }
+
+        [UserRoleAuthentication(Roles = "系统管理员")]
+        public ActionResult MachineStatusContent()
+        {
+            return PartialView("_StatusPartial", this.RefreshMachineStatus(false));
+        }
+
+
+        [UserRoleAuthentication(Roles = "系统管理员")]
+        public ActionResult MachineStatus(bool refresh=false)
+        {
+            return View(this.RefreshMachineStatus(refresh));
+        }
+        #endregion
+
+        #region 设备报料
+        [UserRoleAuthentication(Roles = "报料管理员")]
+        public ActionResult MachineMaterial()
+        {
+            IEnumerable<MachineCallMaterial> materialList = from item in db.MachineCallMaterial
+                                                            orderby item.Status ascending, item.ID descending
+                                                            select item;
+            return View(materialList);
+        }
+
+        [UserRoleAuthentication(Roles = "报料管理员")]
+        public ActionResult MachineMaterialContent()
+        {
+            IEnumerable<MachineCallMaterial> materialList = from item in db.MachineCallMaterial
+                                                            orderby item.Status ascending, item.ID descending
+                                                            select item;
+            return PartialView("_MaterialPartial", materialList);
+        }
+
+        [UserRoleAuthentication(Roles = "报料管理员")]
+        public ActionResult MaterialGetInfo(int id)
+        {
+            MachineCallMaterial material = db.MachineCallMaterial.Find(id);
+            if (material == null)
+            {
+                return HttpNotFound();
+            }
+
+            db.MachineCallMaterial.Attach(material);
+            material.Status = enumDeviceWarnningStatus.GetInfo;
+            material.DateGetInfo = DateTime.Now;
+
+            db.SaveChanges();
+
+            return RedirectToAction("MachineMaterial");
+        }
+        #endregion
+
+        #region 设备报修
+        [UserRoleAuthentication(Roles = "报修管理员")]
+        public ActionResult MachineReport()
+        {
+            IEnumerable<MachineReport> reportList = from item in db.MachineReport
+                                                    orderby item.Status ascending, item.ID descending
+                                                    select item;
+            return View(reportList);
+        }
+
+        [UserRoleAuthentication(Roles = "报修管理员")]
+        public ActionResult MachineReportContent()
+        {
+            IEnumerable<MachineReport> reportList = from item in db.MachineReport
+                                                    orderby item.Status ascending, item.ID descending
+                                                    select item;
+            return PartialView("_ReportPartial", reportList);
+        }
+
+        [UserRoleAuthentication(Roles = "报修管理员")]
+        public ActionResult ReportGetInfo(int id)
+        {
+            MachineReport report = db.MachineReport.Find(id);
+            if (report == null)
+            {
+                return HttpNotFound();
+            }
+
+            db.MachineReport.Attach(report);
+            report.Status = enumDeviceWarnningStatus.GetInfo;
+            report.DateGetInfo = DateTime.Now;
+
+            db.SaveChanges();
+
+            return RedirectToAction("MachineReport");
+        }
+        #endregion
+
+        #region 设备启停
+        private object getMachineStartEndData(string strStartDate , string strEndDate)
+        {
+            object model = null;
+            if (strStartDate != null && strEndDate != null)
+            {
+                DateTime startDate = DateTime.Parse(strStartDate), endDate = DateTime.Parse(strEndDate).AddDays(1);
+                model = from item in db.MachineStartEnd
+                        where item.DateEnd >= startDate && item.DateEnd <= endDate
+                        select item;
+            }
+            else
+            {
+                model = db.MachineStartEnd.OrderByDescending(item => item.ID).Take(50);
+            }
+            return model;
+        }
+
+        [UserRoleAuthentication(Roles = "启停管理员")]
+        public ActionResult MachineStartEnd()
+        {
+            string strStartDate = Request["startDate"], strEndDate = Request["endDate"];
+            object model = this.getMachineStartEndData(strStartDate, strEndDate);
+
+            return View(model);
+        }
+
+        [UserRoleAuthentication(Roles = "启停管理员")]
+        public ActionResult MachineStartEndContent()
+        {
+            object model = this.getMachineStartEndData(null, null);
+
+            return PartialView("_StartEndPartial", model);
         }
         #endregion
     }

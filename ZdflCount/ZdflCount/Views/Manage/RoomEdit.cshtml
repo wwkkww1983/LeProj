@@ -1,0 +1,79 @@
+﻿@model ZdflCount.Models.FactoryRoom
+
+@{
+    ViewBag.Title = "修改车间信息";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>详细信息</legend>
+        @Html.HiddenFor(model => model.RoomID)
+        
+        <div class="display-label">
+                @Html.LabelFor(model => model.MachineCount)
+        </div>
+        <div class="display-field">
+            ： @Html.DisplayFor(model => model.MachineCount)
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.RoomName)
+        </div>
+        <div class="display-field">
+            ： @Html.EditorFor(model => model.RoomName)
+        </div>    
+        <div class="display-label">
+                @Html.LabelFor(model => model.RoomNumber)
+        </div>
+        <div class="display-field">
+            ：@Html.EditorFor(model => model.RoomNumber)
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.RepairNumber)
+        </div>
+        <div class="display-field">
+            ：@Html.EditorFor(model => model.RepairNumber)
+        </div>
+        <div class="error-message-ur-fieldset error-message">@ViewData["error"]</div>
+
+        <div class="display-label">
+                @Html.LabelFor(model => model.FactoryName)
+        </div>
+        <div class="display-field">
+            ：@Html.EditorFor(model => model.FactoryName)
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.ManagerName)
+        </div>
+        <div class="display-field">
+            ：@Html.EditorFor(model => model.ManagerName) 
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.ManagerPhone)
+        </div>
+        <div class="display-field">
+            ：@Html.EditorFor(model => model.ManagerPhone)
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.Address)
+        </div>
+        <div class="display-field">
+            ：@Html.EditorFor(model => model.Address)
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.Remarks)
+        </div>
+        <div class="display-field">
+            ： @Html.TextAreaFor(model => model.Remarks, new { rows = "8", style = "width:99%"})
+        </div>
+
+        <input type="submit" value="保存修改"/>
+    </fieldset>
+}
+
+<div class="left-outof-table">
+    @Html.ActionLink("返回车间列表", "Rooms")
+</div>

@@ -1,0 +1,82 @@
+﻿@model IEnumerable<ZdflCount.Models.Schedules>
+
+@{
+    ViewBag.Title = "施工单列表";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="left-outof-table">        
+    当前订单编号：@ViewData["OrderNumber"]
+</div>
+
+    <div class="right-outof-table">
+        @Html.ActionLink("创建施工单", "Create",new {id=ViewData["OrderId"]})
+    </div>
+<table>
+    <thead>
+        <th>
+            @Html.DisplayNameFor(model => model.Number)
+        </th>
+        <th class="th-datetime">
+            @Html.DisplayNameFor(model => model.DateCreate)
+        </th>
+        <th>@Html.DisplayNameFor(model => model.MachineName)</th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductUnit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductCount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FinishCount)
+        </th>
+        <th>操作</th>
+    </thead>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Number)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateCreate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MachineName)
+        </td>
+        <td>
+            @Html.DisplayEnumDescription("Models.enumStatus",(int)item.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductUnit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductCount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FinishCount)
+        </td>
+        <td>
+            @Html.ActionLink("查看详情", "Details", new { id=item.ID }) |
+            @Html.ActionLink("修改", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("关闭", "Delete", new { id=item.ID })|
+            @Html.ActionLink("报废", "Discard", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>
+
+<div class="left-outof-table">
+    @Html.ActionLink("返回订单列表", "Index", "Order" )
+</div>

@@ -1,0 +1,26 @@
+﻿@model List<ZdflCount.Models.DeviceStatus>
+
+
+@foreach (ZdflCount.Models.DeviceStatus item in Model)
+{
+    <div>
+@*        <span>@item.FactoryName</span>
+        <span> - </span>*@
+        <span>@item.RoomName </span>
+        （@item.MachineList.Count/@item.MachineCount）
+        <div class="block-structure-outline">
+       @foreach (System.Collections.Generic.KeyValuePair<string, DateTime> device in item.MachineList)
+       {
+           <div class="device-block-status block-green-status">
+               @device.Key
+           </div>
+       }
+       @foreach (string device in item.OfflineMachines)
+       {
+           <div class="device-block-status block-gray-status">
+               @device
+           </div>
+       }
+        </div>
+    </div>
+}

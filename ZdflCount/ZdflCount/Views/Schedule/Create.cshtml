@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "新建施工单";
+    var checkName = "";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -37,9 +38,30 @@
         <div class="editor-field">
             ：@ViewData["CreatorName"]
         </div>
-        
         <div class="editor-label">
-             @Html.DisplayNameFor(model => model.Schedules.MachineName)
+            @Html.LabelFor(model => model.Schedules.ProductInfo)
+        </div>
+        <div class="editor-field">
+            ：@Html.DisplayFor(model => model.Orders.ProductInfo)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Schedules.MaterialInfo)
+        </div>
+        <div class="editor-field">
+            <br />
+            @foreach (KeyValuePair<int, string> strItem in Model.MaterialList)
+            {
+                @:<div class="child-indent">
+                    checkName = "cm" + strItem.Key.ToString();
+                    @Html.CheckBox(checkName, true)    
+                    @strItem.Value
+//                    @Html.Label(strItem.Value, new { @for = checkName, @class = "checkbox-label" })
+                @:</div>
+            }
+        </div>   
+
+        <div class="editor-label">
+             @Html.LabelFor(model => model.Schedules.MachineName)
         </div>
         <div class="editor-field">
            ： @Html.DropDownList("machine", @Model.MachineList)
@@ -48,22 +70,38 @@
             @Html.LabelFor(model => model.Schedules.ProductCount)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Schedules.ProductCount)
+           ： @Html.EditorFor(model => model.Schedules.ProductCount)
             @Html.ValidationMessageFor(model => model.Schedules.ProductCount)
+        </div>
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Schedules.UpContinueCount)
+        </div>
+        <div class="editor-field">
+           ： @Html.TextBoxFor(model => model.Schedules.UpContinueCount, new { @Value = Model.Orders.UpContinueCount })
+            @Html.ValidationMessageFor(model => model.Schedules.UpContinueCount)
+        </div>
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Schedules.DownContinueCount)
+        </div>
+        <div class="editor-field">
+           ： @Html.TextBoxFor(model => model.Schedules.DownContinueCount, new { @Value = Model.Orders.DownContinueCount })
+            @Html.ValidationMessageFor(model => model.Schedules.DownContinueCount)
         </div>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Schedules.DetailInfo)
         </div>
         <div class="editor-field">
-            @Html.TextAreaFor(model => model.Schedules.DetailInfo, new { rows = "8", style = "width:99%" })
+            @Html.TextAreaFor(model => model.Schedules.DetailInfo, new { rows = "8", style = "width:99%", @Value = Model.Orders.DetailInfo })
         </div>        
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Schedules.NoticeInfo)
         </div>
         <div class="editor-field">
-            @Html.TextAreaFor(model => model.Schedules.NoticeInfo, new { rows = "8", style = "width:99%" })
+            @Html.TextAreaFor(model => model.Schedules.NoticeInfo, new { rows = "8", style = "width:99%", @Value = Model.Orders.NoticeInfo })
         </div>
         <p>
             <input type="submit" value="保存新施工单" onclick="return CheckProductCount(this.form)" />
@@ -72,8 +110,12 @@
     </fieldset>
 }
 
+<script>
+    document.getElementById("Schedules_DetailInfo").value = document.getElementById("Schedules_DetailInfo").attributes["value"].value;
+    document.getElementById("Schedules_NoticeInfo").value = document.getElementById("Schedules_NoticeInfo").attributes["value"].value;
+</script>
 <div class="left-outof-table">
-    @Html.ActionLink("返回施工单列表", "Index",  new {id = Model.Orders.OrderId})
+    @Html.ActionLink("返回施工单列表", "Index", new { id = Model.Orders.OrderId })
 </div>
 
 @section Scripts {

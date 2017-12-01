@@ -1,0 +1,67 @@
+﻿@model ZdflCount.Models.Machines
+
+@{
+    ViewBag.Title = "修改设备名称";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>详细信息</legend>
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="display-label">
+                @Html.LabelFor(model => model.Number)
+        </div>
+        <div class="display-field">
+            ： @Html.DisplayFor(model => model.Number)
+        </div>    
+        <div class="display-label">
+                @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="display-field">
+            ：@Html.EditorFor(model => model.Name)
+        </div>
+        <div class="error-message-ur-fieldset error-message">@ViewData["error"]</div>
+
+        <div class="display-label">
+                @Html.LabelFor(model => model.Status)
+        </div>
+        <div class="display-field">
+            ： @Html.DisplayEnumDescription("Models.enumMachineStatus",(int)@Model.Status)
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.IpAddress)
+        </div>
+        <div class="display-field">
+            ： @Html.DisplayFor(model => model.IpAddress)
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.RoomName)
+        </div>
+        <div class="display-field">
+            ：@Html.DisplayFor(model => model.RoomName) 
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.RoomNumber)
+        </div>
+        <div class="display-field">
+            ：@Html.DisplayFor(model => model.RoomNumber)
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.RemarkInfo)
+        </div>
+        <div class="display-field">
+            ： @Html.TextAreaFor(model => model.RemarkInfo, new { rows = "8", style = "width:99%"})
+        </div>
+
+        <input type="submit" value="保存修改"/>
+    </fieldset>
+}
+
+<div class="left-outof-table">
+    @Html.ActionLink("返回设备列表", "Machines")
+</div>

@@ -1,21 +1,22 @@
 ﻿@{
-    ViewBag.Title = "添加订单信息";
+    ViewBag.Title = "订单信息";
 }
 
 <h2>已加载订单列表</h2>  
-<a>加载订单（待做）</a>
+@Html.ActionLink("导入订单", "Create")
+
 <table id="tableOrder"  border="1"  width="100%" > 
     <thead>   
         <th>订单编号</th> 
         <th>订单状态</th>
-        <th>订单日期</th>  
+        <th>交期</th>  
         <th>加载日期</th>
         <th>施工单数</th>  
         <th>商品总数量</th>  
         <th>已分派数</th> 
         <th>已生产数</th> 
         <th>待分派数</th> 
-        <th>施工单</th>
+        <th>操作</th>
 
     </thead>   
     @foreach (var item in Model) 
@@ -23,14 +24,18 @@
          <tr>   
              <td>@item.OrderNumber</td> 
              <td>@Html.DisplayEnumDescription("Models.enumStatus",(int)item.Status)</td>
-             <td>@string.Format("{0:yyyy年MM月dd日}", item.DateCreate)</td>  
+             <td>@string.Format("{0:yyyy年MM月dd日}", item.DateNeedFinish)</td>  
              <td>@string.Format("{0:yyyy年MM月dd日}", item.DateAssign)</td>
              <td>@item.AssignedCount</td>  
              <td>@item.ProductCount</td>  
              <td>@item.ProductAssignedCount</td>  
              <td>@item.ProductFinishedCount</td>
              <td>@item.ProductFreeCount</td>
-             <td>@Html.ActionLink("点击查看", "Index", "Schedule", new {id = item.OrderId},null)</td>
+             <td>
+                 @Html.ActionLink("订单详情", "Detail",new {id = item.OrderId}) |
+                 @Html.ActionLink("修改", "Edit",new {id = item.OrderId})  |
+                 @Html.ActionLink("施工单", "OrderIndex", "Schedule", new {id = item.OrderId},null)
+             </td>
          </tr>   
     }                     
 </table>

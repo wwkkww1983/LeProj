@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = "修改施工单";
-    ViewBag.colon="：";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -25,7 +24,7 @@
             ：@Html.DisplayFor(model => model.Schedules.DateCreate)
         </div>
         <div class="editor-label">
-             @Html.DisplayNameFor(model => model.Schedules.Number)
+             @Html.LabelFor(model => model.Schedules.Number)
         </div>
         <div class="editor-field">
             ：@Html.DisplayFor(model => model.Schedules.Number)
@@ -37,7 +36,25 @@
             ： @Html.DisplayEnumDescription("Models.enumStatus",(int)@Model.Schedules.Status)
         </div>
         <div class="editor-label">
-             @Html.DisplayNameFor(model => model.Schedules.MachineName)
+             @Html.LabelFor(model => model.Schedules.ProductInfo)
+        </div>
+        <div class="editor-field">
+           ： @Html.DisplayFor(model => model.Schedules.ProductInfo)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Schedules.MaterialInfo)
+        </div>
+        <div class="editor-field">
+           <br />
+            @foreach (KeyValuePair<int,string> strItem in Model.MaterialList)
+            {
+                @:<div class="child-indent">
+                    @strItem.Value
+                @:</div>
+            }
+        </div>   
+        <div class="editor-label">
+             @Html.LabelFor(model => model.Schedules.MachineName)
         </div>
         <div class="editor-field">
            ：@Html.DropDownList("machine", @Model.MachineList)
@@ -52,12 +69,44 @@
             @Html.LabelFor(model => model.Schedules.ProductCount)
         </div>
         <div class="editor-field">
+            ：
             @if(@Model.Schedules.Status == ZdflCount.Models.enumStatus.Temporary){
                 @Html.EditorFor(model => model.Schedules.ProductCount);
                 @Html.ValidationMessageFor(model => model.Schedules.ProductCount);
             }else{
-                @ViewBag.colon;
                 @Html.DisplayFor(model => model.Schedules.ProductCount);
+            }
+        </div>        
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Schedules.UpContinueCount)
+        </div>
+        <div class="editor-field">
+           ：
+            @if (@Model.Schedules.Status == ZdflCount.Models.enumStatus.Temporary)
+            {
+                @Html.EditorFor(model => model.Schedules.UpContinueCount)
+                @Html.ValidationMessageFor(model => model.Schedules.UpContinueCount)
+            }
+            else
+            {
+                @Html.DisplayFor(model => model.Schedules.UpContinueCount);
+            }
+        </div>
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Schedules.DownContinueCount)
+        </div>
+        <div class="editor-field">            
+           ：
+            @if (@Model.Schedules.Status == ZdflCount.Models.enumStatus.Temporary)
+            {
+                @Html.EditorFor(model => model.Schedules.UpContinueCount)
+                @Html.ValidationMessageFor(model => model.Schedules.DownContinueCount)
+            }
+            else
+            {
+                @Html.DisplayFor(model => model.Schedules.DownContinueCount);
             }
         </div>
 
@@ -65,7 +114,7 @@
             @Html.LabelFor(model => model.Schedules.FinishCount)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Schedules.FinishCount)
+           ：  @Html.EditorFor(model => model.Schedules.FinishCount)
             @Html.ValidationMessageFor(model => model.Schedules.FinishCount)
         </div>
         

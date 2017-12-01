@@ -7,6 +7,7 @@ namespace ZdflCount.App_Start
     public class Coder 
     {
         public const int FACTORY_NORMAL = 0x5A44666C;
+        public static readonly int[] PROTOCOL_HEAD_START = { 0x6C, 0x66, 0x44, 0x5A };
         public const int PROTOCOL_HEAD_COUNT = 12;
         
         /// <summary>
@@ -79,6 +80,14 @@ namespace ZdflCount.App_Start
             byte[] countByte = ConvertHelper.Int32ToBytes(schedule.ProductCount, true);
             Array.Copy(countByte, 0, content, locIdx, 4);
             locIdx += 4 ;
+            //上跳持续数量
+            countByte = ConvertHelper.Int16ToBytes(schedule.UpContinueCount, true);
+            Array.Copy(countByte, 0, content, locIdx, 2);
+            locIdx += 2;
+            //落下持续数量
+            countByte = ConvertHelper.Int16ToBytes(schedule.DownContinueCount, true);
+            Array.Copy(countByte, 0, content, locIdx, 2);
+            locIdx += 2;
             //详细信息
             byte[] detailBytes = Encoding.GetEncoding("GBK").GetBytes(schedule.DetailInfo);
             tempLen = detailBytes.Length;

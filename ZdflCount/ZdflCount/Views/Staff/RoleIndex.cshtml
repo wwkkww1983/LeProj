@@ -5,7 +5,6 @@
     var name = "";
 }
 
-
 <h2>权限分配</h2>
 
 <div style="margin: 20px;">
@@ -30,12 +29,34 @@
             @:<td>
                 name = Model[idx];
                 @Html.CheckBox(name, false, new { value = idx, id = "checkbox-info-" + idx })    
-                @Html.Label(Model[idx], new { @for = Model[idx], @class = "checkbox-label" })
+                @Html.Label(name, new { @for = name, @class = "checkbox-label" })
             @:</td>
         }
       </tr>
     }
      </table>
+   
+    可操作施工单的车间设置
+    <table>
+        @{
+    Dictionary<int, string> roomList = (Dictionary<int, string>)ViewData["room"];
+    int[] roomIds = roomList.Keys.ToArray();
+
+    for (int idx = 0; idx < roomIds.Length; )
+    {
+        <tr class="hidden-table-line">
+        @for (int j = 0; j < 3 && idx < roomIds.Length; j++, idx++)
+        {
+            @:<td>
+                name = "roomInfo-" + roomIds[idx];
+                @Html.CheckBox(name, false, new { value = idx, id = "checkbox-roomInfo-" + roomIds[idx] })    
+                @Html.Label(roomList[roomIds[idx]], new { @for = name, @class = "checkbox-label" })
+            @:</td>
+        }
+      </tr>
+    }
+          }
+    </table>
 
         <button type="submit" id="btn-save-roles" style="visibility:hidden">保存权限</button>
         </fieldset>
@@ -62,10 +83,13 @@
                 document.getElementById("btn-save-roles").innerText = "保存【" + info[0] + "】的权限";
                 document.getElementById("btn-save-roles").style.visibility = "visible";
                 document.getElementById("number").value = info[1];
-                var iCount = parseInt(info[4]);
-                for(var i=1;i<info[4];i++)
-                {
-                    $("#checkbox-info-" + i.toString()).attr('checked', info[5].substr(i - 1, 1) == "1");
+                for (var i = 1; i <= info[4].length; i++) {
+                    $("#checkbox-info-" + i.toString()).attr('checked', info[4].substr(i - 1, 1) == "1");
+                }
+                var rooms = info[5].split(',');
+                for (var i = 0; i < rooms.length; i++) {
+                    var idx = rooms[i].substr(0,rooms[i].length - 1);
+                    $("#checkbox-roomInfo-" + idx).attr('checked', rooms[i].substr(rooms[i].length - 1, 1) == "1");
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {

@@ -1,12 +1,10 @@
 ﻿@model ZdflCount.Models.StaffInfo
 
 @{
-    ViewBag.Title = "修改员工资料";
+    ViewBag.Title = "新增员工信息";
 }
 
 <h2>@ViewBag.Title</h2>
-
-@*<script src="~/Scripts/datepicker.js"></script>*@
 
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
@@ -15,20 +13,26 @@
         <legend>详细信息</legend>    
         <div class="error-message-ur-fieldset error-message">@ViewData["error"]</div>
 
-       <div class="editor-label">
+       <div class="editor-label  required-message">
             @Html.LabelFor(model => model.Name)           
         </div>
         <div class="editor-field">
             ：@Html.EditorFor(model => model.Name)
             @Html.ValidationMessageFor(model => model.Name)
         </div>
-        <div class="editor-label">
+        <div class="editor-label  required-message">
              @Html.LabelFor(model => model.Number)
         </div>
         <div class="editor-field">
             ：@Html.EditorFor(model => model.Number)
             @Html.ValidationMessageFor(model => model.Number)
         </div>
+        <div class="editor-label  required-message">
+            @Html.LabelFor(model => model.Password)
+        </div>
+        <div class="editor-field">
+          ：  @Html.EditorFor(model => model.Password)
+        </div>   
         <div class="editor-label">
              @Html.LabelFor(model => model.Position)
         </div>
@@ -45,7 +49,7 @@
             @Html.LabelFor(model => model.DeptName)
         </div>
         <div class="editor-field">
-           ： @Html.EditorFor(model => model.DeptName)
+           ：@Html.DropDownList("DeptId", (List<SelectListItem>)@ViewData["roomList"])
         </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.Phone)
@@ -94,13 +98,7 @@
         </div>
         <div class="editor-field">
            ： @Html.EditorFor(model => model.EmergencyName)
-        </div>     
-        <div class="editor-label">
-            @Html.LabelFor(model => model.EmergencyPhone)
         </div>
-        <div class="editor-field">
-          ：  @Html.EditorFor(model => model.EmergencyPhone)
-        </div>   
         <div class="editor-label">
             @Html.LabelFor(model => model.Remarks)
         </div>

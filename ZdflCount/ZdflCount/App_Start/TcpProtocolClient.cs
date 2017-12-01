@@ -13,26 +13,60 @@ namespace ZdflCount.App_Start
     {
         private const int CLIENT_PORT_NUMBER = 55555, SERVER_PORT_NUMBER = 55556;
         private const int BUFFER_SIZE = 1024,COMMUNICATION_TIME_OUT = 1000;
+        private const string  PRE_RESP_DOWN_INFO = "PRERESPDOWNINFO";
         private static bool keepListening = false;
         private static Stopwatch sw = new Stopwatch();
         private static Models.DbTableDbContext db = new Models.DbTableDbContext();
         private static TcpListener serverListen = null;
         private static Dictionary<int, NetworkStream> netConnection = new Dictionary<int, NetworkStream>();
+        private static ServiceStack.Redis.RedisClient client = Constants.RedisClient;
 
         public static bool KeepListening
         {
             get { return keepListening; }
         }
 
+        public static enumErrorCode WaittingSendForResp(string strKey)
+        {
+            int intResp = 0;
+            string strTempKey = PRE_RESP_DOWN_INFO + strKey;
+            enumErrorCode sendResult;
+            int i = 0, iMax = 50;
+            
+            for (; i < iMax; i++)
+            {
+                intResp = client.Get<int>(strTempKey);
+                if (intResp == 0)
+                {
+                    Thread.Sleep(100);
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            if(intResp == 0)
+            {
+                sendResult = enumErrorCode.DeviceReciveTimeOut;
+            }
+            else{
+                sendResult = (enumErrorCode)intResp;
+                client.Remove(strTempKey);
+            }
+
+            return sendResult;
+        }
+
         private static enumErrorCode waittingSendForResp(int machineId, Dictionary<int, bool> downStatus, Dictionary<int, enumErrorCode> downResult)
         {
             enumErrorCode sendResult;
-            int i = 0, iMax = 10;
+            int i = 0, iMax = 50;
             for (; i < iMax; i++)
             {
                 if (downStatus[machineId])
                 {
-                    Thread.Sleep(200);
+                    Thread.Sleep(100);
                     continue;
                 }
                 else
@@ -183,6 +217,15 @@ namespace ZdflCount.App_Start
             {
                 serverListen.Stop();
                 keepListening = false;
+                IEnumerable<int> allMachine=netConnection.Keys;
+                foreach (int intId in allMachine)
+                {
+                    NetworkStream ns = netConnection[intId];
+                    ns.Close();
+                    ns.Dispose();
+                    ns = null;
+                }
+                netConnection.Clear();
             }
             catch (Exception ex)
             {
@@ -190,39 +233,23 @@ namespace ZdflCount.App_Start
             }
         }
 
-        private static interfaceClientHanlder  GetHandlerByCommand(enumCommandType type)
+        private static interfaceClientHanlder GetHandlerByCommand(enumCommandType type)
         {
             interfaceClientHanlder typeResult = null;
 
             switch (type)
             {
-                case enumCommandType.UP_HEART_SEND:
-                    typeResult = new ClientHandlerHeartBreak();
-                    break;
+                case enumCommandType.UP_HEART_SEND: typeResult = new ClientHandlerHeartBreak(); break;
+                case enumCommandType.UP_PRODUCT_SEND: typeResult = new ClientHanlderProductInfo(); break;
+                case enumCommandType.UP_DEVICE_SETTING_SEND: typeResult = new ClientHandlerDeviceSetting(); break;
+                case enumCommandType.UP_DEVICE_REPORT_SEND: typeResult = new ClientHandlerDeviceReport(); break;
+                case enumCommandType.UP_DEVICE_CALL_MATERIAL_SEND: typeResult = new ClientHandlerDeviceCallMaterial(); break;
+                case enumCommandType.UP_DEVICE_STARTEND_SEND: typeResult = new ClientHandlerDeviceStartEnd(); break;
+                case enumCommandType.DOWN_SHEDULE_RESP: typeResult = new ClientHandlerDownScheduleResp(); break;
+                case enumCommandType.DOWN_SHEDULE_CLOSE_RESP: typeResult = new ClientHandlerDownScheCloseResp(); break;
+                case enumCommandType.DOWN_SHEDULE_DISCARD_RESP: typeResult = new ClientHandlerDownScheDiscardResp(); break;
 
-                case enumCommandType.UP_PRODUCT_SEND:
-                    typeResult = new ClientHanlderProductInfo();
-                    break;
-
-                case enumCommandType.UP_DEVICE_SETTING_SEND:
-                    typeResult = new ClientHandlerDeviceSetting();
-                    break;
-
-                case enumCommandType.DOWN_SHEDULE_RESP:
-                    typeResult = new ClientHandlerDownScheduleResp();
-                    break;
-
-                case enumCommandType.DOWN_SHEDULE_CLOSE_RESP:
-                    typeResult = new ClientHandlerDownScheCloseResp();
-                    break;
-
-                case enumCommandType.DOWN_SHEDULE_DISCARD_RESP:
-                    typeResult = new ClientHandlerDownScheDiscardResp();
-                    break;
-
-                default:
-                    typeResult = new ClientHandlerNoneDefault();
-                    break;
+                default: typeResult = new ClientHandlerNoneDefault(); break;
             }
             return typeResult;
         }
@@ -312,6 +339,7 @@ namespace ZdflCount.App_Start
             }
         }
 
+
         private static bool ReceiveByProtocol(NetworkStream ns, ref NormalDataStruct dataInfo)
         {
             bool result = false;
@@ -321,6 +349,34 @@ namespace ZdflCount.App_Start
             {
                 db.RecordErrorInfo(enumSystemErrorCode.TcpRecieveErr, "数据头读取超时", byteHead);
                 return result;
+            }
+            int headIdx = 0;
+            while (true)
+            {
+                if (byteHead[headIdx] == Coder.PROTOCOL_HEAD_START[0] && byteHead[headIdx + 1] == Coder.PROTOCOL_HEAD_START[1] &&
+                    byteHead[headIdx + 2] == Coder.PROTOCOL_HEAD_START[2] && byteHead[headIdx + 3] == Coder.PROTOCOL_HEAD_START[3])
+                {
+                    break;
+                }
+                headIdx++;
+                if (headIdx > Coder.PROTOCOL_HEAD_COUNT - 4)
+                {
+                    ReadBuffer(ns, Coder.PROTOCOL_HEAD_COUNT, byteHead);
+                    headIdx = 0;
+                }
+            }
+            if (headIdx > 0)
+            {
+                byte[] byteTemp = new byte[headIdx];
+                ReadBuffer(ns, headIdx, byteTemp);
+                for (int i = 0; i < Coder.PROTOCOL_HEAD_COUNT - headIdx; i++)
+                {
+                    byteHead[i] = byteHead[i + headIdx];
+                }
+                for (int i = Coder.PROTOCOL_HEAD_COUNT - headIdx; i < Coder.PROTOCOL_HEAD_COUNT; i++)
+                {
+                    byteHead[i] = byteTemp[i + headIdx - Coder.PROTOCOL_HEAD_COUNT];
+                }
             }
             Coder.DecodeData(byteHead, ref dataInfo);
             if (!ReadBuffer(ns, dataInfo.contentLen, dataInfo.Content))

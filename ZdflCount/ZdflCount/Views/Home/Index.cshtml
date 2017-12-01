@@ -13,10 +13,12 @@
     </section>
 }
 <h3>系统功能索引:</h3>
-<ol class="round">
+
+<ol class="round" style="float:left; margin-left:10%">
     <li class="one">
         <h5 class="home-li-head-item">订单信息</h5>
          @Html.ActionLink("订单列表", "Index", "Order",null, new {@class = itemClassName })
+         @Html.ActionLink("施工单列表", "Index", "Schedule",null, new {@class = itemClassName })
     </li>
     
     <li class="two">
@@ -27,9 +29,12 @@
     
     <li class="three">
         <h5 class="home-li-head-item">数据统计</h5>
-        @Html.ActionLink("统计信息", "Statistics", "Manage",null, new {@class = itemClassName })
+        @Html.ActionLink("统计结果", "Statistics", "Manage",null, new {@class = itemClassName })
+        @Html.ActionLink("统计基础数据", "StatisticRecord", "Manage",null, new {@class = itemClassName })
+        @Html.ActionLink("生产日志", "ProductRecord", "Manage",null, new {@class = itemClassName })        
     </li>
-
+</ol>
+<ol class="round" style="float:right;margin-right:30%">
     <li class="four">
         <h5 class="home-li-head-item">工厂基础设施</h5>
         @Html.ActionLink("设备信息", "Machines", "Manage",null, new {@class = itemClassName })
@@ -37,8 +42,13 @@
     </li>
     <li class="five">
          <h5 class="home-li-head-item">状态监控</h5>
-        @Html.ActionLink("系统监控", "Index", "Manage",null, new {@class = itemClassName })
-        @Html.ActionLink("设备监控", "MachineStatus", "Manage",null, new {@class = itemClassName })
-
+        @Html.ActionLink("异常日志", "Index", "Manage",null, new {@class = itemClassName })
+        @Html.ActionLink("设备状态", "MachineStatus", "Manage",null, new {@class = itemClassName })
+    </li>
+    <li class="six">
+         <h5 class="home-li-head-item">设备记录</h5>
+        @Html.ActionLink("报料记录", "MachineMaterial", "Manage",null, new {@class = itemClassName })
+        @Html.ActionLink("报修记录", "MachineReport", "Manage",null, new {@class = itemClassName })
+        @Html.ActionLink("启停记录", "MachineStartEnd", "Manage",null, new {@class = itemClassName })
     </li>
 </ol>

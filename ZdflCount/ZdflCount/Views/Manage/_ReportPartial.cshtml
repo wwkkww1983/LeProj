@@ -1,0 +1,62 @@
+﻿@model IEnumerable<ZdflCount.Models.MachineReport>
+
+
+<table>
+    <thead>
+        <th>
+            @Html.DisplayNameFor(model => model.MachineNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MachineName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateCreate)
+        </th>
+        <th>@Html.DisplayNameFor(model => model.RoomNumber)</th>
+       <th>@Html.DisplayNameFor(model => model.RoomName)</th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateGetInfo)
+        </th>
+        <th>操作</th>
+    </thead>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MachineNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MachineName)
+        </td>
+        <td>
+            @Html.DisplayEnumDescription("Models.enumDeviceWarnningStatus",(int)item.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateCreate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RoomNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RoomName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateGetInfo)
+        </td>
+        
+        @if (item.Status == ZdflCount.Models.enumDeviceWarnningStatus.Unhandler)
+        {
+            <td style="background-color:red">
+                @Html.ActionLink("知道了", "ReportGetInfo", new { id=item.ID })
+            </td>
+        }
+        else{
+            <td></td>
+        }
+    </tr>
+}
+
+</table>

@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "设备启停记录";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    开始日期：<input type="date" id="startDate"  />
+    结束日期：<input type="date" id="endDate"/>
+
+    <button class="date-btn-query"> 查询</button>
+</div>
+
+<div id="startEnd-content-detail">
+    @Html.Partial("_StartEndPartial")
+</div>
+
+<script>
+    setInterval(function () {
+        $.ajax({
+            url: 'MachineStartEndContent', //异步请求Action
+            success: function (result) {
+                $("#startEnd-content-detail").html(result);
+            }
+            });
+    }
+            , 30000); //每30秒刷新一次
+</script>
+
+<script src="/Scripts/jquery-1.7.1.js"></script>
+<script src="/Scripts/dateReload.js"></script>

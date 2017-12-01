@@ -6,27 +6,34 @@
 
 <h2>@ViewBag.Title</h2>
 
-<div class="left-outof-table">        
-    当前订单编号：@ViewData["OrderNumber"]
+<div>
+    
+    @Html.DropDownList("machine", (List<SelectListItem>)ViewData["machines"], new  {@class = "like-textare" })    
+    @Html.TextBox("order","", new {placeholder="请输入订单号" }) 
+    @Html.Action("RoomsDownList")
+    <br />
+    开始日期：<input type="date" id="startDate"  />
+    结束日期：<input type="date" id="endDate"/>
+    <button class="date-btn-query"> 查询</button>
 </div>
 
-    <div class="right-outof-table">
-        @Html.ActionLink("创建施工单", "Create",new {id=ViewData["OrderId"]})
-    </div>
 <table>
     <thead>
         <th>
             @Html.DisplayNameFor(model => model.Number)
         </th>
         <th class="th-datetime">
-            @Html.DisplayNameFor(model => model.DateLastUpdate)
+            @Html.DisplayNameFor(model => model.DateCreate)
         </th>
         <th>@Html.DisplayNameFor(model => model.MachineName)</th>
         <th>
             @Html.DisplayNameFor(model => model.Status)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LastUpdatePersonName)
+            @Html.DisplayNameFor(model => model.ProductCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductUnit)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.ProductCount)
@@ -43,7 +50,7 @@
             @Html.DisplayFor(modelItem => item.Number)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DateLastUpdate)
+            @Html.DisplayFor(modelItem => item.DateCreate)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.MachineName)
@@ -52,7 +59,10 @@
             @Html.DisplayEnumDescription("Models.enumStatus",(int)item.Status)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.LastUpdatePersonName)
+            @Html.DisplayFor(modelItem => item.ProductCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductUnit)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ProductCount)
@@ -71,6 +81,35 @@
 
 </table>
 
-<div class="left-outof-table">
-    @Html.ActionLink("返回订单列表", "Index", "Order" )
-</div>
+<script src="/Scripts/jquery-1.7.1.js"></script>
+<script>
+$(".date-btn-query").click(function () {
+    var machine = document.getElementById("machine").value;
+    var startDate = document.getElementById("startDate").value;
+    var endDate = document.getElementById("endDate").value;
+    var order = document.getElementById("order").value;
+    var room = document.getElementById("room").value;
+
+    var urlPath = location.href;
+    urlPath = urlPath.substr(0, urlPath.indexOf("?"));
+    var urlPara = new Array();
+    if (order != "")
+        urlPara.push( "order=" + order);
+    if (room != "")
+        urlPara.push( "room=" + room);
+    if (machine != "")
+        urlPara.push( "machine=" + machine);
+    if (startDate != "")
+        urlPara.push( "startDate=" + startDate);
+    if (endDate != "")
+        urlPara.push("endDate=" + endDate);
+    if (urlPara.length > 0) {
+        urlPath += "?" + urlPara[0];
+    }
+    for(var i=1;i<urlPara.length;i++)
+    {
+        urlPath += "&" + urlPara[i];
+    }
+    window.open(urlPath ,"_self");
+});
+</script>

@@ -1,14 +1,26 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Collections.Generic;
+using ServiceStack.Redis;
 
 namespace ZdflCount.App_Start
 {
     public class Constants
     {
+        public const string MACHINE_MATERIAL_STRUCTURE = "物料：{0}（{1}）； 详细信息：{2}";
+        private static string strRedisPort = System.Configuration.ConfigurationManager.AppSettings["InnerRedisServerPort"];
         private static Dictionary<enumErrorCode, string> errorKeyValue = new Dictionary<enumErrorCode, string>();
+
+        public static RedisClient RedisClient
+        {
+            get
+            {
+                return new RedisClient("127.0.0.1", int.Parse(strRedisPort));
+            }
+        }
         static Constants()
         {
+
             errorKeyValue.Add(enumErrorCode.NONE, string.Empty);
             errorKeyValue.Add(enumErrorCode.HandlerSuccess, "操作成功");
             errorKeyValue.Add(enumErrorCode.FileOnlyExcel, "仅允许提交Excel文件");
@@ -63,6 +75,24 @@ namespace ZdflCount.App_Start
         /// </summary>
         UP_PRODUCT_SEND = 201,
         UP_PRODUCT_RESP = 202,
+
+        /// <summary>
+        /// 设备报修
+        /// </summary>
+        UP_DEVICE_REPORT_SEND = 211,
+        UP_DEVICE_REPORT_RESP = 212,
+
+        /// <summary>
+        /// 设备叫料
+        /// </summary>
+        UP_DEVICE_CALL_MATERIAL_SEND = 221,
+        UP_DEVICE_CALL_MATERIAL_RESP = 222,
+
+        /// <summary>
+        /// 设备叫料
+        /// </summary>
+        UP_DEVICE_STARTEND_SEND = 231,
+        UP_DEVICE_STARTEND_RESP = 232,
 
         /// <summary>
         /// 设备信息设置
@@ -183,7 +213,9 @@ namespace ZdflCount.App_Start
         /// 生产信息退出登录员工不同
         /// </summary>
         [Description("生产设备退出和登录员工不同")]
-        ProductOutInDiff
+        ProductOutInDiff,
+        [Description("生产设备退出没有对应的登录信息")]
+        ProductOutWithoutIn
     }
 
     /// <summary>
@@ -223,7 +255,13 @@ namespace ZdflCount.App_Start
 
         生产统计数据查看,
         
-        系统管理员
+        系统管理员,
+
+        报料管理员,
+
+        报修管理员,
+
+        启停管理员
     }
 
     /// <summary>
@@ -231,8 +269,13 @@ namespace ZdflCount.App_Start
     /// </summary>
     public enum enumProductType
     {
+        /// <summary>
+        /// 员工在设备端登录（开始记录状态）
+        /// </summary>
         LoginIn = 0x00,
-
+        /// <summary>
+        /// 退出（统计信息）
+        /// </summary>
         LoginOut
     }
 }

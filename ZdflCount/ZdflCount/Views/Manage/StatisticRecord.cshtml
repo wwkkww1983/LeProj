@@ -1,0 +1,47 @@
+﻿@model IEnumerable<ZdflCount.Models.StatisticInfo>
+
+@{
+    ViewBag.Title = "统计基础数据";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    开始日期：<input type="date" id="startDate"  />
+    结束日期：<input type="date" id="endDate"/>
+
+    <button class="date-btn-query"> 查询</button>
+</div>
+<table id="tableOrder"  border="1"  width="100%" > 
+    <thead>   
+        <th>@Html.DisplayNameFor(model => model.StaffName)</th>
+        <th>@Html.DisplayNameFor(model => model.StaffNumber)</th>
+        <th>@Html.DisplayNameFor(model => model.MachineNumber)</th>  
+        <th>@Html.DisplayNameFor(model => model.RoomName)</th>
+        <th>@Html.DisplayNameFor(model => model.ScheduleNumber)</th>
+        <th>@Html.DisplayNameFor(model => model.OrderNumber)</th>  
+        <th>@Html.DisplayNameFor(model => model.FinishCount)</th>  
+        <th>@Html.DisplayNameFor(model => model.ExceptionCount)</th>  
+        <th>@Html.DisplayNameFor(model => model.DateStart)</th>  
+        <th>@Html.DisplayNameFor(model => model.DateOut)</th>  
+
+    </thead>   
+    @foreach (var item in Model) 
+    {
+         <tr> 
+             <td>@item.StaffName</td> 
+              <td>@item.StaffNumber</td> 
+              <td>@item.MachineNumber</td> 
+              <td>@item.RoomName</td> 
+              <td>@item.ScheduleNumber</td> 
+              <td>@item.OrderNumber</td> 
+              <td>@item.FinishCount</td> 
+              <td>@item.ExceptionCount</td> 
+              <td>@item.DateStart</td> 
+              <td>@item.DateOut</td> 
+         </tr>   
+    }                     
+</table>
+
+<script src="/Scripts/jquery-1.7.1.js"></script>
+<script src="/Scripts/dateReload.js"></script>

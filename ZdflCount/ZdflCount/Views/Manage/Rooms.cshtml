@@ -8,22 +8,27 @@
 <table id="tableOrder"  border="1"  width="100%" > 
     <thead>   
         <th>@Html.DisplayNameFor(model => model.RoomName)</th>
+        <th>@Html.DisplayNameFor(model => model.RoomNumber)</th>
+        <th>@Html.DisplayNameFor(model => model.RepairNumber)</th> 
         <th>@Html.DisplayNameFor(model => model.Phone)</th>  
         <th>@Html.DisplayNameFor(model => model.ManagerName)</th> 
         <th>@Html.DisplayNameFor(model => model.ManagerPhone)</th> 
         <th>@Html.DisplayNameFor(model => model.Address)</th>  
         <th>@Html.DisplayNameFor(model => model.Remarks)</th>
-
+        <th>操作</th>
     </thead>   
     @foreach (var item in Model) 
     {
          <tr> 
              <td>@Html.DisplayFor(modelItem => item.RoomName)</td> 
+             <td>@Html.DisplayFor(modelItem => item.RoomNumber)</td> 
+             <td>@Html.DisplayFor(modelItem => item.RepairNumber)</td> 
              <td>@Html.DisplayFor(modelItem => item.Phone)</td> 
              <td>@Html.DisplayFor(modelItem => item.ManagerName)</td> 
              <td>@Html.DisplayFor(modelItem => item.ManagerPhone)</td> 
              <td>@Html.DisplayFor(modelItem => item.Address)</td> 
              <td>@Html.DisplayFor(modelItem => item.Remarks)</td>
+            <td>@Html.ActionLink("修改", "RoomEdit", new { id=item.RoomID }) </td>
          </tr>   
     }                     
 </table>
