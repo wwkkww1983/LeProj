@@ -124,7 +124,14 @@ namespace web2Excel
             foreach (KeyValuePair<string, string> buildingItem in buildingList)
             {
                 itemInfo.BlockNumber = buildingItem.Key;
-                this.ExplainThirdDetail(System.Web.HttpUtility.HtmlDecode(buildingItem.Value), itemInfo);
+                try
+                {
+                    this.ExplainThirdDetail(System.Web.HttpUtility.HtmlDecode(buildingItem.Value), itemInfo);
+                }
+                catch
+                {
+
+                }
                 ////每栋楼抓完后保存数据
                 //ExcelInfo.SaveInfo();
             }

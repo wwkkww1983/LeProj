@@ -27,13 +27,13 @@ namespace web2Excel
             app.Visible = false;
             workBook = app.Workbooks.Add(Nothing);
 
-            Excel.Worksheet worksheet = (Excel.Worksheet)workBook.Sheets[1];
-            worksheet.Name = "原始数据";
-            AddExcelHead(worksheet, false);
-
-            worksheet = (Excel.Worksheet)workBook.Sheets[2];
+            Excel.Worksheet worksheet = (Excel.Worksheet)workBook.Sheets.Add();
             worksheet.Name = "成交数据表";
             AddExcelHead(worksheet, true);
+
+            worksheet = (Excel.Worksheet)workBook.Sheets.Add();
+            worksheet.Name = "原始数据";
+            AddExcelHead(worksheet, false);
 
             worksheet.SaveAs(fileName, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Excel.XlSaveAsAccessMode.xlNoChange, Type.Missing, Type.Missing, Type.Missing);
         }
