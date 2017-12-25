@@ -52,6 +52,11 @@ namespace web2Excel
         public string FunctionName;
 
         /// <summary>
+        /// 房屋单价
+        /// </summary>
+        public string RoomPrice;
+
+        /// <summary>
         /// 建筑面积
         /// </summary>
         public string AreaBuilding;

@@ -20,8 +20,8 @@ namespace VisionManageServer
 
     public class TcpProtocolClient 
     {
-        private const int SERVER_PORT_NUMBER = 55555;
-        private const int BUFFER_SIZE = 1024, COMMUNICATION_TIME_OUT = 1000;
+        private const int SERVER_PORT_NUMBER = 55557;
+        private const int BUFFER_SIZE = 1024, COMMUNICATION_TIME_OUT = 5000;
         private const int PROTOCOL_HEAD_COUNT = 20;
         private static bool keepListening = false;
         private static Stopwatch sw = new Stopwatch();
@@ -47,11 +47,11 @@ namespace VisionManageServer
 
                 while (keepListening)
                 {
+                    Console.WriteLine("开始监听："+ DateTime.Now.ToString());
                     TcpClient serverReceive = serverListen.AcceptTcpClient();
-
                     string clientIP = serverReceive.Client.RemoteEndPoint.ToString();
                     clientIP = clientIP.Substring(0, clientIP.IndexOf(':'));
-
+                    Console.WriteLine("连接成功==：" + DateTime.Now.ToString());
                     NetworkStream ns = serverReceive.GetStream();
                     string strIP = ((IPEndPoint)serverReceive.Client.RemoteEndPoint).Address.ToString();
                     ReceiveByProtocol(ns, strIP);
@@ -131,10 +131,15 @@ namespace VisionManageServer
         {
             try
             {
-                System.IO.MemoryStream ms = new System.IO.MemoryStream (dataInfo.ImageContent);
+                System.IO.MemoryStream ms = new System.IO.MemoryStream(dataInfo.ImageContent);                
                 System.Drawing.Bitmap img = new System.Drawing.Bitmap(ms);
-                img.Save(string.Format("{0}/{1}", System.Environment.CurrentDirectory, dataInfo.TimeStamp),
-                    System.Drawing.Imaging.ImageFormat.Jpeg);
+
+                string filePath = string.Format("{0}/{1}", System.Environment.CurrentDirectory,dataInfo.PhoneNumber);
+                if (!System.IO.Directory.Exists(filePath))
+                {
+                    System.IO.Directory.CreateDirectory(filePath);
+                }
+                img.Save(string.Format("{0}/{1}.jpg", filePath, dataInfo.TimeStamp), System.Drawing.Imaging.ImageFormat.Jpeg);
                 ms.Close();
             }
             catch (Exception ex)
@@ -181,8 +186,11 @@ namespace VisionManageServer
                 ImageInfo dataInfo = new ImageInfo();
                 if(!ReceiveByProtocol(ns, dataInfo))
                     return;
-
+                Console.WriteLine("接受完成==：" + DateTime.Now.ToString());
                 HandlerByProtocol(dataInfo);
+                Console.WriteLine("处理OK：" + DateTime.Now.ToString());
+                ns.Close();
+                ns.Dispose();
             }
             catch (Exception ex)
             {                

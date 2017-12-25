@@ -223,14 +223,16 @@ namespace web2Excel
                 info.RoomNumber = itemDetail.Count > 2 ? itemDetail[2].Groups["detail"].Value : "";
                 info.RoomType = itemDetail.Count > 3 ? itemDetail[3].Groups["detail"].Value : "";
                 info.FunctionName = itemDetail.Count > 4 ? itemDetail[4].Groups["detail"].Value : "";
-                info.AreaBuilding = itemDetail.Count > 5 ? itemDetail[5].Groups["detail"].Value : "";
-                info.AreaRoom = itemDetail.Count > 6 ? itemDetail[6].Groups["detail"].Value : "";
-                info.AreaPublic = itemDetail.Count > 7 ? itemDetail[7].Groups["detail"].Value : "";
-                info.HouseStatus = itemDetail.Count > 8 ? itemDetail[8].Groups["detail"].Value : "";
-                if (itemDetail.Count <= 9) continue;
-                startIdx = itemDetail[9].Groups["detail"].Value.IndexOf("\">");
-                endIdx = itemDetail[9].Groups["detail"].Value.IndexOf("</");
-                info.IsPrepare = itemDetail[9].Groups["detail"].Value.Substring(startIdx + 2, endIdx - startIdx - 2);
+                //新增“房屋单价”，没有用到
+                info.RoomPrice = itemDetail.Count > 5 ? itemDetail[5].Groups["detail"].Value : "";
+                info.AreaBuilding = itemDetail.Count > 6 ? itemDetail[6].Groups["detail"].Value : "";
+                info.AreaRoom = itemDetail.Count > 7 ? itemDetail[7].Groups["detail"].Value : "";
+                info.AreaPublic = itemDetail.Count > 8 ? itemDetail[8].Groups["detail"].Value : "";
+                info.HouseStatus = itemDetail.Count > 9 ? itemDetail[9].Groups["detail"].Value : "";
+                if (itemDetail.Count <= 10) continue;
+                startIdx = itemDetail[10].Groups["detail"].Value.IndexOf("\">");
+                endIdx = itemDetail[10].Groups["detail"].Value.IndexOf("</");
+                info.IsPrepare = itemDetail[10].Groups["detail"].Value.Substring(startIdx + 2, endIdx - startIdx - 2);
 
                 infoList.Add(info);
             }
