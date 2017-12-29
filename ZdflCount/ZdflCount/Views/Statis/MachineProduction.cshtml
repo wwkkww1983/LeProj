@@ -1,0 +1,37 @@
+﻿@model IEnumerable<ZdflCount.Models.VS_MachineProduction>
+@{
+    ViewBag.Title = "设备产量统计表";
+}
+
+<h2>员工产量统计表</h2>
+
+
+<div>
+    开始日期：<input type="date" id="startDate"  />
+    结束日期：<input type="date" id="endDate"/>
+
+    <button class="date-btn-query"> 查询</button>
+</div>
+<table id="tableOrder"  border="1"  width="100%" > 
+    <thead>    
+        <th>@Html.DisplayNameFor(model => model.RoomName)</th>
+        <th>@Html.DisplayNameFor(model => model.MachineNumber)</th>
+        <th>@Html.DisplayNameFor(model => model.OrderNumber)</th>  
+        <th>@Html.DisplayNameFor(model => model.Finish)</th>  
+        <th>@Html.DisplayNameFor(model => model.Exception)</th>
+
+    </thead>   
+    @foreach (var item in Model) 
+    {
+         <tr> 
+              <td>@item.RoomName</td> 
+              <td>@item.MachineNumber</td>  
+              <td>@item.OrderNumber</td> 
+              <td>@item.Finish</td> 
+              <td>@item.Exception</td> 
+         </tr>   
+    }                     
+</table>
+
+<script src="/Scripts/jquery-1.7.1.js"></script>
+<script src="/Scripts/dateReload.js"></script>

@@ -40,11 +40,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
@@ -197,13 +198,30 @@
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ScheduleController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\StatisController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201711280625342_Initial.cs" />
-    <Compile Include="Migrations\201711280625342_Initial.Designer.cs">
-      <DependentUpon>201711280625342_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201712290756402_statisView.cs" />
+    <Compile Include="Migrations\201712290756402_statisView.Designer.cs">
+      <DependentUpon>201712290756402_statisView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712290759551_statisView1.cs" />
+    <Compile Include="Migrations\201712290759551_statisView1.Designer.cs">
+      <DependentUpon>201712290759551_statisView1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712290816421_statisView2.cs" />
+    <Compile Include="Migrations\201712290816421_statisView2.Designer.cs">
+      <DependentUpon>201712290816421_statisView2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712290825182_statisView3.cs" />
+    <Compile Include="Migrations\201712290825182_statisView3.Designer.cs">
+      <DependentUpon>201712290825182_statisView3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712290846170_statisView4.cs" />
+    <Compile Include="Migrations\201712290846170_statisView4.Designer.cs">
+      <DependentUpon>201712290846170_statisView4.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
@@ -369,6 +387,9 @@
     <Content Include="Views\Manage\_StartEndPartial.cshtml" />
     <Content Include="Views\Schedule\Index.cshtml" />
     <Content Include="Views\Manage\RoomEdit.cshtml" />
+    <Content Include="Views\Statis\StaffProduction.cshtml" />
+    <Content Include="Views\Statis\MachineProduction.cshtml" />
+    <Content Include="Views\Statis\MachineWorking.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -379,8 +400,20 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201711280625342_Initial.resx">
-      <DependentUpon>201711280625342_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201712290756402_statisView.resx">
+      <DependentUpon>201712290756402_statisView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712290759551_statisView1.resx">
+      <DependentUpon>201712290759551_statisView1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712290816421_statisView2.resx">
+      <DependentUpon>201712290816421_statisView2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712290825182_statisView3.resx">
+      <DependentUpon>201712290825182_statisView3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712290846170_statisView4.resx">
+      <DependentUpon>201712290846170_statisView4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

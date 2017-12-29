@@ -102,7 +102,7 @@ namespace ZdflCount.Models
         /// 离职
         /// </summary>
         [Description("离职")]
-        Dimission, 
+        Dimission,
 
         /// <summary>
         /// 退休
@@ -211,31 +211,31 @@ namespace ZdflCount.Models
         /// 加载日期（订单加载到当前系统的时间）
         /// </summary>
         [DisplayName("订单加载时间")]
-        public DateTime DateAssign{get;set;}
+        public DateTime DateAssign { get; set; }
 
         /// <summary>
         /// 已经分配的施工单数
         /// </summary>
         [DisplayName("施工单数")]
-        public int AssignedCount{get;set;}
+        public int AssignedCount { get; set; }
 
         /// <summary>
         /// 订单的商品总数量
         /// </summary>
         [DisplayName("订单总商品数")]
-        public int ProductCount{get;set;}
+        public int ProductCount { get; set; }
 
         /// <summary>
         /// 已分派商品数
         /// </summary>
         [DisplayName("已分派商品数")]
-        public int ProductAssignedCount{get;set;}
+        public int ProductAssignedCount { get; set; }
 
         /// <summary>
         /// 已生产商品数量
         /// </summary>
         [DisplayName("已生产商品数")]
-        public int ProductFinishedCount{get;set;}
+        public int ProductFinishedCount { get; set; }
 
         /// <summary>
         /// 待分派商品数
@@ -249,7 +249,7 @@ namespace ZdflCount.Models
         [DisplayName("注意事项")]
         public string NoticeInfo { get; set; }
     }
-    #endregion 
+    #endregion
 
     #region 员工信息
     public class StaffInfo
@@ -519,7 +519,7 @@ namespace ZdflCount.Models
 
         [DisplayName("备注信息")]
         public string RemarkInfo { get; set; }
-        
+
         [DisplayName("设备状态")]
         public enumMachineStatus Status { get; set; }
     }
@@ -555,12 +555,12 @@ namespace ZdflCount.Models
 
         [DisplayName("机台")]
         public string MachineName { get; set; }
-        
+
         [DisplayName("通道数")]
         public int ChannelCount { get; set; }
 
         [DisplayName("信息类型")]
-        public byte MsgType  { get; set; }
+        public byte MsgType { get; set; }
 
         [DisplayName("通道1已完成")]
         public int ChannelFinish1 { get; set; }
@@ -674,7 +674,7 @@ namespace ZdflCount.Models
 
         [DisplayName("机台")]
         [StringLength(50)]
-        public string MachineName{ get; set; }
+        public string MachineName { get; set; }
 
         public int RoomId { get; set; }
 
@@ -906,15 +906,15 @@ namespace ZdflCount.Models
 
         //[Key]
         public int MachineId { get; set; }
-        
+
         [StringLength(50)]
         public string MachineName { get; set; }
 
-        public int RoomID {get;set;}
-                
+        public int RoomID { get; set; }
+
         [StringLength(50)]
         public string RoomName { get; set; }
-        
+
         [StringLength(50)]
         public string FactoryName { get; set; }
     }
@@ -950,6 +950,91 @@ namespace ZdflCount.Models
         public string ErrorStack { get; set; }
     }
     #endregion
+
+    #region 统计视图
+    #region 员工产量表
+
+    public class VS_StaffProduction
+    {
+        [Key]
+        public Guid ID { get; set; }
+
+        [DisplayName("车间")]
+        [StringLength(50)]
+        public string RoomName { get; set; }
+
+        [DisplayName("员工姓名")]
+        [StringLength(50)]
+        public string StaffName { get; set; }
+
+        [DisplayName("订单编号")]
+        [Required]
+        [StringLength(50)]
+        public string OrderNumber { get; set; }
+
+        [DisplayName("完成总数")]
+        [Required]
+        public int Finish { get; set; }
+
+        [DisplayName("异常总数")]
+        [Required]
+        public int Exception { get; set; }
+    }
+    #endregion
+
+    #region 机台产量表
+
+    public class VS_MachineProduction
+    {
+        [Key]
+        public Guid ID { get; set; }
+
+        [DisplayName("车间")]
+        [StringLength(50)]
+        public string RoomName { get; set; }
+
+        [DisplayName("设备编码")]
+        [Required]
+        [StringLength(50)]
+        public string MachineNumber { get; set; }
+
+        [DisplayName("订单编号")]
+        [Required]
+        [StringLength(50)]
+        public string OrderNumber { get; set; }
+
+        [DisplayName("完成总数")]
+        [Required]
+        public int Finish { get; set; }
+
+        [DisplayName("异常总数")]
+        [Required]
+        public int Exception { get; set; }
+    }
+    #endregion
+
+    #region 开机时间表
+
+    public class VS_MachineWorking
+    {
+        [Key]
+        public Guid ID { get; set; }
+
+        [DisplayName("车间")]
+        [StringLength(50)]
+        public string RoomName { get; set; }
+
+        [DisplayName("设备编码")]
+        [Required]
+        [StringLength(50)]
+        public string MachineNumber { get; set; }
+
+        [DisplayName("工作总时间")]
+        [Required]
+        public int WorkingMinute { get; set; }
+    }
+    #endregion
+    #endregion
     #endregion
 
     #region 前台页面显示模型
@@ -960,7 +1045,7 @@ namespace ZdflCount.Models
     {
         public Schedules Schedules { get; set; }
         public Orders Orders { get; set; }
-        public Dictionary<int,string> MaterialList { get; private set; }
+        public Dictionary<int, string> MaterialList { get; private set; }
         public List<SelectListItem> MachineList { get; private set; }
 
         private DbTableDbContext db = new DbTableDbContext();
@@ -985,14 +1070,14 @@ namespace ZdflCount.Models
 
         public void GetMachineByUser(int userId)
         {
-            int []rooms = this.GetRoomsForUser(userId);
+            int[] rooms = this.GetRoomsForUser(userId);
             IEnumerable<Machines> allMachines = from item in db.Machines
                                                 where item.Status == enumMachineStatus.Normal && rooms.Contains(item.RoomID)
                                                 select item;
             this.MachineList = new List<SelectListItem>(allMachines.Count<Machines>());
             foreach (Machines item in allMachines)
             {
-                this.MachineList.Add(new SelectListItem { Text =item.RoomName +" - "+ item.Number, Value = item.ID.ToString() });
+                this.MachineList.Add(new SelectListItem { Text = item.RoomName + " - " + item.Number, Value = item.ID.ToString() });
             }
         }
 
@@ -1016,17 +1101,17 @@ namespace ZdflCount.Models
         {
             string[] strMatArray = strMaterials.Split(';');
             int[] intMatArray = new int[strMatArray.Length];
-            for(int i=0;i< strMatArray.Length;i++)
+            for (int i = 0; i < strMatArray.Length; i++)
             {
                 intMatArray[i] = int.Parse(strMatArray[i]);
             }
             IEnumerable<Materials> tempMaterialList = from item in this.db.Materials
-                                                  where intMatArray.Contains(item.ID)
-                                                  select item;
+                                                      where intMatArray.Contains(item.ID)
+                                                      select item;
             this.MaterialList = new Dictionary<int, string>();
             foreach (Materials item in tempMaterialList)
             {
-                this.MaterialList.Add(item.ID,string.Format(App_Start.Constants.MACHINE_MATERIAL_STRUCTURE , item.Code,item.Unit, item.DetailInfo));
+                this.MaterialList.Add(item.ID, string.Format(App_Start.Constants.MACHINE_MATERIAL_STRUCTURE, item.Code, item.Unit, item.DetailInfo));
             }
         }
     }
@@ -1146,7 +1231,7 @@ namespace ZdflCount.Models
         /// <param name="remark">备注信息（参数值）</param>
         /// <param name="remarkBinary">备注信息（二进制形式）</param>
         /// <param name="userId"></param>
-        public void RecordErrorInfo(App_Start.enumSystemErrorCode type, Exception ex, string remark, byte[] remarkBinary,int userId=0)
+        public void RecordErrorInfo(App_Start.enumSystemErrorCode type, Exception ex, string remark, byte[] remarkBinary, int userId = 0)
         {
             ErrorInfo info = new ErrorInfo()
             {
@@ -1196,6 +1281,29 @@ namespace ZdflCount.Models
             }
         }
 
+    }
+
+    public class DbViewDbContext : DbContext
+    {
+        public DbViewDbContext()
+            : base("DefaultConnection")
+        {
+        }
+
+        /// <summary>
+        /// 员工产量表
+        /// </summary>
+        public DbSet<VS_StaffProduction> StaffProduction { get; set; }
+
+        /// <summary>
+        /// 设备产量表
+        /// </summary>
+        public DbSet<VS_MachineProduction> MachineProduction { get; set; }
+
+        /// <summary>
+        /// 设备开机时间
+        /// </summary>
+        public DbSet<VS_MachineWorking> MachineWorking { get; set; }        
     }
     #endregion
 }

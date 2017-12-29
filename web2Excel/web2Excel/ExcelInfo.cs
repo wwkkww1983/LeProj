@@ -45,7 +45,7 @@ namespace web2Excel
         /// <param name="hasDeal">是否显示成交日期</param>
         private static void AddExcelHead(Excel.Worksheet worksheet, bool hasDeal)
         {
-            string[] headItems = { "项目名称", "地址", "幢号（楼号）", "层高", "所在层", "房间号", "户型", "用途", "建筑面积", "套内面积", "分摊面积", "房屋状态", "预售/现售", "成交日期","房屋单价" };
+            string[] headItems = { "项目名称", "地址", "幢号（楼号）", "层高", "所在层", "房间号", "户型", "用途", "建筑面积", "套内面积", "分摊面积", "房屋状态", "预售/现售", "房屋单价", "成交日期" };
             int idx = 1;
             foreach (string strItem in headItems)
             {
@@ -53,7 +53,6 @@ namespace web2Excel
             }
             if (!hasDeal)
             {
-
                 worksheet.Cells[1, idx - 1] = string.Empty;
             }
         }
@@ -83,8 +82,8 @@ namespace web2Excel
             worksheet.Cells[itemIdx, idx++] = itemInfo.AreaPublic;
             worksheet.Cells[itemIdx, idx++] = itemInfo.HouseStatus;
             worksheet.Cells[itemIdx, idx++] = itemInfo.IsPrepare;
-            worksheet.Cells[itemIdx, idx++] = itemInfo.DealDate;
             worksheet.Cells[itemIdx, idx++] = itemInfo.RoomPrice;
+            worksheet.Cells[itemIdx, idx++] = itemInfo.DealDate;
         }
 
         /// <summary>
