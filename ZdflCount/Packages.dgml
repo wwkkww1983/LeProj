@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DirectedGraph GraphDirection="LeftToRight" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="DotNetOpenAuth.AspNet 4.0.3.12153" Category="包" Bounds="1038.47959960938,344.103392586263,235.72,25.8366666666666" Label="DotNetOpenAuth.AspNet 4.0.3.12153" UseManualLocation="True" />
+    <Node Id="DotNetOpenAuth.Core 4.0.3.12153" Category="包" Bounds="748.786725475721,536.778121350221,220.073333333333,25.8366666666667" Label="DotNetOpenAuth.Core 4.0.3.12153" UseManualLocation="True" />
+    <Node Id="DotNetOpenAuth.OAuth.Consumer 4.0.3.12153" Category="包" Bounds="752.955533955892,399.940156656901,292.023333333333,25.8366666666666" Label="DotNetOpenAuth.OAuth.Consumer 4.0.3.12153" UseManualLocation="True" />
+    <Node Id="DotNetOpenAuth.OAuth.Core 4.0.3.12153" Category="包" Bounds="752.062587076823,469.583741861979,260.44,25.8366666666666" Label="DotNetOpenAuth.OAuth.Core 4.0.3.12153" UseManualLocation="True" />
+    <Node Id="DotNetOpenAuth.OpenId.Core 4.0.3.12153" Category="包" Bounds="1096.46946509565,532.629582011223,265.813333333333,25.8366666666667" Label="DotNetOpenAuth.OpenId.Core 4.0.3.12153" UseManualLocation="True" />
+    <Node Id="DotNetOpenAuth.OpenId.RelyingParty 4.0.3.12153" Category="包" Bounds="1096.79993439144,468.066597534601,310.593333333333,25.8366666666666" Label="DotNetOpenAuth.OpenId.RelyingParty 4.0.3.12153" UseManualLocation="True" />
+    <Node Id="EntityFramework 6.2.0" Category="包" Bounds="1206.47691830089,-303.492996944926,146.776666666667,25.8366666666666" Label="EntityFramework 6.2.0" UseManualLocation="True" />
+    <Node Id="Microsoft.AspNet.Mvc 4.0.20710.0" Category="包" Bounds="1621.60246453207,308.209806899305,215.99,25.8366666666666" Label="Microsoft.AspNet.Mvc 4.0.20710.0" UseManualLocation="True" />
+    <Node Id="Microsoft.AspNet.Mvc.zh-Hans 4.0.20710.0" Category="包" Bounds="1541.20237792969,169.573836311849,266.22,25.8366666666667" Label="Microsoft.AspNet.Mvc.zh-Hans 4.0.20710.0" UseManualLocation="True" />
+    <Node Id="Microsoft.AspNet.Razor 2.0.20710.0" Category="包" Bounds="1388.01186587938,407.324379055358,224.53,25.8366666666666" Label="Microsoft.AspNet.Razor 2.0.20710.0" UseManualLocation="True" />
+    <Node Id="Microsoft.AspNet.Razor.zh-Hans 2.0.20710.0" Category="包" Bounds="1299.50773760424,282.21377726237,274.76,25.8366666666666" Label="Microsoft.AspNet.Razor.zh-Hans 2.0.20710.0" UseManualLocation="True" />
+    <Node Id="Microsoft.AspNet.Web.Optimization 1.0.0" Category="包" Bounds="1974.09687363078,181.384827428747,258.213333333334,25.8366666666667" Label="Microsoft.AspNet.Web.Optimization 1.0.0" UseManualLocation="True" />
+    <Node Id="Microsoft.AspNet.Web.Optimization.zh-Hans 1.0.0" Category="包" Bounds="1849.25291857206,68.6429404855161,308.443333333333,25.8366666666667" Label="Microsoft.AspNet.Web.Optimization.zh-Hans 1.0.0" UseManualLocation="True" />
+    <Node Id="Microsoft.AspNet.WebApi 4.0.20710.0" Category="包" Bounds="1986.96323681376,-14.6109050427575,237.933333333333,25.8366666666667" Label="Microsoft.AspNet.WebApi 4.0.20710.0" UseManualLocation="True" />
+    <Node Id="Microsoft.AspNet.WebApi.Client 4.0.20710.0" Category="包" Bounds="1532.39821044922,-311.350782779948,273.91,25.8366666666666" Label="Microsoft.AspNet.WebApi.Client 4.0.20710.0" UseManualLocation="True" />
+    <Node Id="Microsoft.AspNet.WebApi.Client.zh-Hans 4.0.20710.0" Category="包" Bounds="1209.56423459489,-373.213620183452,324.14,25.8366666666666" Label="Microsoft.AspNet.WebApi.Client.zh-Hans 4.0.20710.0" UseManualLocation="True" />
+    <Node Id="Microsoft.AspNet.WebApi.Core 4.0.20710.0" Category="包" Bounds="1813.88032900484,-369.793124418319,267.873333333335,25.8366666666666" Label="Microsoft.AspNet.WebApi.Core 4.0.20710.0" UseManualLocation="True" />
+    <Node Id="Microsoft.AspNet.WebApi.Core.zh-Hans 4.0.20710.0" Category="包" Bounds="1771.8200374349,-255.514016113281,318.103333333333,25.8366666666667" Label="Microsoft.AspNet.WebApi.Core.zh-Hans 4.0.20710.0" UseManualLocation="True" />
+    <Node Id="Microsoft.AspNet.WebApi.WebHost 4.0.20710.0" Category="包" Bounds="2095.53341796875,-199.677249446615,294.44,25.8366666666667" Label="Microsoft.AspNet.WebApi.WebHost 4.0.20710.0" UseManualLocation="True" />
+    <Node Id="Microsoft.AspNet.WebApi.WebHost.zh-Hans 4.0.20710.0" Category="包" Bounds="1814.16773908767,-117.900317736816,344.67,25.8366666666667" Label="Microsoft.AspNet.WebApi.WebHost.zh-Hans 4.0.20710.0" UseManualLocation="True" />
+    <Node Id="Microsoft.AspNet.WebPages 2.0.20710.0" Category="包" Bounds="1628.95464854553,516.221642531528,252.65,25.8366666666666" Label="Microsoft.AspNet.WebPages 2.0.20710.0" UseManualLocation="True" />
+    <Node Id="Microsoft.AspNet.WebPages.Data 2.0.20710.0" Category="包" Bounds="439.645920410156,416.489961344401,282.416666666667,25.8366666666666" Label="Microsoft.AspNet.WebPages.Data 2.0.20710.0" UseManualLocation="True" />
+    <Node Id="Microsoft.AspNet.WebPages.Data.zh-Hans 2.0.20710.0" Category="包" Bounds="454.328382310749,63.1112061191224,332.646666666667,25.8366666666667" Label="Microsoft.AspNet.WebPages.Data.zh-Hans 2.0.20710.0" UseManualLocation="True" />
+    <Node Id="Microsoft.AspNet.WebPages.OAuth 2.0.20710.0" Category="包" Bounds="936.877039381399,238.555227928311,293.016666666667,25.8366666666667" Label="Microsoft.AspNet.WebPages.OAuth 2.0.20710.0" UseManualLocation="True" />
+    <Node Id="Microsoft.AspNet.WebPages.OAuth.zh-Hans 2.0.20710.0" Category="包" Bounds="1101.03758546773,165.357720759446,343.246666666667,25.8366666666667" Label="Microsoft.AspNet.WebPages.OAuth.zh-Hans 2.0.20710.0" UseManualLocation="True" />
+    <Node Id="Microsoft.AspNet.WebPages.WebData 2.0.20710.0" Category="包" Bounds="647.763385009766,310.007130078125,309.1,25.8366666666666" Label="Microsoft.AspNet.WebPages.WebData 2.0.20710.0" UseManualLocation="True" />
+    <Node Id="Microsoft.AspNet.WebPages.WebData.zh-Hans 2.0.20710.0" Category="包" Bounds="643.767020253778,164.884799741301,359.33,25.8366666666667" Label="Microsoft.AspNet.WebPages.WebData.zh-Hans 2.0.20710.0" UseManualLocation="True" />
+    <Node Id="Microsoft.AspNet.WebPages.zh-Hans 2.0.20710.0" Category="包" Bounds="1760.05957361243,247.354523815222,302.88,25.8366666666667" Label="Microsoft.AspNet.WebPages.zh-Hans 2.0.20710.0" UseManualLocation="True" />
+    <Node Id="Microsoft.Net.Http 2.0.20710.0" Category="包" Bounds="1539.3820770056,-249.522299863063,196.173333333333,25.8366666666667" Label="Microsoft.Net.Http 2.0.20710.0" UseManualLocation="True" />
+    <Node Id="Microsoft.Net.Http.zh-Hans 2.0.20710.0" Category="包" Bounds="1539.51443768309,-176.480074508071,246.403333333333,25.8366666666667" Label="Microsoft.Net.Http.zh-Hans 2.0.20710.0" UseManualLocation="True" />
+    <Node Id="Microsoft.Web.Infrastructure 1.0.0.0" Category="包" Bounds="2142.17872714293,508.893078605908,225.36,25.8366666666667" Label="Microsoft.Web.Infrastructure 1.0.0.0" UseManualLocation="True" />
+    <Node Id="Microsoft.jQuery.Unobtrusive.Ajax 2.0.20710.0" Category="包" Bounds="909.988044585464,-93.5995889778197,284.583333333333,25.8366666666667" Label="Microsoft.jQuery.Unobtrusive.Ajax 2.0.20710.0" UseManualLocation="True" />
+    <Node Id="Microsoft.jQuery.Unobtrusive.Validation 2.0.20710.0" Category="包" Bounds="769.66945123315,-212.976363582985,318.35,25.8366666666667" Label="Microsoft.jQuery.Unobtrusive.Validation 2.0.20710.0" UseManualLocation="True" />
+    <Node Id="Modernizr 2.5.3" Category="包" Bounds="1204.41958690247,-233.898779322072,109.933333333333,25.8366666666667" Label="Modernizr 2.5.3" UseManualLocation="True" />
+    <Node Id="Newtonsoft.Json 4.5.6" Category="包" Bounds="1626.04359277807,-371.418718047104,146.006666666667,25.8366666666666" Label="Newtonsoft.Json 4.5.6" UseManualLocation="True" />
+    <Node Id="WebGrease 1.1.0" Category="包" Bounds="1987.79243868539,351.320481517091,116.436666666666,25.8366666666666" Label="WebGrease 1.1.0" UseManualLocation="True" />
+    <Node Id="ZdflCount" Category="项目" Bounds="1592.63166666667,0,77.3833333333332,25.8366666666667" Label="ZdflCount" />
+    <Node Id="jQuery 1.7.1.1" Category="包" Bounds="763.867460524127,-95.3482788340265,98.49,25.8366666666667" Label="jQuery 1.7.1.1" UseManualLocation="True" />
+    <Node Id="jQuery.UI.Combined 1.8.20.1" Category="包" Bounds="457.733526269163,-14.5043114736131,183.43,25.8366666666667" Label="jQuery.UI.Combined 1.8.20.1" UseManualLocation="True" />
+    <Node Id="jQuery.Validation 1.9.0.1" Category="包" Bounds="469.830061678442,-157.139748568762,159.513333333333,25.8366666666667" Label="jQuery.Validation 1.9.0.1" UseManualLocation="True" />
+    <Node Id="knockoutjs 2.1.0" Category="包" Bounds="1205.15204784524,-170.209180516063,112.8,25.8366666666667" Label="knockoutjs 2.1.0" UseManualLocation="True" />
+  </Nodes>
+  <Links>
+    <Link Source="DotNetOpenAuth.AspNet 4.0.3.12153" Target="DotNetOpenAuth.OAuth.Consumer 4.0.3.12153" Category="程序包依赖项" Bounds="967.307993905657,369.94005925293,129.486205889625,28.0919428700333" />
+    <Link Source="DotNetOpenAuth.AspNet 4.0.3.12153" Target="DotNetOpenAuth.OpenId.RelyingParty 4.0.3.12153" Category="程序包依赖项" Bounds="1166.31853561814,369.940061848958,70.2972800365624,91.0040604671061" />
+    <Link Source="DotNetOpenAuth.OAuth.Consumer 4.0.3.12153" Target="DotNetOpenAuth.OAuth.Core 4.0.3.12153" Category="程序包依赖项" Bounds="887.47425830685,425.776823323568,8.39807296278946,35.0545821387393" />
+    <Link Source="DotNetOpenAuth.OAuth.Core 4.0.3.12153" Target="DotNetOpenAuth.Core 4.0.3.12153" Category="程序包依赖项" Bounds="866.300014033993,495.420408528646,11.472448098057,32.8606693003736" />
+    <Link Source="DotNetOpenAuth.OpenId.Core 4.0.3.12153" Target="DotNetOpenAuth.Core 4.0.3.12153" Category="程序包依赖项" Bounds="977.859527976255,547.035882251661,118.609965025047,1.32790952512892" />
+    <Link Source="DotNetOpenAuth.OpenId.RelyingParty 4.0.3.12153" Target="DotNetOpenAuth.OpenId.Core 4.0.3.12153" Category="程序包依赖项" Bounds="1236.90985716858,493.90325764974,10.6406458458866,30.2366725504962" />
+    <Link Source="Microsoft.AspNet.Mvc 4.0.20710.0" Target="Microsoft.AspNet.Razor 2.0.20710.0" Category="程序包依赖项" Bounds="1538.42728163417,334.04647664388,161.281087921291,69.7072464054952" />
+    <Link Source="Microsoft.AspNet.Mvc 4.0.20710.0" Target="Microsoft.AspNet.WebPages 2.0.20710.0" Category="程序包依赖项" Bounds="1731.19237486611,334.04647664388,21.3894525504461,173.242965516323" />
+    <Link Source="Microsoft.AspNet.Mvc.zh-Hans 4.0.20710.0" Target="Microsoft.AspNet.Mvc 4.0.20710.0" Category="程序包依赖项" Bounds="1679.4639355481,195.410505574544,41.6482579041076,104.439495432462" />
+    <Link Source="Microsoft.AspNet.Razor.zh-Hans 2.0.20710.0" Target="Microsoft.AspNet.Razor 2.0.20710.0" Category="程序包依赖项" Bounds="1443.43296344622,308.050443929036,46.2309614245669,91.2456079417166" />
+    <Link Source="Microsoft.AspNet.Web.Optimization 1.0.0" Target="Microsoft.Web.Infrastructure 1.0.0.0" Category="程序包依赖项" Bounds="2109.18554292933,207.221494954427,135.909507438286,293.50467550545" />
+    <Link Source="Microsoft.AspNet.Web.Optimization 1.0.0" Target="WebGrease 1.1.0" Category="程序包依赖项" Bounds="2053.22937029461,207.221494954427,45.6265095136155,135.569133294477" />
+    <Link Source="Microsoft.AspNet.Web.Optimization.zh-Hans 1.0.0" Target="Microsoft.AspNet.Web.Optimization 1.0.0" Category="程序包依赖项" Bounds="2014.90187513565,94.4796011861165,70.9113780959735,80.1641301215202" />
+    <Link Source="Microsoft.AspNet.WebApi 4.0.20710.0" Target="Microsoft.AspNet.WebApi.WebHost 4.0.20710.0" Category="程序包依赖项" Bounds="2115.4806735768,-166.603658870807,112.371527199904,151.992753897459" />
+    <Link Source="Microsoft.AspNet.WebApi.Client 4.0.20710.0" Target="Microsoft.Net.Http 2.0.20710.0" Category="程序包依赖项" Bounds="1648.25565737339,-285.514116113281,14.4356714826583,27.9928145667773" />
+    <Link Source="Microsoft.AspNet.WebApi.Client 4.0.20710.0" Target="Newtonsoft.Json 4.5.6" Category="程序包依赖项" Bounds="1675.7392026861,-337.514021498517,12.9334206694734,26.1632387185693" />
+    <Link Source="Microsoft.AspNet.WebApi.Client.zh-Hans 4.0.20710.0" Target="Microsoft.AspNet.WebApi.Client 4.0.20710.0" Category="程序包依赖项" Bounds="1433.8045481357,-347.376954752604,164.566550823322,34.1951779341441" />
+    <Link Source="Microsoft.AspNet.WebApi.Core 4.0.20710.0" Target="Microsoft.AspNet.WebApi.Client 4.0.20710.0" Category="程序包依赖项" Bounds="1739.71409425919,-343.95645304362,146.550143003102,30.7570773843797" />
+    <Link Source="Microsoft.AspNet.WebApi.Core.zh-Hans 4.0.20710.0" Target="Microsoft.AspNet.WebApi.Core 4.0.20710.0" Category="程序包依赖项" Bounds="1932.78723536163,-335.05379220216,11.7941628835229,79.5397760888783" />
+    <Link Source="Microsoft.AspNet.WebApi.WebHost 4.0.20710.0" Target="Microsoft.AspNet.WebApi.Core 4.0.20710.0" Category="程序包依赖项" Bounds="1978.01015099429,-339.459739236627,242.346257576745,139.782489790013" />
+    <Link Source="Microsoft.AspNet.WebApi.WebHost 4.0.20710.0" Target="Microsoft.Web.Infrastructure 1.0.0.0" Category="程序包依赖项" Bounds="2242.97411648508,-173.840577799479,11.5101773838919,673.734969522052" />
+    <Link Source="Microsoft.AspNet.WebApi.WebHost.zh-Hans 4.0.20710.0" Target="Microsoft.AspNet.WebApi.WebHost 4.0.20710.0" Category="程序包依赖项" Bounds="2026.98270974653,-171.104379482745,166.71670061249,53.2040667792948" />
+    <Link Source="Microsoft.AspNet.WebPages 2.0.20710.0" Target="Microsoft.AspNet.Razor 2.0.20710.0" Category="程序包依赖项" Bounds="1538.80436427756,436.695625772825,186.224606444137,79.5259945071228" />
+    <Link Source="Microsoft.AspNet.WebPages 2.0.20710.0" Target="Microsoft.Web.Infrastructure 1.0.0.0" Category="程序包依赖项" Bounds="1881.60460205078,523.596374141524,251.575093300859,3.69046355783155" />
+    <Link Source="Microsoft.AspNet.WebPages.Data.zh-Hans 2.0.20710.0" Target="Microsoft.AspNet.WebPages.Data 2.0.20710.0" Category="程序包依赖项" Bounds="583.316348421368,88.9478743489583,35.8804950832566,318.598624184674" />
+    <Link Source="Microsoft.AspNet.WebPages.OAuth 2.0.20710.0" Target="DotNetOpenAuth.AspNet 4.0.3.12153" Category="程序包依赖项" Bounds="1092.31441819652,264.391882222494,49.9787948332778,72.3079260559992" />
+    <Link Source="Microsoft.AspNet.WebPages.OAuth 2.0.20710.0" Target="Microsoft.AspNet.WebPages.WebData 2.0.20710.0" Category="程序包依赖项" Bounds="861.853075650092,264.391882222494,170.715148161042,43.3978768863821" />
+    <Link Source="Microsoft.AspNet.WebPages.OAuth.zh-Hans 2.0.20710.0" Target="Microsoft.AspNet.WebPages.OAuth 2.0.20710.0" Category="程序包依赖项" Bounds="1125.18400890714,191.194395345052,114.072442205037,44.1145921818768" />
+    <Link Source="Microsoft.AspNet.WebPages.WebData 2.0.20710.0" Target="Microsoft.AspNet.WebPages.Data 2.0.20710.0" Category="程序包依赖项" Bounds="615.832455435546,335.843796744792,159.6138513538,76.746154512568" />
+    <Link Source="Microsoft.AspNet.WebPages.WebData.zh-Hans 2.0.20710.0" Target="Microsoft.AspNet.WebPages.WebData 2.0.20710.0" Category="程序包依赖项" Bounds="805.489357266345,190.721464436849,16.0627642783236,110.379487328974" />
+    <Link Source="Microsoft.AspNet.WebPages.zh-Hans 2.0.20710.0" Target="Microsoft.AspNet.WebPages 2.0.20710.0" Category="程序包依赖项" Bounds="1767.3070046257,273.191190999349,136.686564949841,235.248630287785" />
+    <Link Source="Microsoft.Net.Http.zh-Hans 2.0.20710.0" Target="Microsoft.Net.Http 2.0.20710.0" Category="程序包依赖项" Bounds="1644.87421551385,-215.179435922256,13.3765791391234,38.6993655283756" />
+    <Link Source="Microsoft.jQuery.Unobtrusive.Ajax 2.0.20710.0" Target="jQuery 1.7.1.1" Category="程序包依赖项" Bounds="871.357186200847,-82.004085503197,38.6308712535803,0.282452823677971" />
+    <Link Source="Microsoft.jQuery.Unobtrusive.Validation 2.0.20710.0" Target="jQuery.Validation 1.9.0.1" Category="程序包依赖项" Bounds="637.689942586744,-187.139695841471,203.409593279839,29.9471919486829" />
+    <Link Source="ZdflCount" Target="EntityFramework 6.2.0" Category="安装的程序包" Bounds="1301.63706630921,-271.774196856377,314.726307626133,271.774196576633" />
+    <Link Source="ZdflCount" Target="Microsoft.AspNet.Mvc.zh-Hans 4.0.20710.0" Category="安装的程序包" Bounds="1634.59831758166,25.8366663869222,34.2274612961039,135.01314689207" />
+    <Link Source="ZdflCount" Target="Microsoft.AspNet.Razor.zh-Hans 2.0.20710.0" Category="安装的程序包" Bounds="1450.89412062907,25.8366663869222,171.528952490584,248.965809117178" />
+    <Link Source="ZdflCount" Target="Microsoft.AspNet.Web.Optimization.zh-Hans 1.0.0" Category="安装的程序包" Bounds="1670.01503092448,20.0549743794154,254.571445813865,46.9554624312895" />
+    <Link Source="ZdflCount" Target="Microsoft.AspNet.WebApi 4.0.20710.0" Category="安装的程序包" Bounds="1670.01503092448,2.24678933298669,307.952467666421,9.48040914897389" />
+    <Link Source="ZdflCount" Target="Microsoft.AspNet.WebApi.Client.zh-Hans 4.0.20710.0" Category="安装的程序包" Bounds="1385.76344989984,-339.98938591729,236.571091908204,339.989385637545" />
+    <Link Source="ZdflCount" Target="Microsoft.AspNet.WebApi.Core.zh-Hans 4.0.20710.0" Category="安装的程序包" Bounds="1646.46799454717,-223.836606337992,262.411764467314,223.836606058247" />
+    <Link Source="ZdflCount" Target="Microsoft.AspNet.WebApi.WebHost.zh-Hans 4.0.20710.0" Category="安装的程序包" Bounds="1668.69348277921,-89.2282644491516,270.350517897502,89.7417406180731" />
+    <Link Source="ZdflCount" Target="Microsoft.AspNet.WebPages.Data.zh-Hans 2.0.20710.0" Category="安装的程序包" Bounds="795.921216381323,15.3344271370728,796.710481209823,49.7504410054033" />
+    <Link Source="ZdflCount" Target="Microsoft.AspNet.WebPages.OAuth.zh-Hans 2.0.20710.0" Category="安装的程序包" Bounds="1308.85408877259,25.8366663869222,294.449289509113,135.75288991528" />
+    <Link Source="ZdflCount" Target="Microsoft.AspNet.WebPages.WebData.zh-Hans 2.0.20710.0" Category="安装的程序包" Bounds="895.5466097432,20.8150233302734,697.085087847946,142.270041832368" />
+    <Link Source="ZdflCount" Target="Microsoft.AspNet.WebPages.zh-Hans 2.0.20710.0" Category="安装的程序包" Bounds="1645.95584238917,25.8366663869222,244.164387847082,215.561364385552" />
+    <Link Source="ZdflCount" Target="Microsoft.Net.Http.zh-Hans 2.0.20710.0" Category="安装的程序包" Bounds="1633.6213085248,-141.782500977278,25.2206129250787,141.782500697533" />
+    <Link Source="ZdflCount" Target="Microsoft.jQuery.Unobtrusive.Ajax 2.0.20710.0" Category="安装的程序包" Bounds="1141.0822576503,-66.3267576644941,451.549439940847,72.9907709686611" />
+    <Link Source="ZdflCount" Target="Microsoft.jQuery.Unobtrusive.Validation 2.0.20710.0" Category="安装的程序包" Bounds="980.066978945879,-184.528461941945,613.065955623433,185.868285960441" />
+    <Link Source="ZdflCount" Target="Modernizr 2.5.3" Category="安装的程序包" Bounds="1287.54720024649,-203.270950174228,323.233910424805,203.270949894484" />
+    <Link Source="ZdflCount" Target="jQuery.UI.Combined 1.8.20.1" Category="安装的程序包" Bounds="650.162708133183,-0.235739141029175,942.468989457963,12.6353467713284" />
+    <Link Source="ZdflCount" Target="knockoutjs 2.1.0" Category="安装的程序包" Bounds="1297.79203387637,-140.609276313812,305.466873957409,140.609276034067" />
+    <Link Source="jQuery.UI.Combined 1.8.20.1" Target="jQuery 1.7.1.1" Category="程序包依赖项" Bounds="591.580278053398,-66.8732896145142,170.795814699853,52.3689777731853" />
+    <Link Source="jQuery.Validation 1.9.0.1" Target="jQuery 1.7.1.1" Category="程序包依赖项" Bounds="604.680293336404,-131.303086954753,150.844440635034,35.3699804794272" />
+  </Links>
+  <Categories>
+    <Category Id="包" />
+    <Category Id="安装的程序包" />
+    <Category Id="程序包依赖项" />
+    <Category Id="项目" />
+  </Categories>
+  <Properties>
+    <Property Id="Bounds" DataType="System.Windows.Rect" />
+    <Property Id="Expression" DataType="System.String" />
+    <Property Id="GraphDirection" DataType="Microsoft.VisualStudio.Diagrams.Layout.LayoutOrientation" />
+    <Property Id="GroupLabel" DataType="System.String" />
+    <Property Id="IsEnabled" DataType="System.Boolean" />
+    <Property Id="Label" Label="标签" Description="可批注对象的可显示标签" DataType="System.String" />
+    <Property Id="TargetType" DataType="System.Type" />
+    <Property Id="UseManualLocation" DataType="System.Boolean" />
+    <Property Id="Value" DataType="System.String" />
+    <Property Id="ValueLabel" DataType="System.String" />
+  </Properties>
+  <Styles>
+    <Style TargetType="Node" GroupLabel="项目" ValueLabel="True">
+      <Condition Expression="HasCategory('项目')" />
+      <Setter Property="Background" Value="Blue" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="程序包依赖项" ValueLabel="True">
+      <Condition Expression="HasCategory('程序包依赖项')" />
+      <Setter Property="Background" Value="Yellow" />
+    </Style>
+  </Styles>
+</DirectedGraph>
