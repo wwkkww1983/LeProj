@@ -149,7 +149,9 @@ namespace XczdServer
     {
         Start = 0x01,
 
-        End
+        End,
+
+        Finish
     }
     #endregion
 
@@ -320,6 +322,10 @@ namespace XczdServer
         /// 生产信息退出登录员工不同
         /// </summary>
         ProductOutInDiff,
+
+        /// <summary>
+        /// 生产设备退出没有对应的登录信息
+        /// </summary>
         ProductOutWithoutIn,
         /// <summary>
         /// 设备报修外部接口调用失败
@@ -585,6 +591,7 @@ namespace XczdServer
             public int FillField;
             public byte[] Content;
             public string IpAddress;
+            public int MachineId;
             public System.Net.Sockets.NetworkStream stream;
         }
 

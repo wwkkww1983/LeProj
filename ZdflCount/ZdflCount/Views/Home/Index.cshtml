@@ -29,10 +29,11 @@
     
     <li class="three">
         <h5 class="home-li-head-item">数据统计</h5>
+        @Html.ActionLink("订单产量表", "OrderProduction", "Statis",null, new {@class = itemClassName })
         @Html.ActionLink("员工产量表", "StaffProduction", "Statis",null, new {@class = itemClassName })
         @Html.ActionLink("机台产量表", "MachineProduction", "Statis",null, new {@class = itemClassName })
         @Html.ActionLink("机台工时表", "MachineWorking", "Statis",null, new {@class = itemClassName })
-        @Html.ActionLink("统计图表", "Statistics", "Manage",null, new {@class = itemClassName })
+        @*@Html.ActionLink("统计图表", "Statistics", "Manage",null, new {@class = itemClassName })*@
         @Html.ActionLink("基础数据", "StatisticRecord", "Manage",null, new {@class = itemClassName })
         @Html.ActionLink("生产日志", "ProductRecord", "Manage",null, new {@class = itemClassName })        
     </li>

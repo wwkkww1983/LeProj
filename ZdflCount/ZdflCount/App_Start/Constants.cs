@@ -7,17 +7,51 @@ namespace ZdflCount.App_Start
 {
     public class Constants
     {
+        public const int ITEM_COUNT_EACH_PAGE_DEFAULT = 50;
         public const string MACHINE_MATERIAL_STRUCTURE = "物料：{0}（{1}）； 详细信息：{2}";
+        public const string DATE_FORMAT = "yyyy-MM-dd";        
         private static string strRedisPort = System.Configuration.ConfigurationManager.AppSettings["InnerRedisServerPort"];
         private static Dictionary<enumErrorCode, string> errorKeyValue = new Dictionary<enumErrorCode, string>();
 
-        public static RedisClient RedisClient
+        private static PooledRedisClientManager prcm = null;
+        private readonly static object _lockObjectRedis = new object();
+        //private static RedisClient client = null;
+        public static IRedisClient RedisClient
         {
             get
             {
-                return new RedisClient("127.0.0.1", int.Parse(strRedisPort));
+                if (prcm == null)
+                {
+                    lock (_lockObjectRedis)
+                    {
+                        if (prcm == null)
+                        {
+                            string strIPPort = string.Format("127.0.0.1:{0}", strRedisPort);
+                            // 支持读写分离，均衡负载 
+                            prcm = new PooledRedisClientManager(new string[] { strIPPort }, new string[] { strIPPort }, new RedisClientManagerConfig
+                            {
+                                MaxWritePoolSize = 200, // “写”链接池链接数 
+                                MaxReadPoolSize = 200, // “读”链接池链接数 
+                                AutoStart = true,
+                            });
+                        }
+                    }
+                }
+                return prcm.GetClient();
+                //if (client == null)
+                //{
+                //    lock (_lockObjectRedis)
+                //    {
+                //        if (client == null)
+                //        {
+                //            client = RedisClientFactory.Instance.CreateRedisClient(strIp, int.Parse(strPort));
+                //        }
+                //    }
+                //}
+                //return client;
             }
         }
+
         static Constants()
         {
 
@@ -214,6 +248,7 @@ namespace ZdflCount.App_Start
         /// </summary>
         [Description("生产设备退出和登录员工不同")]
         ProductOutInDiff,
+
         [Description("生产设备退出没有对应的登录信息")]
         ProductOutWithoutIn
     }

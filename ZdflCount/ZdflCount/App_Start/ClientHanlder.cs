@@ -122,7 +122,7 @@ namespace ZdflCount.App_Start
                 ExceptionCount = outInfo.UnusualCount,
                 FinishCount = finishCount,
                 MachineId = machine.ID,
-                MachineNumber = machine.Number,
+                MachineName = machine.Name,
                 OrderNumber = tempSchedule.OrderNumber,
                 ScheduleID = tempSchedule.ID,
                 ScheduleNumber = tempSchedule.Number,

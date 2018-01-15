@@ -18,7 +18,7 @@ namespace ZdflCount.Controllers
         private DbTableDbContext db = new DbTableDbContext();
         private ScheduleOrder modelSchOrder = new ScheduleOrder();
         private RoomController roomControl = new RoomController();
-        private static ServiceStack.Redis.RedisClient client = Constants.RedisClient;
+        private static ServiceStack.Redis.IRedisClient client = Constants.RedisClient;
 
         #region 列表页
 
@@ -41,26 +41,18 @@ namespace ZdflCount.Controllers
             ViewData["machines"] = machineSelectList;
             //整理查询条件（起止时间）
             DateTime dateStart, dateEnd;
-            if (strEndDate == null && strStartDate == null)
+            if (strStartDate == null || strStartDate == string.Empty)
             {
-                dateStart = DateTime.Now.Date;
-                dateEnd = DateTime.Now.AddDays(1);
+                strStartDate = DateTime.Now.AddDays(-1 * (DateTime.Now.Day - 1)).ToString(App_Start.Constants.DATE_FORMAT);
             }
-            else if (strStartDate == null)
+            if (strEndDate == null || strEndDate == string.Empty)
             {
-                dateStart = DateTime.Parse(strEndDate);
-                dateEnd = dateStart.AddDays(1);
+                strEndDate = DateTime.Now.ToString(App_Start.Constants.DATE_FORMAT);
             }
-            else if (strEndDate == null)
-            {
-                dateStart = DateTime.Parse(strStartDate);
-                dateEnd = dateStart.AddDays(1);
-            }
-            else
-            {
-                dateStart = DateTime.Parse(strStartDate);
-                dateEnd = DateTime.Parse(strEndDate);
-            }
+            ViewData["startDate"] = strStartDate;
+            ViewData["endDate"] = strEndDate;
+            dateStart = DateTime.Parse(strStartDate);
+            dateEnd = DateTime.Parse(strEndDate).AddDays(1);
             int intRoom = Convert.ToInt32(room), intMachine = Convert.ToInt32(machine);
             //执行查询
             var schedules = from item in db.Schedules
@@ -230,7 +222,7 @@ namespace ZdflCount.Controllers
             }
             Machines currentMachine = this.db.Machines.Find(machine);
             schedules.MachineId = machine;
-            schedules.MachineName = currentMachine.Number;
+            schedules.MachineName = currentMachine.Name;
             schedules.RoomId = currentMachine.RoomID;
             if (!roomControl.CheckUserInRoom(userId, schedules.RoomId))
             {
@@ -323,7 +315,7 @@ namespace ZdflCount.Controllers
                     return RedirectToAction("Login", "Account");
                 }   
                 schedules.MachineId = machine;
-                schedules.MachineName = currentMachine.Number;
+                schedules.MachineName = currentMachine.Name;
                 schedules.RoomId = currentMachine.RoomID;
                 schedules.LastUpdatePersonID = userId;
                 schedules.LastUpdatePersonName = User.Identity.Name;
@@ -493,7 +485,13 @@ namespace ZdflCount.Controllers
             client.Set(PRE_DOWN_INFO + strUserKey, buff);
             client.Set<string>(infoType + machineId.ToString(), strUserKey);
 
-            return App_Start.TcpProtocolClient.WaittingSendForResp(strUserKey);
+            enumErrorCode result = App_Start.TcpProtocolClient.WaittingSendForResp(strUserKey);
+            
+            client.Remove(PRE_DOWN_INFO_MACHINE + strUserKey);
+            client.Remove(PRE_DOWN_INFO + strUserKey);
+            client.Remove(infoType + machineId.ToString());
+
+            return result;
         }
         #endregion
 

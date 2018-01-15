@@ -1,0 +1,41 @@
+﻿@model IEnumerable<ZdflCount.Models.VS_OrderProduction>
+@{
+    ViewBag.Title = "订单产量统计表";
+}
+
+<h2>订单产量统计表</h2>
+
+
+<div>
+    开始日期：<input type="date" id="startDate" value="@ViewData["startDate"]"/>
+    结束日期：<input type="date" id="endDate" value="@ViewData["endDate"]"/>
+
+    <button class="date-btn-query"> 查询</button>
+</div>
+<table id="tableOrder"  border="1"  width="100%" > 
+    <thead>
+        <th>@Html.DisplayNameFor(model => model.OrderNumber)</th>  
+        <th>@Html.DisplayNameFor(model => model.RoomName)</th>
+        <th>@Html.DisplayNameFor(model => model.ProductCount)</th>  
+        <th>@Html.DisplayNameFor(model => model.ProductLeft)</th>  
+        <th>@Html.DisplayNameFor(model => model.Finish)</th>  
+        <th>@Html.DisplayNameFor(model => model.Valid)</th>  
+        <th>@Html.DisplayNameFor(model => model.Exception)</th>
+
+    </thead>   
+    @foreach (var item in Model) 
+    {
+         <tr>  
+              <td>@item.OrderNumber</td> 
+              <td>@item.RoomName</td>
+              <td>@item.ProductCount</td> 
+              <td>@item.ProductLeft</td> 
+              <td>@item.Finish</td> 
+              <td>@item.Valid</td> 
+              <td>@item.Exception</td> 
+         </tr>   
+    }                     
+</table>
+
+<script src="/Scripts/jquery-1.7.1.js"></script>
+<script src="/Scripts/dateReload.js"></script>

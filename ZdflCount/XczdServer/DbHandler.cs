@@ -11,20 +11,72 @@ namespace XczdServer
     public class DbHandler
     {
         private static SqlConnection conn = null;
+        private static readonly object _ErrorInsertLock = new object();
+        private readonly static DataTable errorTableSchema = new DataTable();
+        //private Queue<string> ErrorNeedInsertQueue = new Queue<string>();
+        /// <summary>
+        /// 队列形式写入异常日志
+        /// </summary>
+        private static Queue<ErrorInfo> ErrorObjectsQueue = new Queue<ErrorInfo>();
+        /// <summary>
+        /// 由于使用频繁且数据量小，因此设备信息放入内存
+        /// </summary>
+        private readonly static Dictionary<int, Machines> AllMachinesIdEntity = new Dictionary<int, Machines>();
+
+        #region 初始化
         public DbHandler()
         {
-            if (conn != null)
+            if (errorTableSchema.Columns.Count < 1)
             {
-                return;
+                this.GetErrorTableSchema(errorTableSchema);
             }
-            string strdbConn = Ini.GetItemValue("sqlServer", "connString");
-            conn = new SqlConnection(strdbConn);
-            try
+            if (conn == null)
             {
-                conn.Open();
+                string strdbConn = Ini.GetItemValue("sqlServer", "connString");
+                conn = new SqlConnection(strdbConn);
+                try
+                {
+                    conn.Open();
+                }
+                catch { }
             }
-            catch { }
+            if (AllMachinesIdEntity.Count < 1)
+            {
+                this.InitialLoadAllMachines();
+            }
         }
+
+        private void GetErrorTableSchema(DataTable dt)
+        {
+            dt.Columns.AddRange(new DataColumn[] {   
+                new DataColumn("ID",typeof(int)), 
+                new DataColumn("ErrorType",typeof(int)),  
+                new DataColumn("HappenTime",typeof(DateTime)),  
+                new DataColumn("UserID",typeof(int)), 
+                new DataColumn("Remark",typeof(string)),
+                new DataColumn("RemarkBinary",typeof(byte[])),
+                new DataColumn("ErrorMsg",typeof(string)),
+                new DataColumn("ErrorSource",typeof(string)),
+                new DataColumn("ErrorStack",typeof(string))
+            });
+        }
+
+        private void InitialLoadAllMachines()
+        {
+            string strSql = "select * from Machines";
+            using (SqlCommand cmd = new SqlCommand(strSql, conn))
+            {
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                adapter.Fill(ds);
+
+                foreach (DataRow dr in ds.Tables[0].Rows)
+                {
+                    AllMachinesIdEntity.Add(Convert.ToInt32(dr["ID"]), exchangeMachine(dr));
+                }
+            }
+        }
+        #endregion
 
         #region 生产数据
         public int InsertProductInfo(NetStructure.ProductInfo info)
@@ -57,7 +109,7 @@ namespace XczdServer
         #endregion
 
         #region 设备设置
-        public int InsertMachines(NetStructure.DeviceSetting info,out int machineId)
+        public int InsertMachines(NetStructure.DeviceSetting info, out int machineId)
         {
             int rest = 0;
             machineId = 0;
@@ -86,7 +138,7 @@ namespace XczdServer
             }
             return rest;
         }
-        
+
         private Machines exchangeMachine(DataRow dr)
         {
             Machines info = new Machines();
@@ -105,26 +157,35 @@ namespace XczdServer
 
         public Machines SelectMachine(int machineId)
         {
-            Machines info = null;
-            string strSql = "select * from Machines where ID=@ID";
-            using (SqlCommand cmd = new SqlCommand(strSql, conn))
+            Machines tempItem = null;
+            if (AllMachinesIdEntity.Keys.Contains(machineId))
             {
-                cmd.Parameters.Add("@ID", SqlDbType.Int);
-                cmd.Parameters["@ID"].Value = machineId;
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                DataSet ds = new DataSet();
-                try
-                {
-                    adapter.Fill(ds);
-                }
-                catch { }
-
-                if (ds.Tables.Count < 1 || ds.Tables[0].Rows.Count < 1) return info;
-                DataRow dr = ds.Tables[0].Rows[0];
-
-                info = exchangeMachine(dr);
+                tempItem = AllMachinesIdEntity[machineId];
             }
-            return info;
+            return tempItem;
+            //Machines info = null;
+            //string strSql = string.Format("select * from Machines where ID={0}", machineId);
+            //using (SqlCommand cmd = new SqlCommand(strSql, conn))
+            //{
+            //    //SqlDataReader dr = cmd.ExecuteReader();
+            //    //if (dr.HasRows && dr.Read())
+            //    //{
+            //    //    info = exchangeMachine(dr);
+            //    //}
+            //    //dr.Close();
+            //    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+            //    DataSet ds = new DataSet();
+            //    try
+            //    {
+            //        adapter.Fill(ds);
+            //    }
+            //    catch { }
+
+            //    if (ds.Tables.Count < 1 || ds.Tables[0].Rows.Count < 1) return info;
+            //    DataRow dr = ds.Tables[0].Rows[0];
+            //    info = exchangeMachine(dr);
+            //}
+            //return info;
         }
 
         public string GetRoomReportNumber(int roomId)
@@ -151,31 +212,6 @@ namespace XczdServer
             return info;
 
         }
-
-        public Machines SelectMachine(string machineNumber)
-        {
-            Machines info = null;
-            string strSql = "select * from Machines where Number=@Number";
-            using (SqlCommand cmd = new SqlCommand(strSql, conn))
-            {
-                cmd.Parameters.Add("@Number", SqlDbType.Int);
-                cmd.Parameters["@Number"].Value = machineNumber;
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                DataSet ds = new DataSet();
-                try
-                {
-                    adapter.Fill(ds);
-                }
-                catch { }
-
-                if (ds.Tables.Count < 1 || ds.Tables[0].Rows.Count < 1) return info;
-                DataRow dr = ds.Tables[0].Rows[0];
-
-                info = exchangeMachine(dr);
-            }
-            return info;
-        }
-
         #endregion
 
         #region 车间
@@ -221,6 +257,7 @@ namespace XczdServer
         }
         #endregion
 
+        #region 心跳
         public void InsertHeartBreak(HeartBreak info)
         {
             using (SqlCommand cmd = conn.CreateCommand())
@@ -235,7 +272,9 @@ namespace XczdServer
                 cmd.ExecuteNonQuery();
             }
         }
+        #endregion
 
+        #region 设备生产情况
         public void InsertMachineReport(MachineReport info)
         {
             string strSql = @"INSERT INTO MachineReports (DateCreate,MachineId,MachineName,MachineNumber,RoomId,RoomNumber,RoomName,[Status]) 
@@ -256,6 +295,9 @@ namespace XczdServer
             }
         }
 
+        #endregion
+
+        #region 设备叫料
         public void InsertMachineCallMaterial(MachineCallMaterial info)
         {
             string strSql = @"INSERT INTO MachineCallMaterials (DateCreate,MachineId,MachineNumber,MachineName,RoomId,RoomNumber,RoomName,
@@ -282,6 +324,7 @@ namespace XczdServer
                 cmd.ExecuteNonQuery();
             }
         }
+        #endregion
 
         #region 设备启动停止
         public void InsertMachineStartEnd(MachineStartEnd info)
@@ -329,7 +372,7 @@ namespace XczdServer
             {
                 cmd.Parameters.AddWithValue("@startId", startId);
                 cmd.Parameters.AddWithValue("@DateEnd", DateTime.Now);
-                cmd.Parameters.AddWithValue("@Status", enumDeviceWorkStatus.End);
+                cmd.Parameters.AddWithValue("@Status", enumDeviceWorkStatus.Finish);
 
                 cmd.ExecuteNonQuery();
             }
@@ -388,36 +431,96 @@ namespace XczdServer
         }
         #endregion
 
-        public void InsertErrorInfo(enumSystemErrorCode type, Exception ex, string remark, byte[] remarkBinary)
+        #region 异常日志
+        public void InsertErrorInfo()
         {
-            string strSql = @"INSERT INTO ErrorInfoes (HappenTime,ErrorType,Remark,userID,ErrorMsg,ErrorSource,ErrorStack,RemarkBinary) 
-                              VALUES (@HappenTime,@ErrorType,@Remark,@userID,@ErrorMsg,@ErrorSource,@ErrorStack,@RemarkBinary)";
-
-            using (SqlCommand cmd = new SqlCommand(strSql, conn))
+            while (true)
             {
-                cmd.Parameters.AddWithValue("@HappenTime", DateTime.Now);
-                cmd.Parameters.AddWithValue("@ErrorType", type);
-                cmd.Parameters.AddWithValue("@Remark", remark);
-                cmd.Parameters.AddWithValue("@userID", 0);
-                if (ex == null)
+                SqlBulkCopy buckCopy = new SqlBulkCopy(conn);
+                buckCopy.DestinationTableName = "ErrorInfoes";
+                DataTable dt = errorTableSchema.Clone();
+                while (ErrorObjectsQueue.Count > 0)
                 {
-                    cmd.Parameters.AddWithValue("@ErrorMsg", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@ErrorSource", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@ErrorStack", DBNull.Value);
+                    ErrorInfo errorItem = ErrorObjectsQueue.Dequeue();
+                    if (errorItem == null) continue;
+                    DataRow dr = dt.NewRow();
+                    dr["ErrorType"] = (int)(errorItem.ErrorType);
+                    dr["UserID"] = errorItem.userID;
+                    dr["Remark"] = errorItem.Remark;
+                    dr["RemarkBinary"] = errorItem.RemarkBinary;
+                    dr["ErrorMsg"] = errorItem.ErrorMsg;
+                    dr["ErrorSource"] = errorItem.ErrorSource;
+                    dr["ErrorStack"] = errorItem.ErrorStack;
+                    dr["HappenTime"] = errorItem.HappenTime;
+                    dt.Rows.Add(dr);
                 }
-                else
+                if (dt.Rows.Count > 0)
                 {
-                    cmd.Parameters.AddWithValue("@ErrorMsg", ex.Message);
-                    cmd.Parameters.AddWithValue("@ErrorSource", ex.Source);
-                    cmd.Parameters.AddWithValue("@ErrorStack", ex.StackTrace);
-
+                    try
+                    {
+                        buckCopy.WriteToServer(dt);
+                    }
+                    catch { }
                 }
-
-                cmd.Parameters.AddWithValue("@RemarkBinary", remarkBinary ?? new byte[] { } );
-                
-                cmd.ExecuteNonQuery();
+                //StringBuilder sbValue = new StringBuilder();                
+                //bool hasContent = false;
+                //while (ErrorNeedInsertQueue.Count > 0)
+                //{
+                //    string strItem = ErrorNeedInsertQueue.Dequeue();
+                //    sbValue.Append(',');
+                //    sbValue.Append(strItem);
+                //    hasContent = true;
+                //}
+                //if (hasContent)
+                //{
+                //    sbValue.Remove(0, 1);
+                //    sbValue.Insert(0,"INSERT INTO ErrorInfoes (HappenTime,ErrorType,Remark,userID,RemarkBinary,ErrorMsg,ErrorSource,ErrorStack) VALUES ");
+                //    string strSql = sbValue.ToString();
+                //    using (SqlCommand cmd = new SqlCommand(strSql, conn))
+                //    {
+                //        try
+                //        {
+                //            cmd.ExecuteNonQuery();
+                //        }
+                //        catch(Exception ex)
+                //        {
+                //            if (ex.Message.Contains("关闭"))
+                //            {
+                //                conn.Close();
+                //                conn.Open();
+                //            }
+                //        }
+                //    }
+                //}
+                System.Threading.Thread.Sleep(30000);//30秒写入一次
             }
         }
+
+        public void InsertErrorInfo(enumSystemErrorCode type, Exception ex, string remark, byte[] remarkBinary)
+        {
+            //byte[] tempBinary = remarkBinary ?? new byte[] { };
+            //string strValue = string.Format("('{0}',{1},'{2}',{3},'{4}',", DateTime.Now, (int)type, remark, 0,
+            //    System.Text.Encoding.Unicode.GetString(tempBinary));
+
+            //string strError = "'','','')";
+            //if (ex != null)
+            //{
+            //    strError = string.Format("'{0}','{1}','{2}')", ex.Message, ex.Source, ex.StackTrace);
+            //}
+            //ErrorNeedInsertQueue.Enqueue(strValue + strError);
+            ErrorObjectsQueue.Enqueue(new ErrorInfo()
+            {
+                ErrorMsg = ex == null ? string.Empty : ex.Message,
+                ErrorSource = ex == null ? string.Empty : ex.Source,
+                ErrorStack = ex == null ? string.Empty : ex.StackTrace,
+                ErrorType = type,
+                HappenTime = DateTime.Now,
+                Remark = remark,
+                RemarkBinary = remarkBinary,
+                userID = 0
+            });
+        }
+        #endregion
 
         #region 施工单
         private Schedules exchangeSchedule(DataRow dr)
@@ -515,23 +618,7 @@ namespace XczdServer
             }
         }
         #endregion
-        
-        public void UpdateOrderFinishCount(int orderId, int count)
-        {
-            string strSql = @"UPDATE Orders SET ProductFinishedCount=ProductFinishedCount+@FinishCount,
-                                Status=case when ProductFinishedCount+@FinishCount>ProductCount then @StatusFinish else @StatusWorking end 
-                                WHERE ID=@ID;";
 
-            using (SqlCommand cmd = new SqlCommand(strSql, conn))
-            {
-                cmd.Parameters.AddWithValue("@ID", orderId);
-                cmd.Parameters.AddWithValue("@FinishCount", count);
-                cmd.Parameters.AddWithValue("@StatusWorking", (int)enumStatus.Working);
-                cmd.Parameters.AddWithValue("@StatusFinish", (int)enumStatus.Finished);
-
-                cmd.ExecuteNonQuery();
-            }
-        }
 
         public UserProfile SelectUser(string userName)
         {
@@ -556,7 +643,6 @@ namespace XczdServer
                 {
                     UserId = Convert.ToInt32(dr["UserId"]),
                     UserName = dr["UserName"].ToString()
-                     
                 };
             }
             return info;

@@ -43,3 +43,25 @@
 }
 
 </table>
+
+
+<script LANGUAGE="JavaScript">
+　　function openwin(title,top,left)
+　　{
+　　    OpenWindow=window.open("", title, "height=250, width=250,toolbar=no,top="+top+",left="+left+",menubar=no");
+        OpenWindow.document.write("<TITLE>" + title + "</TITLE>");
+        OpenWindow.document.write("<BODY BGCOLOR=#ffffff>");
+        OpenWindow.document.write("<h1>Hello!</h1>");
+        OpenWindow.document.write("New window opened!");
+        OpenWindow.document.write("</BODY>");
+        OpenWindow.document.write("</HTML>");
+        OpenWindow.document.close();
+　　} 
+</script>
+
+@foreach (var item in Model)
+{
+<script>
+    openwin("@item.MachineName", 250, 0);
+</script>
+}

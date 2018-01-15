@@ -138,7 +138,10 @@ namespace ZdflCount.Models
         Start = 0x01,
 
         [Description("停止")]
-        End
+        End,
+
+        [Description("完成")]
+        Finish
     }
     #endregion
 
@@ -553,7 +556,7 @@ namespace ZdflCount.Models
         [DisplayName("机台")]
         public int MachineId { get; set; }
 
-        [DisplayName("机台")]
+        [DisplayName("设备名称")]
         public string MachineName { get; set; }
 
         [DisplayName("通道数")]
@@ -841,10 +844,10 @@ namespace ZdflCount.Models
 
         public int MachineId { get; set; }
 
-        [DisplayName("设备编码")]
+        [DisplayName("设备名称")]
         [Required]
         [StringLength(50)]
-        public string MachineNumber { get; set; }
+        public string MachineName { get; set; }
 
         [Required]
         public int RoomID { get; set; }
@@ -874,7 +877,11 @@ namespace ZdflCount.Models
         [Required]
         public int FinishCount { get; set; }
 
-        [DisplayName("异常总数")]
+        [DisplayName("合格数")]
+        [Required]
+        public int ValidCount { get; set; }
+
+        [DisplayName("异常数")]
         [Required]
         public int ExceptionCount { get; set; }
 
@@ -956,9 +963,6 @@ namespace ZdflCount.Models
 
     public class VS_StaffProduction
     {
-        [Key]
-        public Guid ID { get; set; }
-
         [DisplayName("车间")]
         [StringLength(50)]
         public string RoomName { get; set; }
@@ -976,7 +980,11 @@ namespace ZdflCount.Models
         [Required]
         public int Finish { get; set; }
 
-        [DisplayName("异常总数")]
+        [DisplayName("合格数")]
+        [Required]
+        public int Valid { get; set; }
+
+        [DisplayName("异常数")]
         [Required]
         public int Exception { get; set; }
     }
@@ -986,17 +994,14 @@ namespace ZdflCount.Models
 
     public class VS_MachineProduction
     {
-        [Key]
-        public Guid ID { get; set; }
-
         [DisplayName("车间")]
         [StringLength(50)]
         public string RoomName { get; set; }
 
-        [DisplayName("设备编码")]
+        [DisplayName("设备名称")]
         [Required]
         [StringLength(50)]
-        public string MachineNumber { get; set; }
+        public string MachineName { get; set; }
 
         [DisplayName("订单编号")]
         [Required]
@@ -1007,9 +1012,48 @@ namespace ZdflCount.Models
         [Required]
         public int Finish { get; set; }
 
-        [DisplayName("异常总数")]
+        [DisplayName("合格数")]
+        [Required]
+        public int Valid { get; set; }
+
+        [DisplayName("异常数")]
         [Required]
         public int Exception { get; set; }
+    }
+    #endregion
+
+    #region 订单产量表
+
+    public class VS_OrderProduction
+    {
+        [DisplayName("车间")]
+        [StringLength(50)]
+        public string RoomName { get; set; }
+        
+        [DisplayName("订单编号")]
+        [Required]
+        [StringLength(50)]
+        public string OrderNumber { get; set; }
+
+        [DisplayName("完成总数")]
+        [Required]
+        public int Finish { get; set; }
+
+        [DisplayName("合格数")]
+        [Required]
+        public int Valid { get; set; }
+
+        [DisplayName("异常数")]
+        [Required]
+        public int Exception { get; set; }
+
+        [DisplayName("订单总数量")]
+        [Required]
+        public int ProductCount { get; set; }
+
+        [DisplayName("订单剩余数")]
+        [Required]
+        public int ProductLeft { get; set; }
     }
     #endregion
 
@@ -1017,21 +1061,22 @@ namespace ZdflCount.Models
 
     public class VS_MachineWorking
     {
-        [Key]
-        public Guid ID { get; set; }
-
         [DisplayName("车间")]
         [StringLength(50)]
-        public string RoomName { get; set; }
+        public string RoomNumber { get; set; }
 
-        [DisplayName("设备编码")]
+        [DisplayName("设备名称")]
         [Required]
         [StringLength(50)]
-        public string MachineNumber { get; set; }
+        public string MachineName { get; set; }
 
         [DisplayName("工作总时间")]
         [Required]
         public int WorkingMinute { get; set; }
+
+        [DisplayName("启停次数")]
+        [Required]
+        public int WorkingCount { get; set; }
     }
     #endregion
     #endregion
@@ -1077,7 +1122,7 @@ namespace ZdflCount.Models
             this.MachineList = new List<SelectListItem>(allMachines.Count<Machines>());
             foreach (Machines item in allMachines)
             {
-                this.MachineList.Add(new SelectListItem { Text = item.RoomName + " - " + item.Number, Value = item.ID.ToString() });
+                this.MachineList.Add(new SelectListItem { Text = item.RoomName + " - " + item.Name, Value = item.ID.ToString() });
             }
         }
 
@@ -1242,7 +1287,7 @@ namespace ZdflCount.Models
                 ErrorMsg = ex.Message,
                 ErrorSource = ex.Source,
                 ErrorStack = ex.StackTrace,
-                RemarkBinary = remarkBinary
+                RemarkBinary =remarkBinary
             };
             try
             {
@@ -1283,27 +1328,12 @@ namespace ZdflCount.Models
 
     }
 
-    public class DbViewDbContext : DbContext
+    public class DbSqlDbContext : DbContext
     {
-        public DbViewDbContext()
+        public DbSqlDbContext()
             : base("DefaultConnection")
         {
-        }
-
-        /// <summary>
-        /// 员工产量表
-        /// </summary>
-        public DbSet<VS_StaffProduction> StaffProduction { get; set; }
-
-        /// <summary>
-        /// 设备产量表
-        /// </summary>
-        public DbSet<VS_MachineProduction> MachineProduction { get; set; }
-
-        /// <summary>
-        /// 设备开机时间
-        /// </summary>
-        public DbSet<VS_MachineWorking> MachineWorking { get; set; }        
+        }    
     }
     #endregion
 }

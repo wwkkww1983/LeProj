@@ -16,28 +16,43 @@ namespace XczdServer
                             PRE_INFO_TYPE_CREATE = "INFOTYPECREATE", PRE_INFO_TYPE_CLOSE = "INFOTYPECLOSE", PRE_INFO_TYPE_DISCARD = "INFOTYPEDISCARD";
         private static readonly string strIp = Ini.GetItemValue("redis", "server");
         private static readonly string strPort = Ini.GetItemValue("redis", "port");
-        private static readonly string strIPPort = string.Format("{0}:{1}", strIp, strPort);
-        private static readonly PooledRedisClientManager prcm = CreateManager(new string[] { strIPPort }, new string[] { strIPPort });
+        private static PooledRedisClientManager prcm = null;
+        private readonly static object _lockObjectRedis = new object();
+        //private static RedisClient client = null;
         public static IRedisClient RedisClient
         {
-            get;
-            private set;
-        } 
-
-        static GlobalVariable()
-        {
-            RedisClient = prcm.GetClient();
-        }
-
-        private static PooledRedisClientManager CreateManager(string[] readWriteHosts, string[] readOnlyHosts)
-        {
-            // 支持读写分离，均衡负载 
-            return new PooledRedisClientManager(readWriteHosts, readOnlyHosts, new RedisClientManagerConfig
+            get
             {
-                MaxWritePoolSize = 5, // “写”链接池链接数 
-                MaxReadPoolSize = 5, // “读”链接池链接数 
-                AutoStart = true,
-            });
+                if (prcm == null)
+                {
+                    lock (_lockObjectRedis)
+                    {
+                        if (prcm == null)
+                        {
+                            string strIPPort = string.Format("{0}:{1}", strIp, strPort);
+                            // 支持读写分离，均衡负载 
+                            prcm = new PooledRedisClientManager(new string[] { strIPPort }, new string[] { strIPPort }, new RedisClientManagerConfig
+                            {
+                                MaxWritePoolSize = 200, // “写”链接池链接数 
+                                MaxReadPoolSize = 200, // “读”链接池链接数 
+                                AutoStart = true,
+                            });
+                        }
+                    }
+                }
+                return prcm.GetClient();
+                //if (client == null)
+                //{
+                //    lock (_lockObjectRedis)
+                //    {
+                //        if (client == null)
+                //        {
+                //            client = RedisClientFactory.Instance.CreateRedisClient(strIp, int.Parse(strPort));
+                //        }
+                //    }
+                //}
+                //return client;
+            }
         }
 
         /// <summary>

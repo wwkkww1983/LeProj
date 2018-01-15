@@ -12,7 +12,7 @@ namespace XczdServer
     public class TcpProtocolClient 
     {
         private const int SERVER_PORT_NUMBER = 55556;
-        private const int BUFFER_SIZE = 1024, COMMUNICATION_TIME_OUT = 1000;
+        private const int BUFFER_SIZE = 1024, COMMUNICATION_TIME_OUT = 10000;
         private static bool keepListening = false;
         private static Stopwatch sw = new Stopwatch();
         private static DbHandler db = new DbHandler();
@@ -66,8 +66,6 @@ namespace XczdServer
                         {
                             int intResult = (int)result;
                             client.Set<int>(GlobalVariable.PRE_RESP_DOWN_INFO + strUserKey, intResult);
-                            client.Remove(GlobalVariable.PRE_DOWN_INFO_MACHINE + strUserKey);
-                            client.Remove(GlobalVariable.PRE_DOWN_INFO + strUserKey);
                         }
                     }
                 }
@@ -107,9 +105,14 @@ namespace XczdServer
             string strError = null;
             try
             {
-                //数据下派
+                //清空原来所有实时数据
+                ClearRedisServer();
+                //数据下派 子线程
                 Thread threadSend = new Thread(DownScheduleHandler);
                 threadSend.Start();
+                //异常日志写入子线程
+                Thread threadErrorInsert = new Thread(db.InsertErrorInfo);
+                threadErrorInsert.Start();
                 //端口监听并接受数据
                 serverListen = new TcpListener(IPAddress.Any, SERVER_PORT_NUMBER);
                 serverListen.Start();
@@ -118,13 +121,12 @@ namespace XczdServer
                 while (keepListening)
                 {
                     TcpClient serverReceive = serverListen.AcceptTcpClient();
-
-                    string clientIP = serverReceive.Client.RemoteEndPoint.ToString();
-                    clientIP = clientIP.Substring(0, clientIP.IndexOf(':'));
-
-                    NetworkStream ns = serverReceive.GetStream();
-                    string strIP = ((IPEndPoint)serverReceive.Client.RemoteEndPoint).Address.ToString();
-                    ReceiveByProtocol(ns, strIP);
+                    NetStructure.NormalDataStruct dataInfo = new NetStructure.NormalDataStruct();
+                    dataInfo.stream = serverReceive.GetStream();;
+                    dataInfo.IpAddress = ((IPEndPoint)serverReceive.Client.RemoteEndPoint).Address.ToString();
+                    //子线程接收和处理信息
+                    Thread ThreadHanler = new Thread(new ParameterizedThreadStart(ThreadHandler));
+                    ThreadHanler.Start(dataInfo); 
                 }
                 //ClientHanlderProductInfo info = new ClientHanlderProductInfo();
                 //info.HandlerTest();
@@ -176,6 +178,14 @@ namespace XczdServer
             }
         }
 
+        private static void ClearRedisServer()
+        {
+            using (ServiceStack.Redis.IRedisClient client = GlobalVariable.RedisClient)
+            {
+                client.FlushAll();
+            }
+        }
+
         private static interfaceClientHanlder GetHandlerByCommand(enumCommandType type)
         {
             interfaceClientHanlder typeResult = null;
@@ -192,7 +202,7 @@ namespace XczdServer
                 case enumCommandType.DOWN_SHEDULE_CLOSE_RESP: typeResult = new ClientHandlerDownScheCloseResp(); break;
                 case enumCommandType.DOWN_SHEDULE_DISCARD_RESP: typeResult = new ClientHandlerDownScheDiscardResp(); break;
 
-                default: typeResult = new ClientHandlerNoneDefault(); break;
+                default: break;//typeResult = new ClientHandlerNoneDefault();
             }
             return typeResult;
         }
@@ -212,6 +222,7 @@ namespace XczdServer
             sw.Start();
             while (already_read < nCount && ns.CanRead && sw.ElapsedMilliseconds < COMMUNICATION_TIME_OUT)
             {
+                ns.ReadTimeout = COMMUNICATION_TIME_OUT;
                 this_read = ns.Read(bt, already_read, nCount - already_read);
                 already_read = already_read + this_read;
                 if (already_read < nCount)
@@ -230,19 +241,25 @@ namespace XczdServer
         private static void ThreadHandler(object objData)
         {
             NetStructure.NormalDataStruct dataInfo = (NetStructure.NormalDataStruct)objData;
-            HandlerByProtocol(dataInfo);
             while (true)
             {
                 try
                 {
                     ReceiveByProtocol(dataInfo.stream, ref dataInfo);
-                    HandlerByProtocol(dataInfo);
+                    HandlerByProtocol(ref dataInfo);
                 }
                 catch (System.IO.IOException ioEx)
                 {
-                    if (!ioEx.Message.Contains("远程主机强迫关闭了一个现有的连接"))
+                    if (!ioEx.Message.Contains("远程主机强迫关闭了一个现有的连接") && !ioEx.Message.Contains("没有正确答复或连接的主机没有反应"))
                     {//忽略设备断开连接的错误，因为可能是设备断电导致，下次上电会自动重连
                         db.InsertErrorInfo(enumSystemErrorCode.TcpMachineStreamException, ioEx, dataInfo.IpAddress, dataInfo.Content);
+                    }
+                    dataInfo.stream.Close();
+                    dataInfo.stream.Dispose();
+                    dataInfo.stream = null;
+                    if (netConnection.Keys.Contains(dataInfo.MachineId))
+                    {
+                        netConnection.Remove(dataInfo.MachineId);
                     }
                     break;
                 }
@@ -253,11 +270,16 @@ namespace XczdServer
             }
         }
 
-        private static void HandlerByProtocol(NetStructure.NormalDataStruct dataInfo)
+        private static void HandlerByProtocol(ref NetStructure.NormalDataStruct dataInfo)
         {
             try
             {
                 interfaceClientHanlder clientHandler = GetHandlerByCommand(dataInfo.Code);
+                if (clientHandler == null)
+                {
+                    db.InsertErrorInfo(enumSystemErrorCode.TcpDefaultHandlerErr, null,  dataInfo.IpAddress, dataInfo.Content);
+                    return;
+                }
                 byte[] byteResult = clientHandler.HandlerClientData(dataInfo.Content);
                 //返回信息
                 byte[] buffResp = null;
@@ -270,6 +292,7 @@ namespace XczdServer
                     ConvertHelper.BytesToInt16(buffResp, buffResp.Length - 2, true) ://设置协议没有设备ID，所以用返回回去的ID
                     ConvertHelper.BytesToInt16(dataInfo.Content, true);//其它协议以设备ID开头
 
+                dataInfo.MachineId = tempMachineId;
                 if (netConnection.ContainsKey(tempMachineId))
                 {
                     netConnection[tempMachineId] = dataInfo.stream;
@@ -284,7 +307,7 @@ namespace XczdServer
                 db.InsertErrorInfo(enumSystemErrorCode.TcpHandlerException, ex, dataInfo.IpAddress, dataInfo.Content);
             }
         }
-        
+
         private static bool ReceiveByProtocol(NetworkStream ns, ref NetStructure.NormalDataStruct dataInfo)
         {
             bool result = false;
@@ -292,7 +315,7 @@ namespace XczdServer
 
             if (!ReadBuffer(ns, Coder.PROTOCOL_HEAD_COUNT, byteHead))
             {
-                db.InsertErrorInfo(enumSystemErrorCode.TcpRecieveErr,null, "数据头读取超时", byteHead);
+                db.InsertErrorInfo(enumSystemErrorCode.TcpRecieveErr, null, "数据头读取超时", byteHead);
                 return result;
             }
             int headIdx = 0;
@@ -326,33 +349,12 @@ namespace XczdServer
             Coder.DecodeData(byteHead, ref dataInfo);
             if (!ReadBuffer(ns, dataInfo.contentLen, dataInfo.Content))
             {
-                db.InsertErrorInfo(enumSystemErrorCode.TcpRecieveErr, null,"数据主体读取超时", byteHead);
+                db.InsertErrorInfo(enumSystemErrorCode.TcpRecieveErr, null, "数据主体读取超时", byteHead);
                 return result;
             }
             result = true;
+
             return result;
         }
-
-        private static void ReceiveByProtocol(NetworkStream ns, string strIP)
-        {
-            byte[] byteHead = new byte[Coder.PROTOCOL_HEAD_COUNT];
-            try
-            {
-                NetStructure.NormalDataStruct dataInfo = new NetStructure.NormalDataStruct();
-                if(!ReceiveByProtocol(ns, ref dataInfo))
-                    return;
-                
-                dataInfo.stream = ns;
-                dataInfo.IpAddress = strIP;
-                //子线程处理信息
-                Thread ThreadHanler = new Thread(new ParameterizedThreadStart(ThreadHandler));
-                ThreadHanler.Start(dataInfo); 
-            }
-            catch (Exception ex)
-            {
-                db.InsertErrorInfo(enumSystemErrorCode.TcpRecieveErr, ex, strIP, byteHead);
-            }
-        }
-        
     }
 }

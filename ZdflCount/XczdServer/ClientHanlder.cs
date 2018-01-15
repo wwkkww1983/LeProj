@@ -149,34 +149,41 @@ namespace XczdServer
         /// <returns></returns>
         private HeartBreak exchangeData(NetStructure.HeartBreak info, Machines machine)
         {
+            int channel = info.ChannelInfo;
+            int machineId = machine.ID;
+            string machineName = machine.Name;
+
             return new HeartBreak()
             {
                 DateCreate = DateTime.Now,
-                ChannelInfo = info.ChannelInfo,
-                MachineId = machine.ID,
-                MachineName = machine.Number
+                ChannelInfo = channel,
+                MachineId = machineId,
+                MachineName = machineName
             };
         }
 
         private void RefreshOnlineInfo(Machines machine)
         {
-            const string ONLINE_FACTRORY_ROOM = "ONLINEFACTRORYROOM", PRE_ONLINE_MACHINE = "PREONLINEMACHINE", 
+            const string ONLINE_FACTRORY_ROOM = "ONLINEFACTORYROOM", PRE_ROOM_NAME_NUMBER = "PREROOMNAMENUMBER", PRE_ONLINE_MACHINE = "PREONLINEMACHINE",
                          PRE_MACHINE_NAME_NUMBER = "PREMACHINENAMENUMBER", PRE_ONLINE_TIME = "PREONLINETIME";
 
-            ServiceStack.Redis.IRedisClient client = GlobalVariable.RedisClient;
-            HashSet<string> roomList = client.GetAllItemsFromSet(ONLINE_FACTRORY_ROOM);
-            if (!roomList.Contains(machine.RoomName))
+            using (ServiceStack.Redis.IRedisClient client = GlobalVariable.RedisClient)
             {
-                client.AddItemToSet(ONLINE_FACTRORY_ROOM, machine.RoomName);
+                HashSet<string> roomList = client.GetAllItemsFromSet(ONLINE_FACTRORY_ROOM);
+                if (!roomList.Contains(machine.RoomNumber))
+                {
+                    client.AddItemToSet(ONLINE_FACTRORY_ROOM, machine.RoomNumber);
+                    client.Set<string>(PRE_ROOM_NAME_NUMBER + machine.RoomNumber, machine.RoomName);
+                }
+                string strMachineValue = PRE_ONLINE_MACHINE + machine.RoomNumber;
+                HashSet<string> machineList = client.GetAllItemsFromSet(strMachineValue);
+                if (!machineList.Contains(machine.Number))
+                {
+                    client.AddItemToSet(strMachineValue, machine.Number);
+                    client.Set<string>(PRE_MACHINE_NAME_NUMBER + machine.Number, machine.Name);
+                }
+                client.Set<long>(PRE_ONLINE_TIME + machine.Number, DateTime.Now.Ticks);
             }
-            string strMachineValue = PRE_ONLINE_MACHINE + machine.RoomName;
-            HashSet<string> machineList = client.GetAllItemsFromSet(strMachineValue);
-            if (!machineList.Contains(machine.Number))
-            {
-                client.AddItemToSet(strMachineValue, machine.Number);
-                client.Set<string>(PRE_MACHINE_NAME_NUMBER + machine.Number, machine.Name);
-            }
-            client.Set<long>(PRE_ONLINE_TIME + machine.Number, DateTime.Now.Ticks);
         }
 
         public byte[] HandlerClientData(byte[] buff)
@@ -184,11 +191,16 @@ namespace XczdServer
             DbHandler db = new DbHandler();
             NetStructure.HeartBreak outInfo = this.DecodeData(buff);
             Machines machine = db.SelectMachine(outInfo.MachineId);
-            HeartBreak innerInfo = this.exchangeData(outInfo, machine);
-            //记录原始数据
-            db.InsertHeartBreak(innerInfo);
+
+            if (machine == null)
+            {
+                throw new Exception(outInfo.MachineId.ToString());
+            }
             //记录设备状态
             RefreshOnlineInfo(machine);
+            ////记录原始数据
+            //HeartBreak innerInfo = this.exchangeData(outInfo, machine);
+            //db.InsertHeartBreak(innerInfo);
 
             byte[] resp = { };
             return resp;
@@ -437,21 +449,15 @@ namespace XczdServer
         {
             byte[] buffResp = { 1 };
             DbHandler db = new DbHandler();
-            try
-            {
-                NetStructure.DeviceMaterial outInfo = this.DecodeData(buff);
-                Machines machine = db.SelectMachine(outInfo.MachineId);
-                Schedules schedule = db.SelectSchedule(outInfo.ScheduleNumber);
-                MachineCallMaterial innerInfo = this.exchangeData(machine, schedule);
-                //记录原始数据
-                db.InsertMachineCallMaterial(innerInfo);
+            NetStructure.DeviceMaterial outInfo = this.DecodeData(buff);
+            Machines machine = db.SelectMachine(outInfo.MachineId);
+            Schedules schedule = db.SelectSchedule(outInfo.ScheduleNumber);
+            MachineCallMaterial innerInfo = this.exchangeData(machine, schedule);
+            //记录原始数据
+            db.InsertMachineCallMaterial(innerInfo);
 
-                buffResp[0] = 0;
-            }
-            catch
-            {
+            buffResp[0] = 0;
 
-            }
             return buffResp;
         }
 
@@ -505,21 +511,24 @@ namespace XczdServer
         /// <returns></returns>
         private MachineStartEnd exchangeData(NetStructure.DeviceStartEnd outInfo, Machines machine, Schedules schedule, UserProfile userInfo)
         {
-            return new MachineStartEnd()
+            MachineStartEnd startEndItem = new MachineStartEnd()
             {
                 MachineNumber = machine.Number,
                 MachineId = machine.ID,
                 MachineName = machine.Name,
                 RoomId = machine.RoomID,
-                RoomNumber = machine.RoomName,
-                OrderId = schedule.OrderId,
-                OrderNumber = schedule.OrderNumber,
-                ScheduleId = schedule.ID,
-                SchueduleNumber = schedule.Number,
-                UserId = userInfo == null ? 0 : userInfo.UserId,
-                UserNumber = userInfo == null ? "" : userInfo.UserName,
-                Status = outInfo.Status
+                RoomNumber = machine.RoomName
             };
+
+            startEndItem.OrderId = schedule.OrderId;
+            startEndItem.OrderNumber = schedule.OrderNumber;
+            startEndItem.ScheduleId = schedule.ID;
+            startEndItem.SchueduleNumber = schedule.Number;
+            startEndItem.UserId = userInfo == null ? 0 : userInfo.UserId;
+            startEndItem.UserNumber = userInfo == null ? "" : userInfo.UserName;
+            startEndItem.Status = outInfo.Status;
+
+            return startEndItem;
         }
 
 
@@ -527,47 +536,41 @@ namespace XczdServer
         {
             byte[] buffResp = { 1 };
             DbHandler db = new DbHandler();
-            try
-            {
-                DateTime currentTime = DateTime.Now;
-                NetStructure.DeviceStartEnd outInfo = this.DecodeData(buff);
-                Machines machine = db.SelectMachine(outInfo.MachineId);
-                Schedules schedule = db.SelectSchedule(outInfo.ScheduleNumber);
-                UserProfile userInfo = db.SelectUser(outInfo.UserNumber);
-                MachineStartEnd innerInfo = this.exchangeData(outInfo, machine, schedule, userInfo);
-                //记录原始数据
+            DateTime currentTime = DateTime.Now;
+            NetStructure.DeviceStartEnd outInfo = this.DecodeData(buff);
+            Machines machine = db.SelectMachine(outInfo.MachineId);
+            Schedules schedule = db.SelectSchedule(outInfo.ScheduleNumber);
+            UserProfile userInfo = db.SelectUser(outInfo.UserNumber);
+            MachineStartEnd innerInfo = this.exchangeData(outInfo, machine, schedule, userInfo);
+            //记录原始数据
 
-                if (outInfo.Status == enumDeviceWorkStatus.Start)
+            if (outInfo.Status == enumDeviceWorkStatus.Start)
+            {
+                innerInfo.DateStart = currentTime;
+                db.InsertMachineStartEnd(innerInfo);
+            }
+            else
+            {
+                int startId = db.GetStartEndID(new MachineStartEnd()
                 {
-                    innerInfo.DateStart = currentTime;
+                    MachineId = outInfo.MachineId,
+                    SchueduleNumber = outInfo.ScheduleNumber,
+                    UserNumber = outInfo.UserNumber,
+                    Status = enumDeviceWorkStatus.Start
+                });
+                if (startId == 0)
+                {
+                    innerInfo.DateEnd = currentTime;
                     db.InsertMachineStartEnd(innerInfo);
                 }
                 else
                 {
-                    int startId = db.GetStartEndID(new MachineStartEnd()
-                    {
-                        MachineId = outInfo.MachineId,
-                        SchueduleNumber = outInfo.ScheduleNumber,
-                        UserNumber = outInfo.UserNumber,
-                        Status = enumDeviceWorkStatus.Start
-                    });
-                    if (startId == 0)
-                    {
-                        innerInfo.DateEnd = currentTime;
-                        db.InsertMachineStartEnd(innerInfo);
-                    }
-                    else
-                    {
-                        db.FinishStartStatus(startId);
-                    }
+                    db.FinishStartStatus(startId);
                 }
-
-                buffResp[0] = 0;
             }
-            catch
-            {
 
-            }
+            buffResp[0] = 0;
+
             return buffResp;
         }
 
@@ -606,13 +609,12 @@ namespace XczdServer
         {
             NetStructure.ClientResp outInfo = this.DecodeData(buff);
 
-            ServiceStack.Redis.IRedisClient client = GlobalVariable.RedisClient;
-            string strUserKey = client.Get<string>(GlobalVariable.PRE_INFO_TYPE_CREATE + outInfo.MachineId.ToString());
+            using (ServiceStack.Redis.IRedisClient client = GlobalVariable.RedisClient)
+            {
+                string strUserKey = client.Get<string>(GlobalVariable.PRE_INFO_TYPE_CREATE + outInfo.MachineId.ToString());
 
-            client.Set<int>(GlobalVariable.PRE_RESP_DOWN_INFO + strUserKey, (int)outInfo.RespResult);
-            client.Remove(GlobalVariable.PRE_DOWN_INFO_MACHINE + strUserKey);
-            client.Remove(GlobalVariable.PRE_DOWN_INFO + strUserKey);
-
+                client.Set<int>(GlobalVariable.PRE_RESP_DOWN_INFO + strUserKey, (int)outInfo.RespResult);
+            }
             return null;
         }
 
@@ -651,13 +653,11 @@ namespace XczdServer
         {
             NetStructure.ClientResp outInfo = this.DecodeData(buff);
 
-            ServiceStack.Redis.IRedisClient client = GlobalVariable.RedisClient;
-            string strUserKey = client.Get<string>(GlobalVariable.PRE_INFO_TYPE_CLOSE + outInfo.MachineId.ToString());
-
-            client.Set<int>(GlobalVariable.PRE_RESP_DOWN_INFO + strUserKey, (int)outInfo.RespResult);
-            client.Remove(GlobalVariable.PRE_DOWN_INFO_MACHINE + strUserKey);
-            client.Remove(GlobalVariable.PRE_DOWN_INFO + strUserKey);
-
+            using (ServiceStack.Redis.IRedisClient client = GlobalVariable.RedisClient)
+            {
+                string strUserKey = client.Get<string>(GlobalVariable.PRE_INFO_TYPE_CLOSE + outInfo.MachineId.ToString());
+                client.Set<int>(GlobalVariable.PRE_RESP_DOWN_INFO + strUserKey, (int)outInfo.RespResult);
+            }
             return null;
         }
 
@@ -696,13 +696,11 @@ namespace XczdServer
         {
             NetStructure.ClientResp outInfo = this.DecodeData(buff);
 
-            ServiceStack.Redis.IRedisClient client = GlobalVariable.RedisClient;
-            string strUserKey = client.Get<string>(GlobalVariable.PRE_INFO_TYPE_DISCARD + outInfo.MachineId.ToString());
-
-            client.Set<int>(GlobalVariable.PRE_RESP_DOWN_INFO + strUserKey, (int)outInfo.RespResult);
-            client.Remove(GlobalVariable.PRE_DOWN_INFO_MACHINE + strUserKey);
-            client.Remove(GlobalVariable.PRE_DOWN_INFO + strUserKey);
-
+            using (ServiceStack.Redis.IRedisClient client = GlobalVariable.RedisClient)
+            {
+                string strUserKey = client.Get<string>(GlobalVariable.PRE_INFO_TYPE_DISCARD + outInfo.MachineId.ToString());
+                client.Set<int>(GlobalVariable.PRE_RESP_DOWN_INFO + strUserKey, (int)outInfo.RespResult);
+            }
             return null;
         }
 

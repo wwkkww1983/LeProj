@@ -7,8 +7,8 @@
 <h2>@ViewBag.Title</h2>
 
 <div>
-    开始日期：<input type="date" id="startDate"  />
-    结束日期：<input type="date" id="endDate"/>
+    开始日期：<input type="date" id="startDate" value="@ViewData["startDate"]" />
+    结束日期：<input type="date" id="endDate" value="@ViewData["endDate"]"/>
 
     <button class="date-btn-query"> 查询</button>
 </div>
@@ -16,7 +16,7 @@
     <thead>   
         <th>@Html.DisplayNameFor(model => model.StaffName)</th>
         <th>@Html.DisplayNameFor(model => model.StaffNumber)</th>
-        <th>@Html.DisplayNameFor(model => model.MachineNumber)</th>  
+        <th>@Html.DisplayNameFor(model => model.MachineName)</th>  
         <th>@Html.DisplayNameFor(model => model.RoomName)</th>
         <th>@Html.DisplayNameFor(model => model.ScheduleNumber)</th>
         <th>@Html.DisplayNameFor(model => model.OrderNumber)</th>  
@@ -31,7 +31,7 @@
          <tr> 
              <td>@item.StaffName</td> 
               <td>@item.StaffNumber</td> 
-              <td>@item.MachineNumber</td> 
+              <td>@item.MachineName</td> 
               <td>@item.RoomName</td> 
               <td>@item.ScheduleNumber</td> 
               <td>@item.OrderNumber</td> 

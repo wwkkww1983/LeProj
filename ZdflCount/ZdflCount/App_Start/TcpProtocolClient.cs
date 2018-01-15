@@ -19,7 +19,7 @@ namespace ZdflCount.App_Start
         private static Models.DbTableDbContext db = new Models.DbTableDbContext();
         private static TcpListener serverListen = null;
         private static Dictionary<int, NetworkStream> netConnection = new Dictionary<int, NetworkStream>();
-        private static ServiceStack.Redis.RedisClient client = Constants.RedisClient;
+        private static ServiceStack.Redis.IRedisClient client = Constants.RedisClient;
 
         public static bool KeepListening
         {
@@ -32,7 +32,7 @@ namespace ZdflCount.App_Start
             string strTempKey = PRE_RESP_DOWN_INFO + strKey;
             enumErrorCode sendResult;
             int i = 0, iMax = 50;
-            
+
             for (; i < iMax; i++)
             {
                 intResp = client.Get<int>(strTempKey);
@@ -46,11 +46,12 @@ namespace ZdflCount.App_Start
                     break;
                 }
             }
-            if(intResp == 0)
+            if (intResp == 0)
             {
                 sendResult = enumErrorCode.DeviceReciveTimeOut;
             }
-            else{
+            else
+            {
                 sendResult = (enumErrorCode)intResp;
                 client.Remove(strTempKey);
             }

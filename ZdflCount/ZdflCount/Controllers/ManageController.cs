@@ -11,10 +11,10 @@ namespace ZdflCount.Controllers
     [App_Start.UserLoginAuthentication]
     public class ManageController : Controller
     {
-        private const string ONLINE_FACTRORY_ROOM = "ONLINEFACTRORYROOM", PRE_ONLINE_MACHINE = "PREONLINEMACHINE",
+        private const string ONLINE_FACTRORY_ROOM = "ONLINEFACTORYROOM", PRE_ROOM_NAME_NUMBER = "PREROOMNAMENUMBER", PRE_ONLINE_MACHINE = "PREONLINEMACHINE",
                             PRE_MACHINE_NAME_NUMBER = "PREMACHINENAMENUMBER", PRE_ONLINE_TIME = "PREONLINETIME";
-        private DbTableDbContext db = new DbTableDbContext(); 
-        private static ServiceStack.Redis.RedisClient client = Constants.RedisClient;
+        private DbTableDbContext db = new DbTableDbContext();
+        private static ServiceStack.Redis.IRedisClient client = Constants.RedisClient;
 
         #region 设备
         [UserRoleAuthentication(Roles = "系统管理员")]
@@ -43,6 +43,13 @@ namespace ZdflCount.Controllers
             machine.RemarkInfo = RemarkInfo;
             db.SaveChanges();
 
+            string strName = client.Get<string>(PRE_MACHINE_NAME_NUMBER + machine.Number);
+            if (strName != null && strName != string.Empty)
+            {
+                client.Set<string>(PRE_MACHINE_NAME_NUMBER + machine.Number, Name);
+            }
+                
+
             return RedirectToAction("Machines");
         }
 
@@ -54,6 +61,38 @@ namespace ZdflCount.Controllers
         public ActionResult Rooms()
         {
             return View(db.FactoryRoom);
+        }
+
+        [UserRoleAuthentication(Roles = "系统管理员")]
+        public ActionResult RoomCreate()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [UserRoleAuthentication(Roles = "系统管理员")]
+        public ActionResult RoomCreate(FactoryRoom room)
+        {
+            IEnumerable<FactoryRoom> tempRoom = from item in db.FactoryRoom
+                                                where item.RoomNumber == room.RoomNumber || item.RoomName == room.RoomName
+                                                select item;
+            if (tempRoom.Count() > 0)
+            {
+                ViewData["error"] = "【车间编号】或【车间名称】 重复";
+                return View(room);
+            }
+            //车间增加
+            db.FactoryRoom.Add(room);
+            db.SaveChanges();
+            //添加超级管理员
+            db.UsersInRooms.Add(new UsersInRooms()
+            {
+                RoomId = room.RoomID,
+                UserId = 1
+            });
+            db.SaveChanges();
+
+            return RedirectToAction("Rooms");
         }
 
         [UserRoleAuthentication(Roles = "系统管理员")]
@@ -101,13 +140,7 @@ namespace ZdflCount.Controllers
             db.SaveChanges(); 
             if (oldRoomName != room.RoomName)
             {
-                client.RemoveItemFromSet(ONLINE_FACTRORY_ROOM, dbRoom.RoomName);
-                HashSet<string> redisMachineList = client.GetAllItemsFromSet(PRE_ONLINE_MACHINE + dbRoom.RoomName);
-                foreach (string machine in redisMachineList)
-                {
-                    client.Remove(PRE_ONLINE_TIME + machine);
-                    client.RemoveItemFromSet(PRE_ONLINE_MACHINE + room, machine);
-                }
+                client.Set<string>(PRE_ONLINE_MACHINE + dbRoom.RoomNumber, room.RoomName);
             }
 
             return RedirectToAction("Rooms");
@@ -121,7 +154,7 @@ namespace ZdflCount.Controllers
         {
             ViewData["ServerStatus"] = TcpProtocolClient.KeepListening;
             ViewData["error"] = error;
-            
+
             return View(db.ErrorInfo.OrderBy(item => item.ErrorType).OrderByDescending(item => item.ID).Take(20));
         }
 
@@ -186,14 +219,14 @@ namespace ZdflCount.Controllers
         {
             JsonResult result = new JsonResult();
             string horizon = Request.Form["horizon"], vertical = Request.Form["vertical"], userNumber = Request.Form["userNumber"] ,
-                userName = Request.Form["userName"], machine = Request.Form["machine"],order = Request.Form["order"],room = Request.Form["room"];
-            int roomId = room == null ? 0 : int.Parse(room);
+                userName = Request.Form["userName"], strMachine = Request.Form["machine"],order = Request.Form["order"],room = Request.Form["room"];
+            int roomId = room == null ? 0 : int.Parse(room), machineId = strMachine == null ? 0 : int.Parse(strMachine);
             DateTime endDateQuery = endDate.Date.AddDays(1);
             IEnumerable<StatisticInfo> infoList = from item in db.Statistics
                                                   where item.DateOut >= startDate.Date && item.DateOut <= endDateQuery &&
                                                           (string.IsNullOrEmpty(userNumber) || item.StaffNumber == userNumber) &&
                                                           (string.IsNullOrEmpty(userName) || item.StaffName == userName) &&
-                                                          (string.IsNullOrEmpty(machine) || item.MachineNumber == machine) &&
+                                                          (string.IsNullOrEmpty(strMachine) || item.MachineId == machineId) &&
                                                           (string.IsNullOrEmpty(order) || item.OrderNumber == order) &&
                                                           (string.IsNullOrEmpty(room) || item.RoomID == roomId)
                                                    //group by (case 
@@ -207,7 +240,7 @@ namespace ZdflCount.Controllers
                 switch (horizon)
                 {
                     case "staff": strKey = item.StaffName; break;
-                    case "machine": strKey = item.MachineNumber; break;
+                    case "machine": strKey = item.MachineName; break;
                     case "order": strKey = item.OrderNumber; break;
                     case "room": strKey = item.RoomName; break;
                     case "factory": strKey = item.Factory; break;
@@ -249,18 +282,16 @@ namespace ZdflCount.Controllers
         public ActionResult ProductRecord()
         {
             object model = null;
-            string strStartDate = Request["startDate"], strEndDate = Request["endDate"];
-            if (strStartDate != null && strEndDate != null)
-            {
-                DateTime startDate = DateTime.Parse(strStartDate), endDate = DateTime.Parse(strEndDate).AddDays(1);
-                model = from item in db.ProductInfo
-                        where item.DateCreate >= startDate && item.DateCreate <= endDate
-                        select item;
-            }
-            else
-            {
-                model = db.ProductInfo.OrderByDescending(item => item.ID).Take(50);
-            }
+            string strStartDate = Common.getStartDate(Request["startDate"]), strEndDate = Common.getEndDate(Request["endDate"]);
+            DateTime startDate = DateTime.Parse(strStartDate), endDate = DateTime.Parse(strEndDate).AddDays(1);
+
+            model = (from item in db.ProductInfo
+                     where item.DateCreate >= startDate && item.DateCreate <= endDate
+                     orderby item.ID descending
+                     select item).Take(Constants.ITEM_COUNT_EACH_PAGE_DEFAULT);
+
+            ViewData["startDate"] = strStartDate;
+            ViewData["endDate"] = strEndDate;
             return View(model);
         }
         #endregion
@@ -269,19 +300,17 @@ namespace ZdflCount.Controllers
         public ActionResult StatisticRecord()
         {
             object model = null;
-            string strStartDate = Request["startDate"], strEndDate = Request["endDate"];
-            if (strStartDate != null && strEndDate != null)
-            {
-                DateTime startDate = DateTime.Parse(strStartDate), endDate = DateTime.Parse(strEndDate).AddDays(1);
-                model = from item in db.Statistics
-                        where item.DateOut >= startDate && item.DateOut <= endDate
-                        select item;
-            }
-            else
-            {
-                model = db.Statistics.OrderByDescending(item => item.ID).Take(50);
-            }
-            return View(db.Statistics.OrderByDescending(item => item.ID).Take(50));
+            string strStartDate = Common.getStartDate(Request["startDate"]), strEndDate = Common.getEndDate(Request["endDate"]);
+            DateTime startDate = DateTime.Parse(strStartDate), endDate = DateTime.Parse(strEndDate).AddDays(1);
+
+            model = (from item in db.Statistics
+                    where item.DateOut >= startDate && item.DateOut <= endDate
+                    orderby item.ID descending
+                     select item).Take(Constants.ITEM_COUNT_EACH_PAGE_DEFAULT);
+
+            ViewData["startDate"] = strStartDate;
+            ViewData["endDate"] = strEndDate;
+            return View(model);
         }
         #endregion 
 
@@ -301,20 +330,20 @@ namespace ZdflCount.Controllers
                 HashSet<string> roomList = client.GetAllItemsFromSet(ONLINE_FACTRORY_ROOM);
                 foreach (string room in roomList)
                 {
-                    FactoryRoom roomItem = db.FactoryRoom.FirstOrDefault(item => item.RoomName == room);
+                    FactoryRoom roomItem = db.FactoryRoom.FirstOrDefault(item => item.RoomNumber == room);
                     DeviceStatus tempStatus = new DeviceStatus()
                     {
-                        RoomName = room,
+                        RoomName = client.Get<string>(PRE_ROOM_NAME_NUMBER + room),
                         MachineList = new Dictionary<string, DateTime>()
                     };
                     HashSet<string> machineList = client.GetAllItemsFromSet(PRE_ONLINE_MACHINE + room);
                     foreach (string machine in machineList)
-                    {                        
+                    {
                         DateTime lastTime = new DateTime(client.Get<long>(PRE_ONLINE_TIME + machine));
                         if (CheckValidTime(lastTime))
                         {
                             string strName = client.Get<string>(PRE_MACHINE_NAME_NUMBER + machine);
-                            tempStatus.MachineList.Add(strName??machine, lastTime);
+                            tempStatus.MachineList.Add(strName ?? machine, lastTime);
                         }
                         else
                         {
@@ -322,17 +351,17 @@ namespace ZdflCount.Controllers
                             client.RemoveItemFromSet(PRE_ONLINE_MACHINE + room, machine);
                         }
                     }
-                    if (machineList.Count < 1)
+                    if (tempStatus.MachineList.Count < 1)
                     {
                         client.RemoveItemFromSet(ONLINE_FACTRORY_ROOM, room);
                     }
                     IEnumerable<Machines> roomMachines = from item in db.Machines
                                                          where item.RoomID == roomItem.RoomID
                                                          select item;
-                    List<string> freeMachineList = new List<string> ();
+                    List<string> freeMachineList = new List<string>();
                     foreach (Machines item in roomMachines)
                     {
-                        if (!machineList.Contains(item.Name))
+                        if (!tempStatus.MachineList.Keys.Contains(item.Name) && !tempStatus.MachineList.Keys.Contains(item.Number))
                             freeMachineList.Add(item.Name);
                     }
                     tempStatus.OfflineMachines = freeMachineList.ToArray();
@@ -359,11 +388,15 @@ namespace ZdflCount.Controllers
                     IEnumerable<LastHeartBreak> lastItemList = from tempMachine in db.LastHeartBreak
                                                                where tempMachine.RoomID == device.RoomID
                                                                select tempMachine;
+                    List<string> freeMachineList = new List<string>();
                     foreach (LastHeartBreak item in lastItemList)
                     {
                         if (CheckValidTime(item.DateRefresh))
                             device.MachineList.Add(item.MachineName, item.DateRefresh);
+                        else
+                            freeMachineList.Add(item.MachineName);
                     }
+                    device.OfflineMachines = freeMachineList.ToArray();
                 }
             }
             return deviceStatusList;
@@ -460,20 +493,19 @@ namespace ZdflCount.Controllers
         #endregion
 
         #region 设备启停
-        private object getMachineStartEndData(string strStartDate , string strEndDate)
+        private object getMachineStartEndData(string start, string end)
         {
             object model = null;
-            if (strStartDate != null && strEndDate != null)
-            {
-                DateTime startDate = DateTime.Parse(strStartDate), endDate = DateTime.Parse(strEndDate).AddDays(1);
-                model = from item in db.MachineStartEnd
-                        where item.DateEnd >= startDate && item.DateEnd <= endDate
-                        select item;
-            }
-            else
-            {
-                model = db.MachineStartEnd.OrderByDescending(item => item.ID).Take(50);
-            }
+            string strStartDate = Common.getStartDate(start), strEndDate = Common.getEndDate(end);
+            DateTime startDate = DateTime.Parse(strStartDate), endDate = DateTime.Parse(strEndDate).AddDays(1);
+
+            model = (from item in db.MachineStartEnd
+                     where item.DateEnd >= startDate && item.DateEnd <= endDate
+                     orderby item.ID descending
+                     select item).Take(Constants.ITEM_COUNT_EACH_PAGE_DEFAULT);
+
+            ViewData["startDate"] = strStartDate;
+            ViewData["endDate"] = strEndDate;
             return model;
         }
 

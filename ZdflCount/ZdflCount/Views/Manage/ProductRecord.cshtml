@@ -7,8 +7,8 @@
 <h2>@ViewBag.Title</h2>
 
 <div>
-    开始日期：<input type="date" id="startDate"  />
-    结束日期：<input type="date" id="endDate"/>
+    开始日期：<input type="date" id="startDate"  value="@ViewData["startDate"]" />
+    结束日期：<input type="date" id="endDate" value="@ViewData["endDate"]"/>
 
     <button class="date-btn-query"> 查询</button>
 </div>

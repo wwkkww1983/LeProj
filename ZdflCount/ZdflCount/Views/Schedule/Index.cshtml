@@ -12,8 +12,8 @@
     @Html.TextBox("order","", new {placeholder="请输入订单号" }) 
     @Html.Action("RoomsDownList")
     <br />
-    开始日期：<input type="date" id="startDate"  />
-    结束日期：<input type="date" id="endDate"/>
+    开始日期：<input type="date" id="startDate" value="@ViewData["startDate"]" />
+    结束日期：<input type="date" id="endDate"/ value="@ViewData["endDate"]">
     <button class="date-btn-query"> 查询</button>
 </div>
 

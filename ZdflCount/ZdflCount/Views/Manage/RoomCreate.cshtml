@@ -1,0 +1,73 @@
+﻿@model ZdflCount.Models.FactoryRoom
+
+@{
+    ViewBag.Title = "新增车间";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>详细信息</legend>
+        @Html.HiddenFor(model => model.RoomID)
+        
+        <div class="display-label">
+                @Html.LabelFor(model => model.RoomName)
+        </div>
+        <div class="display-field">
+            ： @Html.TextBoxFor(model => model.RoomName)
+        </div>    
+        <div class="display-label">
+                @Html.LabelFor(model => model.RoomNumber)
+        </div>
+        <div class="display-field">
+            ：@Html.TextBoxFor(model => model.RoomNumber)
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.RepairNumber)
+        </div>
+        <div class="display-field">
+            ：@Html.TextBoxFor(model => model.RepairNumber,new {Value="2399"})
+        </div>
+        <div class="error-message-ur-fieldset error-message">@ViewData["error"]</div>
+
+        <div class="display-label">
+                @Html.LabelFor(model => model.FactoryName)
+        </div>
+        <div class="display-field">
+            ：@Html.TextBoxFor(model => model.FactoryName,new {Value="许昌振德"})
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.ManagerName)
+        </div>
+        <div class="display-field">
+            ：@Html.TextBoxFor(model => model.ManagerName) 
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.ManagerPhone)
+        </div>
+        <div class="display-field">
+            ：@Html.TextBoxFor(model => model.ManagerPhone)
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.Address)
+        </div>
+        <div class="display-field">
+            ：@Html.TextBoxFor(model => model.Address)
+        </div>
+        <div class="display-label">
+                @Html.LabelFor(model => model.Remarks)
+        </div>
+        <div class="display-field">
+            ： @Html.TextAreaFor(model => model.Remarks, new { rows = "8", style = "width:99%"})
+        </div>
+
+        <input type="submit" value="保存新车间"/>
+    </fieldset>
+}
+
+<div class="left-outof-table">
+    @Html.ActionLink("返回车间列表", "Rooms")
+</div>

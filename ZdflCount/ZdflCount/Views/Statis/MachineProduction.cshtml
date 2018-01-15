@@ -3,21 +3,22 @@
     ViewBag.Title = "设备产量统计表";
 }
 
-<h2>员工产量统计表</h2>
+<h2>设备产量统计表</h2>
 
 
 <div>
-    开始日期：<input type="date" id="startDate"  />
-    结束日期：<input type="date" id="endDate"/>
+    开始日期：<input type="date" id="startDate" value="@ViewData["startDate"]"/>
+    结束日期：<input type="date" id="endDate" value="@ViewData["endDate"]"/>
 
     <button class="date-btn-query"> 查询</button>
 </div>
 <table id="tableOrder"  border="1"  width="100%" > 
     <thead>    
         <th>@Html.DisplayNameFor(model => model.RoomName)</th>
-        <th>@Html.DisplayNameFor(model => model.MachineNumber)</th>
+        <th>@Html.DisplayNameFor(model => model.MachineName)</th>
         <th>@Html.DisplayNameFor(model => model.OrderNumber)</th>  
         <th>@Html.DisplayNameFor(model => model.Finish)</th>  
+        <th>@Html.DisplayNameFor(model => model.Valid)</th>  
         <th>@Html.DisplayNameFor(model => model.Exception)</th>
 
     </thead>   
@@ -25,9 +26,10 @@
     {
          <tr> 
               <td>@item.RoomName</td> 
-              <td>@item.MachineNumber</td>  
+              <td>@item.MachineName</td>  
               <td>@item.OrderNumber</td> 
               <td>@item.Finish</td> 
+              <td>@item.Valid</td> 
               <td>@item.Exception</td> 
          </tr>   
     }                     
