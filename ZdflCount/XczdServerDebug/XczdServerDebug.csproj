@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{00A12152-5AF9-4FC2-8CA8-2C75DB1298C5}</ProjectGuid>
+    <ProjectGuid>{9C878D12-51D3-4674-A200-1D51098053E9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>XczdServer</RootNamespace>
