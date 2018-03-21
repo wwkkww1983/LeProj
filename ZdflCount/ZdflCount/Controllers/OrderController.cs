@@ -6,6 +6,7 @@ using System.Runtime.Serialization.Json;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Transactions;
 using ZdflCount.Models;
 using ZdflCount.App_Start;
 
@@ -95,12 +96,15 @@ namespace ZdflCount.Controllers
         public ActionResult Index()
         {
             int[] rooms = roomControl.GetRoomsForUser(Convert.ToInt32(Session["UserID"]));
-            var orders = from item in db.Orders
-                            where rooms.Contains(item.RoomId)
-                            orderby item.Status ascending, item.OrderId descending
-                            select item;
+            using (var t = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadUncommitted }))
+            {
+                var orders = (from item in db.Orders
+                             where rooms.Contains(item.RoomId)
+                             orderby item.Status ascending, item.OrderId descending
+                             select item).ToList();
 
-            return View(orders);
+                return View(orders);
+            }
         }
         #endregion 
 
@@ -110,15 +114,19 @@ namespace ZdflCount.Controllers
 
         public ActionResult Detail(int id, enumErrorCode error = enumErrorCode.NONE)
         {
-            Orders order = db.Orders.Find(id);
-            if (order == null)
+            Orders order = null;
+            using (var t = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadUncommitted }))
             {
-                return HttpNotFound();
-            }
-            int userId = Convert.ToInt32(Session["UserID"]);
-            if (!roomControl.CheckUserInRoom(userId, order.RoomId))
-            {
-                return RedirectToAction("Login", "Account");
+                order = db.Orders.Find(id);
+                if (order == null)
+                {
+                    return HttpNotFound();
+                }
+                int userId = Convert.ToInt32(Session["UserID"]);
+                if (!roomControl.CheckUserInRoom(userId, order.RoomId))
+                {
+                    return RedirectToAction("Login", "Account");
+                }
             }
 
             ScheduleOrder tempSchedule = new ScheduleOrder();
@@ -177,11 +185,14 @@ namespace ZdflCount.Controllers
         public JsonResult GetOrderInfo(string order)
         {
             JsonResult result = new JsonResult();
-            Orders tempCurrentOrder = db.Orders.FirstOrDefault(item => item.OrderNumber == order);
-            if (tempCurrentOrder != null)
+            using (var t = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadUncommitted }))
             {
-                result.Data = new { error = ORDER_EXISTS_ERROR };
-                return result;
+                Orders tempCurrentOrder = db.Orders.FirstOrDefault(item => item.OrderNumber == order);
+                if (tempCurrentOrder != null)
+                {
+                    result.Data = new { error = ORDER_EXISTS_ERROR };
+                    return result;
+                }
             }
             result.Data = new { error = ORDER_RIGHT_ERROR };
             //获取订单数据
@@ -266,9 +277,9 @@ namespace ZdflCount.Controllers
                 strIds += item.ID + ";";
             }
             order.MaterialInfo = strIds.Substring(0, strIds.Length - 1);
+            
             db.Orders.Add(order);
-
-            db.SaveChanges();
+            db.SaveChanges();            
 
             return RedirectToAction("Detail", new { id = order.OrderId, error = enumErrorCode.HandlerSuccess });
         }
@@ -279,22 +290,25 @@ namespace ZdflCount.Controllers
 
         public ActionResult Edit(int id)
         {
-            Orders order = db.Orders.Find(id);
-
-            ScheduleOrder tempSchedule = new ScheduleOrder();
-            tempSchedule.GetOrderMaterial(order.MaterialInfo);
-            string[] materialArray = tempSchedule.MaterialList.Values.ToArray();
-            ViewData["materials"] = materialArray;
-
-            List<SelectListItem> materialInfos = new List<SelectListItem>();
-            materialInfos.Add(new SelectListItem { Text = "不新增物料", Value = "0" });
-            foreach (Materials item in db.Materials)
+            using (var t = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadUncommitted }))
             {
-                materialInfos.Add(new SelectListItem { Text = string.Format(App_Start.Constants.MACHINE_MATERIAL_STRUCTURE, item.Code, item.Unit, item.DetailInfo), Value = item.ID.ToString() });
-            }
-            ViewData["materialInfos"] = materialInfos;
+                Orders order = db.Orders.Find(id);
 
-            return View(order);
+                ScheduleOrder tempSchedule = new ScheduleOrder();
+                tempSchedule.GetOrderMaterial(order.MaterialInfo);
+                string[] materialArray = tempSchedule.MaterialList.Values.ToArray();
+                ViewData["materials"] = materialArray;
+
+                List<SelectListItem> materialInfos = new List<SelectListItem>();
+                materialInfos.Add(new SelectListItem { Text = "不新增物料", Value = "0" });
+                foreach (Materials item in db.Materials)
+                {
+                    materialInfos.Add(new SelectListItem { Text = string.Format(App_Start.Constants.MACHINE_MATERIAL_STRUCTURE, item.Code, item.Unit, item.DetailInfo), Value = item.ID.ToString() });
+                }
+                ViewData["materialInfos"] = materialInfos;
+
+                return View(order);
+            }
         }
 
         //
@@ -303,25 +317,29 @@ namespace ZdflCount.Controllers
         [HttpPost]
         public ActionResult Edit(Orders orderNew, int material = 0)
         {
-            Orders orderOld = db.Orders.Find(orderNew.OrderId);
-            db.Orders.Attach(orderOld);
-
-            orderOld.UpContinueCount = orderNew.UpContinueCount;
-            orderOld.DownContinueCount = orderNew.DownContinueCount;
-            orderOld.DetailInfo = orderNew.DetailInfo;
-            orderOld.NoticeInfo = orderNew.NoticeInfo;
-            if (material != 0)
+            Orders orderOld = null;
+            using (var t = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadUncommitted }))
             {
-                if (orderOld.MaterialInfo == null || orderOld.MaterialInfo == "")
+                orderOld = db.Orders.Find(orderNew.OrderId);
+                db.Orders.Attach(orderOld);
+
+                orderOld.UpContinueCount = orderNew.UpContinueCount;
+                orderOld.DownContinueCount = orderNew.DownContinueCount;
+                orderOld.DetailInfo = orderNew.DetailInfo;
+                orderOld.NoticeInfo = orderNew.NoticeInfo;
+                if (material != 0)
                 {
-                    orderOld.MaterialInfo = material.ToString ();
+                    if (orderOld.MaterialInfo == null || orderOld.MaterialInfo == "")
+                    {
+                        orderOld.MaterialInfo = material.ToString();
+                    }
+                    else
+                    {
+                        orderOld.MaterialInfo = orderOld.MaterialInfo + ";" + material.ToString();
+                    }
                 }
-                else
-                {
-                    orderOld.MaterialInfo = orderOld.MaterialInfo + ";" + material.ToString ();
-                }
+                db.SaveChanges();
             }
-            db.SaveChanges();
 
             return RedirectToAction("Detail", new { id = orderOld.OrderId, error = enumErrorCode.HandlerSuccess });
         }

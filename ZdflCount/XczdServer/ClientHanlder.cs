@@ -520,12 +520,31 @@ namespace XczdServer
                 RoomNumber = machine.RoomName
             };
 
-            startEndItem.OrderId = schedule.OrderId;
-            startEndItem.OrderNumber = schedule.OrderNumber;
-            startEndItem.ScheduleId = schedule.ID;
-            startEndItem.SchueduleNumber = schedule.Number;
-            startEndItem.UserId = userInfo == null ? 0 : userInfo.UserId;
-            startEndItem.UserNumber = userInfo == null ? "" : userInfo.UserName;
+            if (schedule == null)
+            {
+                startEndItem.OrderId = 0;
+                startEndItem.OrderNumber = "";
+                startEndItem.ScheduleId = 0;
+                startEndItem.SchueduleNumber = "";
+            }
+            else
+            {
+                startEndItem.OrderId = schedule.OrderId;
+                startEndItem.OrderNumber = schedule.OrderNumber;
+                startEndItem.ScheduleId = schedule.ID;
+                startEndItem.SchueduleNumber = schedule.Number;
+            }
+
+            if (userInfo == null)
+            {
+                startEndItem.UserId = 0;
+                startEndItem.UserNumber = "";
+            }
+            else
+            {
+                startEndItem.UserId = userInfo.UserId;
+                startEndItem.UserNumber = userInfo.UserName;
+            }
             startEndItem.Status = outInfo.Status;
 
             return startEndItem;

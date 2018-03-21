@@ -71,7 +71,7 @@ namespace XczdServer
                 }
                 catch (Exception ex)
                 {
-                    db.InsertErrorInfo(enumSystemErrorCode.TcpSenderException, ex, "", null);
+                    db.InsertErrorInfo(enumSystemErrorCode.TcpSenderException, ex, "outside", null);
                 }
                 Thread.Sleep(2000);
             }
@@ -83,7 +83,7 @@ namespace XczdServer
             byte[] buffReceive = new byte[BUFFER_SIZE];
             if (!netConnection.ContainsKey(machineId))
             {
-                db.InsertErrorInfo(enumSystemErrorCode.TcpSenderException, null, machineId.ToString(), content);
+                //db.InsertErrorInfo(enumSystemErrorCode.TcpSenderException, null, machineId.ToString(), content);
                 return enumErrorCode.DeviceNotWork;
             }
             NetworkStream ns = netConnection[machineId];
@@ -122,7 +122,7 @@ namespace XczdServer
                 {
                     TcpClient serverReceive = serverListen.AcceptTcpClient();
                     NetStructure.NormalDataStruct dataInfo = new NetStructure.NormalDataStruct();
-                    dataInfo.stream = serverReceive.GetStream();;
+                    dataInfo.stream = serverReceive.GetStream();
                     dataInfo.IpAddress = ((IPEndPoint)serverReceive.Client.RemoteEndPoint).Address.ToString();
                     //子线程接收和处理信息
                     Thread ThreadHanler = new Thread(new ParameterizedThreadStart(ThreadHandler));
@@ -318,34 +318,34 @@ namespace XczdServer
                 db.InsertErrorInfo(enumSystemErrorCode.TcpRecieveErr, null, "数据头读取超时", byteHead);
                 return result;
             }
-            int headIdx = 0;
-            while (true)
-            {
-                if (byteHead[headIdx] == Coder.PROTOCOL_HEAD_START[0] && byteHead[headIdx + 1] == Coder.PROTOCOL_HEAD_START[1] &&
-                    byteHead[headIdx + 2] == Coder.PROTOCOL_HEAD_START[2] && byteHead[headIdx + 3] == Coder.PROTOCOL_HEAD_START[3])
-                {
-                    break;
-                }
-                headIdx++;
-                if (headIdx > Coder.PROTOCOL_HEAD_COUNT - 4)
-                {
-                    ReadBuffer(ns, Coder.PROTOCOL_HEAD_COUNT, byteHead);
-                    headIdx = 0;
-                }
-            }
-            if (headIdx > 0)
-            {
-                byte[] byteTemp = new byte[headIdx];
-                ReadBuffer(ns, headIdx, byteTemp);
-                for (int i = 0; i < Coder.PROTOCOL_HEAD_COUNT - headIdx; i++)
-                {
-                    byteHead[i] = byteHead[i + headIdx];
-                }
-                for (int i = Coder.PROTOCOL_HEAD_COUNT - headIdx; i < Coder.PROTOCOL_HEAD_COUNT; i++)
-                {
-                    byteHead[i] = byteTemp[i + headIdx - Coder.PROTOCOL_HEAD_COUNT];
-                }
-            }
+            //int headIdx = 0;
+            //while (true)
+            //{
+            //    if (byteHead[headIdx] == Coder.PROTOCOL_HEAD_START[0] && byteHead[headIdx + 1] == Coder.PROTOCOL_HEAD_START[1] &&
+            //        byteHead[headIdx + 2] == Coder.PROTOCOL_HEAD_START[2] && byteHead[headIdx + 3] == Coder.PROTOCOL_HEAD_START[3])
+            //    {
+            //        break;
+            //    }
+            //    headIdx++;
+            //    if (headIdx > Coder.PROTOCOL_HEAD_COUNT - 4)
+            //    {
+            //        ReadBuffer(ns, Coder.PROTOCOL_HEAD_COUNT, byteHead);
+            //        headIdx = 0;
+            //    }
+            //}
+            //if (headIdx > 0)
+            //{
+            //    byte[] byteTemp = new byte[headIdx];
+            //    ReadBuffer(ns, headIdx, byteTemp);
+            //    for (int i = 0; i < Coder.PROTOCOL_HEAD_COUNT - headIdx; i++)
+            //    {
+            //        byteHead[i] = byteHead[i + headIdx];
+            //    }
+            //    for (int i = Coder.PROTOCOL_HEAD_COUNT - headIdx; i < Coder.PROTOCOL_HEAD_COUNT; i++)
+            //    {
+            //        byteHead[i] = byteTemp[i + headIdx - Coder.PROTOCOL_HEAD_COUNT];
+            //    }
+            //}
             Coder.DecodeData(byteHead, ref dataInfo);
             if (!ReadBuffer(ns, dataInfo.contentLen, dataInfo.Content))
             {

@@ -381,7 +381,7 @@ namespace XczdServer
         public int GetStartEndID(MachineStartEnd info)
         {
             int rest = 0;
-            string strSql = @"select Top 1 ID from MachineStartEnds where MachineId=@MachineId and SchueduleNumber=@SchueduleNumber
+            string strSql = @"select Top 1 ID from MachineStartEnds  with(nolock) where MachineId=@MachineId and SchueduleNumber=@SchueduleNumber
                                 and [Status]=@Status ORDER BY ID desc";
 
             using (SqlCommand cmd = new SqlCommand(strSql, conn))

@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Transactions;
 using ZdflCount.Models;
 using ZdflCount.App_Start;
 
@@ -55,21 +56,23 @@ namespace ZdflCount.Controllers
             dateEnd = DateTime.Parse(strEndDate).AddDays(1);
             int intRoom = Convert.ToInt32(room), intMachine = Convert.ToInt32(machine);
             //执行查询
-            var schedules = from item in db.Schedules
+            using (var t = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadUncommitted }))
+            {
+                var schedules = (from item in db.Schedules
                             where rooms.Contains(item.RoomId) &&
                                 item.DateLastUpdate >= dateStart && item.DateLastUpdate <= dateEnd &&
                                 (order == null || item.OrderNumber == order) &&
                                 (room == null || item.RoomId == intRoom) &&
                                 (machine == null || item.MachineId == intMachine)
                             orderby item.Status ascending, item.DateLastUpdate descending
-                            select item;
+                                select item).ToList();
+                if (schedules == null)
+                {
+                    return HttpNotFound();
+                }
 
-            if (schedules == null)
-            {
-                return HttpNotFound();
+                return View(schedules);
             }
-
-            return View(schedules);
         }
 
         public ActionResult RoomsDownList()
@@ -103,19 +106,22 @@ namespace ZdflCount.Controllers
         public ActionResult OrderIndex(int id = 0)
         {
             int[] rooms = roomControl.GetRoomsForUser(Convert.ToInt32(Session["UserID"]));
-            var schedules = from item in db.Schedules
-                            where item.OrderId == id && rooms.Contains(item.RoomId)
-                            orderby item.Status ascending, item.DateLastUpdate descending
-                            select item;
-            if (schedules == null)
+            using (var t = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadUncommitted }))
             {
-                return HttpNotFound();
-            }
-            Orders orderInfo = db.Orders.Find(id);
-            ViewData["OrderId"] = id;
-            ViewData["OrderNumber"] = orderInfo.OrderNumber;
+                var schedules = (from item in db.Schedules
+                                where item.OrderId == id && rooms.Contains(item.RoomId)
+                                orderby item.Status ascending, item.DateLastUpdate descending
+                                select item).ToList();
+                if (schedules == null)
+                {
+                    return HttpNotFound();
+                }
+                Orders orderInfo = db.Orders.Find(id);
+                ViewData["OrderId"] = id;
+                ViewData["OrderNumber"] = orderInfo.OrderNumber;
 
-            return View(schedules);
+                return View(schedules);
+            }
         }
         #endregion 
 
@@ -126,18 +132,22 @@ namespace ZdflCount.Controllers
         [UserRoleAuthentication(Roles = "施工单管理员,施工单查看,施工单创建,施工单修改,施工单下派,施工单关闭,施工单报废")]
         public ActionResult Details(int id = 0, enumErrorCode error = enumErrorCode.NONE)
         {
-            Schedules schedules = db.Schedules.Find(id);
-            if (schedules == null)
+            using (var t = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadUncommitted }))
             {
-                return HttpNotFound();
-            } 
-            int userId = Convert.ToInt32(Session["UserID"]);
-            if (!roomControl.CheckUserInRoom(userId, schedules.RoomId))
-            {
-                return RedirectToAction("Login", "Account");
+                Schedules schedules = db.Schedules.Find(id);
+
+                if (schedules == null)
+                {
+                    return HttpNotFound();
+                }
+                int userId = Convert.ToInt32(Session["UserID"]);
+                if (!roomControl.CheckUserInRoom(userId, schedules.RoomId))
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+                ViewData["error"] = Constants.GetErrorString(error);
+                return View(schedules);
             }
-            ViewData["error"] = Constants.GetErrorString(error);
-            return View(schedules);
         }
         #endregion
 
@@ -146,15 +156,19 @@ namespace ZdflCount.Controllers
         [UserRoleAuthentication(Roles = "施工单管理员,施工单下派")]
         public ActionResult Assign(int id = 0)
         {
-            Schedules schedules = db.Schedules.Find(id);
-            if (schedules == null)
-            {
-                return HttpNotFound();
-            }
+            Schedules schedules = null;
             int userId = Convert.ToInt32(Session["UserID"]);
-            if (!roomControl.CheckUserInRoom(userId, schedules.RoomId))
+            using (var t = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadUncommitted }))
             {
-                return RedirectToAction("Login", "Account");
+                schedules = db.Schedules.Find(id);
+                if (schedules == null)
+                {
+                    return HttpNotFound();
+                }
+                if (!roomControl.CheckUserInRoom(userId, schedules.RoomId))
+                {
+                    return RedirectToAction("Login", "Account");
+                }
             }
             db.Schedules.Attach(schedules);
             schedules.DetailInfo = schedules.DetailInfo == null ? string.Empty : schedules.DetailInfo;
@@ -177,7 +191,10 @@ namespace ZdflCount.Controllers
         [UserRoleAuthentication(Roles = "施工单管理员,施工单创建")]
         public ActionResult Create(int id=0)
         {
-            this.modelSchOrder.GetOrderById(id);
+            using (var t = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadUncommitted }))
+            {
+                this.modelSchOrder.GetOrderById(id);
+            }
             this.modelSchOrder.GetMachineByUser(Convert.ToInt32(Session["UserID"]));
             ViewData["CreatorName"] = User.Identity.Name;
 
@@ -211,55 +228,58 @@ namespace ZdflCount.Controllers
                 return Content("输入创建施工单数据无效");
             }
             int userId = Convert.ToInt32(Session["UserID"]);
-            Orders orderInfo = db.Orders.Find(schedules.OrderId);
-            if (temporary == 0 && orderInfo.ProductFreeCount < schedules.ProductCount)
+            Orders orderInfo = null;
+            using (var t = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadUncommitted }))
             {
-                this.modelSchOrder.Schedules = schedules;
-                this.modelSchOrder.Orders = orderInfo;
-                this.modelSchOrder.SelectMachine(machine);
-                ViewData["error"] = "分派数量超过订单剩余总数";
-                return View(this.modelSchOrder);
+                orderInfo = db.Orders.Find(schedules.OrderId);
+                if (temporary == 0 && orderInfo.ProductFreeCount < schedules.ProductCount)
+                {
+                    this.modelSchOrder.Schedules = schedules;
+                    this.modelSchOrder.Orders = orderInfo;
+                    this.modelSchOrder.SelectMachine(machine);
+                    ViewData["error"] = "分派数量超过订单剩余总数";
+                    return View(this.modelSchOrder);
+                }
+                Machines currentMachine = this.db.Machines.Find(machine);
+                schedules.MachineId = machine;
+                schedules.MachineName = currentMachine.Name;
+                schedules.RoomId = currentMachine.RoomID;
+                if (!roomControl.CheckUserInRoom(userId, schedules.RoomId))
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+                schedules.OrderNumber = orderInfo.OrderNumber;
+                schedules.ProductCode = orderInfo.ProductCode;
+                schedules.ProductUnit = orderInfo.ProductUnit;
+                schedules.ProductInfo = orderInfo.ProductInfo;
+                schedules.RoomNumber = orderInfo.RoomNumber;
+                schedules.DateCreate = DateTime.Now;
+                schedules.DateLastUpdate = DateTime.Now;
+                schedules.FinishCount = 0;
+                schedules.CreatorID = userId;
+                schedules.CreatorName = User.Identity.Name;
+                schedules.LastUpdatePersonID = schedules.CreatorID;
+                schedules.LastUpdatePersonName = User.Identity.Name;
+                string strMaterial = string.Empty;
+                foreach (string tempKey in Request.Form.AllKeys)
+                {
+                    if (tempKey.StartsWith("cm") && Request.Form[tempKey].Contains("true"))
+                        strMaterial += tempKey.Substring(2) + ";";
+                }
+                if (strMaterial.Length > 0)
+                {
+                    schedules.MaterialInfo = strMaterial.Substring(0, strMaterial.Length - 1);
+                    string strMatDetail = string.Empty;
+                    this.modelSchOrder.GetOrderMaterial(schedules.MaterialInfo);
+                    foreach (KeyValuePair<int, string> tempItem in this.modelSchOrder.MaterialList)
+                        strMatDetail += tempItem.Value + "；";
+                    schedules.MaterialDetail = strMatDetail;
+                }
+                string tempNumberStr = KeepLength_CutFillStart(orderInfo.AssignedCount + 1, 4, '0');
+                schedules.Number = string.Format("{0}-{1}", schedules.OrderNumber, tempNumberStr);
+                schedules.Status = temporary > 0 ? enumStatus.Temporary : enumStatus.Unhandle;
+                db.Schedules.Add(schedules);
             }
-            Machines currentMachine = this.db.Machines.Find(machine);
-            schedules.MachineId = machine;
-            schedules.MachineName = currentMachine.Name;
-            schedules.RoomId = currentMachine.RoomID;
-            if (!roomControl.CheckUserInRoom(userId, schedules.RoomId))
-            {
-                return RedirectToAction("Login", "Account");
-            }
-            schedules.OrderNumber = orderInfo.OrderNumber;
-            schedules.ProductCode = orderInfo.ProductCode;
-            schedules.ProductUnit = orderInfo.ProductUnit;
-            schedules.ProductInfo = orderInfo.ProductInfo;
-            schedules.RoomNumber = orderInfo.RoomNumber;
-            schedules.DateCreate = DateTime.Now;
-            schedules.DateLastUpdate = DateTime.Now;
-            schedules.FinishCount = 0;
-            schedules.CreatorID = userId;
-            schedules.CreatorName = User.Identity.Name;
-            schedules.LastUpdatePersonID = schedules.CreatorID;
-            schedules.LastUpdatePersonName = User.Identity.Name;
-            string strMaterial = string.Empty;
-            foreach (string tempKey in Request.Form.AllKeys)
-            {
-                if (tempKey.StartsWith("cm") && Request.Form[tempKey].Contains("true"))
-                    strMaterial += tempKey.Substring(2) + ";";
-            }
-            if (strMaterial.Length > 0)
-            {
-                schedules.MaterialInfo = strMaterial.Substring(0, strMaterial.Length - 1);
-                string strMatDetail = string.Empty;
-                this.modelSchOrder.GetOrderMaterial(schedules.MaterialInfo);
-                foreach (KeyValuePair<int, string> tempItem in this.modelSchOrder.MaterialList)
-                    strMatDetail += tempItem.Value + "；";
-                schedules.MaterialDetail = strMatDetail;
-            }
-            string tempNumberStr = KeepLength_CutFillStart(orderInfo.AssignedCount + 1, 4, '0');
-            schedules.Number = string.Format("{0}-{1}", schedules.OrderNumber, tempNumberStr);
-            schedules.Status = temporary > 0 ? enumStatus.Temporary : enumStatus.Unhandle;
-            db.Schedules.Add(schedules);
-
             if (temporary == 0)
             {
                 orderInfo.ProductFreeCount -= schedules.ProductCount;
@@ -279,21 +299,24 @@ namespace ZdflCount.Controllers
         public ActionResult Edit(int id = 0)
         {
             int userId = Convert.ToInt32(Session["UserID"]);
-            Schedules schedules = db.Schedules.Find(id);
-            if (schedules == null)
+            using (var t = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadUncommitted }))
             {
-                return HttpNotFound();
-            }
-            if (!roomControl.CheckUserInRoom(userId, schedules.RoomId))
-            {
-                return RedirectToAction("Login", "Account");
-            }         
-            this.modelSchOrder.Schedules = schedules;
-            this.modelSchOrder.GetOrderById(schedules.OrderId);
-            this.modelSchOrder.GetMachineByUser(userId);
-            this.modelSchOrder.SelectMachine(schedules.MachineId);
+                Schedules schedules = db.Schedules.Find(id);
+                if (schedules == null)
+                {
+                    return HttpNotFound();
+                }
+                if (!roomControl.CheckUserInRoom(userId, schedules.RoomId))
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+                this.modelSchOrder.Schedules = schedules;
+                this.modelSchOrder.GetOrderById(schedules.OrderId);
+                this.modelSchOrder.GetMachineByUser(userId);
+                this.modelSchOrder.SelectMachine(schedules.MachineId);
 
-            return View(this.modelSchOrder);
+                return View(this.modelSchOrder);
+            }
         }
 
         //
@@ -359,19 +382,22 @@ namespace ZdflCount.Controllers
         [UserRoleAuthentication(Roles = "施工单管理员,施工单关闭")]
         public ActionResult Delete(int id = 0, enumErrorCode error = enumErrorCode.NONE)
         {
-            Schedules schedules = db.Schedules.Find(id);
-            if (schedules == null)
+            using (var t = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadUncommitted }))
             {
-                return HttpNotFound();
-            }
-            int userId = Convert.ToInt32(Session["UserID"]);
-            if (!roomControl.CheckUserInRoom(userId, schedules.RoomId))
-            {
-                return RedirectToAction("Login", "Account");
-            }
-            ViewData["error"] = Constants.GetErrorString(error);
+                Schedules schedules = db.Schedules.Find(id);
+                if (schedules == null)
+                {
+                    return HttpNotFound();
+                }
+                int userId = Convert.ToInt32(Session["UserID"]);
+                if (!roomControl.CheckUserInRoom(userId, schedules.RoomId))
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+                ViewData["error"] = Constants.GetErrorString(error);
 
-            return View(schedules);
+                return View(schedules);
+            }
         }
 
         //
@@ -381,12 +407,16 @@ namespace ZdflCount.Controllers
         [UserRoleAuthentication(Roles = "施工单管理员,施工单关闭")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Schedules schedules = db.Schedules.Find(id);
-            //db.Schedules.Remove(schedules);
+            Schedules schedules = null; 
             int userId = Convert.ToInt32(Session["UserID"]);
-            if (!roomControl.CheckUserInRoom(userId, schedules.RoomId))
+            using (var t = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadUncommitted }))
             {
-                return RedirectToAction("Login", "Account");
+                schedules = db.Schedules.Find(id);
+                //db.Schedules.Remove(schedules);               
+                if (!roomControl.CheckUserInRoom(userId, schedules.RoomId))
+                {
+                    return RedirectToAction("Login", "Account");
+                }
             }
             enumErrorCode result = enumErrorCode.HandlerSuccess;
             if (schedules.Status == enumStatus.Assigned || schedules.Status == enumStatus.Working)
@@ -422,19 +452,22 @@ namespace ZdflCount.Controllers
         [UserRoleAuthentication(Roles = "施工单管理员,施工单报废")]
         public ActionResult Discard(int id = 0, enumErrorCode error = enumErrorCode.NONE)
         {
-            Schedules schedules = db.Schedules.Find(id);
-            if (schedules == null)
+            using (var t = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadUncommitted }))
             {
-                return HttpNotFound();
-            }
-            int userId = Convert.ToInt32(Session["UserID"]);
-            if (!roomControl.CheckUserInRoom(userId, schedules.RoomId))
-            {
-                return RedirectToAction("Login", "Account");
-            }
-            ViewData["error"] = Constants.GetErrorString(error);
+                Schedules schedules = db.Schedules.Find(id);
+                if (schedules == null)
+                {
+                    return HttpNotFound();
+                }
+                int userId = Convert.ToInt32(Session["UserID"]);
+                if (!roomControl.CheckUserInRoom(userId, schedules.RoomId))
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+                ViewData["error"] = Constants.GetErrorString(error);
 
-            return View(schedules);
+                return View(schedules);
+            }
         }
 
         //
@@ -444,11 +477,16 @@ namespace ZdflCount.Controllers
         [UserRoleAuthentication(Roles = "施工单管理员,施工单报废")]
         public ActionResult DiscardConfirmed(int id)
         {
-            Schedules schedules = db.Schedules.Find(id);
+            Schedules schedules = null;
             int userId = Convert.ToInt32(Session["UserID"]);
-            if (!roomControl.CheckUserInRoom(userId, schedules.RoomId))
+
+            using (var t = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadUncommitted }))
             {
-                return RedirectToAction("Login", "Account");
+                schedules = db.Schedules.Find(id);
+                if (!roomControl.CheckUserInRoom(userId, schedules.RoomId))
+                {
+                    return RedirectToAction("Login", "Account");
+                }
             }
 
             enumErrorCode result = enumErrorCode.HandlerSuccess;
