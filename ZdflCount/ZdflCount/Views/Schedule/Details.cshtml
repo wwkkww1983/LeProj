@@ -13,7 +13,8 @@
     <legend>详细信息</legend>
 
     @if(@Model.Status == ZdflCount.Models.enumStatus.Unhandle){
-        using (Html.BeginForm("Assign","Schedule",new {id=Model.ID},FormMethod.Post,null)) {
+        using (Html.BeginForm("Assign", "Schedule", new { id = Model.ID }, FormMethod.Post, new {onsubmit = "getElementsByClassName('right-within-handler-button')[0].disabled=true;return true;"}))
+        {
             <input class="right-within-handler-button" value="下派施工单" type="submit"/>
         }
     }
